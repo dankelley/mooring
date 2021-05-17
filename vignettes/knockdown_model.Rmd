@@ -61,10 +61,12 @@ Each element is described by the following properties, independent of flow.
   makes to the overall mooring length.
 * Area, $A_i$ [m$^2$] projected in the $x$ direction.
 * A measure of buoyancy force divided by $g$, the acceleration due to gravity.
-  For a solid object, this is a simple number, expressed in kg, and denoted $m$
-  below. For a cable, it is expressed per unit length of cable, i.e. in kg/m,
-  and denoted $\mu$ below.  Manufacturers tend to provide $m$ or $\mu$ in
-  technical documentation about mooring components.
+  For a solid object, this is a simple number, expressed in kg, and denoted
+  $m_i$ below. For a cable, it is expressed per unit length of cable, i.e. in
+  kg/m, and denoted $\mu_i$ below.  Manufacturers tend to provide $m$ or $\mu$
+  values in technical documentation about mooring components. Note that they
+  refer to in-water buoyancy force, but the distinction between freshwater
+  and seawater is seldom made clear.
 * Drag coefficient, $C_{Di}$, defined as the ratio of drag force, $\D_i$, to
   $\frac{1}{2}A_i\rho_i u_i|u_i|$.
 
@@ -93,7 +95,7 @@ and for a portion of a cable of length $\Delta l$ with
 
 The drag force is expressed with
 \begin{equation}
-\D_i = \frac{1}{2} A_i C_{Di} \rho_i u_i |u_i|
+\D_i = \frac{1}{2} A_i C_{Di}\ \rho_i u_i |u_i|
 \end{equation}
 where $A_i$ is the area projected in the flow direction.
 
