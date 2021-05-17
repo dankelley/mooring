@@ -1,8 +1,24 @@
 ---
 title: Two-dimensional Mooring Model
 author: Dan Kelley
-date: 2021 May 15
+date: "`r Sys.Date()`"
 bibliography: model.bib
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+    fig_caption: yes
+    fig_width: 3.5
+    fig_height: 3.5
+    dpi: 72
+    dev.args: list(pointsize=11)
+vignette: >
+  %\VignetteIndexEntry{Knockdown Model}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  markdown:
+    wrap: 72
 ---
 \newcommand{\D}{{\cal D}}
 \newcommand{\B}{{\cal B}}
