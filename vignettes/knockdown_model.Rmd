@@ -1,5 +1,5 @@
 ---
-title: Two-dimensional Mooring Model
+title: Mooring Response to Unidirectional Flow
 author: Dan Kelley
 date: "`r Sys.Date()`"
 bibliography: model.bib
@@ -13,7 +13,7 @@ output:
     dpi: 72
     dev.args: list(pointsize=11)
 vignette: >
-  %\VignetteIndexEntry{Knockdown Model}
+  %\VignetteIndexEntry{Mooring Response to Unidirectional Flow}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:

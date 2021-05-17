@@ -5,6 +5,5 @@
 .DS_Store
 *.out
 vignettes/*pdf
-
 /doc/
 /Meta/

@@ -54,7 +54,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/knockdown_model.html">Two-dimensional Mooring Model</a>
+      <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
     </li>
     <li>
       <a href="../articles/object_orientation.html">Object-orientation Scheme</a>
@@ -78,7 +78,7 @@
       <h1 data-toc-skip>Object-orientation Scheme</h1>
                         <h4 class="author">Dan Kelley</h4>
             
-            <h4 class="date">2021 May 17</h4>
+            <h4 class="date">2021-05-17</h4>
       
       
       <div class="hidden name"><code>object_orientation.Rmd</code></div>
@@ -87,114 +87,13 @@
 
     
     
-<p>Below is mainly just R code. I’ll write this up with some text if this scheme shows promise.</p>
+<p>The S3 scheme is used for objects created by functions in the <code>mooring</code> package. These objects inherit from the <code>"mooring"</code> class. The contents consist of a list that in turn contains one or more lists.</p>
+<p>The elementary functions such as [anchor()], [cable()] and [float()] all produce a list that contains a single list describing the item. That item contains elements called <code>type</code> that indicate the meaning (e.g. [cable()] produces objects with type equal to <code>"cable"</code>), as well as an element called <code>model</code>, which is a string indicating the particular variety of cable.</p>
+<p>The combination function, [+,mooring()], produces a list that contains 2 or more lists, one for each element. For example,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Demo oo for mooring analysis</span>
-<span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># for debugging only</span>
-
-<span class="va">anchor</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">model</span><span class="op">=</span><span class="st">"default_anchor"</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="va">rval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"anchor"</span>, model<span class="op">=</span><span class="va">model</span>, length<span class="op">=</span><span class="fl">0.3</span><span class="op">)</span><span class="op">)</span> <span class="co"># guess on length</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">rval</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"mooring"</span>
-    <span class="va">rval</span>
-<span class="op">}</span>
-
-<span class="va">release</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">model</span><span class="op">=</span><span class="st">"default_release"</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="va">rval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"anchor"</span>, model<span class="op">=</span><span class="va">model</span>, length<span class="op">=</span><span class="fl">1.0</span><span class="op">)</span><span class="op">)</span> <span class="co"># guess on length</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">rval</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"mooring"</span>
-    <span class="va">rval</span>
-<span class="op">}</span>
-
-<span class="va">cable</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">length</span><span class="op">=</span><span class="cn">NULL</span>, <span class="va">model</span><span class="op">=</span><span class="st">"Mooring Systems 3X19 3/16"</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span><span class="op">)</span>
-        <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"must specify length"</span><span class="op">)</span>
-    <span class="va">rval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"cable"</span>, model<span class="op">=</span><span class="va">model</span>, length<span class="op">=</span><span class="va">length</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">rval</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"mooring"</span>
-    <span class="va">rval</span>
-<span class="op">}</span>
-
-<span class="va">float</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">model</span><span class="op">=</span><span class="st">"Hydro Float 20"</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="va">rval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">"float"</span>, model<span class="op">=</span><span class="va">model</span>, length<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="co"># guess on length</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">rval</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"mooring"</span>
-    <span class="va">rval</span>
-<span class="op">}</span>
-
-<span class="va">print.mooring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fl">0</span> <span class="op">==</span> <span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-        <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Empty object (programming error)\n"</span><span class="op">)</span>
-    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-        <span class="kw">if</span> <span class="op">(</span><span class="va">n</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span>
-            <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Single element:\n"</span><span class="op">)</span>
-        <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-            <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Mooring with"</span>, <span class="va">n</span>, <span class="st">"elements:\n"</span><span class="op">)</span>
-        <span class="op">}</span>
-        <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-            <span class="va">mi</span> <span class="op">&lt;-</span> <span class="va">m</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>
-            <span class="co"># FIXME: more if blocks for various types, to customize output. For example,</span>
-            <span class="co"># cable has buoyancy in kg/m, whereas other things have it in kg.  Also,</span>
-            <span class="co"># should report depth ranges, etc.</span>
-            <span class="kw">if</span> <span class="op">(</span><span class="va">mi</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"cable"</span><span class="op">)</span> <span class="op">{</span>
-                <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  %s (\"%s\") %gm\n"</span>, <span class="va">mi</span><span class="op">$</span><span class="va">type</span>, <span class="va">mi</span><span class="op">$</span><span class="va">model</span>, <span class="va">mi</span><span class="op">$</span><span class="va">length</span><span class="op">)</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-            <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-                <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"  %s (\"%s\") %gm\n"</span>, <span class="va">mi</span><span class="op">$</span><span class="va">type</span>, <span class="va">mi</span><span class="op">$</span><span class="va">model</span>, <span class="va">mi</span><span class="op">$</span><span class="va">length</span><span class="op">)</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-            <span class="op">}</span>
-        <span class="op">}</span>
-    <span class="op">}</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="va">plot.mooring</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">M</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">length</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">bottom</span> <span class="op">&lt;&lt;-</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">l</span><span class="op">)</span> <span class="co"># Kludge ... maybe we want a water() function</span>
-    <span class="va">z</span> <span class="op">&lt;-</span> <span class="va">bottom</span> <span class="op">+</span> <span class="va">l</span>
-    <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">l</span><span class="op">)</span><span class="op">)</span>, <span class="va">z</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">""</span>, ylab<span class="op">=</span><span class="st">"z [m]"</span>, type<span class="op">=</span><span class="st">"n"</span><span class="op">)</span>
-    <span class="va">usr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="st">"usr"</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/graphics/rect.html">rect</a></span><span class="op">(</span><span class="va">usr</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">usr</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="va">usr</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">bottom</span>, col<span class="op">=</span><span class="st">"tan"</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">l</span><span class="op">)</span><span class="op">)</span>, <span class="va">z</span>, pch<span class="op">=</span><span class="st">"+"</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"ROUGH plot -- testing if we can read elements"</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="va">`+.mooring`</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="va">n1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
-    <span class="va">n2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span>
-    <span class="va">rval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="va">n1</span><span class="op">+</span><span class="va">n2</span><span class="op">)</span>
-    <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n1</span><span class="op">)</span><span class="op">)</span>
-        <span class="va">rval</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">m1</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>
-    <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n2</span><span class="op">)</span><span class="op">)</span>
-        <span class="va">rval</span><span class="op">[[</span><span class="va">n1</span> <span class="op">+</span> <span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">m2</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">rval</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"mooring"</span>
-    <span class="va">rval</span>
-<span class="op">}</span>
-
-<span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></code></pre></div>
-<pre><code>## Single element:
-##   anchor ("default_anchor") 0.3m</code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cable.html">cable</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">C</span><span class="op">)</span></code></pre></div>
-<pre><code>## Single element:
-##   cable ("Mooring Systems 3X19 3/16") 100m</code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="cn">F</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="cn">F</span><span class="op">)</span></code></pre></div>
-<pre><code>## Single element:
-##   float ("Hydro Float 20") 0.5m</code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">M</span> <span class="op">&lt;-</span> <span class="va">A</span> <span class="op">+</span> <span class="va">C</span> <span class="op">+</span> <span class="cn">F</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></code></pre></div>
-<pre><code>## Mooring with 3 elements:
-##   anchor ("default_anchor") 0.3m
-##   cable ("Mooring Systems 3X19 3/16") 100m
-##   float ("Hydro Float 20") 0.5m</code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></code></pre></div>
-<p><img src="object_orientation_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mooring</span><span class="op">)</span>
+<span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/cable.html">cable</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>produces a list with 3 elements, one that holds information on the anchor, a second that holds information on the cable (whih is 100 m long in this case), and a third that holds information on the float.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

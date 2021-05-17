@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create an anchor object — anchor • mooring</title>
+<title>mooring: A Package for Analysing Oceanographic Moorings. — mooring • mooring</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Create an anchor object — anchor" />
-<meta property="og:description" content="Create an anchor object" />
+<meta property="og:title" content="mooring: A Package for Analysing Oceanographic Moorings. — mooring" />
+<meta property="og:description" content="The mooring package provides functions for working with
+oceanographic moorings." />
 
 
 
@@ -118,40 +119,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create an anchor object</h1>
+    <h1>mooring: A Package for Analysing Oceanographic Moorings.</h1>
     
-    <div class="hidden name"><code>anchor.Rd</code></div>
+    <div class="hidden name"><code>mooring.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create an anchor object</p>
+    <p>The mooring package provides functions for working with
+oceanographic moorings.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>anchor</span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"default_anchor"</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>model</th>
-      <td><p>character value indicating the model of the anchor.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of the <code>"mooring"</code> class, with <code>type</code> equal to <code>"anchor"</code>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other functions that create mooring objects: 
-<code><a href='+.mooring.html'>+.mooring</a>()</code>,
-<code><a href='cable.html'>cable</a>()</code>,
-<code><a href='float.html'>float</a>()</code>,
-<code><a href='release.html'>release</a>()</code></p></div>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Dan Kelley</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Create, summarize, and plot a simple mooring comprising</span>
+<span class='co'># a bottom anchor, a 100-metre cable, and a float.</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
+<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='cable.html'>cable</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Mooring with 3 elements:
+#&gt;   anchor ("default_anchor") 0.3m
+#&gt;   cable ("Mooring Systems 3X19 3/16") 100m
+#&gt;   float ("Hydro Float 20") 0.5m</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+</div><div class='img'><img src='mooring-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
