@@ -1,7 +1,7 @@
 ^mooring\.Rproj$
 ^\.Rproj\.user$
 ^sandbox$
-
 ^_pkgdown\.yml$
+^_config\.yml$
 ^docs$
 ^pkgdown$
