@@ -17,6 +17,7 @@ Create a float object
 }
 \seealso{
 Other functions that create mooring objects: 
+\code{\link{+.mooring}()},
 \code{\link{anchor}()},
 \code{\link{cable}()},
 \code{\link{release}()}

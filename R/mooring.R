@@ -1,8 +1,37 @@
+#' mooring: A Package for Analysing Oceanographic Moorings.
+#'
+#' @description
+#' The mooring package provides functions for working with
+#' oceanographic moorings.
+#'
+#' @details
+#'
+#'
+#' @examples
+#' # Create, summarize, and plot a simple mooring comprising
+#' # a bottom anchor, a 100-metre cable, and a float.
+#' library(mooring)
+#' A <- anchor()
+#' C <- cable(100)
+#' F <- float()
+#' m <- A + C + F
+#' print(m)
+#' plot(m)
+#'
+#' @docType package
+#'
+#' @name mooring
+NULL
+
+
+
+
 #' Create an anchor object
 #'
 #' @param model character value indicating the model of the anchor.
 #' @return an object of the `"mooring"` class, with `type` equal to `"anchor"`.
 #' @family functions that create mooring objects
+#' @export
 #' @author Dan Kelley
 anchor <- function(model="default_anchor")
 {
@@ -16,6 +45,7 @@ anchor <- function(model="default_anchor")
 #' @param model character value indicating the model of the acoustic release.
 #' @return an object of the `"mooring"` class, with `type` equal to `"release"`.
 #' @family functions that create mooring objects
+#' @export
 #' @author Dan Kelley
 release <- function(model="default_release")
 {
@@ -30,6 +60,7 @@ release <- function(model="default_release")
 #' @param model character value indicating the model of the cable.
 #' @return an object of the `"mooring"` class, with `type` equal to `"cable"`.
 #' @family functions that create mooring objects
+#' @export
 #' @author Dan Kelley
 cable <- function(length=NULL, model="Mooring Systems 3X19 3/16")
 {
@@ -45,6 +76,7 @@ cable <- function(length=NULL, model="Mooring Systems 3X19 3/16")
 #' @param model character value indicating the model of the float.
 #' @return an object of the `"mooring"` class, with `type` equal to `"float"`.
 #' @family functions that create mooring objects
+#' @export
 #' @author Dan Kelley
 float <- function(model="Hydro Float 20")
 {
@@ -53,9 +85,36 @@ float <- function(model="Hydro Float 20")
     rval
 }
 
+#' Combine two mooring objects
+#'
+#' The first object is "placed" the second.
+#' @param m1,m2 objects of the `"mooring"` class.
+#' @family functions that create mooring objects
+#' @examples
+#' A <- anchor()
+#' C <- cable(100)
+#' F <- float()
+#' m <- A + C + F
+#' print(m)
+#' @export
+#' @author Dan Kelley
+`+.mooring` <- function(m1, m2)
+{
+    n1 <- length(m1)
+    n2 <- length(m2)
+    rval <- vector("list", n1+n2)
+    for (i in seq_len(n1))
+        rval[[i]] <- m1[[i]]
+    for (i in seq_len(n2))
+        rval[[n1 + i]] <- m2[[i]]
+    class(rval) <- "mooring"
+    rval
+}
+
 #' Print a mooring object
 #'
 #' @param m an object of the `"mooring"` class.
+#' @export
 #' @author Dan Kelley
 print.mooring <- function(m)
 {
@@ -87,6 +146,7 @@ print.mooring <- function(m)
 #'
 #' @param m an object of the `"mooring"` class.
 #' @importFrom graphics mtext par points rect
+#' @export
 #' @author Dan Kelley
 plot.mooring <- function(m)
 {
@@ -98,22 +158,4 @@ plot.mooring <- function(m)
     rect(usr[1], usr[3], usr[2], bottom, col="tan")
     points(rep(0, length(l)), z, pch="+")
     mtext("ROUGH plot -- testing if we can read elements")
-}
-
-#' Combine two mooring objects
-#'
-#' The first object is "placed" the second.
-#' @param m1,m2 objects of the `"mooring"` class.
-#' @author Dan Kelley
-`+.mooring` <- function(m1, m2)
-{
-    n1 <- length(m1)
-    n2 <- length(m2)
-    rval <- vector("list", n1+n2)
-    for (i in seq_len(n1))
-        rval[[i]] <- m1[[i]]
-    for (i in seq_len(n2))
-        rval[[n1 + i]] <- m2[[i]]
-    class(rval) <- "mooring"
-    rval
 }

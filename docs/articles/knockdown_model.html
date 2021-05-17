@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -57,7 +57,7 @@
       <a href="../articles/knockdown_model.html">Two-dimensional Mooring Model</a>
     </li>
     <li>
-      <a href="../articles/object_orientation.html">Object-orientation scheme (draft)</a>
+      <a href="../articles/object_orientation.html">Object-orientation Scheme</a>
     </li>
   </ul>
 </li>
@@ -78,7 +78,7 @@
       <h1 data-toc-skip>Two-dimensional Mooring Model</h1>
                         <h4 class="author">Dan Kelley</h4>
             
-            <h4 class="date">2021 May 15</h4>
+            <h4 class="date">2021-05-17</h4>
       
       
       <div class="hidden name"><code>knockdown_model.Rmd</code></div>
@@ -122,7 +122,7 @@
 \label{e:compute_2}
 \begin{split}
 \phi_2 &amp;= \tan^{-1}\frac{{\cal D}_1}{{\cal B}_1}\cr
-{\cal T}_2 &amp;= \sqrt{{\cal D}_1^2+{\cal B}_1^2}
+{\cal T}_2 &amp;= \sqrt{{\cal D}_1^2 + {\cal B}_1^2}
 \end{split}
 \end{equation}\]</span></p>
 <p>The force balance for the second element (<span class="math inline">\(i=2\)</span>) is <span class="math display">\[\begin{equation}
@@ -135,7 +135,7 @@
 \label{e:compute_3}
 \begin{split}
 \phi_3 &amp;= \tan^{-1}\frac{{\cal D}_2+{\cal T}_2\sin\phi_2}{{\cal B}_2+{\cal T}_2\cos\phi_2}\cr
-{\cal T}_3 &amp;= \sqrt{({\cal D}_2+{\cal T}_2\sin\phi_2)^2+({\cal B}_2+{\cal T}_2\cos\phi_2)^2}
+{\cal T}_3 &amp;= \sqrt{({\cal D}_2+{\cal T}_2\sin\phi_2)^2 + ({\cal B}_2+{\cal T}_2\cos\phi_2)^2}
 \end{split}
 \end{equation}\]</span> may be calculated, since <span class="math inline">\(\phi_2\)</span> and <span class="math inline">\({\cal T}_2\)</span> are known from .</p>
 <p>This reasoning applies for all elements below the first one, so that  may be generalized to <span class="math display">\[\begin{equation}
@@ -155,9 +155,11 @@
 <div id="example" class="section level1">
 <h1 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h1>
-<p> shows the result of simulating a <em>Hydro Float 20</em> float connected to the bottom with a <em>Mooring Systems 3x19 3/16"</em> wire cable, in a region with a depth-independent 2m/s current, which might be encountered in a region with strong tides. Note that the float is predicted to sink <span class="math inline">\(9.33\)</span>m with this current. However, the predicted knockdown is only <span class="math inline">\(0.72\)</span>m with a <span class="math inline">\(1\)</span>m/s current. This difference provides an indication of the importance of designing a mooring for the system under study.</p>
+<p>Figure 1 shows the result of simulating a <em>Hydro Float 20</em> float connected to the bottom with a <em>Mooring Systems 3x19 3/16"</em> wire cable, in a region with a depth-independent 2m/s current, which might be encountered in a region with strong tides. Note that the float is predicted to sink <span class="math inline">\(9.33\)</span>m with this current. However, the predicted knockdown is only <span class="math inline">\(0.72\)</span>m with a <span class="math inline">\(1\)</span>m/s current. This difference provides an indication of the importance of designing a mooring for the system under study.</p>
 <div class="figure">
-<embed src="example_01.pdf"></embed><p class="caption">Response of a mooring consisting of a <em>Hydro Float 20</em> atop 100m of <em>Mooring Systems 3x19 3/16"</em> wire cable, in a 1m/s current. <strong>Left</strong>: Cable tension, in kg, with gray for the <span class="math inline">\(u=0\)</span> case and black for <span class="math inline">\(u=1\)</span>m/s. <strong>Right:</strong> Mooring shape, with gray and black as in the left panel.</p>
+<img src="knockdown_model_files/figure-html/unnamed-chunk-1-1.png" alt='Response of a mooring consisting of a *Hydro Float 20* atop 100m of *Mooring Systems 3x19 3/16"* wire cable, in a 1m/s current. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for $u=1$m/s. **Right:** Mooring shape, with gray and black as in the left panel.' width="700"><p class="caption">
+Response of a mooring consisting of a <em>Hydro Float 20</em> atop 100m of <em>Mooring Systems 3x19 3/16"</em> wire cable, in a 1m/s current. <strong>Left</strong>: Cable tension, in kg, with gray for the <span class="math inline">\(u=0\)</span> case and black for <span class="math inline">\(u=1\)</span>m/s. <strong>Right:</strong> Mooring shape, with gray and black as in the left panel.
+</p>
 </div>
 </div>
 <div id="special-case-negligible-currents" class="section level1">

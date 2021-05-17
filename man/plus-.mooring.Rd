@@ -12,6 +12,21 @@
 \description{
 The first object is "placed" the second.
 }
+\examples{
+A <- anchor()
+C <- cable(100)
+F <- float()
+m <- A + C + F
+print(m)
+}
+\seealso{
+Other functions that create mooring objects: 
+\code{\link{anchor}()},
+\code{\link{cable}()},
+\code{\link{float}()},
+\code{\link{release}()}
+}
 \author{
 Dan Kelley
 }
+\concept{functions that create mooring objects}
