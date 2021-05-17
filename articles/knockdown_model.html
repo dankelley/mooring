@@ -105,46 +105,40 @@
 <li>A measure of buoyancy force divided by <span class="math inline">\(g\)</span>, the acceleration due to gravity. For a solid object, this is a simple number, expressed in kg, and denoted <span class="math inline">\(m_i\)</span> below. For a cable, it is expressed per unit length of cable, i.e. in kg/m, and denoted <span class="math inline">\(\mu_i\)</span> below. Manufacturers tend to provide <span class="math inline">\(m\)</span> or <span class="math inline">\(\mu\)</span> values in technical documentation about mooring components. Note that they refer to in-water buoyancy force, but the distinction between freshwater and seawater is seldom made clear.</li>
 <li>Drag coefficient, <span class="math inline">\(C_{Di}\)</span>, defined as the ratio of drag force, <span class="math inline">\({\cal D}_i\)</span>, to <span class="math inline">\(\frac{1}{2}A_i\rho_i u_i|u_i|\)</span>.</li>
 </ul>
-<p>Tension is computed between each element, with <span class="math inline">\({\cal T}_i\)</span> representing the value above the <span class="math inline">\(i\)</span>-th element (pulling upward, for case with no water motion) and <span class="math inline">\({\cal T}_{i+1}\)</span> representing the value below it.</p>
-<p>In the presence of a horizontal current, the mooring will deform, so the elements will no longer be oriented vertically. The angle made by the <span class="math inline">\(i\)</span>-th element to the vertical is represented with <span class="math inline">\(\phi_i\)</span>.</p>
+<p>A tension force exists between each interior mooring element. The tension above the <span class="math inline">\(i\)</span>-th interior element (thus pulling upward on it) is denoted <span class="math inline">\({\cal T}_i\)</span>, and <span class="math inline">\({\cal T}_{i+1}\)</span> represents the tension pulling down from below. These tensions will be directed vertically if there is no current, but they will have horizontal components with a current, because it will distort the mooring from its upright orientation. The angle made by the <span class="math inline">\(i\)</span>-th element to the vertical is represented with <span class="math inline">\(\phi_i\)</span>. Determining these two quantities, <span class="math inline">\({\cal T}\)</span> and <span class="math inline">\(\phi\)</span>, is the key to inferring the response of a mooring to currents.</p>
 <p>Quasi-steady dynamics are assumed, so that forces must balance in both the horizontal and vertical directions. The tension force has components in both the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> directions, but the buoyancy force (defined as positive for objects that would rise if unattached to a mooring) acts only in the vertical, upwards if <span class="math inline">\(m\)</span> or <span class="math inline">\(\mu\)</span> is positive.</p>
-<p>The buoyancy force for a solid object is found with <span class="math display">\[\begin{equation}
+<p>The buoyancy force for a solid object is found with (Equation 1) <span class="math display">\[\begin{equation}
 {\cal B}_i = -g m_i
-\end{equation}\]</span> and for a portion of a cable of length <span class="math inline">\(\Delta l\)</span> with <span class="math display">\[\begin{equation}
+\end{equation}\]</span> and for a portion of a cable of length <span class="math inline">\(\Delta l\)</span> with (Equation 2) <span class="math display">\[\begin{equation}
 {\cal B}_i = -g \mu_i \Delta l
 \end{equation}\]</span></p>
-<p>The drag force is expressed with <span class="math display">\[\begin{equation}
+<p>The drag force is expressed with (Equation 3) <span class="math display">\[\begin{equation}
 {\cal D}_i = \frac{1}{2} A_i C_{Di}\ \rho_i u_i |u_i|
 \end{equation}\]</span> where <span class="math inline">\(A_i\)</span> is the area projected in the flow direction.</p>
 <p>Note that <span class="math inline">\({\cal D}_i&gt;0\)</span> for a force in the positive <span class="math inline">\(x\)</span> direction, and <span class="math inline">\({\cal B}_i&gt;0\)</span> for a force in the positive <span class="math inline">\(z\)</span> direction (upward). For positive velocities, <span class="math inline">\({\cal D}_i\)</span> is non-negative, irrespective of the properties of element <span class="math inline">\(i\)</span>. However, the buoyancy force, <span class="math inline">\({\cal B}_i\)</span>, may be positive or negative, depending on the difference in density between the element and seawater.</p>
-<p>With these definitions, the force balances in the horizontal and vertical may be expressed as follows. The top element (<span class="math inline">\(i=1\)</span>) has no stress being applied from above, so the drag and buoyancy are matched with the stress components, with <span class="math display">\[\begin{equation}
-\label{e:balance_1}
+<p>With these definitions, the force balances in the horizontal and vertical may be expressed as follows. The top element (<span class="math inline">\(i=1\)</span>) has no stress being applied from above, so the drag and buoyancy are matched with the stress components, with (Equation 4) <span class="math display">\[\begin{equation}
 \begin{split}
 {\cal D}_1 &amp;= {\cal T}_2 \sin\phi_2\cr
 {\cal B}_1 &amp;= {\cal T}_2 \cos\phi_2
 \end{split}
-\end{equation}\]</span> which permit computation of <span class="math display">\[\begin{equation}
-\label{e:compute_2}
+\end{equation}\]</span> which permit computation of (Equation 5) <span class="math display">\[\begin{equation}
 \begin{split}
 \phi_2 &amp;= \tan^{-1}\frac{{\cal D}_1}{{\cal B}_1}\cr
 {\cal T}_2 &amp;= \sqrt{{\cal D}_1^2 + {\cal B}_1^2}
 \end{split}
 \end{equation}\]</span></p>
-<p>The force balance for the second element (<span class="math inline">\(i=2\)</span>) is <span class="math display">\[\begin{equation}
-\label{e:balance_2}
+<p>The force balance for the second element (<span class="math inline">\(i=2\)</span>) is (Equation 6) <span class="math display">\[\begin{equation}
 \begin{split}
 {\cal D}_2 + {\cal T}_2 \sin\phi_2 &amp;= {\cal T}_3 \sin\phi_3\cr
 {\cal B}_2 + {\cal T}_2 \cos\phi_2 &amp;= {\cal T}_3 \cos\phi_3
 \end{split}
-\end{equation}\]</span> with which <span class="math display">\[\begin{equation}
-\label{e:compute_3}
+\end{equation}\]</span> with which (Equation 7) <span class="math display">\[\begin{equation}
 \begin{split}
 \phi_3 &amp;= \tan^{-1}\frac{{\cal D}_2+{\cal T}_2\sin\phi_2}{{\cal B}_2+{\cal T}_2\cos\phi_2}\cr
 {\cal T}_3 &amp;= \sqrt{({\cal D}_2+{\cal T}_2\sin\phi_2)^2 + ({\cal B}_2+{\cal T}_2\cos\phi_2)^2}
 \end{split}
-\end{equation}\]</span> may be calculated, since <span class="math inline">\(\phi_2\)</span> and <span class="math inline">\({\cal T}_2\)</span> are known from .</p>
-<p>This reasoning applies for all elements below the first one, so that  may be generalized to <span class="math display">\[\begin{equation}
-\label{e:compute_i}
+\end{equation}\]</span> may be calculated, since <span class="math inline">\(\phi_2\)</span> and <span class="math inline">\({\cal T}_2\)</span> are known from Equation 5.</p>
+<p>This reasoning applies for all elements below the first one, so that Equation 7 may be generalized to (Equation 8) <span class="math display">\[\begin{equation}
 \begin{split}
 \phi_i &amp;= \tan^{-1}\frac{{\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1}}{{\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1}}\cr
 {\cal T}_i &amp;= \sqrt{({\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1})^2+({\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1})^2}
@@ -152,8 +146,8 @@
 \end{equation}\]</span> for <span class="math inline">\(i=2,\dots,n\)</span>.</p>
 <p>This suggests a step-by-step procedure for computing angles and tensions throughout the mooring.</p>
 <ol style="list-style-type: decimal">
-<li>Use  to compute <span class="math inline">\(\phi_2\)</span> and <span class="math inline">\({\cal T}_2\)</span>.</li>
-<li>Use  to compute <span class="math inline">\(\phi_i\)</span> and <span class="math inline">\({\cal T}_i\)</span> sequentially, for <span class="math inline">\(i=3\)</span> to <span class="math inline">\(i=n\)</span>.</li>
+<li>Use Equation 5 to compute <span class="math inline">\(\phi_2\)</span> and <span class="math inline">\({\cal T}_2\)</span>.</li>
+<li>Use Equation 8 to compute <span class="math inline">\(\phi_i\)</span> and <span class="math inline">\({\cal T}_i\)</span> sequentially, for <span class="math inline">\(i=3\)</span> to <span class="math inline">\(i=n\)</span>.</li>
 </ol>
 <p>If the current is depth-variable, then the drag values <span class="math inline">\({\cal D}_i\)</span> depend on the local velocity, and so the mooring shape must be taken into account. This can be handled by applying the calculation procedure iteratively, starting with the assumption of a vertical mooring, and computing vertical positions of components by taking <span class="math inline">\(\phi_i\)</span> values into account, from the bottom up.</p>
 </div>
