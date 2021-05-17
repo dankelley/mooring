@@ -1,4 +1,3 @@
-rm(list=ls())
 # name                     radius_m buoyancy_kg   CD  notes
 # "Mooring Systems SF-30"  0.381            149   0.5 "buoyancy for 300m"
 #
@@ -71,10 +70,10 @@ L <- abs(diff(z)[1])
 X <- rev(L * cumsum(rev(sin(phi))))
 Z <- min(z, na.rm=TRUE) + rev(L * cumsum(rev(cos(phi))))
 
-if (!interactive()) pdf("example_01.pdf", width=7, height=3, pointsize=10)
+#if (!interactive()) png("example_01.png", width=7, height=3, pointsize=10, unit="in", res=200)
 colStagnant <- "gray"
 lwdStagnant <- 2
-par(mfrow=c(1,2), mar=c(3,3,2,1), mgp=c(2,0.7,0))
+par(mfrow=c(1,2), mar=c(3,3,2,2), mgp=c(2,0.7,0))
 ylim <- c(min(z, na.rm=TRUE), 5)
 Tstagnant <- cumsum(B)
 xlim <- range(c(T/g, Tstagnant/g), na.rm=TRUE)
@@ -87,9 +86,10 @@ lines(c(0, 0), range(z, na.rm=TRUE), col=colStagnant, lwd=lwdStagnant)
 points(0, max(z, na.rm=TRUE), pch=20, col="gray")
 points(X[2], Z[2], pch=20)
 knockdown <- max(z,na.rm=TRUE) - max(Z,na.rm=TRUE)
-mtext(sprintf("%s with u=%.1fm/s: knockdown %.1fm", float, u, knockdown), cex=par("cex"))
+mtext(sprintf("%s with u=%.1fm/s", float, u), cex=par("cex"), line=0.25)
+mtext(sprintf("Knockdown %.1fm ", knockdown), cex=par("cex"), line=-1.25)
 grid()
-if (!interactive()) dev.off()
+#if (!interactive()) dev.off()
 
 # "Mooring Systems SF-30" float with 100m of 3x19-3/16 cable below
 # u [m/s]   knockdown [m]

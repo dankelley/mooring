@@ -161,15 +161,18 @@ components by taking $\phi_i$ values into account, from the bottom up.
 
 # Example
 
-\autoref{f:example_01} shows the result of simulating a *Hydro Float 20*
-float connected to the bottom with a *Mooring Systems 3x19 3/16"* wire cable,
-in a region with a depth-independent 2m/s current, which might be encountered
-in a region with strong tides.  Note that the float is predicted to sink
-$9.33$m with this current.  However, the predicted knockdown is only $0.72$m
-with a $1$m/s current.  This difference provides an indication of the
-importance of designing a mooring for the system under study.
+Figure 1 shows the result of simulating a *Hydro Float 20* float connected to
+the bottom with a *Mooring Systems 3x19 3/16"* wire cable, in a region with a
+depth-independent 2m/s current, which might be encountered in a region with
+strong tides.  Note that the float is predicted to sink $9.33$m with this
+current.  However, the predicted knockdown is only $0.72$m with a $1$m/s
+current.  This difference provides an indication of the importance of designing
+a mooring for the system under study.
 
-![Response of a mooring consisting of a *Hydro Float 20* atop 100m of *Mooring Systems 3x19 3/16"* wire cable, in a 1m/s current. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for $u=1$m/s. **Right:** Mooring shape, with gray and black as in the left panel.\label{f:example_01}](example_01.pdf)
+```{r echo=FALSE,dev.args=list(pointsize=9),fig.cap="Response of a mooring consisting of a *Hydro Float 20* atop 100m of *Mooring Systems 3x19 3/16\"* wire cable, in a 1m/s current. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for $u=1$m/s. **Right:** Mooring shape, with gray and black as in the left panel."}
+source("example_01.R")
+```
+
 
 # Special case: negligible currents
 
