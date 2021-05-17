@@ -4,6 +4,9 @@ author: Dan Kelley
 date: 2021 May 15
 bibliography: model.bib
 ---
+\newcommand{\D}{{\cal D}}
+\newcommand{\B}{{\cal B}}
+\newcommand{\T}{{\cal T}}
 
 # Introduction
 
@@ -47,12 +50,12 @@ Each element is described by the following properties, independent of flow.
   (for unstated water density).  For buoyant elements, such as nylon line,
   $\mu_i$ is negative, but it is positive for wire and chain cables, and
   for most instrument packages.
-* Drag coefficient, $C_{Di}$, defined as the ratio of drag force, ${\cal D}_i$, to
+* Drag coefficient, $C_{Di}$, defined as the ratio of drag force, $\D_i$, to
   $\frac{1}{2}A_i\rho_i u_i|u_i|$.
 
-Tension is computed between each element, with ${\cal T}_i$ representing the value
+Tension is computed between each element, with $\T_i$ representing the value
 above the $i$-th element (pulling upward, for case with no water motion) and
-${\cal T}_{i+1}$ representing the value below it.
+$\T_{i+1}$ representing the value below it.
 
 In the presence of a horizontal current, the mooring will deform, so the elements
 will no longer be oriented vertically.  The angle made by the $i$-th element to
@@ -63,21 +66,20 @@ horizontal and vertical directions. The tension force has components in both
 the $x$ and $z$ directions, but the buoyancy force (defined as positive for
 objects that would rise if unattached to a mooring)
 \begin{equation}
-{\cal B}_i = -g \mu_i
+\B_i = -g \mu_i
 \end{equation}
 (where $g=9.8$ m/s$^2$ is the acceleration due to gravity) acts only in the $z$
 direction, whereas the drag force
 \begin{equation}
-{\cal D}_i = \frac{1}{2} A_i C_{Di} \rho_i u_i |u_i|
+\D_i = \frac{1}{2} A_i C_{Di} \rho_i u_i |u_i|
 \end{equation}
 acts only in the $x$ direction, for a horizontal current.
 
-Note that ${\cal D}_i>0$ for a force in the positive $x$ direction, and ${\cal
-B}_i>0$ for a force in the positive $z$ direction (upward). For positive
-velocities, ${\cal D}_i$  is non-negative, irrespective of the properties of
-element $i$.  However, the buoyancy force, ${\cal B}_i$, may be positive or
-negative, depending on the difference in density between the element and
-seawater.
+Note that $\D_i>0$ for a force in the positive $x$ direction, and $\B_i>0$ for
+a force in the positive $z$ direction (upward). For positive velocities, $\D_i$
+is non-negative, irrespective of the properties of element $i$.  However, the
+buoyancy force, $\B_i$, may be positive or negative, depending on the
+difference in density between the element and seawater.
 
 With these definitions, the force balances in the horizontal and vertical
 may be expressed as follows.  The top element ($i=1$) has no stress
@@ -86,16 +88,16 @@ the stress components, with
 \begin{equation}
 \label{e:balance_1}
 \begin{split}
-{\cal D}_1 &= {\cal T}_2 \sin\phi_2\cr
-{\cal B}_1 &= {\cal T}_2 \cos\phi_2
+\D_1 &= \T_2 \sin\phi_2\cr
+\B_1 &= \T_2 \cos\phi_2
 \end{split}
 \end{equation}
 which permit computation of
 \begin{equation}
 \label{e:compute_2}
 \begin{split}
-\phi_2 &= \tan^{-1}\frac{{\cal D}_1}{{\cal B}_1}\cr
-{\cal T}_2 &= \sqrt{{\cal D}_1^2+{\cal B}_1^2}
+\phi_2 &= \tan^{-1}\frac{\D_1}{\B_1}\cr
+\T_2 &= \sqrt{\D_1^2 + \B_1^2}
 \end{split}
 \end{equation}
 
@@ -103,27 +105,27 @@ The force balance for the second element ($i=2$) is
 \begin{equation}
 \label{e:balance_2}
 \begin{split}
-{\cal D}_2 + {\cal T}_2 \sin\phi_2 &= {\cal T}_3 \sin\phi_3\cr
-{\cal B}_2 + {\cal T}_2 \cos\phi_2 &= {\cal T}_3 \cos\phi_3
+\D_2 + \T_2 \sin\phi_2 &= \T_3 \sin\phi_3\cr
+\B_2 + \T_2 \cos\phi_2 &= \T_3 \cos\phi_3
 \end{split}
 \end{equation}
 with which
 \begin{equation}
 \label{e:compute_3}
 \begin{split}
-\phi_3 &= \tan^{-1}\frac{{\cal D}_2+{\cal T}_2\sin\phi_2}{{\cal B}_2+{\cal T}_2\cos\phi_2}\cr
-{\cal T}_3 &= \sqrt{({\cal D}_2+{\cal T}_2\sin\phi_2)^2+({\cal B}_2+{\cal T}_2\cos\phi_2)^2}
+\phi_3 &= \tan^{-1}\frac{\D_2+\T_2\sin\phi_2}{\B_2+\T_2\cos\phi_2}\cr
+\T_3 &= \sqrt{(\D_2+\T_2\sin\phi_2)^2 + (\B_2+\T_2\cos\phi_2)^2}
 \end{split}
 \end{equation}
-may be calculated, since $\phi_2$ and ${\cal T}_2$ are known from \eqref{e:compute_2}.
+may be calculated, since $\phi_2$ and $\T_2$ are known from \eqref{e:compute_2}.
 
 This reasoning applies for all elements below the first one, so that
 \eqref{e:compute_3} may be generalized to
 \begin{equation}
 \label{e:compute_i}
 \begin{split}
-\phi_i &= \tan^{-1}\frac{{\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1}}{{\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1}}\cr
-{\cal T}_i &= \sqrt{({\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1})^2+({\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1})^2}
+\phi_i &= \tan^{-1}\frac{\D_{i-1}+\T_{i-1}\sin\phi_{i-1}}{\B_{i-1}+\T_{i-1}\cos\phi_{i-1}}\cr
+\T_i &= \sqrt{(\D_{i-1}+\T_{i-1}\sin\phi_{i-1})^2+(\B_{i-1}+\T_{i-1}\cos\phi_{i-1})^2}
 \end{split}
 \end{equation}
 for $i=2,\dots,n$.
@@ -131,11 +133,11 @@ for $i=2,\dots,n$.
 This suggests a step-by-step procedure for computing angles and tensions
 throughout the mooring.
 
-1. Use \eqref{e:compute_2} to compute $\phi_2$ and ${\cal T}_2$.
-2. Use \eqref{e:compute_i} to compute $\phi_i$ and ${\cal T}_i$ sequentially,
+1. Use \eqref{e:compute_2} to compute $\phi_2$ and $\T_2$.
+2. Use \eqref{e:compute_i} to compute $\phi_i$ and $\T_i$ sequentially,
    for $i=3$ to $i=n$.
 
-If the current is depth-variable, then the drag values ${\cal D}_i$ depend on
+If the current is depth-variable, then the drag values $\D_i$ depend on
 the local velocity, and so the mooring shape must be taken into account.  This
 can be handled by applying the calculation procedure iteratively, starting with
 the assumption of a vertical mooring, and computing vertical positions of
@@ -159,15 +161,15 @@ As a special case, if $u_i=0$ for all $i$, then there will be no drag, and so
 (assuming adequate buoyancy), the mooring will be aligned in the vertical, and
 the vertical equation becomes
 \begin{equation}
-{\cal T}_{i+1} = {\cal T}_i + {\cal B}_i
+\T_{i+1} = \T_i + \B_i
 \end{equation}
 which yields
 \begin{equation}
-{\cal T}_i = \sum_{1}^{i-1} {\cal B}_j
+\T_i = \sum_{1}^{i-1} \B_j
 \end{equation}
 for $i>1$.  Physically, this means that the downward tension at any level
 balances the total upward buoyancy force of all the elements above it. The
-bottom tension, ${\cal T}_n$, may be interpreted as the minimum anchor weight that
+bottom tension, $\T_n$, may be interpreted as the minimum anchor weight that
 will hold the mooring in place in the absence of currents. However, it should
 be obvious that heavier weights will be required for practical situations.
 
