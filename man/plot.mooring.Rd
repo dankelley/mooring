@@ -4,13 +4,22 @@
 \alias{plot.mooring}
 \title{Plot a mooring object}
 \usage{
-\method{plot}{mooring}(m)
+\method{plot}{mooring}(x, ...)
 }
 \arguments{
-\item{m}{an object of the \code{"mooring"} class.}
+\item{x}{an object of the \code{"mooring"} class.}
+
+\item{...}{optional arguments.}
 }
 \description{
 Plot a mooring object
+}
+\examples{
+# Create, summarize, and plot a simple mooring comprising
+# a bottom anchor, a 100-metre cable, and a float.
+library(mooring)
+m <- anchor() + cable(100) + float()
+plot(m)
 }
 \author{
 Dan Kelley

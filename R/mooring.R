@@ -1,11 +1,7 @@
 #' mooring: A Package for Analysing Oceanographic Moorings.
 #'
-#' @description
 #' The mooring package provides functions for working with
 #' oceanographic moorings.
-#'
-#' @details
-#'
 #'
 #' @examples
 #' # Create, summarize, and plot a simple mooring comprising
@@ -113,12 +109,13 @@ float <- function(model="Hydro Float 20")
 
 #' Print a mooring object
 #'
-#' @param m an object of the `"mooring"` class.
+#' @param x an object of the `"mooring"` class.
+#' @param ... optional arguments.
 #' @export
 #' @author Dan Kelley
-print.mooring <- function(m)
+print.mooring <- function(x, ...)
 {
-    n <- length(m)
+    n <- length(x)
     if (0 == n) {
         stop("Empty object (programming error)\n")
     } else {
@@ -128,34 +125,56 @@ print.mooring <- function(m)
             cat("Mooring with", n, "elements:\n")
         }
         for (i in seq_len(n)) {
-            mi <- m[[i]]
+            xi <- x[[i]]
             # FIXME: more if blocks for various types, to customize output. For example,
             # cable has buoyancy in kg/m, whereas other things have it in kg.  Also,
             # should report depth ranges, etc.
-            if (mi$type == "cable") {
-                cat(sprintf("  %s (\"%s\") %gm\n", mi$type, mi$model, mi$length), sep="")
+            if (xi$type == "cable") {
+                cat(sprintf("  %s (\"%s\") %gm\n", xi$type, xi$model, xi$length), sep="")
             } else {
-                cat(sprintf("  %s (\"%s\") %gm\n", mi$type, mi$model, mi$length), sep="")
+                cat(sprintf("  %s (\"%s\") %gm\n", xi$type, xi$model, xi$length), sep="")
             }
         }
     }
-    invisible(NULL)
+    invisible(x)
 }
 
 #' Plot a mooring object
 #'
-#' @param m an object of the `"mooring"` class.
-#' @importFrom graphics mtext par points rect
+#' @param x an object of the `"mooring"` class.
+#' @param ... optional arguments.
+#'
+#' @examples
+#' # Create, summarize, and plot a simple mooring comprising
+#' # a bottom anchor, a 100-metre cable, and a float.
+#' library(mooring)
+#' m <- anchor() + cable(100) + float()
+#' plot(m)
+
+#' @importFrom graphics axis box lines mtext par points rect text
 #' @export
 #' @author Dan Kelley
-plot.mooring <- function(m)
+plot.mooring <- function(x, ...)
 {
-    l <- cumsum(sapply(m, function(x) x$length))
+    l <- cumsum(sapply(x, function(xi) xi$length))
     bottom <- -max(l) # Kludge ... maybe we want a water() function
     z <- bottom + l
-    plot(rep(0, length(l)), z, xlim=c(-0.5, 0.5), xlab="", ylab="z [m]", type="n")
+    plot(rep(0, length(l)), z, xlim=c(-0.5, 0.5), xlab="", ylab="z [m]", type="n", axes=FALSE)
+    axis(2)
+    box()
     usr <- par("usr")
-    rect(usr[1], usr[3], usr[2], bottom, col="tan")
+    rect(usr[1], usr[3], usr[2], bottom, col="#f5d9ab")
     points(rep(0, length(l)), z, pch="+")
-    mtext("ROUGH plot -- testing if we can read elements")
+    Z <- bottom
+    for (i in seq_along(x)) {
+        if (x[[i]]$type == "anchor") {
+            points(0, bottom + l[i], pch=20)
+            text(0, bottom + l[i], "Anchor", pos=4)
+        } else if (x[[i]]$type == "float") {
+            points(0, bottom + l[i], pch=20)
+            text(0, bottom + l[i], "Float", pos=4)
+        } else if (x[[i]]$type == "cable") {
+            lines(rep(0, 2), bottom + c(l[i-1], l[i]))
+        }
+    }
 }

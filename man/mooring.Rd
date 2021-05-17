@@ -8,9 +8,6 @@
 The mooring package provides functions for working with
 oceanographic moorings.
 }
-\details{
-
-}
 \examples{
 # Create, summarize, and plot a simple mooring comprising
 # a bottom anchor, a 100-metre cable, and a float.

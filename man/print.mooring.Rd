@@ -4,10 +4,12 @@
 \alias{print.mooring}
 \title{Print a mooring object}
 \usage{
-\method{print}{mooring}(m)
+\method{print}{mooring}(x, ...)
 }
 \arguments{
-\item{m}{an object of the \code{"mooring"} class.}
+\item{x}{an object of the \code{"mooring"} class.}
+
+\item{...}{optional arguments.}
 }
 \description{
 Print a mooring object
