@@ -13,11 +13,10 @@
 The first object is "placed" the second.
 }
 \examples{
-A <- anchor()
-C <- cable(100)
-F <- float()
-m <- A + C + F
+library(mooring)
+m <- anchor() + cable(100) + float()
 print(m)
+plot(m)
 }
 \seealso{
 Other functions that create mooring objects: 

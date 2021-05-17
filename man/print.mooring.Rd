@@ -14,6 +14,11 @@
 \description{
 Print a mooring object
 }
+\examples{
+library(mooring)
+m <- anchor() + cable(100) + float()
+print(m)
+}
 \author{
 Dan Kelley
 }

@@ -7,10 +7,7 @@
 #' # Create, summarize, and plot a simple mooring comprising
 #' # a bottom anchor, a 100-metre cable, and a float.
 #' library(mooring)
-#' A <- anchor()
-#' C <- cable(100)
-#' F <- float()
-#' m <- A + C + F
+#' m <- anchor() + cable(100) + float()
 #' print(m)
 #' plot(m)
 #'
@@ -87,11 +84,10 @@ float <- function(model="Hydro Float 20")
 #' @param m1,m2 objects of the `"mooring"` class.
 #' @family functions that create mooring objects
 #' @examples
-#' A <- anchor()
-#' C <- cable(100)
-#' F <- float()
-#' m <- A + C + F
+#' library(mooring)
+#' m <- anchor() + cable(100) + float()
 #' print(m)
+#' plot(m)
 #' @export
 #' @author Dan Kelley
 `+.mooring` <- function(m1, m2)
@@ -111,6 +107,10 @@ float <- function(model="Hydro Float 20")
 #'
 #' @param x an object of the `"mooring"` class.
 #' @param ... optional arguments.
+#' @examples
+#' library(mooring)
+#' m <- anchor() + cable(100) + float()
+#' print(m)
 #' @export
 #' @author Dan Kelley
 print.mooring <- function(x, ...)

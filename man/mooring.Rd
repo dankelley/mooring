@@ -12,10 +12,7 @@ oceanographic moorings.
 # Create, summarize, and plot a simple mooring comprising
 # a bottom anchor, a 100-metre cable, and a float.
 library(mooring)
-A <- anchor()
-C <- cable(100)
-F <- float()
-m <- A + C + F
+m <- anchor() + cable(100) + float()
 print(m)
 plot(m)
 
