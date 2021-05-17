@@ -36,9 +36,11 @@ CD <- 1.2
 g <- 9.8                               # m/s^2
 rho <- 1027                            # kg/m^3 nominal
 
+
 # Set up area vector for use in drag calculation
 A <- c(Afloat, rep(Acable, 100))
 # Set up buoyancy 'force', later multiply by g to get a force in Newtons
+# FIXME: **This only works if the cable sections are 1m long.**
 Bkg <- c(Bfloat, rep(Bcable, 100))
 # Set up depth (not correct)
 n <- length(A)

@@ -60,12 +60,11 @@ Each element is described by the following properties, independent of flow.
   a float, instrument, or other thing, it is the contribution that the item
   makes to the overall mooring length.
 * Area, $A_i$ [m$^2$] projected in the $x$ direction.
-* The effective mass per metre, $\mu_i$ [kg/m], defined as volume, times the
-  difference between the element's density and seawater density, divided by
-  $L_i$. This quantity is reported by the manufacturers of ropes and cables
-  (for unstated water density).  For buoyant elements, such as nylon line,
-  $\mu_i$ is negative, but it is positive for wire and chain cables, and
-  for most instrument packages.
+* A measure of buoyancy force divided by $g$, the acceleration due to gravity.
+  For a solid object, this is a simple number, expressed in kg, and denoted $m$
+  below. For a cable, it is expressed per unit length of cable, i.e. in kg/m,
+  and denoted $\mu$ below.  Manufacturers tend to provide $m$ or $\mu$ in
+  technical documentation about mooring components.
 * Drag coefficient, $C_{Di}$, defined as the ratio of drag force, $\D_i$, to
   $\frac{1}{2}A_i\rho_i u_i|u_i|$.
 
@@ -80,16 +79,23 @@ the vertical is represented with $\phi_i$.
 Quasi-steady dynamics are assumed, so that forces must balance in both the
 horizontal and vertical directions. The tension force has components in both
 the $x$ and $z$ directions, but the buoyancy force (defined as positive for
-objects that would rise if unattached to a mooring)
+objects that would rise if unattached to a mooring) acts only in the vertical,
+upwards if $m$ or $\mu$ is positive.
+
+The buoyancy force for a solid object is found with
 \begin{equation}
-\B_i = -g \mu_i
+\B_i = -g m_i
 \end{equation}
-(where $g=9.8$ m/s$^2$ is the acceleration due to gravity) acts only in the $z$
-direction, whereas the drag force
+and for a portion of a cable of length $\Delta l$ with
+\begin{equation}
+\B_i = -g \mu_i \Delta l
+\end{equation}
+
+The drag force is expressed with
 \begin{equation}
 \D_i = \frac{1}{2} A_i C_{Di} \rho_i u_i |u_i|
 \end{equation}
-acts only in the $x$ direction, for a horizontal current.
+where $A_i$ is the area projected in the flow direction.
 
 Note that $\D_i>0$ for a force in the positive $x$ direction, and $\B_i>0$ for
 a force in the positive $z$ direction (upward). For positive velocities, $\D_i$
