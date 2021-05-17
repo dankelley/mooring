@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^sandbox$
 
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

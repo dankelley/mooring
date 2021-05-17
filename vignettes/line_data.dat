@@ -1,0 +1,8 @@
+name                                   radius_m  strength_kg  kgPerMetre CD  notes
+"3/8-inch wire cable"                 0.0047625           NA          NA 1.2 ""
+"Mooring Systems 3X19 3/16\""         0.00325           1814      0.0772 1.2 "https://www.mooringsystems.com/rope.htm"
+"Mooring Systems 3X19 1/4\""          0.00420           3016      0.1408 1.2 "https://www.mooringsystems.com/rope.htm"
+"Mooring Systems 3X19 5/16\""         0.00495           4490      0.2128 1.2 "https://www.mooringsystems.com/rope.htm"
+"Mooring Systems 3X19 3/8\""          0.00575           6713      0.3169 1.2 "https://www.mooringsystems.com/rope.htm"
+"Mooring Systems 3X19 7/16\""         0.00635           8528      0.4180 1.2 "https://www.mooringsystems.com/rope.htm"
+

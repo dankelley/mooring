@@ -1,0 +1,218 @@
+---
+title: Two-dimensional Mooring Model
+author: Dan Kelley
+date: 2021 May 15
+bibliography: model.bib
+---
+
+# Introduction
+
+Anchored oceanographic mooring lines are deformed by currents, in much the same
+way as trees are bent by wind.  For very simple moorings, e.g. consisting of a
+single float connected by a uniform cable to an anchor at the bottom, the
+deformation can be calculated if the current is uniform.  The physics is
+analogous to the sagging of telephone lines between poles, and falls into the
+general category of a catenary.  However, things are more complicated for
+depth-varying currents, and for mooring lines that consist of many elements
+connected by cables.
+
+An approach to analysing realistic oceanographic moorings is to use lumped-mass
+theory, in which elements such as floats and instrument packages are
+parameterized by their buoyancy and drag characteristics, and in which cables
+envisioned as connected line elements.  This approach was taken by
+@dewey_mooring_1999 in a GUI-based Matlab system.  The present treatment is of
+similar foundation, although with some added simplifications (such as
+unidirectional current) that are relevant to the basic problem of computing
+"knock-down", i.e. the vertical displacement of instruments that is caused
+by slanting of the mooring line.
+
+# Model
+
+Consider the case of unidirectional horizontal current aligned with the $x$
+axis. Let $z$ be the vertical coordinate, positive upwards, with $z=0$at the
+bottom. The mooring is modelled as a series of $n$ connected elements, with the
+top element being numbered $i$.  Water density is assumed to be a function of
+depth, with value $\rho_i$ at the depth of the $i$-th element, and water
+velocity at that depth is denoted $u_i$.
+
+Each element is described by the following properties, independent of flow.
+
+* Length, $L_i$ [m].  For a portion of cable, this has the common meaning.  For
+  a float, instrument, or other thing, it is the contribution that the item
+  makes to the overall mooring length.
+* Area, $A_i$ [m$^2$] projected in the $x$ direction.
+* The effective mass per metre, $\mu_i$ [kg/m], defined as volume, times the
+  difference between the element's density and seawater density, divided by
+  $L_i$. This quantity is reported by the manufacturers of ropes and cables
+  (for unstated water density).  For buoyant elements, such as nylon line,
+  $\mu_i$ is negative, but it is positive for wire and chain cables, and
+  for most instrument packages.
+* Drag coefficient, $C_{Di}$, defined as the ratio of drag force, ${\cal D}_i$, to
+  $\frac{1}{2}A_i\rho_i u_i|u_i|$.
+
+Tension is computed between each element, with ${\cal T}_i$ representing the value
+above the $i$-th element (pulling upward, for case with no water motion) and
+${\cal T}_{i+1}$ representing the value below it.
+
+In the presence of a horizontal current, the mooring will deform, so the elements
+will no longer be oriented vertically.  The angle made by the $i$-th element to
+the vertical is represented with $\phi_i$.
+
+Quasi-steady dynamics are assumed, so that forces must balance in both the
+horizontal and vertical directions. The tension force has components in both
+the $x$ and $z$ directions, but the buoyancy force (defined as positive for
+objects that would rise if unattached to a mooring)
+\begin{equation}
+{\cal B}_i = -g \mu_i
+\end{equation}
+(where $g=9.8$ m/s$^2$ is the acceleration due to gravity) acts only in the $z$
+direction, whereas the drag force
+\begin{equation}
+{\cal D}_i = \frac{1}{2} A_i C_{Di} \rho_i u_i |u_i|
+\end{equation}
+acts only in the $x$ direction, for a horizontal current.
+
+Note that ${\cal D}_i>0$ for a force in the positive $x$ direction, and ${\cal
+B}_i>0$ for a force in the positive $z$ direction (upward). For positive
+velocities, ${\cal D}_i$  is non-negative, irrespective of the properties of
+element $i$.  However, the buoyancy force, ${\cal B}_i$, may be positive or
+negative, depending on the difference in density between the element and
+seawater.
+
+With these definitions, the force balances in the horizontal and vertical
+may be expressed as follows.  The top element ($i=1$) has no stress
+being applied from above, so the drag and buoyancy are matched with
+the stress components, with
+\begin{equation}
+\label{e:balance_1}
+\begin{split}
+{\cal D}_1 &= {\cal T}_2 \sin\phi_2\cr
+{\cal B}_1 &= {\cal T}_2 \cos\phi_2
+\end{split}
+\end{equation}
+which permit computation of
+\begin{equation}
+\label{e:compute_2}
+\begin{split}
+\phi_2 &= \tan^{-1}\frac{{\cal D}_1}{{\cal B}_1}\cr
+{\cal T}_2 &= \sqrt{{\cal D}_1^2+{\cal B}_1^2}
+\end{split}
+\end{equation}
+
+The force balance for the second element ($i=2$) is
+\begin{equation}
+\label{e:balance_2}
+\begin{split}
+{\cal D}_2 + {\cal T}_2 \sin\phi_2 &= {\cal T}_3 \sin\phi_3\cr
+{\cal B}_2 + {\cal T}_2 \cos\phi_2 &= {\cal T}_3 \cos\phi_3
+\end{split}
+\end{equation}
+with which
+\begin{equation}
+\label{e:compute_3}
+\begin{split}
+\phi_3 &= \tan^{-1}\frac{{\cal D}_2+{\cal T}_2\sin\phi_2}{{\cal B}_2+{\cal T}_2\cos\phi_2}\cr
+{\cal T}_3 &= \sqrt{({\cal D}_2+{\cal T}_2\sin\phi_2)^2+({\cal B}_2+{\cal T}_2\cos\phi_2)^2}
+\end{split}
+\end{equation}
+may be calculated, since $\phi_2$ and ${\cal T}_2$ are known from \eqref{e:compute_2}.
+
+This reasoning applies for all elements below the first one, so that
+\eqref{e:compute_3} may be generalized to
+\begin{equation}
+\label{e:compute_i}
+\begin{split}
+\phi_i &= \tan^{-1}\frac{{\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1}}{{\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1}}\cr
+{\cal T}_i &= \sqrt{({\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1})^2+({\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1})^2}
+\end{split}
+\end{equation}
+for $i=2,\dots,n$.
+
+This suggests a step-by-step procedure for computing angles and tensions
+throughout the mooring.
+
+1. Use \eqref{e:compute_2} to compute $\phi_2$ and ${\cal T}_2$.
+2. Use \eqref{e:compute_i} to compute $\phi_i$ and ${\cal T}_i$ sequentially,
+   for $i=3$ to $i=n$.
+
+If the current is depth-variable, then the drag values ${\cal D}_i$ depend on
+the local velocity, and so the mooring shape must be taken into account.  This
+can be handled by applying the calculation procedure iteratively, starting with
+the assumption of a vertical mooring, and computing vertical positions of
+components by taking $\phi_i$ values into account, from the bottom up.
+
+# Example
+
+\autoref{f:example_01} shows the result of simulating a *Hydro Float 20*
+float connected to the bottom with a *Mooring Systems 3x19 3/16"* wire cable,
+in a region with a depth-independent 2m/s current, which might be encountered
+in a region with strong tides.  Note that the float is predicted to sink
+$9.33$m with this current.  However, the predicted knockdown is only $0.72$m
+with a $1$m/s current.  This difference provides an indication of the
+importance of designing a mooring for the system under study.
+
+![Response of a mooring consisting of a *Hydro Float 20* atop 100m of *Mooring Systems 3x19 3/16"* wire cable, in a 1m/s current. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for $u=1$m/s. **Right:** Mooring shape, with gray and black as in the left panel.\label{f:example_01}](example_01.pdf)
+
+# Special case: negligible currents
+
+As a special case, if $u_i=0$ for all $i$, then there will be no drag, and so
+(assuming adequate buoyancy), the mooring will be aligned in the vertical, and
+the vertical equation becomes
+\begin{equation}
+{\cal T}_{i+1} = {\cal T}_i + {\cal B}_i
+\end{equation}
+which yields
+\begin{equation}
+{\cal T}_i = \sum_{1}^{i-1} {\cal B}_j
+\end{equation}
+for $i>1$.  Physically, this means that the downward tension at any level
+balances the total upward buoyancy force of all the elements above it. The
+bottom tension, ${\cal T}_n$, may be interpreted as the minimum anchor weight that
+will hold the mooring in place in the absence of currents. However, it should
+be obvious that heavier weights will be required for practical situations.
+
+# Data tables
+
+These data, which I extracted from Dewey's Matlab tables (and which he
+extracted from another source) are not yet used in the model.  I'm just putting
+them here for reference, so I can check.  I'd like to get the source material
+Dewey used, to be sure of what I'm seeing.
+
+## Float characteristics
+
+I think `buoyancy` is in kg, the next three quantities are in cm, and `CD` is
+unitless.  I don't know what the last column means.
+
+```{r echo=FALSE}
+floats <- read.csv("floats.csv")
+knitr::kable(floats)
+```
+
+## Wire characteristics
+
+I think `buoyancy` may be in kg per metre length, `length_height` should be
+ignored, `cylinder_width` is in cm, `CD` is unitless.  I don't know what the
+last column means.
+
+```{r echo=FALSE}
+wires <- read.csv("wires.csv")
+knitr::kable(wires)
+```
+
+## Cable characteristics
+
+I think `buoyancy` may be in kg per metre length, `length_height` should be
+ignored, `cylinder_width` is in cm, `CD` is unitless.  I don't know what the
+last column means.
+
+```{r echo=FALSE}
+wires <- read.csv("wires.csv")
+knitr::kable(wires)
+```
+
+
+
+
+# References
+
+

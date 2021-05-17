@@ -3,4 +3,7 @@
 *~
 *.swp
 .DS_Store
+docs
+*.out
+vignettes/*pdf
 

@@ -1,0 +1,7 @@
+destination: docs
+
+reference:
+- title: All functions
+- contents:
+  - matches(".*")
+

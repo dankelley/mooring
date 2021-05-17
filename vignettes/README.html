@@ -1,0 +1,49 @@
+<h3 id="line-properties">Line properties</h3>
+<p>Stored in file <code>line_data.dat</code>, with data sources as below.</p>
+<h4 id="inch-wire-cable">3/8-inch wire cable</h4>
+<ul>
+<li>CD = 1.2 [DeepWater Buoyancy, 2021b].</li>
+<li>radius = 0.0047625</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> (<span class="dv">3</span><span class="sc">/</span><span class="dv">8</span>) <span class="sc">*</span> <span class="fl">0.0254</span> <span class="co"># radius [m]</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.0047625</span></span></code></pre></div>
+<h3 id="float-properties">Float properties</h3>
+<h4 id="mooring-systems-ssf-30">Mooring Systems SSF-30</h4>
+<ul>
+<li>https://www.mooringsystems.com/buoyancy.htm</li>
+<li>radius = 0.381</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> (<span class="dv">30</span>)<span class="sc">*</span><span class="fl">0.0254</span> <span class="co"># radius [m]</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.381</span></span></code></pre></div>
+<h4 id="mooring-systems-ssf-37">Mooring Systems SSF-37</h4>
+<ul>
+<li>https://www.mooringsystems.com/buoyancy.htm</li>
+<li>radius = 0.4699</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> (<span class="dv">37</span>)<span class="sc">*</span><span class="fl">0.0254</span> <span class="co"># radius [m]</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.4699</span></span></code></pre></div>
+<h4 id="hydrofloat-20">HydroFloat 20</h4>
+<ul>
+<li>https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf</li>
+<li>diameter 20 inches</li>
+<li>radius [m]</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> (<span class="dv">20</span>)<span class="sc">*</span><span class="fl">0.0254</span> <span class="co"># radius [m]</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.254</span></span></code></pre></div>
+<ul>
+<li>CD=0.5 (range perhaps 0.4 to 1.0) guessing based on Figures 3 and 4 of Finke &amp; Siedler (1986)</li>
+</ul>
+<p>Stored in file <code>float_data.dat</code>.</p>
+<p><em>Float drag coefficient</em></p>
+<ul>
+<li>Drag coefficient (diagrams figures): Fink and Siedler (1986).</li>
+</ul>
+<p><strong>References</strong></p>
+<ul>
+<li><p>DeepWater Buoyancy, 2021a. “Syntactic Foam Subsea Buoyancy Products for Oceanography / Oil &amp; Gas.” Accessed May 14, 2021. https://deepwaterbuoyancy.com/products/.</p></li>
+<li><p>DeepWater Buoyancy, 2021b. “Mooring Line Cable Fairing.” Accessed May 14,</p>
+<ol start="2021" type="1">
+<li>https://deepwaterbuoyancy.com/product/mooring-line-cable-fairing/.</li>
+</ol></li>
+<li><p>Finke, M., and G. Siedler, 1986. “Drag Coefficients of Oceanographic Mooring Components.” Journal of Atmospheric and Oceanic Technology 3(2):255-264")</p></li>
+</ul>

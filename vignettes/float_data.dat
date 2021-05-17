@@ -1,0 +1,7 @@
+name                     radius_m buoyancy_kg   CD  notes
+"Mooring Systems SF-30"  0.381            149   0.5 "buoyancy for 300m"
+"Mooring Systems SF-35"  0.4445           238   0.5 "buoyancy for 300m"
+"Mooring Systems SF-47"  0.5969           575   0.5 "buoyancy for 300m"
+"Mooring Systems SF-65"  0.8255          1450   0.5 "buoyancy for 300m"
+"Hydro Float 20"         0.254            34.5  0.5 ""
+
