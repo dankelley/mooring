@@ -1,7 +1,7 @@
 ---
 title: Object-orientation Scheme
 author: Dan Kelley
-date: 2021 May 17
+date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -20,100 +20,22 @@ editor_options:
     wrap: 72
 ---
 
-Below is mainly just R code.  I'll write this up with some text if this scheme
-shows promise.
+The S3 scheme is used for objects created by functions in the `mooring`
+package. These objects inherit from the `"mooring"` class.  The contents
+consist of a list that in turn contains one or more lists.
+
+The elementary functions such as [anchor()], [cable()] and [float()] all
+produce a list that contains a single list describing the item.  That item
+contains elements called `type` that indicate the meaning (e.g. [cable()]
+produces objects with type equal to `"cable"`), as well as an element called
+`model`, which is a string indicating the particular variety of cable.
+
+The combination function, [+,mooring()], produces a list that contains 2 or
+more lists, one for each element.  For example,
 ```{r}
-
-# Demo oo for mooring analysis
-rm(list=ls()) # for debugging only
-
-anchor <- function(model="default_anchor")
-{
-    rval <- list(list(type="anchor", model=model, length=0.3)) # guess on length
-    class(rval) <- "mooring"
-    rval
-}
-
-release <- function(model="default_release")
-{
-    rval <- list(list(type="anchor", model=model, length=1.0)) # guess on length
-    class(rval) <- "mooring"
-    rval
-}
-
-cable <- function(length=NULL, model="Mooring Systems 3X19 3/16")
-{
-    if (is.null(length))
-        stop("must specify length")
-    rval <- list(list(type="cable", model=model, length=length))
-    class(rval) <- "mooring"
-    rval
-}
-
-float <- function(model="Hydro Float 20")
-{
-    rval <- list(list(type="float", model=model, length=0.5)) # guess on length
-    class(rval) <- "mooring"
-    rval
-}
-
-print.mooring <- function(m)
-{
-    n <- length(m)
-    if (0 == n) {
-        stop("Empty object (programming error)\n")
-    } else {
-        if (n == 1) {
-            cat("Single element:\n")
-        } else {
-            cat("Mooring with", n, "elements:\n")
-        }
-        for (i in seq_len(n)) {
-            mi <- m[[i]]
-            # FIXME: more if blocks for various types, to customize output. For example,
-            # cable has buoyancy in kg/m, whereas other things have it in kg.  Also,
-            # should report depth ranges, etc.
-            if (mi$type == "cable") {
-                cat(sprintf("  %s (\"%s\") %gm\n", mi$type, mi$model, mi$length), sep="")
-            } else {
-                cat(sprintf("  %s (\"%s\") %gm\n", mi$type, mi$model, mi$length), sep="")
-            }
-        }
-    }
-    invisible(NULL)
-}
-plot.mooring <- function(m)
-{
-    l <- cumsum(sapply(M,function(x) x$length))
-    bottom <<- -max(l) # Kludge ... maybe we want a water() function
-    z <- bottom + l
-    plot(rep(0, length(l)), z, xlim=c(-0.5, 0.5), xlab="", ylab="z [m]", type="n")
-    usr <- par("usr")
-    rect(usr[1], usr[3], usr[2], bottom, col="tan")
-    points(rep(0, length(l)), z, pch="+")
-    mtext("ROUGH plot -- testing if we can read elements")
-}
-`+.mooring` <- function(m1, m2)
-{
-    n1 <- length(m1)
-    n2 <- length(m2)
-    rval <- vector("list", n1+n2)
-    for (i in seq_len(n1))
-        rval[[i]] <- m1[[i]]
-    for (i in seq_len(n2))
-        rval[[n1 + i]] <- m2[[i]]
-    class(rval) <- "mooring"
-    rval
-}
-
-A <- anchor()
-print(A)
-C <- cable(100)
-print(C)
-F <- float()
-print(F)
-
-M <- A + C + F
-print(M)
-plot(M)
+library(mooring)
+m <- anchor() + cable(100) + float()
 ```
+produces a list with 3 elements, one that holds information on the anchor,
+a second that holds information on the cable (whih is 100 m long in this case),
+and a third that holds information on the float.

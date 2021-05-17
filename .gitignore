@@ -6,3 +6,5 @@
 *.out
 vignettes/*pdf
 
+/doc/
+/Meta/

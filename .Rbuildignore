@@ -6,3 +6,5 @@
 ^_config\.yml$
 ^docs$
 ^pkgdown$
+^doc$
+^Meta$
