@@ -9,6 +9,7 @@ Authors@R:
            comment = c(ORCID = "https://orcid.org/0000-0001-7808-5911"))
 Description: Calculates the response of oceanographic moorings to horizontal currents.
 Suggests:
+    knitr,
     rmarkdown
 License: GPL (>= 3)
 Encoding: UTF-8
