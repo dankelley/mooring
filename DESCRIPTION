@@ -1,17 +1,20 @@
 Package: mooring
-Title: Design and model oceanographic moorings
-Version: 0.0.0.9000
-Authors@R: 
+Title: Design and Model Oceanographic Moorings
+Version: 0.1.0
+Authors@R:
     person(given = "Dan",
            family = "Kelley",
            role = c("aut", "cre"),
            email = "dan.kelley@dal.ca",
            comment = c(ORCID = "https://orcid.org/0000-0001-7808-5911"))
 Description: Calculates the response of oceanographic moorings to horizontal currents.
-Suggest:
+Suggests:
     rmarkdown
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+BuildVignettes: true
+VignetteBuilder: knitr
+

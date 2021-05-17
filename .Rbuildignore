@@ -1,3 +1,4 @@
+^.github$
 ^mooring\.Rproj$
 ^\.Rproj\.user$
 ^sandbox$
