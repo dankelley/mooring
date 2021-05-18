@@ -18,9 +18,10 @@ Create an anchor object
 \seealso{
 Other functions that create mooring objects: 
 \code{\link{+.mooring}()},
-\code{\link{cable}()},
+\code{\link{chain}()},
 \code{\link{float}()},
-\code{\link{release}()}
+\code{\link{release}()},
+\code{\link{wire}()}
 }
 \author{
 Dan Kelley

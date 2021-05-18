@@ -5,7 +5,7 @@ csv: force
 rda: force
 	Rscript create_rda.R
 install: force
-	cp element_properties.rda ../data
+	cp mooringElements.rda ../data
 clean: force
 	-rm *~ *.out
 force:

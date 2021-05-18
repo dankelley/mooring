@@ -24,18 +24,18 @@ The S3 scheme is used for objects created by functions in the `mooring`
 package. These objects inherit from the `"mooring"` class.  The contents
 consist of a list that in turn contains one or more lists.
 
-The elementary functions such as [anchor()], [cable()] and [float()] all
+The elementary functions such as [anchor()], [wire()] and [float()] all
 produce a list that contains a single list describing the item.  That item
-contains elements called `type` that indicate the meaning (e.g. [cable()]
+contains elements called `type` that indicate the meaning (e.g. [wire()]
 produces objects with type equal to `"cable"`), as well as an element called
-`model`, which is a string indicating the particular variety of cable.
+`model`, which is a string indicating the particular variety of wire
 
 The combination function, [+,mooring()], produces a list that contains 2 or
 more lists, one for each element.  For example,
 ```{r}
 library(mooring)
-m <- anchor() + cable(100) + float()
+m <- anchor() + wire(height=100) + float()
 ```
-produces a list with 3 elements, one that holds information on the anchor,
-a second that holds information on the cable (whih is 100 m long in this case),
+produces a list with 3 elements, one that holds information on the anchor, a
+second that holds information on the wire (which is 100 m long in this case),
 and a third that holds information on the float.

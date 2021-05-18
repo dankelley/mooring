@@ -19,8 +19,9 @@ Create a mooring-release object
 Other functions that create mooring objects: 
 \code{\link{+.mooring}()},
 \code{\link{anchor}()},
-\code{\link{cable}()},
-\code{\link{float}()}
+\code{\link{chain}()},
+\code{\link{float}()},
+\code{\link{wire}()}
 }
 \author{
 Dan Kelley

@@ -14,16 +14,17 @@ The first object is "placed" the second.
 }
 \examples{
 library(mooring)
-m <- anchor() + cable(100) + float()
+m <- anchor() + wire(height=100) + float()
 print(m)
 plot(m)
 }
 \seealso{
 Other functions that create mooring objects: 
 \code{\link{anchor}()},
-\code{\link{cable}()},
+\code{\link{chain}()},
 \code{\link{float}()},
-\code{\link{release}()}
+\code{\link{release}()},
+\code{\link{wire}()}
 }
 \author{
 Dan Kelley

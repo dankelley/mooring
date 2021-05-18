@@ -4,12 +4,11 @@
   1999; 2021], creating `cables_dewey.csv`, `floats_dewey.csv` and
 `wires_dewey.csv`.
 
-* `make rda` takes the `*_dewey.csv` files and creates `element_properties.rda`
-  from them.  (TODO: make it merge in `cabless_new.csv` etc files. These are
-what users can add to, with pull requests.)
+* `make rda` takes the `*_dewey.csv` files and creates `mooring_elements.rda`
+  from them.
 
-* `make install` copies `element_properties.rda` to `../data`, where it can be
-  accessed by the package.
+* `make install` copies `mooring_elements.rda` to `../data`, so it can be
+  accessed with `data(mooring_elements)`.
 
 
 # References

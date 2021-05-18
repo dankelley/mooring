@@ -4,23 +4,55 @@
 \alias{float}
 \title{Create a float object}
 \usage{
-float(model = "Hydro Float 20")
+float(
+  model = "Kiel SFS40in",
+  buoyancy = NULL,
+  height = NULL,
+  diameter = NULL,
+  CD = NULL
+)
 }
 \arguments{
 \item{model}{character value indicating the model of the float.}
+
+\item{buoyancy}{numeric value of the buoyancy of the float, in kg.
+This is ignored if \code{model} is recognized.}
+
+\item{height}{numeric value for the height of the element, in m.
+This is ignored if \code{model} is recognized.}
+
+\item{diameter}{numeric value for the diameter of the float, in m.
+This is ignored if \code{model} is recognized.}
+
+\item{CD}{numeric value for the drag coefficient for the item.}
 }
 \value{
-an object of the \code{"mooring"} class, with \code{type} equal to \code{"float"}.
+\link{float} returns an object of the \code{"mooring"} class, with \code{type} equal to \code{"float"}.
 }
 \description{
-Create a float object
+Create a float object.
+}
+\details{
+The permitted \code{model} values are listed alphabetically below, as listed with \code{float("?")}:
+\preformatted{
+[1] "16in Viny"        "17 in glass"      "28in ORE"        
+[4] "30in float"       "37in ORE"         "41in ORE"        
+[7] "48in ORE"         "54cm Alum CAP3"   "54x30inClamShell"
+[10] "61in ORE"         "ADCP FloatTech"   "BENTHOS 17in"    
+[13] "Billings-12in"    "BPS Float"        "CDMS 1.2m sphere"
+[16] "CDMS 2m sphere"   "Double 16inViny"  "Double 17in"     
+[19] "FloatTech CF-12"  "Geodyn 8' Toroid" "Kiel SFS40in"    
+[22] "Top of Tow Rope"  "Torp. flt, 3-28"  "Tripple FT CF-12"
+[25] "Trpl 12in glass"  "Trpl 16 in Viny" 
+}
 }
 \seealso{
 Other functions that create mooring objects: 
 \code{\link{+.mooring}()},
 \code{\link{anchor}()},
-\code{\link{cable}()},
-\code{\link{release}()}
+\code{\link{chain}()},
+\code{\link{release}()},
+\code{\link{wire}()}
 }
 \author{
 Dan Kelley

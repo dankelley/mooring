@@ -98,6 +98,9 @@
       <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
     </li>
     <li>
+      <a href="../articles/mooring_elements.html">Default Values for Mooring Elements</a>
+    </li>
+    <li>
       <a href="../articles/object_orientation.html">Object-orientation Scheme</a>
     </li>
   </ul>
@@ -149,12 +152,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
-<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='cable.html'>cable</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>height<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Mooring with 3 elements:
-#&gt;   anchor ("default_anchor") 0.3m
-#&gt;   cable ("Mooring Systems 3X19 3/16") 100m
-#&gt;   float ("Hydro Float 20") 0.5m</div></pre>
+</div><div class='output co'>#&gt; Mooring with 3 elements, listed top-down:
+#&gt;   float  model="Kiel SFS40in", buoyancy=320 kg, height=1 m, diameter=1 m
+#&gt;   wire   model="1/4 wire/jack", buoyancy=-0.13 kg/m, height=100 m, width=0.008 m
+#&gt;   anchor model="default_anchor", height=0.3 m</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

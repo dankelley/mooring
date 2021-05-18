@@ -192,45 +192,6 @@ bottom tension, $\T_n$, may be interpreted as the minimum anchor weight that
 will hold the mooring in place in the absence of currents. However, it should
 be obvious that heavier weights will be required for practical situations.
 
-# Data tables
-
-These data, which I extracted from Dewey's Matlab tables (and which he
-extracted from another source) are not yet used in the model.  I'm just putting
-them here for reference, so I can check.  I'd like to get the source material
-Dewey used, to be sure of what I'm seeing.
-
-## Float characteristics
-
-The `buoyancy` is in kg, the next three quantities are in cm, and `CD` is
-unitless. The meaning of the last column is unclear.
-
-```{r echo=FALSE}
-floats <- read.csv("../create_data/floats_dewey.csv")
-knitr::kable(floats)
-```
-
-## Wire characteristics
-
-The `buoyancy` is in kg/m, the next three quantities are in cm, and `CD` is
-unitless. The meaning of the last column is unclear. In this category,
-`length_height` should be ignored.
-
-```{r echo=FALSE}
-wires <- read.csv("../create_data/wires_dewey.csv")
-knitr::kable(wires)
-```
-
-## Cable characteristics
-
-The `buoyancy` is in kg/m, the next three quantities are in cm, and `CD` is
-unitless. The meaning of the last column is unclear. In this category,
-`length_height` should be ignored.
-
-```{r echo=FALSE}
-chains <- read.csv("../create_data/chains_dewey.csv")
-knitr::kable(chains)
-```
-
 # References
 
 
