@@ -53,15 +53,17 @@
 <ul>
 <li><a href="#float-characteristics"><span class="toc-section-number">0.1</span> Float characteristics</a></li>
 <li><a href="#wire-characteristics"><span class="toc-section-number">0.2</span> Wire characteristics</a></li>
-<li><a href="#cable-characteristics"><span class="toc-section-number">0.3</span> Cable characteristics</a></li>
+<li><a href="#chain-characteristics"><span class="toc-section-number">0.3</span> Chain characteristics</a></li>
 </ul>
 </div>
 
-<p>The data stored in <code>data(mooringElements)</code> were extracted from Dewey’s Matlab matlab file named <code>mdcodes.mat</code>, which were apparently extracted from more primary sources. Neither the provenance and accuracy of individual items was checked before inclusion here. Note that Dewey reports dimensions in centimetres, but these are converted to metres here.</p>
+<p>The data stored in <code>data(mooringElements)</code> were extracted from Dewey’s Matlab matlab file named <code>mdcodes.mat</code>, which were apparently extracted from more primary sources. Neither the provenance and accuracy of individual items was checked before inclusion here.</p>
+<p>Dewey reports dimensions in centimetres, but these are converted to metres here.</p>
+<p>The column names are not the same as Dewey uses. The meaning of the final column is unknown, so it is just called <code>code</code> here.</p>
 <div id="float-characteristics" class="section level2" number="0.1">
 <h2 number="0.1"><span class="header-section-number">0.1</span> Float characteristics</h2>
-<p>The column names are not the same as in Dewey’s Matlab file, although the meaning of the final column is unknown, so it is just called <code>code</code> here.</p>
 <p>The <code>buoyancy</code> values are in kg, the next three quantities are in m, and <code>CD</code> is unitless.</p>
+<p>Dewey lists meaningless values in the column named <code>width</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
 <table>
 <thead>
 <tr class="header">
@@ -314,9 +316,8 @@
 </div>
 <div id="wire-characteristics" class="section level2" number="0.2">
 <h2 number="0.2"><span class="header-section-number">0.2</span> Wire characteristics</h2>
-<p>The column names are not the same as in Dewey’s Matlab file, although the meaning of the final column is unknown, so it is just called <code>code</code> here.</p>
-<p>The <code>buoyancy</code> values are in kg/m, the next three quantities are in m, and <code>CD</code> is unitless. The <code>width</code> column indicates the wire width in m.</p>
-<p>Note that Dewey lists meaningless values in the columns that are named <code>height</code> and <code>diameter</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
+<p>The <code>buoyancy</code> values are in kg/m, the next three quantities are in m, and <code>CD</code> is unitless.</p>
+<p>Dewey lists meaningless values in the columns that are named <code>height</code> and <code>diameter</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
 <table>
 <thead>
 <tr class="header">
@@ -657,11 +658,10 @@
 </tbody>
 </table>
 </div>
-<div id="cable-characteristics" class="section level2" number="0.3">
-<h2 number="0.3"><span class="header-section-number">0.3</span> Cable characteristics</h2>
-<p>The column names are not the same as in Dewey’s Matlab file, although the meaning of the final column is unknown, so it is just called <code>code</code> here.</p>
-<p>The <code>buoyancy</code> values are in kg/m, the next three quantities are in m, and <code>CD</code> is unitless.</p>
-<p>Note Dewey lists meaningless values in the column that is named <code>diameter</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
+<div id="chain-characteristics" class="section level2" number="0.3">
+<h2 number="0.3"><span class="header-section-number">0.3</span> Chain characteristics</h2>
+<p>The <code>buoyancy</code> values are in kg, the next three quantities are in m, and <code>CD</code> is unitless.</p>
+<p>Dewey lists meaningless values in the column that is named <code>diameter</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
 <table>
 <thead>
 <tr class="header">

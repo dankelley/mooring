@@ -24,16 +24,22 @@ editor_options:
 The data stored in `data(mooringElements)` were extracted from Dewey's Matlab
 matlab file named `mdcodes.mat`, which were apparently extracted from more
 primary sources. Neither the provenance and accuracy of individual items was
-checked before inclusion here. Note that Dewey reports dimensions in
-centimetres, but these are converted to metres here.
+checked before inclusion here.
+
+Dewey reports dimensions in centimetres, but these are converted to metres
+here.
+
+The column names are not the same as Dewey uses.  The meaning of the final
+column is unknown, so it is just called `code` here.
 
 ## Float characteristics
 
-The column names are not the same as in Dewey's Matlab file, although the
-meaning of the final column is unknown, so it is just called `code` here.
-
 The `buoyancy` values are in kg, the next three quantities are in m, and `CD`
 is unitless.
+
+Dewey lists meaningless values in the column named `width` here, and those
+values are not used in this code provided in this package, although they are
+retained in the dataset.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
@@ -42,32 +48,26 @@ knitr::kable(mooringElements$floats)
 
 ## Wire characteristics
 
-The column names are not the same as in Dewey's Matlab file, although the
-meaning of the final column is unknown, so it is just called `code` here.
-
 The `buoyancy` values are in kg/m, the next three quantities are in m, and `CD`
-is unitless.  The `width` column indicates the wire width in m.
+is unitless.
 
-Note that Dewey lists meaningless values in the columns that are named `height`
-and `diameter` here, and those values are not used in this code provided in
-this package, although they are retained in the dataset.
+Dewey lists meaningless values in the columns that are named `height` and
+`diameter` here, and those values are not used in this code provided in this
+package, although they are retained in the dataset.
 
 ```{r echo=FALSE}
 knitr::kable(mooringElements$wires)
 ```
 
-## Cable characteristics
+## Chain characteristics
 
 
-The column names are not the same as in Dewey's Matlab file, although the
-meaning of the final column is unknown, so it is just called `code` here.
+The `buoyancy` values are in kg, the next three quantities are in m, and `CD`
+is unitless.
 
-The `buoyancy` values are in kg/m, the next three quantities are in m, and
-`CD` is unitless.
-
-Note Dewey lists meaningless values in the column that is named `diameter`
-here, and those values are not used in this code provided in this package,
-although they are retained in the dataset.
+Dewey lists meaningless values in the column that is named `diameter` here, and
+those values are not used in this code provided in this package, although they
+are retained in the dataset.
 
 ```{r echo=FALSE}
 knitr::kable(mooringElements$chains)
