@@ -90,12 +90,12 @@
 
     
     
-<p>The data stored in <code><a href="https://rdrr.io/r/utils/data.html">data(mooringElements)</a></code> were extracted from Dewey’s Matlab matlab file named <code>mdcodes.mat</code>, which were apparently extracted from more primary sources. Neither the provenance and accuracy of individual items was checked before inclusion here.</p>
+<p>The data stored in <code><a href="https://rdrr.io/r/utils/data.html">data(mooringElements)</a></code> were extracted from Dewey’s Matlab matlab file named <code>mdcodes.mat</code>, which were apparently extracted from more primary sources. Neither the provenance and accuracy of individual items was checked before inclusion here. Note that Dewey reports dimensions in centimetres, but these are converted to metres here.</p>
 <div id="float-characteristics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#float-characteristics" class="anchor"></a>Float characteristics</h2>
 <p>The column names are not the same as in Dewey’s Matlab file, although the meaning of the final column is unknown, so it is just called <code>code</code> here.</p>
-<p>The <code>buoyancy</code> values are in kg, the next three quantities are in cm, and <code>CD</code> is unitless.</p>
+<p>The <code>buoyancy</code> values are in kg, the next three quantities are in m, and <code>CD</code> is unitless.</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">name</th>
@@ -348,8 +348,8 @@
 <h2 class="hasAnchor">
 <a href="#wire-characteristics" class="anchor"></a>Wire characteristics</h2>
 <p>The column names are not the same as in Dewey’s Matlab file, although the meaning of the final column is unknown, so it is just called <code>code</code> here.</p>
-<p>The <code>buoyancy</code> values are in kg/m, the next three quantities are in cm, and <code>CD</code> is unitless.</p>
-<p>The <code>width</code> column indicates the wire width in cm (which is used for drag calculations in the package). Note Dewey lists meaningless values in the columns that are named <code>height</code> and <code>diameter</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
+<p>The <code>buoyancy</code> values are in kg/m, the next three quantities are in m, and <code>CD</code> is unitless. The <code>width</code> column indicates the wire width in m.</p>
+<p>Note that Dewey lists meaningless values in the columns that are named <code>height</code> and <code>diameter</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">name</th>
@@ -692,7 +692,7 @@
 <h2 class="hasAnchor">
 <a href="#cable-characteristics" class="anchor"></a>Cable characteristics</h2>
 <p>The column names are not the same as in Dewey’s Matlab file, although the meaning of the final column is unknown, so it is just called <code>code</code> here.</p>
-<p>The <code>buoyancy</code> values are in kg/m, the next three quantities are in cm, and <code>CD</code> is unitless.</p>
+<p>The <code>buoyancy</code> values are in kg/m, the next three quantities are in m, and <code>CD</code> is unitless.</p>
 <p>Note Dewey lists meaningless values in the column that is named <code>diameter</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
 <table class="table">
 <thead><tr class="header">
@@ -923,10 +923,6 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div id="references" class="section level1">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
 </div>
   </div>
 
