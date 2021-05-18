@@ -49,13 +49,13 @@ by slanting of the mooring line.
 # Model
 
 Consider the case of unidirectional horizontal current aligned with the $x$
-axis. Let $z$ be the vertical coordinate, positive upwards, with $z=0$at the
-bottom. The mooring is modelled as a series of $n$ connected elements, with the
-top element being numbered $i$.  Water density is assumed to be a function of
-depth, with value $\rho_i$ at the depth of the $i$-th element, and water
-velocity at that depth is denoted $u_i$.
+axis. Following oceanographic convention, let $z$ be the vertical coordinate,
+positive upwards, with $z=0$ at the surface.  The mooring is modelled as a
+series of $n$ connected elements, with the top element being numbered $i$.
+Water density and velocity are assumed to be a functions of depth, with values
+$\rho_i$ and $u_i$ at the location $z_i$ of the $i$-th element.
 
-Each element is described by the following properties, independent of flow.
+Each element is described by the following properties.
 
 * Length, $L_i$ [m].  For a portion of cable, this has the common meaning.  For
   a float, instrument, or other thing, it is the contribution that the item
@@ -68,7 +68,7 @@ Each element is described by the following properties, independent of flow.
   values in technical documentation about mooring components. Note that they
   refer to in-water buoyancy force, but the distinction between freshwater
   and seawater is seldom made clear.
-* Drag coefficient, $C_{Di}$, defined as the ratio of drag force, $\D_i$, to
+* Drag coefficient, $C_i$, defined as the ratio of drag force, $\D_i$, to
   $\frac{1}{2}A_i\rho_i u_i|u_i|$.
 
 A tension force exists between each interior mooring element.  The tension
@@ -86,26 +86,22 @@ the $x$ and $z$ directions, but the buoyancy force (defined as positive for
 objects that would rise if unattached to a mooring) acts only in the vertical,
 upwards if $m$ or $\mu$ is positive.
 
-The buoyancy force for a solid object is found with (Equation 1)
+The buoyancy force for a solid object such as an anchor or a float is found
+with (Equation 1)
 \begin{equation}
 \B_i = -g m_i
 \end{equation}
-and for a portion of a cable of length $\Delta l$ with (Equation 2)
+while it is represented with (Equation 2)
 \begin{equation}
 \B_i = -g \mu_i \Delta l
 \end{equation}
+for a portion of a cable of length $\Delta l$.
 
 The drag force is expressed with (Equation 3)
 \begin{equation}
-\D_i = \frac{1}{2} A_i C_{Di}\ \rho_i u_i |u_i|
+\D_i = \frac{1}{2} A_i C_i \rho_i u_i |u_i|
 \end{equation}
 where $A_i$ is the area projected in the flow direction.
-
-Note that $\D_i>0$ for a force in the positive $x$ direction, and $\B_i>0$ for
-a force in the positive $z$ direction (upward). For positive velocities, $\D_i$
-is non-negative, irrespective of the properties of element $i$.  However, the
-buoyancy force, $\B_i$, may be positive or negative, depending on the
-difference in density between the element and seawater.
 
 With these definitions, the force balances in the horizontal and vertical
 may be expressed as follows.  The top element ($i=1$) has no stress
@@ -117,7 +113,7 @@ the stress components, with (Equation 4)
 \B_1 &= \T_2 \cos\phi_2
 \end{split}
 \end{equation}
-which permit computation of (Equation 5)
+from which $\phi_2$ and $\T_2$ may be inferred with (Equation 5)
 \begin{equation}
 \begin{split}
 \phi_2 &= \tan^{-1}\frac{\D_1}{\B_1}\cr
@@ -132,36 +128,35 @@ The force balance for the second element ($i=2$) is (Equation 6)
 \B_2 + \T_2 \cos\phi_2 &= \T_3 \cos\phi_3
 \end{split}
 \end{equation}
-with which (Equation 7)
+Since $\phi_2$ and $\T_2$ are known from Equation 5, Equation 6 may be solved
+with (Equation 7)
 \begin{equation}
 \begin{split}
 \phi_3 &= \tan^{-1}\frac{\D_2+\T_2\sin\phi_2}{\B_2+\T_2\cos\phi_2}\cr
 \T_3 &= \sqrt{(\D_2+\T_2\sin\phi_2)^2 + (\B_2+\T_2\cos\phi_2)^2}
 \end{split}
 \end{equation}
-may be calculated, since $\phi_2$ and $\T_2$ are known from Equation 5.
 
-This reasoning applies for all elements below the first one, so that
-Equation 7 may be generalized to (Equation 8)
+This reasoning applies for all interior elements, so that Equation 7 may be
+generalized to (Equation 8)
 \begin{equation}
 \begin{split}
 \phi_i &= \tan^{-1}\frac{\D_{i-1}+\T_{i-1}\sin\phi_{i-1}}{\B_{i-1}+\T_{i-1}\cos\phi_{i-1}}\cr
 \T_i &= \sqrt{(\D_{i-1}+\T_{i-1}\sin\phi_{i-1})^2+(\B_{i-1}+\T_{i-1}\cos\phi_{i-1})^2}
 \end{split}
 \end{equation}
-for $i=2,\dots,n$.
+for $i=2,\dots,n$, so that the mooring shape may be inferred by a stepwise
+method, working from the top element downwards through the water column:
 
-This suggests a step-by-step procedure for computing angles and tensions
-throughout the mooring.
+1. First, use Equation 5 to compute $\phi_2$ and $\T_2$, the angle and tension below
+   the top element.
+2. Then, use Equation 8 to compute $\phi_i$ and $\T_i$ for $i=3$, then $i=4$, etc.
+   until reaching $i=n$.
 
-1. Use Equation 5 to compute $\phi_2$ and $\T_2$.
-2. Use Equation 8 to compute $\phi_i$ and $\T_i$ sequentially,
-   for $i=3$ to $i=n$.
-
-If the current is depth-variable, then the drag values $\D_i$ depend on
-the local velocity, and so the mooring shape must be taken into account.  This
-can be handled by applying the calculation procedure iteratively, starting with
-the assumption of a vertical mooring, and computing vertical positions of
+If the current is depth-variable, the drag values $\D_i$ depend on the local
+velocity, and so the mooring shape must be taken into account.  This can be
+handled by applying the calculation procedure iteratively, starting with the
+assumption of a vertical mooring, and computing vertical positions of
 components by taking $\phi_i$ values into account, from the bottom up.
 
 # Example
@@ -206,38 +201,35 @@ Dewey used, to be sure of what I'm seeing.
 
 ## Float characteristics
 
-I think `buoyancy` is in kg, the next three quantities are in cm, and `CD` is
-unitless.  I don't know what the last column means.
+The `buoyancy` is in kg, the next three quantities are in cm, and `CD` is
+unitless. The meaning of the last column is unclear.
 
 ```{r echo=FALSE}
-floats <- read.csv("floats.csv")
+floats <- read.csv("../create_data/floats_dewey.csv")
 knitr::kable(floats)
 ```
 
 ## Wire characteristics
 
-I think `buoyancy` may be in kg per metre length, `length_height` should be
-ignored, `cylinder_width` is in cm, `CD` is unitless.  I don't know what the
-last column means.
+The `buoyancy` is in kg/m, the next three quantities are in cm, and `CD` is
+unitless. The meaning of the last column is unclear. In this category,
+`length_height` should be ignored.
 
 ```{r echo=FALSE}
-wires <- read.csv("wires.csv")
+wires <- read.csv("../create_data/wires_dewey.csv")
 knitr::kable(wires)
 ```
 
 ## Cable characteristics
 
-I think `buoyancy` may be in kg per metre length, `length_height` should be
-ignored, `cylinder_width` is in cm, `CD` is unitless.  I don't know what the
-last column means.
+The `buoyancy` is in kg/m, the next three quantities are in cm, and `CD` is
+unitless. The meaning of the last column is unclear. In this category,
+`length_height` should be ignored.
 
 ```{r echo=FALSE}
-wires <- read.csv("wires.csv")
-knitr::kable(wires)
+chains <- read.csv("../create_data/chains_dewey.csv")
+knitr::kable(chains)
 ```
-
-
-
 
 # References
 

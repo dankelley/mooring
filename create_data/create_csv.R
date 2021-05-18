@@ -11,26 +11,26 @@
 library(R.matlab)
 d <- readMat("mdcodes.mat")
 # Discover elements within the dataset
-names(d)
+#> names(d)
 # Set up names for columns.
-names <- c("name","buoyancy","length_height","cylinder_width","sphere_diameter","CD","unknown")
+names <- c("name","buoyancy","length","cylinderWidth","sphereDiameter","CD","unknown")
 
 #> Use next to count spaces
-count <- "      0.........1........2.........3.........4.........5.\n"
-print(head(d$floats, 3))
-cat(count, sep="")
+#> count <- "      0.........1........2.........3.........4.........5.\n"
+#> print(head(d$floats, 3))
+#> cat(count, sep="")
 floats<- read.fwf(textConnection(d$floats),widths=c(18,7,6,6,6,5,4), col.names=names)
 floats$name <- trimws(floats$name)
-write.csv(floats, "floats.csv", row.names=FALSE)
+write.csv(floats, "floats_dewey.csv", row.names=FALSE)
 
 # Wires
 wires <- read.fwf(textConnection(d$wires),widths=c(18,7,6,6,6,5,4), col.names=names)
 wires$name <- trimws(wires$name)
-write.csv(wires, "wires.csv", row.names=FALSE)
+write.csv(wires, "wires_dewey.csv", row.names=FALSE)
 
 # Chains
 chains <- read.fwf(textConnection(d$chains),widths=c(18,7,6,6,6,5,4), col.names=names)
 chains$name <- trimws(chains$name)
-write.csv(chains, "chains.csv", row.names=FALSE)
+write.csv(chains, "chains_dewey.csv", row.names=FALSE)
 
 
