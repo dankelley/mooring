@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Create a float object — float" />
-<meta property="og:description" content="Create a float object" />
+<meta property="og:description" content="Create a float object." />
 
 
 
@@ -98,6 +98,9 @@
       <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
     </li>
     <li>
+      <a href="../articles/mooring_elements.html">Default Values for Mooring Elements</a>
+    </li>
+    <li>
       <a href="../articles/object_orientation.html">Object-orientation Scheme</a>
     </li>
   </ul>
@@ -124,10 +127,16 @@
     </div>
 
     <div class="ref-description">
-    <p>Create a float object</p>
+    <p>Create a float object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>float</span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"Hydro Float 20"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>float</span><span class='op'>(</span>
+  model <span class='op'>=</span> <span class='st'>"Kiel SFS40in"</span>,
+  buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
+  height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  diameter <span class='op'>=</span> <span class='cn'>NULL</span>,
+  CD <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,18 +145,52 @@
       <th>model</th>
       <td><p>character value indicating the model of the float.</p></td>
     </tr>
+    <tr>
+      <th>buoyancy</th>
+      <td><p>numeric value of the buoyancy of the float, in kg.
+This is ignored if <code>model</code> is recognized.</p></td>
+    </tr>
+    <tr>
+      <th>height</th>
+      <td><p>numeric value for the height of the element, in m.
+This is ignored if <code>model</code> is recognized.</p></td>
+    </tr>
+    <tr>
+      <th>diameter</th>
+      <td><p>numeric value for the diameter of the float, in m.
+This is ignored if <code>model</code> is recognized.</p></td>
+    </tr>
+    <tr>
+      <th>CD</th>
+      <td><p>numeric value for the drag coefficient for the item.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of the <code>"mooring"</code> class, with <code>type</code> equal to <code>"float"</code>.</p>
+    <p>float returns an object of the <code>"mooring"</code> class, with <code>type</code> equal to <code>"float"</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The permitted <code>model</code> values are listed alphabetically below, as listed with <code>float("?")</code>:</p><pre>
+[1] "16in Viny"        "17 in glass"      "28in ORE"        
+[4] "30in float"       "37in ORE"         "41in ORE"        
+[7] "48in ORE"         "54cm Alum CAP3"   "54x30inClamShell"
+[10] "61in ORE"         "ADCP FloatTech"   "BENTHOS 17in"    
+[13] "Billings-12in"    "BPS Float"        "CDMS 1.2m sphere"
+[16] "CDMS 2m sphere"   "Double 16inViny"  "Double 17in"     
+[19] "FloatTech CF-12"  "Geodyn 8' Toroid" "Kiel SFS40in"    
+[22] "Top of Tow Rope"  "Torp. flt, 3-28"  "Tripple FT CF-12"
+[25] "Trpl 12in glass"  "Trpl 16 in Viny" 
+</pre>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions that create mooring objects: 
 <code><a href='+.mooring.html'>+.mooring</a>()</code>,
 <code><a href='anchor.html'>anchor</a>()</code>,
-<code><a href='cable.html'>cable</a>()</code>,
-<code><a href='release.html'>release</a>()</code></p></div>
+<code><a href='chain.html'>chain</a>()</code>,
+<code><a href='release.html'>release</a>()</code>,
+<code><a href='wire.html'>wire</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>

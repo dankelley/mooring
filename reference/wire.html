@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>mooring: A Package for Analysing Oceanographic Moorings. — mooring • mooring</title>
+<title>Create a wire object — wire • mooring</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="mooring: A Package for Analysing Oceanographic Moorings. — mooring" />
-<meta property="og:description" content="The mooring package provides functions for working with
-oceanographic moorings." />
+<meta property="og:title" content="Create a wire object — wire" />
+<meta property="og:description" content="Creates an object that describes a mooring wire, or other type of line, e.g.
+nylon ropes are considered wires, for this purpose.
+Note that all dimensions are specified in m, not cm." />
 
 
 
@@ -122,31 +123,89 @@ oceanographic moorings." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>mooring: A Package for Analysing Oceanographic Moorings.</h1>
+    <h1>Create a wire object</h1>
     
-    <div class="hidden name"><code>mooring.Rd</code></div>
+    <div class="hidden name"><code>wire.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The mooring package provides functions for working with
-oceanographic moorings.</p>
+    <p>Creates an object that describes a mooring wire, or other type of line, e.g.
+nylon ropes are considered wires, for this purpose.
+Note that all dimensions are specified in m, not cm.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>wire</span><span class='op'>(</span>
+  model <span class='op'>=</span> <span class='st'>"1/4 wire/jack"</span>,
+  buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
+  height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  CD <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>model</th>
+      <td><p>character value indicating the model name of the wire. The
+default, <code>"1/4 wire/jack"</code>, is for quarter-inch jacketed steel wire. If
+model is set to <code>"?"</code>, then the default is returned, but first a list
+of possible model values is printed. If model is not recognized, then
+wire creates a new type, using the stated diameter and CD values;
+otherwise, these arguments are ignored.</p></td>
+    </tr>
+    <tr>
+      <th>buoyancy</th>
+      <td><p>numeric value of the buoyancy per length of wire, in kg/m.</p></td>
+    </tr>
+    <tr>
+      <th>height</th>
+      <td><p>numeric value indicating the length of the wire, in metres.</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>numeric value for the width of the wire, in m.
+This is ignored if <code>model</code> is recognized.</p></td>
+    </tr>
+    <tr>
+      <th>CD</th>
+      <td><p>numeric value for the drag coefficient for the wire.
+This is ignored if <code>model</code> is recognized.</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create, summarize, and plot a simple mooring comprising</span>
-<span class='co'># a bottom anchor, a 100-metre wire, and a float.</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
-<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>height<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Mooring with 3 elements, listed top-down:
-#&gt;   float  model="Kiel SFS40in", buoyancy=320 kg, height=1 m, diameter=1 m
-#&gt;   wire   model="1/4 wire/jack", buoyancy=-0.13 kg/m, height=100 m, width=0.008 m
-#&gt;   anchor model="default_anchor", height=0.3 m</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='img'><img src='mooring-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <p>wire returns an object of the <code>"mooring"</code> class, with <code>type</code> equal to <code>"wire"</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The permitted <code>model</code> values are listed alphabetically below, as listed with <code>wire("?")</code>:</p><pre>
+"1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"      
+"1/2 Dyneema"      "1/2 Kevlar"       "1/2 Neutral Wire"
+"1/2 VLS"          "1/2 wire/jack"    "1/4 AmSteel-Blue"
+"1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"   
+"1/4-1/2 WarpSpd"  "11mm Perlon"      "1in Neutral Wire"
+"3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"       
+"3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"      
+"3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"     
+"5/16 wire rope"   "5/16 wire/jack"   "5/8 AmSteel-Blue"
+"5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"     
+"7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"     
+"9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"  
+</pre>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other functions that create mooring objects: 
+<code><a href='+.mooring.html'>+.mooring</a>()</code>,
+<code><a href='anchor.html'>anchor</a>()</code>,
+<code><a href='chain.html'>chain</a>()</code>,
+<code><a href='float.html'>float</a>()</code>,
+<code><a href='release.html'>release</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Dan Kelley</p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
