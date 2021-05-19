@@ -35,15 +35,31 @@ Create a float object.
 \details{
 The permitted \code{model} values are listed alphabetically below, as listed with \code{float("?")}:
 \preformatted{
-[1] "16in Viny"        "17 in glass"      "28in ORE"        
-[4] "30in float"       "37in ORE"         "41in ORE"        
-[7] "48in ORE"         "54cm Alum CAP3"   "54x30inClamShell"
-[10] "61in ORE"         "ADCP FloatTech"   "BENTHOS 17in"    
+ [1] "16in Viny"        "17 in glass"      "28in ORE"
+ [4] "30in float"       "37in ORE"         "41in ORE"
+ [7] "48in ORE"         "54cm Alum CAP3"   "54x30inClamShell"
+[10] "61in ORE"         "ADCP FloatTech"   "BENTHOS 17in"
 [13] "Billings-12in"    "BPS Float"        "CDMS 1.2m sphere"
-[16] "CDMS 2m sphere"   "Double 16inViny"  "Double 17in"     
-[19] "FloatTech CF-12"  "Geodyn 8' Toroid" "Kiel SFS40in"    
-[22] "Top of Tow Rope"  "Torp. flt, 3-28"  "Tripple FT CF-12"
-[25] "Trpl 12in glass"  "Trpl 16 in Viny" 
+[16] "CDMS 2m sphere"   "Double 16inViny"  "Double 17in"
+[19] "FloatTech CF-12"  "Geodyn 8' Toroid" "HMB 20"
+[22] "HMB 25"           "HMB 31"           "HMB 36"
+[25] "HMB 40"           "HMB 44"           "HMB 49"
+[28] "HMB 51"           "HMB 56"           "HMB 62"
+[31] "Kiel SFS40in"     "Top of Tow Rope"  "Torp. flt, 3-28"
+[34] "Tripple FT CF-12" "Trpl 12in glass"  "Trpl 16 in Viny"
+}
+
+\strong{Notes:}
+\enumerate{
+\item \code{HMB} in a name is a short-hand for \verb{Hydrofloat Mooring Buoy}.  Data for these
+floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the \code{CD} value
+being set at 0.65 (in the absence of any data from the manufacture) because that
+value is used in Dewey's dataset for many floats.
+}
+}
+\references{
+\enumerate{
+\item \url{https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf}
 }
 }
 \seealso{

@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{an object of the \code{"mooring"} class.}
 
-\item{...}{optional arguments.}
+\item{...}{optional arguments (ignored).}
 }
 \description{
 Print a mooring object
@@ -18,6 +18,7 @@ Print a mooring object
 library(mooring)
 m <- anchor() + wire(height=100) + float()
 print(m)
+
 }
 \author{
 Dan Kelley

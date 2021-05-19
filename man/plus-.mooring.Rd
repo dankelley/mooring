@@ -9,16 +9,28 @@
 \arguments{
 \item{m1, m2}{objects of the \code{"mooring"} class.}
 }
+\value{
+an object of the \code{"mooring"} class that holds the
+combination of \code{m1} and \code{m2}.
+}
 \description{
-The first object is "placed" the second.
+The first object is "placed" above the second (see Examples).
 }
 \examples{
 library(mooring)
 m <- anchor() + wire(height=100) + float()
 print(m)
 plot(m)
+
 }
 \seealso{
+Other functions that create mooring objects: 
+\code{\link{anchor}()},
+\code{\link{chain}()},
+\code{\link{float}()},
+\code{\link{release}()},
+\code{\link{wire}()}
+
 Other functions that create mooring objects: 
 \code{\link{anchor}()},
 \code{\link{chain}()},

@@ -4,12 +4,16 @@
   1999; 2021], creating `cables_dewey.csv`, `floats_dewey.csv` and
 `wires_dewey.csv`.
 
-* `make rda` takes the `*_dewey.csv` files and creates `mooring_elements.rda`
-  from them.
+* `make rda` takes the `*_dewey.csv` files *plus* `chain.csv`, `float.csv`, and
+  `wire.csv` (to which new items may be added), creating `mooringElements.rda`.
 
-* `make install` copies `mooring_elements.rda` to `../data`, so it can be
+* `make install` copies `mooringElements.rda` to `../data`, so it can be
   accessed with `data(mooring_elements)`.
 
+AUTHOR/CONTRIBUTOR NOTE: if new items are added to `chain.csv`, `float.csv` or
+`wire.csv`, the author must rebuild, then use e.g. `float("?")` to get a list,
+and then put that list into the docs for the function (look for the lines
+containing the string `"FIXME: rebuild"`).
 
 # References
 
