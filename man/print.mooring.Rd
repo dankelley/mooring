@@ -16,7 +16,7 @@ Print a mooring object
 }
 \examples{
 library(mooring)
-m <- anchor() + wire(height=100) + float()
+m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
 print(m)
 
 }

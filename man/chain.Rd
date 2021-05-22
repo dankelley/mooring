@@ -37,14 +37,14 @@ Note that all dimensions are specified in m, not cm.
 \details{
 The permitted \code{model} values are listed alphabetically below, as listed with \code{chain("?")}:
 \preformatted{
-[1] "1 chain SL"       "1\" buoy chain"   "1\" shackle"     
-[4] "1/2 chain LL"     "1/2 chain SL"     "1/2 galv link"   
-[7] "1/2 shac+3/8shac" "1/2 shackle"      "1/2 SS link"     
-[10] "1/2 swivel"       "1/2\" buoy chain" "1/4 chain SL"    
-[13] "3/4 swivel"       "3/4\" buoy chain" "3/4\" shackle"   
+[1] "1 chain SL"       "1\" buoy chain"   "1\" shackle"
+[4] "1/2 chain LL"     "1/2 chain SL"     "1/2 galv link"
+[7] "1/2 shac+3/8shac" "1/2 shackle"      "1/2 SS link"
+[10] "1/2 swivel"       "1/2\" buoy chain" "1/4 chain SL"
+[13] "3/4 swivel"       "3/4\" buoy chain" "3/4\" shackle"
 [16] "3/8 chain SL"     "3/8 shackle"      "3/8\" buoy chain"
 [19] "3T SeineSwivel"   "5/8 shackle"      "5/8\" buoy chain"
-[22] "shac-3link-shac"  "shac-Pring-shac"  "shac-ring-shac" 
+[22] "shac-3link-shac"  "shac-Pring-shac"  "shac-ring-shac"
 }
 }
 \seealso{

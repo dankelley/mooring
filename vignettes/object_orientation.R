@@ -1,4 +1,4 @@
 ## -----------------------------------------------------------------------------
 library(mooring)
-m <- anchor() + wire(height=100) + float()
+m <- anchor(depth=100) + wire(length=75) + float()
 

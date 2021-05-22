@@ -103,71 +103,101 @@ The drag force is expressed with (Equation 3)
 \end{equation}
 where $A_i$ is the area projected in the flow direction.
 
-With these definitions, the force balances in the horizontal and vertical
-may be expressed as follows.  The top element ($i=1$) has no stress
-being applied from above, so the drag and buoyancy are matched with
-the stress components, with (Equation 4)
+With these definitions, a steady-state assumption dictates that forces must be
+balanced in the horizontal and vertical directions for each element of the
+mooring.
+
+Consider the case of a mooring consisting of $n$ elements attached to an
+immovable bottom anchor, and let the index $i=1$ refer to the top element, with
+$i$ increasing to $i=n$ at the anchor.
+
+Three forces are involved in this situation: (a) a horizontal drag force, $\D$,
+associated with the current, (b) a vertical buoyancy force, $\B$, caused by a
+density mismatch between a component and the background water, and (c) a
+tension force, $\T$, along the connection between elements.  The tension force
+has only a vertical component for an upright mooring, but horizontal components
+occur for a mooring that is tilted by a current.
+
+By definition, the top element has no tension from above, and so its force
+balance is (Equation 4)
 \begin{equation}
 \begin{split}
 \D_1 &= \T_2 \sin\phi_2\cr
 \B_1 &= \T_2 \cos\phi_2
 \end{split}
 \end{equation}
-from which $\phi_2$ and $\T_2$ may be inferred with (Equation 5)
+where $\T_2$ is the tension between this element and the one below it, and
+$\phi_2$ is the angle that tension force makes to the vertical.  These two
+equations may be solved for $\T_2$ and $\phi_2$, yielding (Equation 5)
 \begin{equation}
 \begin{split}
-\phi_2 &= \tan^{-1}\frac{\D_1}{\B_1}\cr
-\T_2 &= \sqrt{\D_1^2 + \B_1^2}
+\T_2 &= \sqrt{\D_1^2 + \B_1^2}\cr
+\phi_2 &= \tan^{-1}\frac{\D_1}{\B_1}
 \end{split}
 \end{equation}
 
-The force balance for the second element ($i=2$) is (Equation 6)
+If there are more than 2 elements in the mooring, this same reasoning, extended
+to account for stress and angle below the first element, yields (Equation 6)
 \begin{equation}
 \begin{split}
 \D_2 + \T_2 \sin\phi_2 &= \T_3 \sin\phi_3\cr
 \B_2 + \T_2 \cos\phi_2 &= \T_3 \cos\phi_3
 \end{split}
 \end{equation}
-Since $\phi_2$ and $\T_2$ are known from Equation 5, Equation 6 may be solved
+and, since $\phi_2$ and $\T_2$ are known from Equation 5, Equation 6 may be solved
 with (Equation 7)
 \begin{equation}
 \begin{split}
-\phi_3 &= \tan^{-1}\frac{\D_2+\T_2\sin\phi_2}{\B_2+\T_2\cos\phi_2}\cr
-\T_3 &= \sqrt{(\D_2+\T_2\sin\phi_2)^2 + (\B_2+\T_2\cos\phi_2)^2}
+\T_3 &= \sqrt{(\D_2+\T_2\sin\phi_2)^2 + (\B_2+\T_2\cos\phi_2)^2}\cr
+\phi_3 &= \tan^{-1}\frac{\D_2+\T_2\sin\phi_2}{\B_2+\T_2\cos\phi_2}
 \end{split}
 \end{equation}
 
-This reasoning applies for all interior elements, so that Equation 7 may be
-generalized to (Equation 8)
+This may be generalized to larger moorings, with (Equation 8)
 \begin{equation}
 \begin{split}
-\phi_i &= \tan^{-1}\frac{\D_{i-1}+\T_{i-1}\sin\phi_{i-1}}{\B_{i-1}+\T_{i-1}\cos\phi_{i-1}}\cr
-\T_i &= \sqrt{(\D_{i-1}+\T_{i-1}\sin\phi_{i-1})^2+(\B_{i-1}+\T_{i-1}\cos\phi_{i-1})^2}
+\T_i &= \sqrt{(\D_{i-1}+\T_{i-1}\sin\phi_{i-1})^2+(\B_{i-1}+\T_{i-1}\cos\phi_{i-1})^2}\cr
+\phi_i &= \tan^{-1}\frac{\D_{i-1}+\T_{i-1}\sin\phi_{i-1}}{\B_{i-1}+\T_{i-1}\cos\phi_{i-1}}
 \end{split}
 \end{equation}
-for $i=2,\dots,n$, so that the mooring shape may be inferred by a stepwise
-method, working from the top element downwards through the water column:
+applying at each element, $i$.
 
-1. First, use Equation 5 to compute $\phi_2$ and $\T_2$, the angle and tension below
+This leads to a simple way to describe mooring response to a depth-independent
+current, in which $D_i$ and $B_i$ are known quantities for each $i$ from 1 to
+$n$:
+1. First, use Equation 5 to compute $\T_2$ and $\phi_2$, the angle and tension below
    the top element.
-2. Then, use Equation 8 to compute $\phi_i$ and $\T_i$ for $i=3$, then $i=4$, etc.
+2. Then, use Equation 8 to compute $\T_i$ and $\phi_i$ for $i=3$, then $i=4$, etc.
    until reaching $i=n$.
 
-If the current is depth-variable, the drag values $\D_i$ depend on the local
-velocity, and so the mooring shape must be taken into account.  This can be
-handled by applying the calculation procedure iteratively, starting with the
-assumption of a vertical mooring, and computing vertical positions of
-components by taking $\phi_i$ values into account, from the bottom up.
+(Note that $\T_1$ and $\phi_1$ are not defined in this notation.)
+
+If the current varies with depth, then the drag of a given element will depend
+on depth of the element, which in turn depends on the shape of the mooring.
+This may be handled by an iterative scheme.  In the first iteration, the
+vertical positions of mooring elements are inferred by summing their heights,
+and the above procedure is used to infer $\phi_i$. Then, these angles are used
+to calculate a second estimate of element locations, and the procedure is
+repeated using drags appropriate to those locations.  This is repeated until
+the solution converges to within a stated criterion.
 
 # Example
 
-Figure 1 shows the result of simulating a *Hydro Float 20* float connected to
-the bottom with a *Mooring Systems 3x19 3/16"* wire cable, in a region with a
-depth-independent 2m/s current, which might be encountered in a region with
-strong tides.  Note that the float is predicted to sink $9.33$m with this
-current.  However, the predicted knockdown is only $0.72$m with a $1$m/s
-current.  This difference provides an indication of the importance of designing
-a mooring for the system under study.
+```{r echo=FALSE}
+library(mooring)
+f <- float("HMB 20")
+w <- wire(length=100)
+```
+
+
+Figure 1 shows the result of simulating a 20-inch Hydro Float Mooring Buoy
+(with $`r f[[1]]$buoyancy`$kg buoyancy) connected to a bottom anchor with 100 m
+of quarter-inch jacketed wire (with $`r w[[1]]$buoyancy`$kg/m of buoyancy), in
+a depth-independent 0.5 m/s (roughly 1 knot) current.  Note that the float is
+predicted to sink $7.7$m with this current.  However, the predicted knockdown
+increases to $41.2$m with a $1$m/s current, suggesting that this float would be
+of limited utility in supporting an oceanographic mooring a region with strong
+currents.
 
 ```{r echo=FALSE,dev.args=list(pointsize=9),fig.cap="Response of a mooring consisting of a *Hydro Float 20* atop 100m of *Mooring Systems 3x19 3/16\"* wire cable, in a 1m/s current. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for $u=1$m/s. **Right:** Mooring shape, with gray and black as in the left panel."}
 source("example_01.R")

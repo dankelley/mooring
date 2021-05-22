@@ -4,16 +4,20 @@
 \alias{anchor}
 \title{Create an anchor object}
 \usage{
-anchor(model = "default_anchor")
+anchor(model = "default", depth = 0)
 }
 \arguments{
-\item{model}{character value indicating the model of the anchor.}
+\item{model}{character value indicating the model of the anchor.
+At present, only \code{"default"} is permitted, and this is just
+based on a guess on height (when laid on its side).}
+
+\item{depth}{numeric value giving water depth in m.}
 }
 \value{
 an object of the \code{"mooring"} class, with \code{type} equal to \code{"anchor"}.
 }
 \description{
-Create an anchor object
+This must be the first element of a mooring constructed with \code{\link{+,mooring}}.
 }
 \seealso{
 Other functions that create mooring objects: 

@@ -1,13 +1,12 @@
+debug <- FALSE
 #' mooring: A Package for Analysing Oceanographic Moorings.
 #'
 #' The mooring package provides functions for working with
 #' oceanographic moorings.
 #'
 #' @examples
-#' # Create, summarize, and plot a simple mooring comprising
-#' # a bottom anchor, a 100-metre wire, and a float.
 #' library(mooring)
-#' m <- anchor() + wire(height=100) + float()
+#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
 #' print(m)
 #' plot(m)
 #'
@@ -41,7 +40,13 @@ NULL
 
 #' Create an anchor object
 #'
+#' This must be the first element of a mooring constructed with \code{\link{+,mooring}}.
+#'
 #' @param model character value indicating the model of the anchor.
+#' At present, only `"default"` is permitted, and this is just
+#' based on a guess on height (when laid on its side).
+#'
+#' @param depth numeric value giving water depth in m.
 #'
 #' @return an object of the `"mooring"` class, with `type` equal to `"anchor"`.
 #' @family functions that create mooring objects
@@ -49,9 +54,12 @@ NULL
 #' @export
 #'
 #' @author Dan Kelley
-anchor <- function(model="default_anchor")
+anchor <- function(model="default", depth=0)
 {
-    rval <- list(list(type="anchor", model=model, height=0.3, x=0)) # guess on height
+    # guess on height
+    if (model != "default")
+        stop("'model' must be \"default\"")
+    rval <- list(list(type="anchor", model=model, height=0.3, depth=depth, x=0, z=0))
     class(rval) <- "mooring"
     rval
 }
@@ -65,7 +73,7 @@ anchor <- function(model="default_anchor")
 #' @author Dan Kelley
 release <- function(model="default_release")
 {
-    rval <- list(list(type="anchor", model=model, height=1.0, x=0)) # guess on length
+    rval <- list(list(type="anchor", model=model, height=1.0, x=0, z=0)) # guess on length
     class(rval) <- "mooring"
     rval
 }
@@ -79,18 +87,18 @@ release <- function(model="default_release")
 #' The permitted `model` values are listed alphabetically below, as listed with `wire("?")`:
 # FIXME: rebuild this list if new items are added.
 #'\preformatted{
-#' "1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"      
+#' "1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"
 #' "1/2 Dyneema"      "1/2 Kevlar"       "1/2 Neutral Wire"
 #' "1/2 VLS"          "1/2 wire/jack"    "1/4 AmSteel-Blue"
-#' "1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"   
+#' "1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"
 #' "1/4-1/2 WarpSpd"  "11mm Perlon"      "1in Neutral Wire"
-#' "3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"       
-#' "3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"      
-#' "3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"     
+#' "3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"
+#' "3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"
+#' "3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"
 #' "5/16 wire rope"   "5/16 wire/jack"   "5/8 AmSteel-Blue"
-#' "5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"     
-#' "7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"     
-#' "9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"  
+#' "5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"
+#' "7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"
+#' "9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"
 #'}
 #'
 #' @param model character value indicating the model name of the wire. The
@@ -102,7 +110,7 @@ release <- function(model="default_release")
 #'
 #' @param buoyancy numeric value of the buoyancy per length of wire, in kg/m.
 #'
-#' @param height numeric value indicating the length of the wire, in metres.
+#' @param length numeric value indicating the length of the wire, in metres.
 #'
 #' @param width numeric value for the width of the wire, in m.
 #' This is ignored if `model` is recognized.
@@ -119,7 +127,7 @@ release <- function(model="default_release")
 #' @importFrom utils data
 #'
 #' @author Dan Kelley
-wire <- function(model="1/4 wire/jack", buoyancy=NULL, height=NULL, width=NULL, CD=NULL)
+wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=NULL, width=NULL, CD=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -128,8 +136,8 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, height=NULL, width=NULL, 
         print(sort(mooringElements$wires$name))
         model <- "1/4 wire/jack"
     }
-    if (is.null(height))
-        stop("must supply height (m) of the wire")
+    if (is.null(length))
+        stop("must supply length (m) of the wire")
     w <- which(mooringElements$wires$name == model)
     if (1 == length(w)) {
         me <- mooringElements$wires[w,]
@@ -147,7 +155,7 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, height=NULL, width=NULL, 
         if (is.null(width)) stop("must supply width, if creating a new wire model")
         if (is.null(CD)) stop("must supply CD, if creating a new wire model")
     }
-    rval <- list(list(type="wire", model=model, buoyancy=buoyancy, height=height, width=width, CD=CD))
+    rval <- list(list(type="wire", model=model, buoyancy=buoyancy, height=length, width=width, CD=CD, x=0, z=0))
     class(rval) <- "mooring"
     rval
 }
@@ -223,7 +231,7 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
         if (is.null(width)) stop("must supply width, if creating a new chain model")
         if (is.null(CD)) stop("must supply CD, if creating a new chain model")
     }
-    rval <- list(list(type="chain", model=model, buoyancy=buoyancy, height=height, width=width, CD=CD, x=0))
+    rval <- list(list(type="chain", model=model, buoyancy=buoyancy, height=height, width=width, CD=CD, x=0, z=0))
     class(rval) <- "mooring"
     rval
 }
@@ -309,16 +317,20 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
         if (is.null(diameter)) stop("must supply diameter, if creating a new float model")
         if (is.null(CD)) stop("must supply CD, if creating a new float model")
     }
-    rval <- list(list(type="float", model=model, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, x=0))
+    rval <- list(list(type="float", model=model, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, x=0, z=0))
     class(rval) <- "mooring"
     rval
 }
 
 #' Combine two mooring objects
 #'
-#' The first object is "placed" above the second (see Examples).
+#' The first object is "placed" above the second (see Examples).  Note that
+#' the first element of the first object must be the result of a call
+#' to [anchor()].
 #'
-#' @param m1,m2 objects of the `"mooring"` class.
+#' @param m1,m2 objects of `"mooring"` class.  Each can be a single element,
+#' e.g. as created by [wire()], etc., or a combination of elements, as are
+#' returned by the present function.
 #'
 #' @return an object of the `"mooring"` class that holds the
 #' combination of `m1` and `m2`.
@@ -329,7 +341,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor() + wire(height=100) + float()
+#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
 #' print(m)
 #' plot(m)
 #'
@@ -338,12 +350,28 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 `+.mooring` <- function(m1, m2)
 {
     n1 <- length(m1)
+    if (length(n1) < 1L)
+        stop("n1 must have 1 or more elements")
     n2 <- length(m2)
+    if (length(n2) < 1L)
+        stop("n2 must have 1 or more elements")
     rval <- vector("list", n1+n2)
-    for (i in seq_len(n1))
+    mooringHeight <- 0 # for computing z
+    for (i in seq_len(n1)) {
         rval[[i]] <- m1[[i]]
-    for (i in seq_len(n2))
+        rval[[i]]$x <- 0
+        mooringHeight <- mooringHeight + m1[[i]]$height
+    }
+    for (i in seq_len(n2)) {
         rval[[n1 + i]] <- m2[[i]]
+        rval[[n1 + i]]$x <- 0
+        mooringHeight <- mooringHeight + m2[[i]]$height
+    }
+    height <- cumsum(sapply(rval, function(x) x$height))
+    #> cat("height: ", paste(height, collapse=" "), "\n")
+    depth <- if ("anchor" == m1[[1]]$type) m1[[1]]$depth else sum(sapply(rval, function(x) x$height))
+    for (i in seq_len(n1+n2))
+        rval[[i]]$z <- height[i] - depth
     class(rval) <- "mooring"
     rval
 }
@@ -356,7 +384,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor() + wire(height=100) + float()
+#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
 #' print(m)
 #'
 #' @export
@@ -364,14 +392,18 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #' @author Dan Kelley
 print.mooring <- function(x, ...)
 {
+    m <- x # we only use 'x' above to obey the R rules on generics.
     n <- length(x)
-    if (0 == n) {
+    if (0 == n)
         stop("Empty object (programming error)\n")
-    } else {
         if (n == 1) {
             cat("Single element:\n")
         } else {
-            cat("Mooring with", n, "elements, listed top-down:\n")
+            if (m[[1]]$type == "anchor") {
+                cat("Mooring in", m[[1]]$depth, "m of water, with", n, "elements, listed top-down:\n")
+            } else {
+                cat("Mooring with", n, "elements, listed top-down:\n")
+            }
         }
         for (i in rev(seq_len(n))) {
             xi <- x[[i]]
@@ -379,18 +411,21 @@ print.mooring <- function(x, ...)
             # wire has buoyancy in kg/m, whereas other things have it in kg.  Also,
             # should report depth ranges, etc.
             if (xi$type == "wire") {
-                cat(sprintf("  %s   model=\"%s\", buoyancy=%g kg/m, height=%g m, width=%g m\n", xi$type, xi$model, xi$buoyancy, xi$height, xi$width), sep="")
+                cat(sprintf("  %s   model=\"%s\", buoyancy=%g kg/m, length=%g m, width=%g m, x=%g m, z=%g m\n",
+                            xi$type, xi$model, xi$buoyancy, xi$height, xi$width, xi$x, xi$z), sep="")
             } else if (xi$type == "chain") {
-                cat(sprintf("  %s  model=\"%s\", buoyancy=%g kg/m, height=%g m, width=%g m\n", xi$type, xi$model, xi$buoyancy, xi$height, xi$width), sep="")
+                cat(sprintf("  %s  model=\"%s\", buoyancy=%g kg/m, length=%g m, width=%g m, x=%g m, z=%g m\n",
+                            xi$type, xi$model, xi$buoyancy, xi$height, xi$width, xi$x, xi$z), sep="")
             } else if (xi$type == "anchor") {
-                cat(sprintf("  %s model=\"%s\", height=%g m\n", xi$type, xi$model, xi$height), sep="")
+                cat(sprintf("  %s model=\"%s\", height=%g m, x=%g m, z=%g m\n",
+                            xi$type, xi$model, xi$height, xi$x, xi$z), sep="")
             } else if (xi$type == "float") {
-                cat(sprintf("  %s  model=\"%s\", buoyancy=%g kg, height=%g m, diameter=%g m\n", xi$type, xi$model, xi$buoyancy, xi$height, xi$diameter), sep="")
+                cat(sprintf("  %s  model=\"%s\", buoyancy=%g kg, height=%g m, diameter=%g m, x=%g m, z=%g m\n",
+                            xi$type, xi$model, xi$buoyancy, xi$height, xi$diameter, xi$x, xi$z), sep="")
             } else {
                 stop("unknown type \"", xi$type, "\"")
             }
         }
-    }
     invisible(x)
 }
 
@@ -404,10 +439,10 @@ print.mooring <- function(x, ...)
 #' # Create, summarize, and plot a simple mooring comprising
 #' # a bottom anchor, a 100-metre wire, and a float.
 #' library(mooring)
-#' m <- anchor() + wire(height=100) + float()
+#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
 #' plot(m)
-
-#' @importFrom graphics axis box lines mtext par points rect text
+#'
+#' @importFrom graphics abline axis box lines mtext par points rect text
 #'
 #' @export
 #'
@@ -415,39 +450,64 @@ print.mooring <- function(x, ...)
 plot.mooring <- function(x, ...)
 {
     m <- x # we only use 'x' above to obey the R rules on generics.
-    x <- rev(sapply(m, function(mi) mi$x))
-    z <- rev(sapply(m, function(mi) mi$z))
+    colWater <- "#ccdcff"
+    colBottom <- "#e6bb98"
+    colStagnant <- "darkgray"
+    dots <- list(...)
+    debug <- 0L
+    if ("debug" %in% names(dots))
+        debug <- as.integer(max(0L, dots$debug))
+    x <- sapply(m, function(mi) mi$x)
+    z <- sapply(m, function(mi) mi$z)
+    if (debug) {
+        cat("next is x:\n")
+        print(x)
+        cat("next is z:\n")
+        print(z)
+    }
     depth <- -z
+    waterDepth <- if ("anchor" == m[[1]]$type) m[[1]]$depth else abs(min(depth))
+    message("waterDepth=", waterDepth)
     omar <- par("mar")
     omgp <- par("mgp")
     par(mar=c(3.0, 3.5, 1.5, 1), mgp=c(2, 0.7, 0))
-    plot(x, depth, ylim=c(max(depth), 0), asp=1, type="l", xlab="Horizontal position [m]", ylab="Depth [m]")
+    plot(x, depth, ylim=c(waterDepth, 0), asp=1, type="l", xlab="Horizontal position [m]", ylab="Depth [m]")
     box()
-    #> axis(2)
-    #> axis(3)
-    #> mtext("x [m]", side=3, line=par("mgp")[1])
-    #> mtext("depth [m]", side=2, line=par("mgp")[1])
     usr <- par("usr")
-    grid()
-    rect(usr[1], usr[3], usr[2], max(depth), col="#f5d9ab")
-    return(invisible())
-    bottom <- -max(l) # Kludge ... maybe we want a water() function
-    z <- bottom + l
-    plot(rep(0, length(l)), z, xlim=c(-0.5, 0.5), xlab="", ylab="z [m]", type="n", axes=FALSE)
-    axis(2)
-    box()
-    rect(usr[1], usr[3], usr[2], bottom, col="#f5d9ab")
-    #points(rep(0, length(l)), z, pch="+")
-    Z <- bottom
-    for (i in seq_along(x)) {
-        if (x[[i]]$type == "anchor") {
-            points(0, bottom + l[i], pch=20)
-            text(0, bottom + l[i], "Anchor", pos=4)
-        } else if (x[[i]]$type == "float") {
-            points(0, bottom + l[i], pch=20)
-            text(0, bottom + l[i], "Float", pos=4)
-        } else if (x[[i]]$type == "wire") {
-            lines(rep(0, 2), bottom + c(l[i-1], l[i]))
+    rect(usr[1], waterDepth, usr[2], 0, col=colWater, border=NA)
+    grid(col="white")
+    abline(h=0, col=colWater)
+    # Draw shape if water is stagnant
+    mooringLength <- sum(sapply(m, function(x) x$height))  
+    message("DAN 1 length(depth)=",length(depth))
+    print(depth)
+    message("DAN 1 length(mooringLength)=",length(mooringLength))
+
+    lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=2)
+    message("DAN 2")
+    points(0, waterDepth - mooringLength, pch=20, col=colStagnant)
+    message("DAN 3")
+    # Draw actual shape (possibly knocked-over)
+    lines(x, depth, lwd=2*par("lwd"))
+    message("DAN 4")
+    rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
+    for (i in seq_along(m)) {
+        type <- m[[i]]$type
+        x <- m[[i]]$x
+        z <- m[[i]]$z
+        #> message("i=",i,", z[i]=", z[i], ", type=", m[[i]]$type)
+        if (type == "anchor") {
+            if (debug)
+                cat("i=", i, " (anchor at x=", x, ", z=", z, ")\n")
+            points(x, -z, pch=20)
+            text(x, -z, "A", pos=2)
+        } else if (type == "float") {
+            if (debug)
+                cat("i=", i, " (float at x=", x, ", z=", z, ")\n")
+            points(x, -z, pch=20)
+            text(x, -z, "F", pos=4)
+        } else if (type == "wire") {
+            #> message("draw wire??")
         }
     }
     par(mar=omar, mgp=omgp)
@@ -519,65 +579,98 @@ discretise <- function(m, by=1)
 #' defined as height (in m) above the sea surface, so that e.g.
 #' `v=function(z) 0.5*exp(z/100)` mould be used to specify a current that
 #' is 0.5m/s at the surface, dropping exponentially through the water column,
-#' reacing to 0.18m/s a hundred metres below the surface.
+#' reaching to 0.18m/s a hundred metres below the surface.
 #'
+#' @param debug an integer controlling debugging.  The default value of 0
+#' means to work silently. Use a positive value to cause the function to
+#' print some information about intermediate results.
+#'
+#' @examples
+#' library(mooring)
+#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
+#' md <- discretise(m)
+#' mdk <- knockdown(md, u=1)
+#' plot(mdk)
+#'
+#' @importFrom graphics grid
+#' @importFrom utils tail
 #' @export
 #' @author Dan Kelley
-knockdown <- function(m, u=1)
+knockdown <- function(m, u=1, debug=0L)
 {
+    debug <- as.integer(max(0, debug))
     if (is.function(u))
         stop("FIXME: u=function() is not coded yet")
     # Trim the anchor, which is not used in this calculation
     morig <- m
+    depth <- 0
     if (m[[1]]$type == "anchor") {
+        depth <- m[[1]]$depth
         m <- tail(m, -1)
         class(m) <- "mooring"
+    } else {
+        stop("the mooring must start with an object creatred with anchor()")
     }
     # reverse elements, to make it simpler to work from top down
+    mrev <- rev(m)
+    class(mrev) <- "mooring"
     g <- 9.8
     rho <- 1027
-    m <- rev(m)
-    class(m) <- "mooring"
     # Depth below surface (FIXME: how to have more water above?)
-    depth <- cumsum(sapply(m, function(item) item$height))
-    B <- g * unlist(lapply(m, function(item) item$buoyancy))
-    A <- unlist(lapply(m,
+    depth <- cumsum(sapply(mrev, function(item) item$height))
+    if (debug > 0L) {
+        cat("depth: ", paste(depth, collapse=" "), "\n")
+    }
+    B <- g * unlist(lapply(mrev, function(item) item$buoyancy))
+    A <- unlist(lapply(mrev,
                        function(item) {
                            if (item$type == "float") item$height * item$diameter
                            else item$height * item$width
                        }))
-    CD <- unlist(lapply(m, function(item) item$CD))
-    height <- unlist(lapply(m, function(item) item$height))
+    CD <- unlist(lapply(mrev, function(item) item$CD))
+    height <- unlist(lapply(mrev, function(item) item$height))
     D <- 0.5 * A * rho * CD * u^2
     #> par(mfrow=c(2, 2))
     #> plot(B, -d);plot(D, -d)
     # computation
-    n <- length(m)
+    n <- length(mrev)
+    # We won't define phi[1] and T[1], and will trim them
+    # after the calculation.  The only purpose in setting up
+    # n elements is to make the formulae match those in the
+    # vignette.
     phi <- rep(NA, n)
-    T <- rep(NA,n)
+    T <- rep(NA, n)
     phi[2] <- atan2(D[1], B[1]) # radians
     T[2] <- sqrt(D[1]^2 + B[1]^2)
-    for (i in 3:n) {
-        phi[i] <- atan2(D[i-1]+T[i-1]*sin(phi[i-1]), B[i-1]+T[i-1]*cos(phi[i-1]))
-        T[i] <- sqrt((D[i-1]+T[i-1]*sin(phi[i-1]))^2+(B[i-1]+T[i-1]*cos(phi[i-1]))^2)
+    if (n > 2) {
+        for (i in 3:n) {
+            phi[i] <- atan2(D[i-1]+T[i-1]*sin(phi[i-1]), B[i-1]+T[i-1]*cos(phi[i-1]))
+            T[i] <- sqrt((D[i-1]+T[i-1]*sin(phi[i-1]))^2+(B[i-1]+T[i-1]*cos(phi[i-1]))^2)
+        }
     }
-    #> plot(phi, -d);plot(T, -d)
-    x <- rev(cumsum(height * rev(sin(phi))))
-    z <- rev(cumsum(height * rev(cos(phi))))
-    depth <- cumsum(height)
-    #>>> plot(x, depth, ylim=rev(range(depth)), asp=1, type="l")
-    #>>> bottom <- sum(sapply(morig, function(item) item$height))
-    #>>> message("bottom=",bottom)
-    #>>> abline(h=bottom)
-    #>>> lines(rep(0,2), c(bottom, 0), col=2)
-    # reverse? change NA? append 0?
-    bottom <- sum(sapply(morig, function(item) item$height))
-    X <- c(tail(x, -1), 0, 0)
-    Z <- c(tail(z, -1), 0, 0)
+    phi <- tail(phi, -1L)
+    T <- tail(T, -1L)
+    if (debug > 0L) {
+        print(data.frame(phi_deg=phi*180/pi, T_kg=T/g))
+    }
+    # Find x and z by integrating from bottom up.
+    phiRev <- rev(phi)
+    heightRev <- rev(height)[-1]
+    x <- cumsum(heightRev*sin(phiRev))
+    z <- cumsum(heightRev*cos(phiRev)) - head(depth, -1L)
+    if (debug > 0L) {
+        plot(x, z, asp=1,type="l", ylim=c(-depth, 0))
+        lines(rep(0, 2), c(-depth, -depth+sum(sapply(morig,function(item) item$height))), col="gray", lwd=2)
+        grid()
+        mtext(sprintf("max z %.2fm", max(z)))
+    }
     rval <- morig
+    # FIXME this duplication of the last element seems wrong
+    x <- c(0, x, tail(x,1))
+    z <- c(-depth, z, tail(z,1))
     for (i in seq_along(morig)) {
-        rval[[i]]$x <- X[i]
-        rval[[i]]$z <- Z[i] - bottom
+        rval[[i]]$x <- x[i]
+        rval[[i]]$z <- z[i]
     }
     class(rval) <- "mooring"
     rval

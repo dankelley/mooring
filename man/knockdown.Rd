@@ -4,14 +4,35 @@
 \alias{knockdown}
 \title{Compute how a mooring is knocked down by a current}
 \usage{
-knockdown(m)
+knockdown(m, u = 1, debug = 0L)
 }
 \arguments{
 \item{m}{an object of the \code{"mooring"} class, usually created with
 \code{\link[=discretise]{discretise()}}.}
+
+\item{u}{either a non-negative number indicating depth-independent velocity,
+or a function that returns that velocity as a function of the vertical
+coordinate.  For the second case, note that the vertical coordinate is
+defined as height (in m) above the sea surface, so that e.g.
+\code{v=function(z) 0.5*exp(z/100)} mould be used to specify a current that
+is 0.5m/s at the surface, dropping exponentially through the water column,
+reaching to 0.18m/s a hundred metres below the surface.}
+
+\item{debug}{an integer controlling debugging.  The default value of 0
+means to work silently. Use a positive value to cause the function to
+print some information about intermediate results.}
 }
 \description{
-Compute how a mooring is knocked down by a current
+The current may be a depth-independent or depth-dependent,
+as specified by the \code{v} argument.
+}
+\examples{
+library(mooring)
+m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
+md <- discretise(m)
+mdk <- knockdown(md, u=1)
+plot(mdk)
+
 }
 \author{
 Dan Kelley

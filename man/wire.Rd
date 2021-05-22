@@ -7,7 +7,7 @@
 wire(
   model = "1/4 wire/jack",
   buoyancy = NULL,
-  height = NULL,
+  length = NULL,
   width = NULL,
   CD = NULL
 )
@@ -22,7 +22,7 @@ otherwise, these arguments are ignored.}
 
 \item{buoyancy}{numeric value of the buoyancy per length of wire, in kg/m.}
 
-\item{height}{numeric value indicating the length of the wire, in metres.}
+\item{length}{numeric value indicating the length of the wire, in metres.}
 
 \item{width}{numeric value for the width of the wire, in m.
 This is ignored if \code{model} is recognized.}
@@ -41,18 +41,18 @@ Note that all dimensions are specified in m, not cm.
 \details{
 The permitted \code{model} values are listed alphabetically below, as listed with \code{wire("?")}:
 \preformatted{
-"1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"      
+"1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"
 "1/2 Dyneema"      "1/2 Kevlar"       "1/2 Neutral Wire"
 "1/2 VLS"          "1/2 wire/jack"    "1/4 AmSteel-Blue"
-"1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"   
+"1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"
 "1/4-1/2 WarpSpd"  "11mm Perlon"      "1in Neutral Wire"
-"3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"       
-"3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"      
-"3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"     
+"3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"
+"3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"
+"3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"
 "5/16 wire rope"   "5/16 wire/jack"   "5/8 AmSteel-Blue"
-"5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"     
-"7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"     
-"9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"  
+"5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"
+"7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"
+"9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"
 }
 }
 \seealso{

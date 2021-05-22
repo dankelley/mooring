@@ -4,7 +4,10 @@
 *.swp
 .DS_Store
 *.out
-vignettes/*pdf
+vignettes/*.pdf
+vignettes/*.html
+tests/*.pdf
+tests/testthat/*.pdf
 /doc/
 /Meta/
 .Rapp.history
