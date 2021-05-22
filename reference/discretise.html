@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a wire object — wire • mooring</title>
+<title>Discretise the wire portions of a mooring — discretise • mooring</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,10 @@
 
 
 
-<meta property="og:title" content="Create a wire object — wire" />
-<meta property="og:description" content="Creates an object that describes a mooring wire, or other type of line, e.g.
-nylon ropes are considered wires, for this purpose.
-Note that all dimensions are specified in m, not cm." />
+<meta property="og:title" content="Discretise the wire portions of a mooring — discretise" />
+<meta property="og:description" content="Break up wire portions of a mooring into smaller chunks,
+so that the deformation by a current can be traced more
+accurately by knockdown()." />
 
 
 
@@ -123,85 +123,45 @@ Note that all dimensions are specified in m, not cm." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a wire object</h1>
+    <h1>Discretise the wire portions of a mooring</h1>
     
-    <div class="hidden name"><code>wire.Rd</code></div>
+    <div class="hidden name"><code>discretise.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates an object that describes a mooring wire, or other type of line, e.g.
-nylon ropes are considered wires, for this purpose.
-Note that all dimensions are specified in m, not cm.</p>
+    <p>Break up <code>wire</code> portions of a mooring into smaller chunks,
+so that the deformation by a current can be traced more
+accurately by <code><a href='knockdown.html'>knockdown()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>wire</span><span class='op'>(</span>
-  model <span class='op'>=</span> <span class='st'>"1/4 wire/jack"</span>,
-  buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
-  length <span class='op'>=</span> <span class='cn'>NULL</span>,
-  width <span class='op'>=</span> <span class='cn'>NULL</span>,
-  CD <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>discretise</span><span class='op'>(</span><span class='va'>m</span>, by <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>character value indicating the model name of the wire. The
-default, <code>"1/4 wire/jack"</code>, is for quarter-inch jacketed steel wire. If
-model is set to <code>"?"</code>, then the default is returned, but first a list
-of possible model values is printed. If model is not recognized, then
-wire creates a new type, using the stated diameter and CD values;
-otherwise, these arguments are ignored.</p></td>
+      <th>m</th>
+      <td><p>an object of the <code>"mooring"</code> class.</p></td>
     </tr>
     <tr>
-      <th>buoyancy</th>
-      <td><p>numeric value of the buoyancy per length of wire, in kg/m.</p></td>
-    </tr>
-    <tr>
-      <th>length</th>
-      <td><p>numeric value indicating the length of the wire, in metres.</p></td>
-    </tr>
-    <tr>
-      <th>width</th>
-      <td><p>numeric value for the width of the wire, in m.
-This is ignored if <code>model</code> is recognized.</p></td>
-    </tr>
-    <tr>
-      <th>CD</th>
-      <td><p>numeric value for the drag coefficient for the wire.
-This is ignored if <code>model</code> is recognized.</p></td>
+      <th>by</th>
+      <td><p>numeric value giving the rough size of the chunks.
+The actual size is computed as the length of wire, divided
+by the rounded ratio of that length to <code>by</code>. For example,
+using <code>by=10</code> with a 95-m length of wire will result
+in chunks of length 9.5m, not 10m.  In shallow water moorings,
+the default value of 1m makes sense, but larger values
+might be employed for moorings in the deep ocean. If <code>by</code>
+exceeds the height of a wire portion, then that portion is not
+subdivided.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>wire returns an object of the <code>"mooring"</code> class, with <code>type</code> equal to <code>"wire"</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The permitted <code>model</code> values are listed alphabetically below, as listed with <code>wire("?")</code>:</p><pre>
-"1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"
-"1/2 Dyneema"      "1/2 Kevlar"       "1/2 Neutral Wire"
-"1/2 VLS"          "1/2 wire/jack"    "1/4 AmSteel-Blue"
-"1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"
-"1/4-1/2 WarpSpd"  "11mm Perlon"      "1in Neutral Wire"
-"3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"
-"3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"
-"3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"
-"5/16 wire rope"   "5/16 wire/jack"   "5/8 AmSteel-Blue"
-"5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"
-"7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"
-"9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"
-</pre>
-
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other functions that create mooring objects: 
-<code><a href='+.mooring.html'>+.mooring</a>()</code>,
-<code><a href='anchor.html'>anchor</a>()</code>,
-<code><a href='chain.html'>chain</a>()</code>,
-<code><a href='float.html'>float</a>()</code>,
-<code><a href='release.html'>release</a>()</code></p></div>
+    <p>an object of the <code>"mooring"</code> class, identical
+to <code>m</code> except that wire portions are chopped up into shorter
+pieces.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>

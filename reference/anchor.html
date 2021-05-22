@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Create an anchor object — anchor" />
-<meta property="og:description" content="Create an anchor object" />
+<meta property="og:description" content="This must be the first element of a mooring constructed with +,mooring." />
 
 
 
@@ -127,17 +127,23 @@
     </div>
 
     <div class="ref-description">
-    <p>Create an anchor object</p>
+    <p>This must be the first element of a mooring constructed with <code>+,mooring</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>anchor</span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"default_anchor"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>anchor</span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"default"</span>, depth <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>character value indicating the model of the anchor.</p></td>
+      <td><p>character value indicating the model of the anchor.
+At present, only <code>"default"</code> is permitted, and this is just
+based on a guess on height (when laid on its side).</p></td>
+    </tr>
+    <tr>
+      <th>depth</th>
+      <td><p>numeric value giving water depth in m.</p></td>
     </tr>
     </table>
 

@@ -136,16 +136,14 @@ oceanographic moorings.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create, summarize, and plot a simple mooring comprising</span>
-<span class='co'># a bottom anchor, a 100-metre wire, and a float.</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
-<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>height<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
+<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>80</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Mooring with 3 elements, listed top-down:
-#&gt;   float  model="Kiel SFS40in", buoyancy=320 kg, height=1 m, diameter=1 m
-#&gt;   wire   model="1/4 wire/jack", buoyancy=-0.13 kg/m, height=100 m, width=0.008 m
-#&gt;   anchor model="default_anchor", height=0.3 m</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='img'><img src='mooring-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; Mooring in 100 m of water, with 3 elements, listed top-down:
+#&gt;   float  model="HMB 20", buoyancy=34.5 kg, height=0.508 m, diameter=0.508 m, x=0 m, z=-19.192 m
+#&gt;   wire   model="1/4 wire/jack", buoyancy=-0.13 kg/m, length=80 m, width=0.008 m, x=0 m, z=-19.7 m
+#&gt;   anchor model="default", height=0.3 m, x=0 m, z=-99.7 m</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>waterDepth=100</span></div><div class='output co'>#&gt; <span class='message'>DAN 1 length(depth)=3</span></div><div class='output co'>#&gt; [1] 99.700 19.700 19.192</div><div class='output co'>#&gt; <span class='message'>DAN 1 length(mooringLength)=1</span></div><div class='output co'>#&gt; <span class='message'>DAN 2</span></div><div class='output co'>#&gt; <span class='message'>DAN 3</span></div><div class='output co'>#&gt; <span class='message'>DAN 4</span></div><div class='img'><img src='mooring-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
