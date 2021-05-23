@@ -17,7 +17,7 @@ based on a guess on height (when laid on its side).}
 an object of the \code{"mooring"} class, with \code{type} equal to \code{"anchor"}.
 }
 \description{
-This must be the first element of a mooring constructed with \code{\link{+,mooring}}.
+This must be the first element of a mooring constructed with \code{\link{+.mooring}}.
 }
 \seealso{
 Other functions that create mooring objects: 

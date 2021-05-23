@@ -93,9 +93,9 @@ with (Equation 1)
 \end{equation}
 while it is represented with (Equation 2)
 \begin{equation}
-\B_i = -g \mu_i \Delta l
+\B_i = -g \mu_i \Delta l_i
 \end{equation}
-for a portion of a cable of length $\Delta l$.
+for a portion of a cable of length $\Delta l_i$.
 
 The drag force is expressed with (Equation 3)
 \begin{equation}
@@ -199,7 +199,7 @@ increases to $41.2$m with a $1$m/s current, suggesting that this float would be
 of limited utility in supporting an oceanographic mooring a region with strong
 currents.
 
-```{r echo=FALSE,dev.args=list(pointsize=9),fig.cap="Response of a mooring consisting of a *Hydro Float 20* atop 100m of *Mooring Systems 3x19 3/16\"* wire cable, in a 1m/s current. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for $u=1$m/s. **Right:** Mooring shape, with gray and black as in the left panel."}
+```{r echo=FALSE,dev.args=list(pointsize=9),fig.cap="Response of a mooring to a $u=1$m/s current, as described in the text. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for the $u=1$m/s case. **Right:** Mooring shape, with gray and black as in the left panel."}
 source("example_01.R")
 ```
 

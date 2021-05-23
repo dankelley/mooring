@@ -40,7 +40,7 @@ NULL
 
 #' Create an anchor object
 #'
-#' This must be the first element of a mooring constructed with \code{\link{+,mooring}}.
+#' This must be the first element of a mooring constructed with \code{\link{+.mooring}}.
 #'
 #' @param model character value indicating the model of the anchor.
 #' At present, only `"default"` is permitted, and this is just
@@ -459,15 +459,11 @@ plot.mooring <- function(x, ...)
         debug <- as.integer(max(0L, dots$debug))
     x <- sapply(m, function(mi) mi$x)
     z <- sapply(m, function(mi) mi$z)
-    if (debug) {
-        cat("next is x:\n")
-        print(x)
-        cat("next is z:\n")
-        print(z)
-    }
+    mooringDebug(debug, x, overview=TRUE)
+    mooringDebug(debug, z, overview=TRUE)
     depth <- -z
     waterDepth <- if ("anchor" == m[[1]]$type) m[[1]]$depth else abs(min(depth))
-    message("waterDepth=", waterDepth)
+    mooringDebug(debug, waterDepth, overview=TRUE)
     omar <- par("mar")
     omgp <- par("mgp")
     par(mar=c(3.0, 3.5, 1.5, 1), mgp=c(2, 0.7, 0))
@@ -479,17 +475,11 @@ plot.mooring <- function(x, ...)
     abline(h=0, col=colWater)
     # Draw shape if water is stagnant
     mooringLength <- sum(sapply(m, function(x) x$height))  
-    message("DAN 1 length(depth)=",length(depth))
-    print(depth)
-    message("DAN 1 length(mooringLength)=",length(mooringLength))
 
     lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=2)
-    message("DAN 2")
     points(0, waterDepth - mooringLength, pch=20, col=colStagnant)
-    message("DAN 3")
     # Draw actual shape (possibly knocked-over)
     lines(x, depth, lwd=2*par("lwd"))
-    message("DAN 4")
     rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
     for (i in seq_along(m)) {
         type <- m[[i]]$type
@@ -603,9 +593,9 @@ knockdown <- function(m, u=1, debug=0L)
         stop("FIXME: u=function() is not coded yet")
     # Trim the anchor, which is not used in this calculation
     morig <- m
-    depth <- 0
+    waterDepth <- 0
     if (m[[1]]$type == "anchor") {
-        depth <- m[[1]]$depth
+        waterDepth <- m[[1]]$depth
         m <- tail(m, -1)
         class(m) <- "mooring"
     } else {
@@ -618,9 +608,7 @@ knockdown <- function(m, u=1, debug=0L)
     rho <- 1027
     # Depth below surface (FIXME: how to have more water above?)
     depth <- cumsum(sapply(mrev, function(item) item$height))
-    if (debug > 0L) {
-        cat("depth: ", paste(depth, collapse=" "), "\n")
-    }
+    mooringDebug(debug, depth, overview=TRUE)
     B <- g * unlist(lapply(mrev, function(item) item$buoyancy))
     A <- unlist(lapply(mrev,
                        function(item) {
@@ -651,23 +639,35 @@ knockdown <- function(m, u=1, debug=0L)
     phi <- tail(phi, -1L)
     T <- tail(T, -1L)
     if (debug > 0L) {
-        print(data.frame(phi_deg=phi*180/pi, T_kg=T/g))
+        cat("next are head and tail of phi (deg) and T (kg), before adding 2 elements\n")
+        print(head(data.frame(phi_deg=phi*180/pi,T_kg=T/g),3))
+        print(tail(data.frame(phi_deg=phi*180/pi,T_kg=T/g),3))
     }
     # Find x and z by integrating from bottom up.
     phiRev <- rev(phi)
     heightRev <- rev(height)[-1]
-    x <- cumsum(heightRev*sin(phiRev))
-    z <- cumsum(heightRev*cos(phiRev)) - head(depth, -1L)
+    x <- rev(cumsum(heightRev*sin(phiRev)))
+    z <- rev(cumsum(heightRev*cos(phiRev))) - waterDepth
     if (debug > 0L) {
-        plot(x, z, asp=1,type="l", ylim=c(-depth, 0))
-        lines(rep(0, 2), c(-depth, -depth+sum(sapply(morig,function(item) item$height))), col="gray", lwd=2)
+        message("before plot, waterDepth=", waterDepth, ", length(x)=", length(x), ", length(m)=",length(morig))
+        plot(x, z, asp=1,type="l", ylim=c(-waterDepth, 0))
+        lines(rep(0, 2), c(-waterDepth, -waterDepth+sum(sapply(morig,function(item) item$height))), col="gray", lwd=2)
         grid()
         mtext(sprintf("max z %.2fm", max(z)))
+        cat("next are head and tail of x and z, before adding 2 elements\n")
+        print(head(data.frame(x=x,z=z),3))
+        print(tail(data.frame(x=x,z=z),3))
     }
     rval <- morig
-    # FIXME this duplication of the last element seems wrong
-    x <- c(0, x, tail(x,1))
-    z <- c(-depth, z, tail(z,1))
+    # Add top of anchor, and bottom of anchor.  Then reverse, to 
+    # maatch original 'm'.
+    x <- rev(c(x, 0, 0))
+    z <- rev(c(z, -waterDepth + morig[[1]]$height, -waterDepth))
+    if (debug > 0L) {
+        cat("next are head and tail of x and z, after adding 2 elements\n")
+        print(head(data.frame(x=x,z=z),3))
+        print(tail(data.frame(x=x,z=z),3))
+    }
     for (i in seq_along(morig)) {
         rval[[i]]$x <- x[i]
         rval[[i]]$z <- z[i]
@@ -675,3 +675,45 @@ knockdown <- function(m, u=1, debug=0L)
     class(rval) <- "mooring"
     rval
 }
+
+#' Optionally print a debugging message
+#'
+#' A function used for debugging within the package.
+#'
+#' @param debug an integer that controls debugging. If this is positive,
+#' then the other arguments are given to [cat()], to print a message. Note
+#' that no newline is printed, unless included in the \code{...} arguments.
+#'
+#' @param v a value to be displayed.
+#'
+#' @param ... optional extra values to be displayed.
+#'
+#' @param overview logical value indicating whether to summarize `v` (ignoring
+#' `...`), by displaying its name and some of its values.
+#'
+#' @importFrom utils head tail
+#'
+#' @export
+#'
+#' @author Dan Kelley
+mooringDebug <- function(debug, v, ..., overview=FALSE)
+{
+    debug <- as.integer(debug)
+    if (debug > 0L) {
+        if (overview) {
+            msg <- paste(deparse(substitute(expr=v, env=environment())), " ", sep="")
+            n <- length(v)
+            if (n > 1)
+                msg <- paste(msg, "[1:", n, "] ", sep="")
+            if (n < 7)
+                msg <- paste(msg, paste(v, collapse=" "), "\n", sep="")
+            else
+                msg <- paste(msg, paste(head(v, 3), collapse=" "), " ... ", paste(tail(v, 3), collapse=" "), "\n", sep="")
+            cat(msg)
+        } else {
+            cat(v, ...)
+        }
+    }
+    invisible(NULL)
+}
+
