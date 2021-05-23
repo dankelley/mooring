@@ -7,7 +7,9 @@
 release(model = "default_release")
 }
 \arguments{
-\item{model}{character value indicating the model of the acoustic release.}
+\item{model}{character value indicating the model of the acoustic release.
+At present, only \code{"default"} is permitted, and this is just
+based on a guess on height (when laid on its side).}
 }
 \value{
 an object of the \code{"mooring"} class, with \code{type} equal to \code{"release"}.

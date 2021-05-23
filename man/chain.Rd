@@ -13,7 +13,12 @@ chain(
 )
 }
 \arguments{
-\item{model}{character value indicating the model name of the item.}
+\item{model}{character value indicating the model name of the chain. The
+default is \verb{"1\\" buoy chain"}.
+Use \code{chain("?")} to get a listing of permitted values.
+If \code{model} is not recognized, then
+\link{chain} creates a new type, using the stated diameter and CD values;
+otherwise, these arguments are ignored.}
 
 \item{buoyancy}{numeric value of the buoyancy of the item, in kg.
 This is ignored if \code{model} is recognized.}
@@ -28,24 +33,17 @@ This is ignored if \code{model} is recognized.}
 This is ignored if \code{model} is recognized.}
 }
 \value{
-\link{chain} returns an object of the \code{"mooring"} class, with \code{type} equal to \code{"wire"}.
+\link{chain} returns an object of the \code{"mooring"} class, with \code{type} equal to \code{"chain"}.
 }
 \description{
 Creates an object that describes mooring chain elements such as shackles.
 Note that all dimensions are specified in m, not cm.
 }
-\details{
-The permitted \code{model} values are listed alphabetically below, as listed with \code{chain("?")}:
-\preformatted{
-[1] "1 chain SL"       "1\" buoy chain"   "1\" shackle"
-[4] "1/2 chain LL"     "1/2 chain SL"     "1/2 galv link"
-[7] "1/2 shac+3/8shac" "1/2 shackle"      "1/2 SS link"
-[10] "1/2 swivel"       "1/2\" buoy chain" "1/4 chain SL"
-[13] "3/4 swivel"       "3/4\" buoy chain" "3/4\" shackle"
-[16] "3/8 chain SL"     "3/8 shackle"      "3/8\" buoy chain"
-[19] "3T SeineSwivel"   "5/8 shackle"      "5/8\" buoy chain"
-[22] "shac-3link-shac"  "shac-Pring-shac"  "shac-ring-shac"
-}
+\examples{
+library(mooring)
+# List known chain types
+chain("?")
+
 }
 \seealso{
 Other functions that create mooring objects: 

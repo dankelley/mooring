@@ -148,9 +148,9 @@ Note that all dimensions are specified in m, not cm.</p>
     <tr>
       <th>model</th>
       <td><p>character value indicating the model name of the wire. The
-default, <code>"1/4 wire/jack"</code>, is for quarter-inch jacketed steel wire. If
-model is set to <code>"?"</code>, then the default is returned, but first a list
-of possible model values is printed. If model is not recognized, then
+default, <code>"1/4 wire/jack"</code>, is for quarter-inch jacketed steel wire.
+Use <code>wire("?")</code> to get a listing of permitted values.
+If <code>model</code> is not recognized, then
 wire creates a new type, using the stated diameter and CD values;
 otherwise, these arguments are ignored.</p></td>
     </tr>
@@ -177,23 +177,6 @@ This is ignored if <code>model</code> is recognized.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>wire returns an object of the <code>"mooring"</code> class, with <code>type</code> equal to <code>"wire"</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The permitted <code>model</code> values are listed alphabetically below, as listed with <code>wire("?")</code>:</p><pre>
-"1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"
-"1/2 Dyneema"      "1/2 Kevlar"       "1/2 Neutral Wire"
-"1/2 VLS"          "1/2 wire/jack"    "1/4 AmSteel-Blue"
-"1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"
-"1/4-1/2 WarpSpd"  "11mm Perlon"      "1in Neutral Wire"
-"3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"
-"3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"
-"3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"
-"5/16 wire rope"   "5/16 wire/jack"   "5/8 AmSteel-Blue"
-"5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"
-"7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"
-"9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"
-</pre>
-
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions that create mooring objects: 
@@ -206,6 +189,21 @@ This is ignored if <code>model</code> is recognized.</p></td>
 
     <p>Dan Kelley</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
+<span class='co'># List known wire types</span>
+<span class='fu'>wire</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; wire() takes the following strings for its 'model' argument:
+#&gt;  [1] "1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"       "1/2 Dyneema"     
+#&gt;  [5] "1/2 Kevlar"       "1/2 Neutral Wire" "1/2 VLS"          "1/2 wire/jack"   
+#&gt;  [9] "1/4 AmSteel-Blue" "1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"   
+#&gt; [13] "1/4-1/2 WarpSpd"  "11mm Perlon"      "1in Neutral Wire" "3/16 wire rope"  
+#&gt; [17] "3/4 Dacron"       "3/4 Nylon"        "3/4 Polyprop"     "3/8 AmSteel-Blue"
+#&gt; [21] "3/8 Kevlar"       "3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"     
+#&gt; [25] "5/16 wire rope"   "5/16 wire/jack"   "5/8 AmSteel-Blue" "5/8 Kevlar"      
+#&gt; [29] "5/8 Nylon"        "7/16 Dacron"      "7/16 Kevlar"      "7/16 VLS"        
+#&gt; [33] "9/16 Dacron"      "9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"  </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

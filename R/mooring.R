@@ -67,8 +67,13 @@ anchor <- function(model="default", depth=0)
 #' Create a mooring-release object
 #'
 #' @param model character value indicating the model of the acoustic release.
+#' At present, only `"default"` is permitted, and this is just
+#' based on a guess on height (when laid on its side).
+#'
 #' @return an object of the `"mooring"` class, with `type` equal to `"release"`.
+#'
 #' @family functions that create mooring objects
+#'
 #' @export
 #' @author Dan Kelley
 release <- function(model="default_release")
@@ -84,27 +89,10 @@ release <- function(model="default_release")
 #' nylon ropes are considered wires, for this purpose.
 #' Note that all dimensions are specified in m, not cm.
 #'
-#' The permitted `model` values are listed alphabetically below, as listed with `wire("?")`:
-# FIXME: rebuild this list if new items are added.
-#'\preformatted{
-#' "1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"
-#' "1/2 Dyneema"      "1/2 Kevlar"       "1/2 Neutral Wire"
-#' "1/2 VLS"          "1/2 wire/jack"    "1/4 AmSteel-Blue"
-#' "1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"
-#' "1/4-1/2 WarpSpd"  "11mm Perlon"      "1in Neutral Wire"
-#' "3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"
-#' "3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"
-#' "3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"
-#' "5/16 wire rope"   "5/16 wire/jack"   "5/8 AmSteel-Blue"
-#' "5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"
-#' "7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"
-#' "9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"
-#'}
-#'
 #' @param model character value indicating the model name of the wire. The
-#' default, `"1/4 wire/jack"`, is for quarter-inch jacketed steel wire. If
-#' model is set to `"?"`, then the default is returned, but first a list
-#' of possible model values is printed. If model is not recognized, then
+#' default, `"1/4 wire/jack"`, is for quarter-inch jacketed steel wire.
+#' Use `wire("?")` to get a listing of permitted values.
+#' If `model` is not recognized, then
 #' [wire] creates a new type, using the stated diameter and CD values;
 #' otherwise, these arguments are ignored.
 #'
@@ -122,6 +110,11 @@ release <- function(model="default_release")
 #'
 #' @family functions that create mooring objects
 #'
+#' @examples
+#' library(mooring)
+#' # List known wire types
+#' wire("?")
+#'
 #' @export
 #'
 #' @importFrom utils data
@@ -134,7 +127,7 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=NULL, width=NULL, 
     if (model == "?") {
         cat("wire() takes the following strings for its 'model' argument:\n")
         print(sort(mooringElements$wires$name))
-        model <- "1/4 wire/jack"
+        return(invisible(NULL))
     }
     if (is.null(length))
         stop("must supply length (m) of the wire")
@@ -165,20 +158,12 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=NULL, width=NULL, 
 #' Creates an object that describes mooring chain elements such as shackles.
 #' Note that all dimensions are specified in m, not cm.
 #'
-#' The permitted `model` values are listed alphabetically below, as listed with `chain("?")`:
-# FIXME: rebuild this list if new items are added.
-#'\preformatted{
-#' [1] "1 chain SL"       "1\" buoy chain"   "1\" shackle"
-#' [4] "1/2 chain LL"     "1/2 chain SL"     "1/2 galv link"
-#' [7] "1/2 shac+3/8shac" "1/2 shackle"      "1/2 SS link"
-#'[10] "1/2 swivel"       "1/2\" buoy chain" "1/4 chain SL"
-#'[13] "3/4 swivel"       "3/4\" buoy chain" "3/4\" shackle"
-#'[16] "3/8 chain SL"     "3/8 shackle"      "3/8\" buoy chain"
-#'[19] "3T SeineSwivel"   "5/8 shackle"      "5/8\" buoy chain"
-#'[22] "shac-3link-shac"  "shac-Pring-shac"  "shac-ring-shac"
-#'}
-#'
-#' @param model character value indicating the model name of the item.
+#' @param model character value indicating the model name of the chain. The
+#' default is `"1\" buoy chain"`.
+#' Use `chain("?")` to get a listing of permitted values.
+#' If `model` is not recognized, then
+#' [chain] creates a new type, using the stated diameter and CD values;
+#' otherwise, these arguments are ignored.
 #'
 #' @param buoyancy numeric value of the buoyancy of the item, in kg.
 #' This is ignored if `model` is recognized.
@@ -192,13 +177,18 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=NULL, width=NULL, 
 #' @param CD numeric value for the drag coefficient for the item.
 #' This is ignored if `model` is recognized.
 #'
-#' @return [chain] returns an object of the `"mooring"` class, with `type` equal to `"wire"`.
+#' @return [chain] returns an object of the `"mooring"` class, with `type` equal to `"chain"`.
 #'
 #' @family functions that create mooring objects
 #'
 #' @export
 #'
 #' @importFrom utils data
+#'
+#' @examples
+#' library(mooring)
+#' # List known chain types
+#' chain("?")
 #'
 #' @author Dan Kelley
 chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL, CD=NULL)
@@ -208,7 +198,7 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
     if (model == "?") {
         cat("chain() takes the following strings for its 'model' argument:\n")
         print(sort(mooringElements$chains$name))
-        model <- "1\" buoy chain"
+        return(invisible(NULL))
     }
     w <- which(mooringElements$chains$name == model)
     if (1 == length(w)) {
@@ -239,32 +229,18 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
 
 #' Create a float object
 #'
-#' Create a float object.
-#'
-#' The permitted `model` values are listed alphabetically below, as listed with `float("?")`:
-# FIXME: rebuild this list if new items are added.
-#'\preformatted{
-#'  [1] "16in Viny"        "17 in glass"      "28in ORE"
-#'  [4] "30in float"       "37in ORE"         "41in ORE"
-#'  [7] "48in ORE"         "54cm Alum CAP3"   "54x30inClamShell"
-#' [10] "61in ORE"         "ADCP FloatTech"   "BENTHOS 17in"
-#' [13] "Billings-12in"    "BPS Float"        "CDMS 1.2m sphere"
-#' [16] "CDMS 2m sphere"   "Double 16inViny"  "Double 17in"
-#' [19] "FloatTech CF-12"  "Geodyn 8' Toroid" "HMB 20"
-#' [22] "HMB 25"           "HMB 31"           "HMB 36"
-#' [25] "HMB 40"           "HMB 44"           "HMB 49"
-#' [28] "HMB 51"           "HMB 56"           "HMB 62"
-#' [31] "Kiel SFS40in"     "Top of Tow Rope"  "Torp. flt, 3-28"
-#' [34] "Tripple FT CF-12" "Trpl 12in glass"  "Trpl 16 in Viny"
-#'}
-#'
-#' **Notes:**
+#' Create a float object.  Some notes follow.
 #' 1. `HMB` in a name is a short-hand for `Hydrofloat Mooring Buoy`.  Data for these
 #' floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the `CD` value
 #' being set at 0.65 (in the absence of any data from the manufacture) because that
 #' value is used in Dewey's dataset for many floats.
 #'
-#' @param model character value indicating the model of the float.
+#' @param model character value indicating the model name of the float. The
+#' default is `"Kiel SFS40in"`.
+#' Use `float("?")` to get a listing of permitted values.
+#' If `model` is not recognized, then
+#' [float] creates a new type, using the stated diameter and CD values;
+#' otherwise, these arguments are ignored.
 #'
 #' @param buoyancy numeric value of the buoyancy of the float, in kg.
 #' This is ignored if `model` is recognized.
@@ -284,6 +260,11 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
 #'
 #' @family functions that create mooring objects
 #'
+#' @examples
+#' library(mooring)
+#' # List known float types
+#' float("?")
+#'
 #' @export
 #'
 #' @author Dan Kelley
@@ -294,7 +275,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
     if (model == "?") {
         cat("float() takes the following strings for its 'model' argument:\n")
         print(sort(mooringElements$floats$name))
-        model <- "Kiel SFS40in"
+        return(invisible(NULL))
     }
     w <- which(mooringElements$floats$name == model)
     if (1 == length(w)) {

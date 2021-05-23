@@ -40,7 +40,13 @@
 
 
 <meta property="og:title" content="Create a float object — float" />
-<meta property="og:description" content="Create a float object." />
+<meta property="og:description" content="Create a float object.  Some notes follow.
+HMB in a name is a short-hand for Hydrofloat Mooring Buoy.  Data for these
+floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the CD value
+being set at 0.65 (in the absence of any data from the manufacture) because that
+value is used in Dewey's dataset for many floats.
+
+" />
 
 
 
@@ -127,7 +133,13 @@
     </div>
 
     <div class="ref-description">
-    <p>Create a float object.</p>
+    <p>Create a float object.  Some notes follow.</p><ol>
+<li><p><code>HMB</code> in a name is a short-hand for <code>Hydrofloat Mooring Buoy</code>.  Data for these
+floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the <code>CD</code> value
+being set at 0.65 (in the absence of any data from the manufacture) because that
+value is used in Dewey's dataset for many floats.</p></li>
+</ol>
+
     </div>
 
     <pre class="usage"><span class='fu'>float</span><span class='op'>(</span>
@@ -143,7 +155,12 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>character value indicating the model of the float.</p></td>
+      <td><p>character value indicating the model name of the float. The
+default is <code>"Kiel SFS40in"</code>.
+Use <code>float("?")</code> to get a listing of permitted values.
+If <code>model</code> is not recognized, then
+float creates a new type, using the stated diameter and CD values;
+otherwise, these arguments are ignored.</p></td>
     </tr>
     <tr>
       <th>buoyancy</th>
@@ -169,30 +186,6 @@ This is ignored if <code>model</code> is recognized.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>float returns an object of the <code>"mooring"</code> class, with <code>type</code> equal to <code>"float"</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The permitted <code>model</code> values are listed alphabetically below, as listed with <code>float("?")</code>:</p><pre>
- [1] "16in Viny"        "17 in glass"      "28in ORE"
- [4] "30in float"       "37in ORE"         "41in ORE"
- [7] "48in ORE"         "54cm Alum CAP3"   "54x30inClamShell"
-[10] "61in ORE"         "ADCP FloatTech"   "BENTHOS 17in"
-[13] "Billings-12in"    "BPS Float"        "CDMS 1.2m sphere"
-[16] "CDMS 2m sphere"   "Double 16inViny"  "Double 17in"
-[19] "FloatTech CF-12"  "Geodyn 8' Toroid" "HMB 20"
-[22] "HMB 25"           "HMB 31"           "HMB 36"
-[25] "HMB 40"           "HMB 44"           "HMB 49"
-[28] "HMB 51"           "HMB 56"           "HMB 62"
-[31] "Kiel SFS40in"     "Top of Tow Rope"  "Torp. flt, 3-28"
-[34] "Tripple FT CF-12" "Trpl 12in glass"  "Trpl 16 in Viny"
-</pre>
-
-<p><strong>Notes:</strong></p><ol>
-<li><p><code>HMB</code> in a name is a short-hand for <code>Hydrofloat Mooring Buoy</code>.  Data for these
-floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the <code>CD</code> value
-being set at 0.65 (in the absence of any data from the manufacture) because that
-value is used in Dewey's dataset for many floats.</p></li>
-</ol>
-
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -212,6 +205,21 @@ value is used in Dewey's dataset for many floats.</p></li>
 
     <p>Dan Kelley</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
+<span class='co'># List known float types</span>
+<span class='fu'>float</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; float() takes the following strings for its 'model' argument:
+#&gt;  [1] "16in Viny"        "17 in glass"      "28in ORE"         "30in float"      
+#&gt;  [5] "37in ORE"         "41in ORE"         "48in ORE"         "54cm Alum CAP3"  
+#&gt;  [9] "54x30inClamShell" "61in ORE"         "ADCP FloatTech"   "BENTHOS 17in"    
+#&gt; [13] "Billings-12in"    "BPS Float"        "CDMS 1.2m sphere" "CDMS 2m sphere"  
+#&gt; [17] "Double 16inViny"  "Double 17in"      "FloatTech CF-12"  "Geodyn 8' Toroid"
+#&gt; [21] "HMB 20"           "HMB 25"           "HMB 31"           "HMB 36"          
+#&gt; [25] "HMB 40"           "HMB 44"           "HMB 49"           "HMB 51"          
+#&gt; [29] "HMB 56"           "HMB 62"           "Kiel SFS40in"     "Top of Tow Rope" 
+#&gt; [33] "Torp. flt, 3-28"  "Tripple FT CF-12" "Trpl 12in glass"  "Trpl 16 in Viny" </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

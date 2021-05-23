@@ -14,9 +14,9 @@ wire(
 }
 \arguments{
 \item{model}{character value indicating the model name of the wire. The
-default, \code{"1/4 wire/jack"}, is for quarter-inch jacketed steel wire. If
-model is set to \code{"?"}, then the default is returned, but first a list
-of possible model values is printed. If model is not recognized, then
+default, \code{"1/4 wire/jack"}, is for quarter-inch jacketed steel wire.
+Use \code{wire("?")} to get a listing of permitted values.
+If \code{model} is not recognized, then
 \link{wire} creates a new type, using the stated diameter and CD values;
 otherwise, these arguments are ignored.}
 
@@ -38,22 +38,11 @@ Creates an object that describes a mooring wire, or other type of line, e.g.
 nylon ropes are considered wires, for this purpose.
 Note that all dimensions are specified in m, not cm.
 }
-\details{
-The permitted \code{model} values are listed alphabetically below, as listed with \code{wire("?")}:
-\preformatted{
-"1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"
-"1/2 Dyneema"      "1/2 Kevlar"       "1/2 Neutral Wire"
-"1/2 VLS"          "1/2 wire/jack"    "1/4 AmSteel-Blue"
-"1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"
-"1/4-1/2 WarpSpd"  "11mm Perlon"      "1in Neutral Wire"
-"3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"
-"3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"
-"3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"
-"5/16 wire rope"   "5/16 wire/jack"   "5/8 AmSteel-Blue"
-"5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"
-"7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"
-"9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"
-}
+\examples{
+library(mooring)
+# List known wire types
+wire("?")
+
 }
 \seealso{
 Other functions that create mooring objects: 
