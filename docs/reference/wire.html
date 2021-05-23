@@ -137,7 +137,7 @@ Note that all dimensions are specified in m, not cm.</p>
     <pre class="usage"><span class='fu'>wire</span><span class='op'>(</span>
   model <span class='op'>=</span> <span class='st'>"1/4 wire/jack"</span>,
   buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
-  height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  length <span class='op'>=</span> <span class='cn'>NULL</span>,
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
   CD <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
@@ -159,7 +159,7 @@ otherwise, these arguments are ignored.</p></td>
       <td><p>numeric value of the buoyancy per length of wire, in kg/m.</p></td>
     </tr>
     <tr>
-      <th>height</th>
+      <th>length</th>
       <td><p>numeric value indicating the length of the wire, in metres.</p></td>
     </tr>
     <tr>
@@ -180,18 +180,18 @@ This is ignored if <code>model</code> is recognized.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The permitted <code>model</code> values are listed alphabetically below, as listed with <code>wire("?")</code>:</p><pre>
-"1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"      
+"1 Nylon"          "1/2 AmSteel-Blue" "1/2 Dacron"
 "1/2 Dyneema"      "1/2 Kevlar"       "1/2 Neutral Wire"
 "1/2 VLS"          "1/2 wire/jack"    "1/4 AmSteel-Blue"
-"1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"   
+"1/4 Kevlar"       "1/4 wire rope"    "1/4 wire/jack"
 "1/4-1/2 WarpSpd"  "11mm Perlon"      "1in Neutral Wire"
-"3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"       
-"3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"      
-"3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"     
+"3/16 wire rope"   "3/4 Dacron"       "3/4 Nylon"
+"3/4 Polyprop"     "3/8 AmSteel-Blue" "3/8 Kevlar"
+"3/8 wire rope"    "3/8 wire/jack"    "5/16 Kevlar"
 "5/16 wire rope"   "5/16 wire/jack"   "5/8 AmSteel-Blue"
-"5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"     
-"7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"     
-"9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"  
+"5/8 Kevlar"       "5/8 Nylon"        "7/16 Dacron"
+"7/16 Kevlar"      "7/16 VLS"         "9/16 Dacron"
+"9/16 Kevlar"      "BPS Cable"        "BPS Power/Coms"
 </pre>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

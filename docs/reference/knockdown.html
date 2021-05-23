@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Combine two mooring objects — +.mooring • mooring</title>
+<title>Compute how a mooring is knocked down by a current — knockdown • mooring</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,9 @@
 
 
 
-<meta property="og:title" content="Combine two mooring objects — +.mooring" />
-<meta property="og:description" content="The first object is &quot;placed&quot; above the second (see Examples).  Note that
-the first element of the first object must be the result of a call
-to anchor()." />
+<meta property="og:title" content="Compute how a mooring is knocked down by a current — knockdown" />
+<meta property="og:description" content="The current may be a depth-independent or depth-dependent,
+as specified by the v argument." />
 
 
 
@@ -123,49 +122,44 @@ to anchor()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Combine two mooring objects</h1>
+    <h1>Compute how a mooring is knocked down by a current</h1>
     
-    <div class="hidden name"><code>plus-.mooring.Rd</code></div>
+    <div class="hidden name"><code>knockdown.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The first object is "placed" above the second (see Examples).  Note that
-the first element of the first object must be the result of a call
-to <code><a href='anchor.html'>anchor()</a></code>.</p>
+    <p>The current may be a depth-independent or depth-dependent,
+as specified by the <code>v</code> argument.</p>
     </div>
 
-    <pre class="usage"># S3 method for mooring
-+(m1, m2)</pre>
+    <pre class="usage"><span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>m</span>, u <span class='op'>=</span> <span class='fl'>1</span>, debug <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>m1, m2</th>
-      <td><p>objects of <code>"mooring"</code> class.  Each can be a single element,
-e.g. as created by <code><a href='wire.html'>wire()</a></code>, etc., or a combination of elements, as are
-returned by the present function.</p></td>
+      <th>m</th>
+      <td><p>an object of the <code>"mooring"</code> class, usually created with
+<code><a href='discretise.html'>discretise()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>u</th>
+      <td><p>either a non-negative number indicating depth-independent velocity,
+or a function that returns that velocity as a function of the vertical
+coordinate.  For the second case, note that the vertical coordinate is
+defined as height (in m) above the sea surface, so that e.g.
+<code>v=function(z) 0.5*exp(z/100)</code> mould be used to specify a current that
+is 0.5m/s at the surface, dropping exponentially through the water column,
+reaching to 0.18m/s a hundred metres below the surface.</p></td>
+    </tr>
+    <tr>
+      <th>debug</th>
+      <td><p>an integer controlling debugging.  The default value of 0
+means to work silently. Use a positive value to cause the function to
+print some information about intermediate results.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>an object of the <code>"mooring"</code> class that holds the
-combination of <code>m1</code> and <code>m2</code>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other functions that create mooring objects: 
-<code><a href='anchor.html'>anchor</a>()</code>,
-<code><a href='chain.html'>chain</a>()</code>,
-<code><a href='float.html'>float</a>()</code>,
-<code><a href='release.html'>release</a>()</code>,
-<code><a href='wire.html'>wire</a>()</code></p>
-<p>Other functions that create mooring objects: 
-<code><a href='anchor.html'>anchor</a>()</code>,
-<code><a href='chain.html'>chain</a>()</code>,
-<code><a href='float.html'>float</a>()</code>,
-<code><a href='release.html'>release</a>()</code>,
-<code><a href='wire.html'>wire</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
@@ -173,12 +167,10 @@ combination of <code>m1</code> and <code>m2</code>.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
 <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>80</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Mooring in 100 m of water, with 3 elements, listed top-down:
-#&gt;   float  model="HMB 20", buoyancy=34.5 kg, height=0.508 m, diameter=0.508 m, x=0 m, z=-19.192 m
-#&gt;   wire   model="1/4 wire/jack", buoyancy=-0.13 kg/m, length=80 m, width=0.008 m, x=0 m, z=-19.7 m
-#&gt;   anchor model="default", height=0.3 m, x=0 m, z=-99.7 m</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='img'><img src='plus-.mooring-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='discretise.html'>discretise</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+<span class='va'>mdk</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>mdk</span><span class='op'>)</span>
+</div><div class='img'><img src='knockdown-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

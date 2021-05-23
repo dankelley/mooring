@@ -81,7 +81,7 @@
       <h1 data-toc-skip>Mooring Response to Unidirectional Flow</h1>
                         <h4 class="author">Dan Kelley</h4>
             
-            <h4 class="date">2021-05-18</h4>
+            <h4 class="date">2021-05-23</h4>
       
       
       <div class="hidden name"><code>knockdown_model.Rmd</code></div>
@@ -112,52 +112,53 @@
 <p>The buoyancy force for a solid object such as an anchor or a float is found with (Equation 1) <span class="math display">\[\begin{equation}
 {\cal B}_i = -g m_i
 \end{equation}\]</span> while it is represented with (Equation 2) <span class="math display">\[\begin{equation}
-{\cal B}_i = -g \mu_i \Delta l
-\end{equation}\]</span> for a portion of a cable of length <span class="math inline">\(\Delta l\)</span>.</p>
+{\cal B}_i = -g \mu_i \Delta l_i
+\end{equation}\]</span> for a portion of a cable of length <span class="math inline">\(\Delta l_i\)</span>.</p>
 <p>The drag force is expressed with (Equation 3) <span class="math display">\[\begin{equation}
 {\cal D}_i = \frac{1}{2} A_i C_i \rho_i u_i |u_i|
 \end{equation}\]</span> where <span class="math inline">\(A_i\)</span> is the area projected in the flow direction.</p>
-<p>With these definitions, the force balances in the horizontal and vertical may be expressed as follows. The top element (<span class="math inline">\(i=1\)</span>) has no stress being applied from above, so the drag and buoyancy are matched with the stress components, with (Equation 4) <span class="math display">\[\begin{equation}
+<p>With these definitions, a steady-state assumption dictates that forces must be balanced in the horizontal and vertical directions for each element of the mooring.</p>
+<p>Consider the case of a mooring consisting of <span class="math inline">\(n\)</span> elements attached to an immovable bottom anchor, and let the index <span class="math inline">\(i=1\)</span> refer to the top element, with <span class="math inline">\(i\)</span> increasing to <span class="math inline">\(i=n\)</span> at the anchor.</p>
+<p>Three forces are involved in this situation: (a) a horizontal drag force, <span class="math inline">\({\cal D}\)</span>, associated with the current, (b) a vertical buoyancy force, <span class="math inline">\({\cal B}\)</span>, caused by a density mismatch between a component and the background water, and (c) a tension force, <span class="math inline">\({\cal T}\)</span>, along the connection between elements. The tension force has only a vertical component for an upright mooring, but horizontal components occur for a mooring that is tilted by a current.</p>
+<p>By definition, the top element has no tension from above, and so its force balance is (Equation 4) <span class="math display">\[\begin{equation}
 \begin{split}
 {\cal D}_1 &amp;= {\cal T}_2 \sin\phi_2\cr
 {\cal B}_1 &amp;= {\cal T}_2 \cos\phi_2
 \end{split}
-\end{equation}\]</span> from which <span class="math inline">\(\phi_2\)</span> and <span class="math inline">\({\cal T}_2\)</span> may be inferred with (Equation 5) <span class="math display">\[\begin{equation}
+\end{equation}\]</span> where <span class="math inline">\({\cal T}_2\)</span> is the tension between this element and the one below it, and <span class="math inline">\(\phi_2\)</span> is the angle that tension force makes to the vertical. These two equations may be solved for <span class="math inline">\({\cal T}_2\)</span> and <span class="math inline">\(\phi_2\)</span>, yielding (Equation 5) <span class="math display">\[\begin{equation}
 \begin{split}
-\phi_2 &amp;= \tan^{-1}\frac{{\cal D}_1}{{\cal B}_1}\cr
-{\cal T}_2 &amp;= \sqrt{{\cal D}_1^2 + {\cal B}_1^2}
+{\cal T}_2 &amp;= \sqrt{{\cal D}_1^2 + {\cal B}_1^2}\cr
+\phi_2 &amp;= \tan^{-1}\frac{{\cal D}_1}{{\cal B}_1}
 \end{split}
 \end{equation}\]</span></p>
-<p>The force balance for the second element (<span class="math inline">\(i=2\)</span>) is (Equation 6) <span class="math display">\[\begin{equation}
+<p>If there are more than 2 elements in the mooring, this same reasoning, extended to account for stress and angle below the first element, yields (Equation 6) <span class="math display">\[\begin{equation}
 \begin{split}
 {\cal D}_2 + {\cal T}_2 \sin\phi_2 &amp;= {\cal T}_3 \sin\phi_3\cr
 {\cal B}_2 + {\cal T}_2 \cos\phi_2 &amp;= {\cal T}_3 \cos\phi_3
 \end{split}
-\end{equation}\]</span> Since <span class="math inline">\(\phi_2\)</span> and <span class="math inline">\({\cal T}_2\)</span> are known from Equation 5, Equation 6 may be solved with (Equation 7) <span class="math display">\[\begin{equation}
+\end{equation}\]</span> and, since <span class="math inline">\(\phi_2\)</span> and <span class="math inline">\({\cal T}_2\)</span> are known from Equation 5, Equation 6 may be solved with (Equation 7) <span class="math display">\[\begin{equation}
 \begin{split}
-\phi_3 &amp;= \tan^{-1}\frac{{\cal D}_2+{\cal T}_2\sin\phi_2}{{\cal B}_2+{\cal T}_2\cos\phi_2}\cr
-{\cal T}_3 &amp;= \sqrt{({\cal D}_2+{\cal T}_2\sin\phi_2)^2 + ({\cal B}_2+{\cal T}_2\cos\phi_2)^2}
+{\cal T}_3 &amp;= \sqrt{({\cal D}_2+{\cal T}_2\sin\phi_2)^2 + ({\cal B}_2+{\cal T}_2\cos\phi_2)^2}\cr
+\phi_3 &amp;= \tan^{-1}\frac{{\cal D}_2+{\cal T}_2\sin\phi_2}{{\cal B}_2+{\cal T}_2\cos\phi_2}
 \end{split}
 \end{equation}\]</span></p>
-<p>This reasoning applies for all interior elements, so that Equation 7 may be generalized to (Equation 8) <span class="math display">\[\begin{equation}
+<p>This may be generalized to larger moorings, with (Equation 8) <span class="math display">\[\begin{equation}
 \begin{split}
-\phi_i &amp;= \tan^{-1}\frac{{\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1}}{{\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1}}\cr
-{\cal T}_i &amp;= \sqrt{({\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1})^2+({\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1})^2}
+{\cal T}_i &amp;= \sqrt{({\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1})^2+({\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1})^2}\cr
+\phi_i &amp;= \tan^{-1}\frac{{\cal D}_{i-1}+{\cal T}_{i-1}\sin\phi_{i-1}}{{\cal B}_{i-1}+{\cal T}_{i-1}\cos\phi_{i-1}}
 \end{split}
-\end{equation}\]</span> for <span class="math inline">\(i=2,\dots,n\)</span>, so that the mooring shape may be inferred by a stepwise method, working from the top element downwards through the water column:</p>
-<ol style="list-style-type: decimal">
-<li>First, use Equation 5 to compute <span class="math inline">\(\phi_2\)</span> and <span class="math inline">\({\cal T}_2\)</span>, the angle and tension below the top element.</li>
-<li>Then, use Equation 8 to compute <span class="math inline">\(\phi_i\)</span> and <span class="math inline">\({\cal T}_i\)</span> for <span class="math inline">\(i=3\)</span>, then <span class="math inline">\(i=4\)</span>, etc. until reaching <span class="math inline">\(i=n\)</span>.</li>
-</ol>
-<p>If the current is depth-variable, the drag values <span class="math inline">\({\cal D}_i\)</span> depend on the local velocity, and so the mooring shape must be taken into account. This can be handled by applying the calculation procedure iteratively, starting with the assumption of a vertical mooring, and computing vertical positions of components by taking <span class="math inline">\(\phi_i\)</span> values into account, from the bottom up.</p>
+\end{equation}\]</span> applying at each element, <span class="math inline">\(i\)</span>.</p>
+<p>This leads to a simple way to describe mooring response to a depth-independent current, in which <span class="math inline">\(D_i\)</span> and <span class="math inline">\(B_i\)</span> are known quantities for each <span class="math inline">\(i\)</span> from 1 to <span class="math inline">\(n\)</span>: 1. First, use Equation 5 to compute <span class="math inline">\({\cal T}_2\)</span> and <span class="math inline">\(\phi_2\)</span>, the angle and tension below the top element. 2. Then, use Equation 8 to compute <span class="math inline">\({\cal T}_i\)</span> and <span class="math inline">\(\phi_i\)</span> for <span class="math inline">\(i=3\)</span>, then <span class="math inline">\(i=4\)</span>, etc. until reaching <span class="math inline">\(i=n\)</span>.</p>
+<p>(Note that <span class="math inline">\({\cal T}_1\)</span> and <span class="math inline">\(\phi_1\)</span> are not defined in this notation.)</p>
+<p>If the current varies with depth, then the drag of a given element will depend on depth of the element, which in turn depends on the shape of the mooring. This may be handled by an iterative scheme. In the first iteration, the vertical positions of mooring elements are inferred by summing their heights, and the above procedure is used to infer <span class="math inline">\(\phi_i\)</span>. Then, these angles are used to calculate a second estimate of element locations, and the procedure is repeated using drags appropriate to those locations. This is repeated until the solution converges to within a stated criterion.</p>
 </div>
 <div id="example" class="section level1">
 <h1 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h1>
-<p>Figure 1 shows the result of simulating a <em>Hydro Float 20</em> float connected to the bottom with a <em>Mooring Systems 3x19 3/16"</em> wire cable, in a region with a depth-independent 2m/s current, which might be encountered in a region with strong tides. Note that the float is predicted to sink <span class="math inline">\(9.33\)</span>m with this current. However, the predicted knockdown is only <span class="math inline">\(0.72\)</span>m with a <span class="math inline">\(1\)</span>m/s current. This difference provides an indication of the importance of designing a mooring for the system under study.</p>
+<p>Figure 1 shows the result of simulating a 20-inch Hydro Float Mooring Buoy (with <span class="math inline">\(34.5\)</span>kg buoyancy) connected to a bottom anchor with 100 m of quarter-inch jacketed wire (with <span class="math inline">\(-0.13\)</span>kg/m of buoyancy), in a depth-independent 0.5 m/s (roughly 1 knot) current. Note that the float is predicted to sink <span class="math inline">\(7.7\)</span>m with this current. However, the predicted knockdown increases to <span class="math inline">\(41.2\)</span>m with a <span class="math inline">\(1\)</span>m/s current, suggesting that this float would be of limited utility in supporting an oceanographic mooring a region with strong currents.</p>
 <div class="figure">
-<img src="knockdown_model_files/figure-html/unnamed-chunk-1-1.png" alt='Response of a mooring consisting of a *Hydro Float 20* atop 100m of *Mooring Systems 3x19 3/16"* wire cable, in a 1m/s current. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for $u=1$m/s. **Right:** Mooring shape, with gray and black as in the left panel.' width="700"><p class="caption">
-Response of a mooring consisting of a <em>Hydro Float 20</em> atop 100m of <em>Mooring Systems 3x19 3/16"</em> wire cable, in a 1m/s current. <strong>Left</strong>: Cable tension, in kg, with gray for the <span class="math inline">\(u=0\)</span> case and black for <span class="math inline">\(u=1\)</span>m/s. <strong>Right:</strong> Mooring shape, with gray and black as in the left panel.
+<img src="knockdown_model_files/figure-html/unnamed-chunk-2-1.png" alt="Response of a mooring to a $u=1$m/s current, as described in the text. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for the $u=1$m/s case. **Right:** Mooring shape, with gray and black as in the left panel." width="700"><p class="caption">
+Response of a mooring to a <span class="math inline">\(u=1\)</span>m/s current, as described in the text. <strong>Left</strong>: Cable tension, in kg, with gray for the <span class="math inline">\(u=0\)</span> case and black for the <span class="math inline">\(u=1\)</span>m/s case. <strong>Right:</strong> Mooring shape, with gray and black as in the left panel.
 </p>
 </div>
 </div>
