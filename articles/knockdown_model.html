@@ -81,7 +81,7 @@
       <h1 data-toc-skip>Mooring Response to Unidirectional Flow</h1>
                         <h4 class="author">Dan Kelley</h4>
             
-            <h4 class="date">2021-05-22</h4>
+            <h4 class="date">2021-05-23</h4>
       
       
       <div class="hidden name"><code>knockdown_model.Rmd</code></div>
@@ -113,8 +113,8 @@
 <p>The buoyancy force for a solid object such as an anchor or a float is found with (Equation 1) <span class="math display">\[\begin{equation}
 {\cal B}_i = -g m_i
 \end{equation}\]</span> while it is represented with (Equation 2) <span class="math display">\[\begin{equation}
-{\cal B}_i = -g \mu_i \Delta l
-\end{equation}\]</span> for a portion of a cable of length <span class="math inline">\(\Delta l\)</span>.</p>
+{\cal B}_i = -g \mu_i \Delta l_i
+\end{equation}\]</span> for a portion of a cable of length <span class="math inline">\(\Delta l_i\)</span>.</p>
 <p>The drag force is expressed with (Equation 3) <span class="math display">\[\begin{equation}
 {\cal D}_i = \frac{1}{2} A_i C_i \rho_i u_i |u_i|
 \end{equation}\]</span> where <span class="math inline">\(A_i\)</span> is the area projected in the flow direction.</p>
@@ -158,8 +158,8 @@
 <a href="#example" class="anchor"></a>Example</h1>
 <p>Figure 1 shows the result of simulating a 20-inch Hydro Float Mooring Buoy (with <span class="math inline">\(34.5\)</span>kg buoyancy) connected to a bottom anchor with 100 m of quarter-inch jacketed wire (with <span class="math inline">\(-0.13\)</span>kg/m of buoyancy), in a depth-independent 0.5 m/s (roughly 1 knot) current. Note that the float is predicted to sink <span class="math inline">\(7.7\)</span>m with this current. However, the predicted knockdown increases to <span class="math inline">\(41.2\)</span>m with a <span class="math inline">\(1\)</span>m/s current, suggesting that this float would be of limited utility in supporting an oceanographic mooring a region with strong currents.</p>
 <div class="figure">
-<img src="knockdown_model_files/figure-html/unnamed-chunk-2-1.png" alt='Response of a mooring consisting of a *Hydro Float 20* atop 100m of *Mooring Systems 3x19 3/16"* wire cable, in a 1m/s current. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for $u=1$m/s. **Right:** Mooring shape, with gray and black as in the left panel.' width="700"><p class="caption">
-Response of a mooring consisting of a <em>Hydro Float 20</em> atop 100m of <em>Mooring Systems 3x19 3/16"</em> wire cable, in a 1m/s current. <strong>Left</strong>: Cable tension, in kg, with gray for the <span class="math inline">\(u=0\)</span> case and black for <span class="math inline">\(u=1\)</span>m/s. <strong>Right:</strong> Mooring shape, with gray and black as in the left panel.
+<img src="knockdown_model_files/figure-html/unnamed-chunk-2-1.png" alt="Response of a mooring to a $u=1$m/s current, as described in the text. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for the $u=1$m/s case. **Right:** Mooring shape, with gray and black as in the left panel." width="700"><p class="caption">
+Response of a mooring to a <span class="math inline">\(u=1\)</span>m/s current, as described in the text. <strong>Left</strong>: Cable tension, in kg, with gray for the <span class="math inline">\(u=0\)</span> case and black for the <span class="math inline">\(u=1\)</span>m/s case. <strong>Right:</strong> Mooring shape, with gray and black as in the left panel.
 </p>
 </div>
 </div>

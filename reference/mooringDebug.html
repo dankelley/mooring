@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Combine two mooring objects — +.mooring • mooring</title>
+<title>Optionally print a debugging message — mooringDebug • mooring</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Combine two mooring objects — +.mooring" />
-<meta property="og:description" content="The first object is &quot;placed&quot; above the second (see Examples).  Note that
-the first element of the first object must be the result of a call
-to anchor()." />
+<meta property="og:title" content="Optionally print a debugging message — mooringDebug" />
+<meta property="og:description" content="A function used for debugging within the package." />
 
 
 
@@ -123,63 +121,45 @@ to anchor()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Combine two mooring objects</h1>
+    <h1>Optionally print a debugging message</h1>
     
-    <div class="hidden name"><code>plus-.mooring.Rd</code></div>
+    <div class="hidden name"><code>mooringDebug.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The first object is "placed" above the second (see Examples).  Note that
-the first element of the first object must be the result of a call
-to <code><a href='anchor.html'>anchor()</a></code>.</p>
+    <p>A function used for debugging within the package.</p>
     </div>
 
-    <pre class="usage"># S3 method for mooring
-+(m1, m2)</pre>
+    <pre class="usage"><span class='fu'>mooringDebug</span><span class='op'>(</span><span class='va'>debug</span>, <span class='va'>v</span>, <span class='va'>...</span>, overview <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>m1, m2</th>
-      <td><p>objects of <code>"mooring"</code> class.  Each can be a single element,
-e.g. as created by <code><a href='wire.html'>wire()</a></code>, etc., or a combination of elements, as are
-returned by the present function.</p></td>
+      <th>debug</th>
+      <td><p>an integer that controls debugging. If this is positive,
+then the other arguments are given to <code><a href='https://rdrr.io/r/base/cat.html'>cat()</a></code>, to print a message. Note
+that no newline is printed, unless included in the <code>...</code> arguments.</p></td>
+    </tr>
+    <tr>
+      <th>v</th>
+      <td><p>a value to be displayed.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>optional extra values to be displayed.</p></td>
+    </tr>
+    <tr>
+      <th>overview</th>
+      <td><p>logical value indicating whether to summarize <code>v</code> (ignoring
+<code>...</code>), by displaying its name and some of its values.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>an object of the <code>"mooring"</code> class that holds the
-combination of <code>m1</code> and <code>m2</code>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other functions that create mooring objects: 
-<code><a href='anchor.html'>anchor</a>()</code>,
-<code><a href='chain.html'>chain</a>()</code>,
-<code><a href='float.html'>float</a>()</code>,
-<code><a href='release.html'>release</a>()</code>,
-<code><a href='wire.html'>wire</a>()</code></p>
-<p>Other functions that create mooring objects: 
-<code><a href='anchor.html'>anchor</a>()</code>,
-<code><a href='chain.html'>chain</a>()</code>,
-<code><a href='float.html'>float</a>()</code>,
-<code><a href='release.html'>release</a>()</code>,
-<code><a href='wire.html'>wire</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
-<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>80</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Mooring in 100 m of water, with 3 elements, listed top-down:
-#&gt;   float  model="HMB 20", buoyancy=34.5 kg, height=0.508 m, diameter=0.508 m, x=0 m, z=-19.192 m
-#&gt;   wire   model="1/4 wire/jack", buoyancy=-0.13 kg/m, length=80 m, width=0.008 m, x=0 m, z=-19.7 m
-#&gt;   anchor model="default", height=0.3 m, x=0 m, z=-99.7 m</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='img'><img src='plus-.mooring-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
