@@ -25,16 +25,17 @@ as specified by the \code{v} argument.
 \examples{
 library(mooring)
 # Illustrate importance of drag on the wire.
+par(mfrow=c(1, 3))
 m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
 md <- discretise(m)
 # No knockdown
 plot(md)
-# Knockdown in uniform 0.5 m/s current
+# Knockdown in uniform 0.5 m/s (approx. 1 knot) current
 k1 <- knockdown(md, u=0.5)
-plot(k1)
+plot(k1, title="uniform 0.5 m/s")
 # Knockdown in 0.5 m/s current but only in top 40m of water column
 k2 <- knockdown(md, u=function(depth) ifelse(depth < 40, 0.5, 0))
-plot(k2)
+plot(k2, title="0.5 m/s only in top 40m")
 
 }
 \author{

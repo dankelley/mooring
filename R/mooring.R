@@ -10,7 +10,7 @@ debug <- FALSE
 #' # (roughly 1 knot) current. Buoyancy is provided with a float
 #' # of diameter 20 inches.
 #' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
-#' par(mfrow=c(1,2))
+#' par(mfrow=c(1, 3))
 #' plot(m)
 #' # Must discretise the wire portion to resolve the shape.
 #' md <- discretise(m)
@@ -428,6 +428,9 @@ print.mooring <- function(x, ...)
 #' water and sediments with filled rectangles.  The alternative
 #' is a simpler plot.
 #'
+#' @param title character value indicating a title to put above
+#' the plot.
+#'
 #' @param ... optional arguments.
 #'
 #' @examples
@@ -438,11 +441,12 @@ print.mooring <- function(x, ...)
 #' plot(m)
 #'
 #' @importFrom graphics abline axis box lines mtext par points rect text
+#' @importFrom grDevices extendrange
 #'
 #' @export
 #'
 #' @author Dan Kelley
-plot.mooring <- function(x, which="velocity", fancy=FALSE, ...)
+plot.mooring <- function(x, which="velocity", fancy=FALSE, title="", ...)
 {
     if (which != "velocity")
         stop("FIXME: make which=\"velocity\" work")
@@ -463,8 +467,10 @@ plot.mooring <- function(x, which="velocity", fancy=FALSE, ...)
     mooringDebug(debug, waterDepth, overview=TRUE)
     omar <- par("mar")
     omgp <- par("mgp")
-    par(mar=c(3.0, 3.5, 1.5, 1), mgp=c(2, 0.7, 0))
-    plot(x, depth, ylim=c(waterDepth, 0), asp=1, type="l", xlab="Horizontal Coordinate [m]", ylab="Depth [m]")
+    par(mar=c(3.5, 3.5, 1.5, 1), mgp=c(2, 0.7, 0))
+    xlim <- extendrange(x)
+    ylim <- c(waterDepth, 0)
+    plot(x, depth, xlim=xlim, ylim=ylim, asp=1, type="l", xlab="Horizontal Coordinate [m]", ylab="Depth [m]")
     if (fancy) {
         box()
         usr <- par("usr")
@@ -478,11 +484,10 @@ plot.mooring <- function(x, which="velocity", fancy=FALSE, ...)
     }
     # Draw shape if water is stagnant
     mooringLength <- sum(sapply(m, function(x) x$height))
-
-    lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=2)
+    lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=1.4*par("lwd"))
     points(0, waterDepth - mooringLength, pch=20, col=colStagnant)
     # Draw actual shape (possibly knocked-over)
-    lines(x, depth, lwd=2*par("lwd"))
+    lines(x, depth, lwd=1.4*par("lwd"))
     if (fancy)
         rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
     for (i in seq_along(m)) {
@@ -498,12 +503,14 @@ plot.mooring <- function(x, which="velocity", fancy=FALSE, ...)
         } else if (type == "float") {
             if (debug)
                 cat("i=", i, " (float at x=", x, ", z=", z, ")\n")
-            points(x, -z, pch=20)
-            text(x, -z, sprintf("F (%.1fm)", -z), pos=4)
+            points(x, -z, pch=20, cex=1.4)
+            text(x, -z, "F", pos=4)
+            text(x, -z, sprintf("%.1fm", -z), pos=2)
         } else if (type == "wire") {
             #> message("draw wire??")
         }
     }
+    mtext(title, cex=par("cex"))
     par(mar=omar, mgp=omgp)
 }
 
@@ -582,16 +589,17 @@ discretise <- function(m, by=1)
 #' @examples
 #' library(mooring)
 #' # Illustrate importance of drag on the wire.
+#' par(mfrow=c(1, 3))
 #' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
 #' md <- discretise(m)
 #' # No knockdown
 #' plot(md)
-#' # Knockdown in uniform 0.5 m/s current
+#' # Knockdown in uniform 0.5 m/s (approx. 1 knot) current
 #' k1 <- knockdown(md, u=0.5)
-#' plot(k1)
+#' plot(k1, title="uniform 0.5 m/s")
 #' # Knockdown in 0.5 m/s current but only in top 40m of water column
 #' k2 <- knockdown(md, u=function(depth) ifelse(depth < 40, 0.5, 0))
-#' plot(k2)
+#' plot(k2, title="0.5 m/s only in top 40m")
 #'
 #' @importFrom graphics grid
 #' @importFrom utils tail
