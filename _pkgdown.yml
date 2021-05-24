@@ -2,10 +2,11 @@ destination: docs
 figures:
   dev: ragg::agg_png
   dpi: 96
-  dev.args: []
+  dev.args:
+    pointsize: 12
   fig.ext: png
-  fig.width: 7.2916667
-  fig.height: 7.2916667
+  fig.width: 5.208333
+  fig.height: 5.208333
   fig.asp: 1
   fig.retina: 2
   bg: NA
