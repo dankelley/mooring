@@ -572,12 +572,8 @@ discretise <- function(m, by=1)
 #' [discretise()].
 #'
 #' @param u either a non-negative number indicating depth-independent velocity,
-#' or a function that returns that velocity as a function of the vertical
-#' coordinate.  For the second case, note that the vertical coordinate is
-#' defined as height (in m) above the sea surface, so that e.g.
-#' `v=function(z) 0.5*exp(z/100)` mould be used to specify a current that
-#' is 0.5m/s at the surface, dropping exponentially through the water column,
-#' reaching to 0.18m/s a hundred metres below the surface.
+#' or a function that returns that velocity as a function of depth (m)
+#' below the ocean surface; see \dQuote{Examples}.
 #'
 #' @param debug an integer controlling debugging.  The default value of 0
 #' means to work silently. Use a positive value to cause the function to
@@ -591,10 +587,10 @@ discretise <- function(m, by=1)
 #' # No knockdown
 #' plot(md)
 #' # Knockdown in uniform 0.5 m/s current
-#' k1 <- knockdown(md, u=1)
+#' k1 <- knockdown(md, u=0.5)
 #' plot(k1)
 #' # Knockdown in 0.5 m/s current but only in top 40m of water column
-#' k2 <- knockdown(md, u=function(z) ifelse(z>-40, 1, 0))
+#' k2 <- knockdown(md, u=function(depth) ifelse(depth < 40, 0.5, 0))
 #' plot(k2)
 #'
 #' @importFrom graphics grid
@@ -638,8 +634,8 @@ knockdown <- function(m, u=1, debug=0L)
     CD <- unlist(lapply(mrev, function(item) item$CD))
     height <- unlist(lapply(mrev, function(item) item$height))
     if (is.function(u)) {
-        z <- sapply(mrev, function(M) M$z)
-        u2 <- sapply(z, u)^2
+        depth <- -sapply(mrev, function(M) M$z)
+        u2 <- sapply(depth, u)^2
         #message("u is a function; length(z)=", length(z), ", length(u2)=", length(u2))
         mooringDebug(debug, "next is calculated velocity profile\n")
         mooringDebug(debug, z, overview=TRUE, round=2)
