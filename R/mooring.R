@@ -424,6 +424,10 @@ print.mooring <- function(x, ...)
 #' @param which character value indicating the desired plot, with
 #' choices: `"velocity"`, `"knockdown" and `"tension"`.
 #'
+#' @param fancy logical value indicating whether to indicate the
+#' water and sediments with filled rectangles.  The alternative
+#' is a simpler plot.
+#'
 #' @param ... optional arguments.
 #'
 #' @examples
@@ -438,7 +442,7 @@ print.mooring <- function(x, ...)
 #' @export
 #'
 #' @author Dan Kelley
-plot.mooring <- function(x, which="velocity", ...)
+plot.mooring <- function(x, which="velocity", fancy=FALSE, ...)
 {
     if (which != "velocity")
         stop("FIXME: make which=\"velocity\" work")
@@ -460,20 +464,27 @@ plot.mooring <- function(x, which="velocity", ...)
     omar <- par("mar")
     omgp <- par("mgp")
     par(mar=c(3.0, 3.5, 1.5, 1), mgp=c(2, 0.7, 0))
-    plot(x, depth, ylim=c(waterDepth, 0), asp=1, type="l", xlab="Horizontal position [m]", ylab="Depth [m]")
-    box()
-    usr <- par("usr")
-    rect(usr[1], waterDepth, usr[2], 0, col=colWater, border=NA)
-    grid(col="white")
-    abline(h=0, col=colWater)
+    plot(x, depth, ylim=c(waterDepth, 0), asp=1, type="l", xlab="Horizontal Coordinate [m]", ylab="Depth [m]")
+    if (fancy) {
+        box()
+        usr <- par("usr")
+        rect(usr[1], waterDepth, usr[2], 0, col=colWater, border=NA)
+        grid(col="white")
+        abline(h=0, col=colWater)
+    } else {
+        grid()
+        abline(h=0, col="#0066ff", lwd=2)
+        abline(h=waterDepth, col="#996633", lwd=2)
+    }
     # Draw shape if water is stagnant
-    mooringLength <- sum(sapply(m, function(x) x$height))  
+    mooringLength <- sum(sapply(m, function(x) x$height))
 
     lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=2)
     points(0, waterDepth - mooringLength, pch=20, col=colStagnant)
     # Draw actual shape (possibly knocked-over)
     lines(x, depth, lwd=2*par("lwd"))
-    rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
+    if (fancy)
+        rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
     for (i in seq_along(m)) {
         type <- m[[i]]$type
         x <- m[[i]]$x

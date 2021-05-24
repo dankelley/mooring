@@ -4,13 +4,17 @@
 \alias{plot.mooring}
 \title{Plot a mooring object}
 \usage{
-\method{plot}{mooring}(x, which = "velocity", ...)
+\method{plot}{mooring}(x, which = "velocity", fancy = FALSE, ...)
 }
 \arguments{
 \item{x}{an object of the \code{"mooring"} class.}
 
 \item{which}{character value indicating the desired plot, with
 choices: \code{"velocity"}, \verb{"knockdown" and }"tension"`.}
+
+\item{fancy}{logical value indicating whether to indicate the
+water and sediments with filled rectangles.  The alternative
+is a simpler plot.}
 
 \item{...}{optional arguments.}
 }
