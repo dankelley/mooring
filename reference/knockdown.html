@@ -145,12 +145,8 @@ as specified by the <code>v</code> argument.</p>
     <tr>
       <th>u</th>
       <td><p>either a non-negative number indicating depth-independent velocity,
-or a function that returns that velocity as a function of the vertical
-coordinate.  For the second case, note that the vertical coordinate is
-defined as height (in m) above the sea surface, so that e.g.
-<code>v=function(z) 0.5*exp(z/100)</code> mould be used to specify a current that
-is 0.5m/s at the surface, dropping exponentially through the water column,
-reaching to 0.18m/s a hundred metres below the surface.</p></td>
+or a function that returns that velocity as a function of depth (m)
+below the ocean surface; see &#8220;Examples&#8221;.</p></td>
     </tr>
     <tr>
       <th>debug</th>
@@ -166,11 +162,18 @@ print some information about intermediate results.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
+<span class='co'># Illustrate importance of drag on the wire.</span>
 <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>80</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span>
 <span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='discretise.html'>discretise</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-<span class='va'>mdk</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>mdk</span><span class='op'>)</span>
-</div><div class='img'><img src='knockdown-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># No knockdown</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span>
+</div><div class='img'><img src='knockdown-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Knockdown in uniform 0.5 m/s current</span>
+<span class='va'>k1</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span><span class='op'>)</span>
+</div><div class='img'><img src='knockdown-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Knockdown in 0.5 m/s current but only in top 40m of water column</span>
+<span class='va'>k2</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>depth</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>depth</span> <span class='op'>&lt;</span> <span class='fl'>40</span>, <span class='fl'>0.5</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: FIXME: u=function() case is not fully coded yet (no iteration is done)</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span><span class='op'>)</span>
+</div><div class='img'><img src='knockdown-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
