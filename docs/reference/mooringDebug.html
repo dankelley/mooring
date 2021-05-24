@@ -130,7 +130,7 @@
     <p>A function used for debugging within the package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mooringDebug</span><span class='op'>(</span><span class='va'>debug</span>, <span class='va'>v</span>, <span class='va'>...</span>, overview <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mooringDebug</span><span class='op'>(</span><span class='va'>debug</span>, <span class='va'>v</span>, <span class='va'>...</span>, overview <span class='op'>=</span> <span class='cn'>FALSE</span>, round <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,6 +153,12 @@ that no newline is printed, unless included in the <code>...</code> arguments.</
       <th>overview</th>
       <td><p>logical value indicating whether to summarize <code>v</code> (ignoring
 <code>...</code>), by displaying its name and some of its values.</p></td>
+    </tr>
+    <tr>
+      <th>round</th>
+      <td><p>either FALSE, for no rounding, or an integer, indicating the
+rounding to be used, via a call to <code><a href='https://rdrr.io/r/base/Round.html'>round()</a></code>. This applies only to the case
+where <code>overview</code> is TRUE.</p></td>
     </tr>
     </table>
 

@@ -6,9 +6,16 @@ debug <- FALSE
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
-#' print(m)
+#' # Illustrate the deformation of a 100-m mooring in a 0.5 m/s
+#' # (roughly 1 knot) current. Buoyancy is provided with a float
+#' # of diameter 20 inches.
+#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' par(mfrow=c(1,2))
 #' plot(m)
+#' # Must discretise the wire portion to resolve the shape.
+#' md <- discretise(m)
+#' mdk <- knockdown(md, u=0.5)
+#' plot(mdk)
 #'
 #' @docType package
 #'
@@ -414,6 +421,9 @@ print.mooring <- function(x, ...)
 #'
 #' @param x an object of the `"mooring"` class.
 #'
+#' @param which character value indicating the desired plot, with
+#' choices: `"velocity"`, `"knockdown" and `"tension"`.
+#'
 #' @param ... optional arguments.
 #'
 #' @examples
@@ -428,8 +438,10 @@ print.mooring <- function(x, ...)
 #' @export
 #'
 #' @author Dan Kelley
-plot.mooring <- function(x, ...)
+plot.mooring <- function(x, which="velocity", ...)
 {
+    if (which != "velocity")
+        stop("FIXME: make which=\"velocity\" work")
     m <- x # we only use 'x' above to obey the R rules on generics.
     colWater <- "#ccdcff"
     colBottom <- "#e6bb98"
@@ -440,8 +452,8 @@ plot.mooring <- function(x, ...)
         debug <- as.integer(max(0L, dots$debug))
     x <- sapply(m, function(mi) mi$x)
     z <- sapply(m, function(mi) mi$z)
-    mooringDebug(debug, x, overview=TRUE)
-    mooringDebug(debug, z, overview=TRUE)
+    mooringDebug(debug, x, overview=TRUE, round=2)
+    mooringDebug(debug, z, overview=TRUE, round=2)
     depth <- -z
     waterDepth <- if ("anchor" == m[[1]]$type) m[[1]]$depth else abs(min(depth))
     mooringDebug(debug, waterDepth, overview=TRUE)
@@ -476,7 +488,7 @@ plot.mooring <- function(x, ...)
             if (debug)
                 cat("i=", i, " (float at x=", x, ", z=", z, ")\n")
             points(x, -z, pch=20)
-            text(x, -z, "F", pos=4)
+            text(x, -z, sprintf("F (%.1fm)", -z), pos=4)
         } else if (type == "wire") {
             #> message("draw wire??")
         }
@@ -526,11 +538,15 @@ discretise <- function(m, by=1)
             dwire$group <- group # so we can undo this later
             for (i in seq_len(n))
                 rval[[1+length(rval)]] <- dwire
-            #message("WIRE height=", height, ", dheight=", dheight, ", n=", n)
             group <- group + 1
         } else {
             rval[[1+length(rval)]] <- item
         }
+    }
+    # Fix up the z values
+    z <- -rval[[1]]$depth + cumsum(sapply(rval, function(x) x$height))
+    for (i in seq_along(rval)) {
+        rval[[i]]$z <- z[i]
     }
     class(rval) <- "mooring"
     rval
@@ -558,10 +574,17 @@ discretise <- function(m, by=1)
 #'
 #' @examples
 #' library(mooring)
+#' # Illustrate importance of drag on the wire.
 #' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
 #' md <- discretise(m)
-#' mdk <- knockdown(md, u=1)
-#' plot(mdk)
+#' # No knockdown
+#' plot(md)
+#' # Knockdown in uniform 0.5 m/s current
+#' k1 <- knockdown(md, u=1)
+#' plot(k1)
+#' # Knockdown in 0.5 m/s current but only in top 40m of water column
+#' k2 <- knockdown(md, u=function(z) ifelse(z>-40, 1, 0))
+#' plot(k2)
 #'
 #' @importFrom graphics grid
 #' @importFrom utils tail
@@ -570,13 +593,18 @@ discretise <- function(m, by=1)
 knockdown <- function(m, u=1, debug=0L)
 {
     debug <- as.integer(max(0, debug))
-    if (is.function(u))
-        stop("FIXME: u=function() is not coded yet")
+    if (is.function(u)) {
+        #z <- sapply(m, function(x) x$z)
+        #mooringDebug(debug, z, overview=TRUE)
+        warning("FIXME: u=function() case is not fully coded yet (no iteration is done)\n")
+    }
     # Trim the anchor, which is not used in this calculation
     morig <- m
-    waterDepth <- 0
+    waterDepth <- anchorHeight <- 0
+    # Remove the anchor, after saving waterDepth and anchorHeight
     if (m[[1]]$type == "anchor") {
         waterDepth <- m[[1]]$depth
+        anchorHeight <- m[[1]]$height
         m <- tail(m, -1)
         class(m) <- "mooring"
     } else {
@@ -598,9 +626,17 @@ knockdown <- function(m, u=1, debug=0L)
                        }))
     CD <- unlist(lapply(mrev, function(item) item$CD))
     height <- unlist(lapply(mrev, function(item) item$height))
-    D <- 0.5 * A * rho * CD * u^2
-    #> par(mfrow=c(2, 2))
-    #> plot(B, -d);plot(D, -d)
+    if (is.function(u)) {
+        z <- sapply(mrev, function(M) M$z)
+        u2 <- sapply(z, u)^2
+        #message("u is a function; length(z)=", length(z), ", length(u2)=", length(u2))
+        mooringDebug(debug, "next is calculated velocity profile\n")
+        mooringDebug(debug, z, overview=TRUE, round=2)
+        mooringDebug(debug, u2, overview=TRUE, round=2)
+    } else {
+        u2 <- u^2
+    }
+    D <- 0.5 * A * rho * CD * u2
     # computation
     n <- length(mrev)
     # We won't define phi[1] and T[1], and will trim them
@@ -619,36 +655,23 @@ knockdown <- function(m, u=1, debug=0L)
     }
     phi <- tail(phi, -1L)
     T <- tail(T, -1L)
-    if (debug > 0L) {
-        cat("next are head and tail of phi (deg) and T (kg), before adding 2 elements\n")
-        print(head(data.frame(phi_deg=phi*180/pi,T_kg=T/g),3))
-        print(tail(data.frame(phi_deg=phi*180/pi,T_kg=T/g),3))
-    }
+    mooringDebug(debug, "Original values:\n")
+    mooringDebug(debug, phi*180/pi, overview=TRUE, round=1)
+    mooringDebug(debug, T/g, overview=TRUE, round=1)
     # Find x and z by integrating from bottom up.
     phiRev <- rev(phi)
     heightRev <- rev(height)[-1]
     x <- rev(cumsum(heightRev*sin(phiRev)))
     z <- rev(cumsum(heightRev*cos(phiRev))) - waterDepth
-    if (debug > 0L) {
-        message("before plot, waterDepth=", waterDepth, ", length(x)=", length(x), ", length(m)=",length(morig))
-        plot(x, z, asp=1,type="l", ylim=c(-waterDepth, 0))
-        lines(rep(0, 2), c(-waterDepth, -waterDepth+sum(sapply(morig,function(item) item$height))), col="gray", lwd=2)
-        grid()
-        mtext(sprintf("max z %.2fm", max(z)))
-        cat("next are head and tail of x and z, before adding 2 elements\n")
-        print(head(data.frame(x=x,z=z),3))
-        print(tail(data.frame(x=x,z=z),3))
-    }
+    mooringDebug(debug, x, overview=TRUE, round=2)
+    mooringDebug(debug, z, overview=TRUE, round=2)
     rval <- morig
-    # Add top of anchor, and bottom of anchor.  Then reverse, to 
-    # maatch original 'm'.
+    # Add top of anchor, and bottom of anchor.  Then reverse, to match original 'm'.
     x <- rev(c(x, 0, 0))
     z <- rev(c(z, -waterDepth + morig[[1]]$height, -waterDepth))
-    if (debug > 0L) {
-        cat("next are head and tail of x and z, after adding 2 elements\n")
-        print(head(data.frame(x=x,z=z),3))
-        print(tail(data.frame(x=x,z=z),3))
-    }
+    mooringDebug(debug, "Values after adding two elements:\n")
+    mooringDebug(debug, x, overview=TRUE, round=2)
+    mooringDebug(debug, z, overview=TRUE, round=2)
     for (i in seq_along(morig)) {
         rval[[i]]$x <- x[i]
         rval[[i]]$z <- z[i]
@@ -672,17 +695,23 @@ knockdown <- function(m, u=1, debug=0L)
 #' @param overview logical value indicating whether to summarize `v` (ignoring
 #' `...`), by displaying its name and some of its values.
 #'
+#' @param round either FALSE, for no rounding, or an integer, indicating the
+#' rounding to be used, via a call to [round()]. This applies only to the case
+#' where `overview` is TRUE.
+#'
 #' @importFrom utils head tail
 #'
 #' @export
 #'
 #' @author Dan Kelley
-mooringDebug <- function(debug, v, ..., overview=FALSE)
+mooringDebug <- function(debug, v, ..., overview=FALSE, round=FALSE)
 {
     debug <- as.integer(debug)
     if (debug > 0L) {
         if (overview) {
             msg <- paste(deparse(substitute(expr=v, env=environment())), " ", sep="")
+            if (is.numeric(round))
+                v <- round(v, as.integer(round))
             n <- length(v)
             if (n > 1)
                 msg <- paste(msg, "[1:", n, "] ", sep="")

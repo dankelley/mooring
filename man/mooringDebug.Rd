@@ -4,7 +4,7 @@
 \alias{mooringDebug}
 \title{Optionally print a debugging message}
 \usage{
-mooringDebug(debug, v, ..., overview = FALSE)
+mooringDebug(debug, v, ..., overview = FALSE, round = FALSE)
 }
 \arguments{
 \item{debug}{an integer that controls debugging. If this is positive,
@@ -17,6 +17,10 @@ that no newline is printed, unless included in the \code{...} arguments.}
 
 \item{overview}{logical value indicating whether to summarize \code{v} (ignoring
 \code{...}), by displaying its name and some of its values.}
+
+\item{round}{either FALSE, for no rounding, or an integer, indicating the
+rounding to be used, via a call to \code{\link[=round]{round()}}. This applies only to the case
+where \code{overview} is TRUE.}
 }
 \description{
 A function used for debugging within the package.

@@ -10,8 +10,15 @@ oceanographic moorings.
 }
 \examples{
 library(mooring)
-m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
-print(m)
+# Illustrate the deformation of a 100-m mooring in a 0.5 m/s
+# (roughly 1 knot) current. Buoyancy is provided with a float
+# of diameter 20 inches.
+m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+par(mfrow=c(1,2))
 plot(m)
+# Must discretise the wire portion to resolve the shape.
+md <- discretise(m)
+mdk <- knockdown(md, u=0.5)
+plot(mdk)
 
 }
