@@ -40,11 +40,11 @@ m
 #>   wire   model="1/4 wire/jack", buoyancy=-0.13 kg/m, length=100 m, width=0.008 m, x=0 m, z=-19.7 m
 #>   anchor model="default", height=0.3 m, x=0 m, z=-119.7 m
 par(mfrow=c(1,2))
-plot(m)
+plot(m, fancy=TRUE)
 # Discretise wire portion (to 1m spacing), then apply a 0.5 m/s current.
 md <- discretise(m)
 mdk <- knockdown(md, u=0.5)
-plot(mdk)
+plot(mdk, fancy=TRUE)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />

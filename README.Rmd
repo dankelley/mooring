@@ -44,10 +44,10 @@ library(mooring)
 m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
 m
 par(mfrow=c(1,2))
-plot(m)
+plot(m, fancy=TRUE)
 # Discretise wire portion (to 1m spacing), then apply a 0.5 m/s current.
 md <- discretise(m)
 mdk <- knockdown(md, u=0.5)
-plot(mdk)
+plot(mdk, fancy=TRUE)
 ```
 
