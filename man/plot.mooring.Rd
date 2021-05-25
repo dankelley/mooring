@@ -32,7 +32,10 @@ Plot a mooring object
 # a bottom anchor, a 100-metre wire, and a float.
 library(mooring)
 m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
-plot(m)
+md <- discretise(m)
+par(mfrow=c(1, 2))
+plot(md)
+plot(md, which="tension")
 
 }
 \author{

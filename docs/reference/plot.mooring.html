@@ -131,7 +131,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mooring</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, which <span class='op'>=</span> <span class='st'>"velocity"</span>, fancy <span class='op'>=</span> <span class='cn'>FALSE</span>, title <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, which <span class='op'>=</span> <span class='st'>"shape"</span>, showDepths <span class='op'>=</span> <span class='cn'>TRUE</span>, fancy <span class='op'>=</span> <span class='cn'>FALSE</span>, title <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,7 +143,12 @@
     <tr>
       <th>which</th>
       <td><p>character value indicating the desired plot, with
-choices: <code>"velocity"</code>, <code>"knockdown" and </code>"tension"`.</p></td>
+choices: <code>"shape"</code> and <code>"tension"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>showDepths</th>
+      <td><p>logical value indicating whether to indicate the depths of
+floats, to the left of the symbols.</p></td>
     </tr>
     <tr>
       <th>fancy</th>
@@ -171,7 +176,10 @@ the plot.</p></td>
 <span class='co'># a bottom anchor, a 100-metre wire, and a float.</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mooring</span><span class='op'>)</span>
 <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>80</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+<span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='discretise.html'>discretise</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>md</span>, which<span class='op'>=</span><span class='st'>"tension"</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.mooring-1.png' alt='' width='600' height='600' /></div><div class='input'>
 </div></pre>
   </div>

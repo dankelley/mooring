@@ -1,4 +1,3 @@
-debug <- FALSE
 g <- 9.8
 #' mooring: A Package for Analysing Oceanographic Moorings.
 #'
@@ -447,7 +446,10 @@ print.mooring <- function(x, ...)
 #' # a bottom anchor, a 100-metre wire, and a float.
 #' library(mooring)
 #' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
-#' plot(m)
+#' md <- discretise(m)
+#' par(mfrow=c(1, 2))
+#' plot(md)
+#' plot(md, which="tension")
 #'
 #' @importFrom graphics abline axis box lines mtext par points rect text
 #' @importFrom grDevices extendrange
@@ -477,12 +479,17 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE, fancy=FALSE, title="
     mooringDebug(debug, waterDepth, overview=TRUE)
     omar <- par("mar")
     omgp <- par("mgp")
-    par(mar=c(3.5, 3.5, 1.5, 1), mgp=c(2, 0.7, 0))
+    par(mar=c(1.5, 3.5, 3.5, 1), mgp=c(2, 0.7, 0))
     xlim <- extendrange(c(x, xstagnant))
     ylim <- c(waterDepth, 0)
-    plot(x, depth, xlim=xlim, ylim=ylim, asp=if (which=="shape") 1, type="l",
-         xlab=if (which == "shape") "Horizontal Coordinate [m]" else if (which == "tension") "Tension [kg]",
-         ylab="Depth [m]")
+    plot(x, depth, xlim=xlim, ylim=ylim, asp=if (which=="shape") 1, type="l", xlab="", ylab="", axes=FALSE)
+    xlab <- if (which == "shape") "Horizontal Coordinate [m]" else if (which == "tension") "Tension [kg]"
+    ylab <- "Depth [m]"
+    box()
+    axis(2)
+    mtext(ylab, side=2, line=par("mgp")[1], cex=par("cex"))
+    axis(3)
+    mtext(xlab, side=3, line=par("mgp")[1], cex=par("cex"))
     if (fancy) {
         box()
         usr <- par("usr")
@@ -527,7 +534,7 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE, fancy=FALSE, title="
             #> message("draw wire??")
         }
     }
-    mtext(title, cex=par("cex"))
+    mtext(title, side=1, cex=par("cex"))
     par(mar=omar, mgp=omgp)
 }
 
@@ -578,10 +585,12 @@ discretise <- function(m, by=1)
             rval[[1+length(rval)]] <- item
         }
     }
-    # Fix up the z values
+    # Fix up the z and T values
     z <- -rval[[1]]$depth + cumsum(sapply(rval, function(x) x$height))
+    T <- tension(rval, stagnant=TRUE)
     for (i in seq_along(rval)) {
         rval[[i]]$z <- z[i]
+        rval[[i]]$T <- T[i]
     }
     class(rval) <- "mooring"
     rval
@@ -869,7 +878,7 @@ z <- function(m)
 #' @author Dan Kelley
 tension <- function(m, stagnant=FALSE)
 {
-    if (stagnant) {
+    if (stagnant || all(x(m) == 0)) {
         b <- buoyancy(m)[-1]
         T <- rev(cumsum(rev(b)))
         c(T[1], T) # repeat anchor
