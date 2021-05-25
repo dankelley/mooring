@@ -9,7 +9,9 @@ Authors@R:
            comment = c(ORCID = "https://orcid.org/0000-0001-7808-5911"))
 BugReports: https://github.com/dankelley/mooring/issues
 Description: Calculates the response of oceanographic moorings to horizontal currents.
-Depends: R (>= 3.5.0)
+Depends:
+    R (>= 3.5.0),
+    shiny
 Suggests:
     knitr,
     rmarkdown

@@ -1,4 +1,5 @@
 g <- 9.8
+library(shiny)
 #' mooring: A Package for Analysing Oceanographic Moorings.
 #'
 #' The mooring package provides functions for working with
@@ -133,9 +134,8 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=NULL, width=NULL, 
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
     if (model == "?") {
-        cat("wire() takes the following strings for its 'model' argument:\n")
-        print(sort(mooringElements$wires$name))
-        return(invisible(NULL))
+        #cat("wire() takes the following strings for its 'model' argument:\n")
+        return(sort(mooringElements$wires$name))
     }
     if (is.null(length))
         stop("must supply length (m) of the wire")
@@ -204,9 +204,8 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
     if (model == "?") {
-        cat("chain() takes the following strings for its 'model' argument:\n")
-        print(sort(mooringElements$chains$name))
-        return(invisible(NULL))
+        #cat("chain() takes the following strings for its 'model' argument:\n")
+        return(sort(mooringElements$chains$name))
     }
     w <- which(mooringElements$chains$name == model)
     if (1 == length(w)) {
@@ -281,9 +280,8 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
     if (model == "?") {
-        cat("float() takes the following strings for its 'model' argument:\n")
-        print(sort(mooringElements$floats$name))
-        return(invisible(NULL))
+        #cat("float() takes the following strings for its 'model' argument:\n")
+        return(sort(mooringElements$floats$name))
     }
     w <- which(mooringElements$floats$name == model)
     if (1 == length(w)) {
@@ -910,3 +908,71 @@ buoyancy <- function(m)
     sapply(m, function(mi) { if (mi$type == "wire") mi$buoyancy * mi$height else mi$buoyancy })
 }
 
+wireChoices <- wire("?")
+floatChoices <- float("?")
+
+## app for simulating the effect of a vessel strike on a whale
+ui <- fluidPage(tags$style(HTML("body {font-family: 'Arial'; font-size: 12px; margin-left:1ex}")),
+                fluidRow(column(5,
+                                sliderInput("length",  h6("Wire length [m]"), ticks=FALSE,
+                                            min=10,  max=1000, value=200, step=1)),
+                         column(5,
+                                sliderInput("u",  h6("Current [m/s]"), ticks=FALSE,
+                                            min=0, max=5,  value=0.5, step=0.1))),
+                fluidRow(column(3,
+                                selectInput("wireModel", "Wire Type",
+                                            choices=wireChoices,
+                                            selected="1/4 wire/jack")),
+                         column(3,
+                                selectInput("floatModel", "Float Type",
+                                            choices=floatChoices,
+                                            selected="Kiel SFS40in"))),
+                fluidRow(plotOutput("plot")))
+
+
+#' Server for app, with standard arguments.
+#'
+#' @param input A list created by the shiny server, with entries for slider settings, etc.
+#'
+#' @param output A list of output entries, for plotting, etc.
+#'
+#' @param session A list used for various purposes.
+#'
+#' @importFrom shiny observeEvent renderPlot stopApp
+#'
+#' @author Dan Kelley
+server <- function(input, output, session)
+{
+  output$plot <- renderPlot({
+      length <- input$length
+      u <- input$u
+      wireModel <- input$wireModel
+      floatModel <- input$floatModel
+      # message("wireModel=", wireModel, ", floatModel=", floatModel)
+      m <- anchor(depth=length+10) + wire(model=wireModel, length=length) + float(model=floatModel)
+      md <- discretise(m, 1)
+      mdk <- knockdown(md, u)
+      par(mfrow=c(1,2))
+      plot(mdk, which="tension", fancy=TRUE, showDepths=FALSE)
+      plot(mdk, fancy=TRUE)
+  }, pointsize=12)#, height=500)
+}
+
+#' Run a GUI app for interactive simulations
+#'
+#' This makes a simple mooring with an anchor, a line, and a float, in
+#' a depth-uniform current.  Sliders adjust line length and current speed.
+#' Pulldown menus adjust wire and float types.
+#'
+#' @param options List containing options that are provided
+#' to \code{\link[shiny]{shinyApp}}, which creates the GUI app.
+#'
+#' @importFrom shiny shinyApp
+#'
+#' @export
+#'
+#' @author Dan Kelley
+app <- function(options=list(height=500)) # NOTE: height has no effect
+{
+    shinyApp(ui=ui, server=server, options=options)
+}
