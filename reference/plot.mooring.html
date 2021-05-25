@@ -131,7 +131,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mooring</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, which <span class='op'>=</span> <span class='st'>"velocity"</span>, fancy <span class='op'>=</span> <span class='cn'>FALSE</span>, title <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, which <span class='op'>=</span> <span class='st'>"shape"</span>, showDepths <span class='op'>=</span> <span class='cn'>TRUE</span>, fancy <span class='op'>=</span> <span class='cn'>FALSE</span>, title <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,7 +143,12 @@
     <tr>
       <th>which</th>
       <td><p>character value indicating the desired plot, with
-choices: <code>"velocity"</code>, <code>"knockdown" and </code>"tension"`.</p></td>
+choices: <code>"shape"</code> and <code>"tension"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>showDepths</th>
+      <td><p>logical value indicating whether to indicate the depths of
+floats, to the left of the symbols.</p></td>
     </tr>
     <tr>
       <th>fancy</th>
