@@ -3,10 +3,10 @@ figures:
   dev: ragg::agg_png
   dpi: 96
   dev.args:
-      pointsize: 18
+      pointsize: 12
   fig.ext: png
-  fig.width: 5.208333
-  fig.height: 5.208333
+  fig.width: 6.25
+  fig.height: 6.25
   fig.asp: 1
   fig.retina: 2
   bg: NA

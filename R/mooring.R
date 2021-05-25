@@ -580,24 +580,27 @@ discretise <- function(m, by=1)
 #'
 #' @param u either a non-negative number indicating depth-independent velocity,
 #' or a function that returns that velocity as a function of depth (m)
-#' below the ocean surface; see \dQuote{Examples}.
+#' below the ocean surface; see Example 3.
 #'
 #' @param debug an integer controlling debugging.  The default value of 0
 #' means to work silently. Use a positive value to cause the function to
 #' print some information about intermediate results.
 #'
 #' @examples
-#' library(mooring)
 #' # Illustrate importance of drag on the wire.
-#' par(mfrow=c(1, 3))
+#' library(mooring)
 #' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
 #' md <- discretise(m)
-#' # No knockdown
+#' par(mfrow=c(1, 3))
+#'
+#' # Example 1: no current
 #' plot(md)
-#' # Knockdown in uniform 0.5 m/s (approx. 1 knot) current
+#'
+#' # Example 2: uniform 0.5 m/s (approx. 1 knot) current
 #' k1 <- knockdown(md, u=0.5)
 #' plot(k1, title="uniform 0.5 m/s")
-#' # Knockdown in 0.5 m/s current but only in top 40m of water column
+#'
+#' # Example 3: 0.5 m/s current but only in top 40m of water column
 #' k2 <- knockdown(md, u=function(depth) ifelse(depth < 40, 0.5, 0))
 #' plot(k2, title="0.5 m/s only in top 40m")
 #'
