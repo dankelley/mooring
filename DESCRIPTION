@@ -7,6 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "dan.kelley@dal.ca",
            comment = c(ORCID = "https://orcid.org/0000-0001-7808-5911"))
+BugReports: https://github.com/dankelley/mooring/issues
 Description: Calculates the response of oceanographic moorings to horizontal currents.
 Depends: R (>= 3.5.0)
 Suggests:
@@ -14,6 +15,7 @@ Suggests:
     rmarkdown
 License: GPL (>= 3)
 Encoding: UTF-8
+URL: https://dankelley.github.io/mooring/
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
