@@ -1,4 +1,5 @@
 debug <- FALSE
+g <- 9.8
 #' mooring: A Package for Analysing Oceanographic Moorings.
 #'
 #' The mooring package provides functions for working with
@@ -66,7 +67,8 @@ anchor <- function(model="default", depth=0)
     # guess on height
     if (model != "default")
         stop("'model' must be \"default\"")
-    rval <- list(list(type="anchor", model=model, height=0.3, depth=depth, x=0, z=0))
+    # FIXME: guess a train wheel weighs 1000kg and is a foot wide
+    rval <- list(list(type="anchor", model=model, buoyancy=-1000, height=0.3, depth=depth, x=0, z=0))
     class(rval) <- "mooring"
     rval
 }
@@ -358,11 +360,15 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
     height <- cumsum(sapply(rval, function(x) x$height))
     #> cat("height: ", paste(height, collapse=" "), "\n")
     depth <- if ("anchor" == m1[[1]]$type) m1[[1]]$depth else sum(sapply(rval, function(x) x$height))
-    for (i in seq_len(n1+n2))
+    T <- rev(cumsum(rev(buoyancy(rval[-1]))))
+    T <- c(T[1], T)
+    for (i in seq_len(n1+n2)) {
         rval[[i]]$z <- height[i] - depth
+        rval[[i]]$T <- T[i]
+    }
     class(rval) <- "mooring"
     rval
-}
+}                                      # +.mooring
 
 #' Print a mooring object
 #'
@@ -405,8 +411,8 @@ print.mooring <- function(x, ...)
                 cat(sprintf("  %s  model=\"%s\", buoyancy=%g kg/m, length=%g m, width=%g m, x=%g m, z=%g m\n",
                             xi$type, xi$model, xi$buoyancy, xi$height, xi$width, xi$x, xi$z), sep="")
             } else if (xi$type == "anchor") {
-                cat(sprintf("  %s model=\"%s\", height=%g m, x=%g m, z=%g m\n",
-                            xi$type, xi$model, xi$height, xi$x, xi$z), sep="")
+                cat(sprintf("  %s model=\"%s\", buoyancy=%g kg, height=%g m, x=%g m, z=%g m\n",
+                            xi$type, xi$model, xi$buoyancy, xi$height, xi$x, xi$z), sep="")
             } else if (xi$type == "float") {
                 cat(sprintf("  %s  model=\"%s\", buoyancy=%g kg, height=%g m, diameter=%g m, x=%g m, z=%g m\n",
                             xi$type, xi$model, xi$buoyancy, xi$height, xi$diameter, xi$x, xi$z), sep="")
@@ -422,7 +428,10 @@ print.mooring <- function(x, ...)
 #' @param x an object of the `"mooring"` class.
 #'
 #' @param which character value indicating the desired plot, with
-#' choices: `"velocity"`, `"knockdown" and `"tension"`.
+#' choices: `"shape"` and `"tension"`.
+#'
+#' @param showDepths logical value indicating whether to indicate the depths of
+#' floats, to the left of the symbols.
 #'
 #' @param fancy logical value indicating whether to indicate the
 #' water and sediments with filled rectangles.  The alternative
@@ -446,10 +455,10 @@ print.mooring <- function(x, ...)
 #' @export
 #'
 #' @author Dan Kelley
-plot.mooring <- function(x, which="velocity", fancy=FALSE, title="", ...)
+plot.mooring <- function(x, which="shape", showDepths=TRUE, fancy=FALSE, title="", ...)
 {
-    if (which != "velocity")
-        stop("FIXME: make which=\"velocity\" work")
+    if (!which %in% c("shape", "tension"))
+        stop("which must be \"shape\" or \"tension\"")
     m <- x # we only use 'x' above to obey the R rules on generics.
     colWater <- "#ccdcff"
     colBottom <- "#e6bb98"
@@ -458,7 +467,8 @@ plot.mooring <- function(x, which="velocity", fancy=FALSE, title="", ...)
     debug <- 0L
     if ("debug" %in% names(dots))
         debug <- as.integer(max(0L, dots$debug))
-    x <- sapply(m, function(mi) mi$x)
+    x <- if (which == "shape") x(m) else if (which == "tension") tension(m)
+    xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant=TRUE)
     z <- sapply(m, function(mi) mi$z)
     mooringDebug(debug, x, overview=TRUE, round=2)
     mooringDebug(debug, z, overview=TRUE, round=2)
@@ -468,9 +478,11 @@ plot.mooring <- function(x, which="velocity", fancy=FALSE, title="", ...)
     omar <- par("mar")
     omgp <- par("mgp")
     par(mar=c(3.5, 3.5, 1.5, 1), mgp=c(2, 0.7, 0))
-    xlim <- extendrange(x)
+    xlim <- extendrange(c(x, xstagnant))
     ylim <- c(waterDepth, 0)
-    plot(x, depth, xlim=xlim, ylim=ylim, asp=1, type="l", xlab="Horizontal Coordinate [m]", ylab="Depth [m]")
+    plot(x, depth, xlim=xlim, ylim=ylim, asp=if (which=="shape") 1, type="l",
+         xlab=if (which == "shape") "Horizontal Coordinate [m]" else if (which == "tension") "Tension [kg]",
+         ylab="Depth [m]")
     if (fancy) {
         box()
         usr <- par("usr")
@@ -482,30 +494,35 @@ plot.mooring <- function(x, which="velocity", fancy=FALSE, title="", ...)
         abline(h=0, col="#0066ff", lwd=2)
         abline(h=waterDepth, col="#996633", lwd=2)
     }
-    # Draw shape if water is stagnant
-    mooringLength <- sum(sapply(m, function(x) x$height))
-    lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=1.4*par("lwd"))
-    points(0, waterDepth - mooringLength, pch=20, col=colStagnant)
-    # Draw actual shape (possibly knocked-over)
+    # Redraw to cover grid
     lines(x, depth, lwd=1.4*par("lwd"))
+    # Draw conditions for u=0 case
+    if (which == "shape") {
+        mooringLength <- sum(sapply(m, function(x) x$height))
+        lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=1.4*par("lwd"))
+        points(0, waterDepth - mooringLength, pch=20, col=colStagnant)
+    } else if (which == "tension") {
+        lines(tension(m, stagnant=TRUE), depth, col=colStagnant, lwd=1.4*par("lwd"))
+    }
     if (fancy)
         rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
     for (i in seq_along(m)) {
         type <- m[[i]]$type
-        x <- m[[i]]$x
-        z <- m[[i]]$z
+        xi <- x[i]
+        zi <- m[[i]]$z
         #> message("i=",i,", z[i]=", z[i], ", type=", m[[i]]$type)
         if (type == "anchor") {
             if (debug)
-                cat("i=", i, " (anchor at x=", x, ", z=", z, ")\n")
-            points(x, -z, pch=20)
-            text(x, -z, "A", pos=2)
+                cat("i=", i, " (anchor at xi=", xi, ", zi=", zi, ")\n")
+            points(xi, -zi, pch=20)
+            text(xi, -zi, "A", pos=2)
         } else if (type == "float") {
             if (debug)
-                cat("i=", i, " (float at x=", x, ", z=", z, ")\n")
-            points(x, -z, pch=20, cex=1.4)
-            text(x, -z, "F", pos=4)
-            text(x, -z, sprintf("%.1fm", -z), pos=2)
+                cat("i=", i, " (float at xi=", xi, ", zi=", zi, ")\n")
+            points(xi, -zi, pch=20, cex=1.4)
+            text(xi, -zi, "F", pos=4)
+            if (showDepths)
+                text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
         } else if (type == "wire") {
             #> message("draw wire??")
         }
@@ -631,7 +648,6 @@ knockdown <- function(m, u=1, debug=0L)
     # reverse elements, to make it simpler to work from top down
     mrev <- rev(m)
     class(mrev) <- "mooring"
-    g <- 9.8
     rho <- 1027
     # Depth below surface (FIXME: how to have more water above?)
     depth <- cumsum(sapply(mrev, function(item) item$height))
@@ -687,12 +703,16 @@ knockdown <- function(m, u=1, debug=0L)
     # Add top of anchor, and bottom of anchor.  Then reverse, to match original 'm'.
     x <- rev(c(x, 0, 0))
     z <- rev(c(z, -waterDepth + morig[[1]]$height, -waterDepth))
+    phi <- c(phi[1], phi, tail(phi, 1))
+    T <- rev(c(T[1], T, tail(T, 1)))
     mooringDebug(debug, "Values after adding two elements:\n")
     mooringDebug(debug, x, overview=TRUE, round=2)
     mooringDebug(debug, z, overview=TRUE, round=2)
     for (i in seq_along(morig)) {
         rval[[i]]$x <- x[i]
         rval[[i]]$z <- z[i]
+        rval[[i]]$phi <- phi[i]
+        rval[[i]]$T <- T[i]
     }
     class(rval) <- "mooring"
     rval
@@ -743,5 +763,141 @@ mooringDebug <- function(debug, v, ..., overview=FALSE, round=FALSE)
         }
     }
     invisible(NULL)
+}
+
+# FIXME: put all the below into alphabetical order (once working)
+
+#> #' Get angles from a mooring
+#> #'
+#> #' @param m an object of the `"mooring"` class.
+#> #'
+#> #' @return a numeric vector of angles (in degrees) made by each inter-element connector to the vertical.
+#> #' Note that this has length 1 less than the length of `m`.
+#> #'
+#> #' @export
+#> #'
+#> #' @author Dan Kelley
+#> angle <- function(m)
+#> {
+#>     180 / pi * sapply(m, function(mi) mi$phi)
+#> }
+
+#' Return depth, in m, of elements in mooring.
+#'
+#' This is the negative of [z()].
+#'
+#' @param m an object of the `"mooring"` class.
+#'
+#' @return a numeric vector of depth in metres.
+#'
+#' @examples
+#' library(mooring)
+#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' depth(m)
+#'
+#' @export
+#'
+#' @author Dan Kelley
+depth <- function(m)
+{
+    -z(m)
+}
+
+#' Return horizontal coordinate, in m, of elements in mooring.
+#'
+#' @param m an object of the `"mooring"` class.
+#'
+#' @return a numeric vector of horizontal coordinate in metres.
+#'
+#' @examples
+#' library(mooring)
+#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' x(m)
+#'
+#' @export
+#'
+#' @author Dan Kelley
+x <- function(m)
+{
+    sapply(m, function(mi) mi$x)
+}
+
+#' Return vertical coordinate, in m, of elements in mooring.
+#'
+#' This is the negative of [depth()].
+#'
+#' @param m an object of the `"mooring"` class.
+#'
+#' @return a numeric vector of vertical coordinate in metres.
+#'
+#' @examples
+#' library(mooring)
+#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' z(m)
+#'
+#' @export
+#'
+#' @author Dan Kelley
+z <- function(m)
+{
+    sapply(m, function(mi) mi$z)
+}
+
+#' Return tension, in kg, between elements in mooring.
+#'
+#' The first element (for the anchor) is repeated, so that the
+#' length of the returned result matches the length of `m`.
+#'
+#' @param m an object of the `"mooring"` class.
+#'
+#' @param stagnant a logical indicating whether to compute tension
+#' as though no currents were present.
+#'
+#' @return a numeric vector of tension, in kg.
+#'
+#' @examples
+#' library(mooring)
+#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' md <- discretise(m)
+#' mdk <- knockdown(md, u=0.5)
+#' depth <- depth(mdk)
+#' # Next is handled better by plot.mooring(mdk,which="tension")
+#' plot(tension(mdk), depth, ylim=rev(range(depth)), type="l")
+#'
+#' @export
+#'
+#' @author Dan Kelley
+tension <- function(m, stagnant=FALSE)
+{
+    if (stagnant) {
+        b <- buoyancy(m)[-1]
+        T <- rev(cumsum(rev(b)))
+        c(T[1], T) # repeat anchor
+    } else {
+        sapply(m, function(mi) mi$T/g)
+    }
+}
+
+#' Return buoyancy of elements in mooring, in kg.
+#'
+#' This is a direct lookup for all types except `"wire"`.
+#' In the wire case, the stored buoyancy is in kg/m and therefore
+#' the length of the wire is multiplied by that value.
+#'
+#' @param m an object of the `"mooring"` class.
+#'
+#' @return a numeric vector of buoyancy, in kg.
+#'
+#' @examples
+#' library(mooring)
+#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' buoyancy(m)
+#'
+#' @export
+#'
+#' @author Dan Kelley
+buoyancy <- function(m)
+{
+    sapply(m, function(mi) { if (mi$type == "wire") mi$buoyancy * mi$height else mi$buoyancy })
 }
 
