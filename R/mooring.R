@@ -1,5 +1,7 @@
-g <- 9.8
-library(shiny)
+###################
+# 1. overall docs #
+###################
+
 #' mooring: A Package for Analysing Oceanographic Moorings.
 #'
 #' The mooring package provides functions for working with
@@ -36,15 +38,24 @@ NULL
 #' @usage data(mooringElements)
 #'
 #' @references
-#' Dewey, Richard K. “Mooring Design & Dynamics—a Matlab® Package for
-#' Designing and Analyzing Oceanographic Moorings.” Marine Models 1, no. 1
-#' (December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X.
+#' Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
+#' Designing and Analyzing Oceanographic Moorings." Marine Models 1, no. 1
+#' (December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
 #'
-#' Dewey, Richard. “Mooring Design and Dynamics.” Accessed May 15, 2021.
-#' http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php.
+#' Dewey, Richard. "Mooring Design and Dynamics." Accessed May 15, 2021.
+#' http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
 NULL
 
+###################
+# 2. setup        #
+###################
 
+g <- 9.8
+
+
+##################
+# 3. Code        #
+##################
 
 #' Create an anchor object
 #'
@@ -67,8 +78,8 @@ anchor <- function(model="default", depth=0)
     # guess on height
     if (model != "default")
         stop("'model' must be \"default\"")
-    # FIXME: guess a train wheel weighs 1000kg and is a foot wide
-    rval <- list(list(type="anchor", model=model, buoyancy=-1000, height=0.3, depth=depth, x=0, z=0))
+    # a train wheel weighs 1000kg and is a foot wide, but we set height=0
+    rval <- list(list(type="anchor", model=model, buoyancy=-1000, height=0, depth=depth, x=0, z=0))
     class(rval) <- "mooring"
     rval
 }
@@ -129,7 +140,7 @@ release <- function(model="default_release")
 #' @importFrom utils data
 #'
 #' @author Dan Kelley
-wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=NULL, width=NULL, CD=NULL)
+wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=1, width=NULL, CD=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -137,8 +148,6 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=NULL, width=NULL, 
         #cat("wire() takes the following strings for its 'model' argument:\n")
         return(sort(mooringElements$wires$name))
     }
-    if (is.null(length))
-        stop("must supply length (m) of the wire")
     w <- which(mooringElements$wires$name == model)
     if (1 == length(w)) {
         me <- mooringElements$wires[w,]
@@ -908,17 +917,30 @@ buoyancy <- function(m)
     sapply(m, function(mi) { if (mi$type == "wire") mi$buoyancy * mi$height else mi$buoyancy })
 }
 
-wireChoices <- wire("?")
-floatChoices <- float("?")
+###################
+# 4. app          #
+###################
+
+library(shiny)
 
 ## app for simulating the effect of a vessel strike on a whale
+floatChoices <- float("?")
+wireChoices <- wire("?")
+dewey1999 <- "Dewey, Richard K. \"Mooring Design & Dynamics-a Matlab\" Package for Designing and Analyzing Oceanographic Moorings.\" Marine Models 1, no. 1 (December 1, 1999): 103-57. https://doi.org/10.1016/S1369-9350(00)00002-X"
+dewey2021 <- "Dewey, Richard. \"Mooring Design and Dynamics.\" Accessed May 15, 2021.  http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php"
+
+indent <- paste0(rep("&nbsp;", 8), collapse="")
+help <- paste0("Use sliders and pulldown menus to adjust conditions. Click the <b>Code</b> button to see code to reproduce the simulation. To learn more about the properties of a given float or wire, open an R console and type e.g. <br>", indent, "<tt>float(\"Kiel SFS40in\")</tt><br>or<br>", indent, "<tt>wire(\"1/4 wire/jack\")</tt><br>A list of float types is obtained with <br>", indent, "<tt>float(\"?\")</tt><br>and <br>", indent, "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Deweey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>", dewey1999, "<li>", dewey2021, "</ul>")
+
 ui <- fluidPage(tags$style(HTML("body {font-family: 'Arial'; font-size: 12px; margin-left:1ex}")),
                 fluidRow(column(5,
-                                sliderInput("length",  h6("Wire length [m]"), ticks=FALSE,
+                                sliderInput("length",  h6("Wire length [m]"),
                                             min=10,  max=1000, value=200, step=1)),
                          column(5,
-                                sliderInput("u",  h6("Current [m/s]"), ticks=FALSE,
-                                            min=0, max=5,  value=0.5, step=0.1))),
+                                sliderInput("u",  h6("Current [m/s]"),
+                                            min=0, max=5,  value=0.5, step=0.1)),
+                         shiny::actionButton("help", "Help"),
+                         shiny::actionButton("code", "Code")),
                 fluidRow(column(3,
                                 selectInput("wireModel", "Wire Type",
                                             choices=wireChoices,
@@ -938,24 +960,42 @@ ui <- fluidPage(tags$style(HTML("body {font-family: 'Arial'; font-size: 12px; ma
 #'
 #' @param session A list used for various purposes.
 #'
-#' @importFrom shiny observeEvent renderPlot stopApp
+#' @importFrom shiny modalDialog observeEvent renderPlot showModal stopApp
 #'
 #' @author Dan Kelley
 server <- function(input, output, session)
 {
-  output$plot <- renderPlot({
-      length <- input$length
-      u <- input$u
-      wireModel <- input$wireModel
-      floatModel <- input$floatModel
-      # message("wireModel=", wireModel, ", floatModel=", floatModel)
-      m <- anchor(depth=length+10) + wire(model=wireModel, length=length) + float(model=floatModel)
-      md <- discretise(m, 1)
-      mdk <- knockdown(md, u)
-      par(mfrow=c(1,2))
-      plot(mdk, which="tension", fancy=TRUE, showDepths=FALSE)
-      plot(mdk, fancy=TRUE)
-  }, pointsize=12)#, height=500)
+    observeEvent(input$help, {
+                 showModal(modalDialog(shiny::HTML(help), title="Using this application", size="l"))
+                })
+
+    observeEvent(input$code, {
+                 length <- input$length
+                 u <- input$u
+                 wireModel <- input$wireModel
+                 floatModel <- input$floatModel
+                 msg <- sprintf("%s<br>m <- anchor(depth=%g) + wire(model=\"%s\", length=%g) + float(model=\"%s\")<br>", "library(mooring)", length, wireModel, length, floatModel)
+                 msg <- paste0(msg, "md <- discretise(m, 1)<br>")
+                 msg <- paste0(msg, "mdk <- knockdown(md, ", u, ")<br>")
+                 msg <- paste0(msg, "par(mfrow=c(1, 2))<br>")
+                 msg <- paste0(msg, "plot(mdk, which=\"tension\", fancy=TRUE, showDepths=FALSE)<br>")
+                 msg <- paste0(msg, "plot(mdk, which=\"shape\", fancy=TRUE)<br>")
+                 showModal(modalDialog(shiny::HTML(msg), title="R code", size="l"))
+                })
+
+    output$plot <- renderPlot({
+        length <- input$length
+        u <- input$u
+        wireModel <- input$wireModel
+        floatModel <- input$floatModel
+        # message("wireModel=", wireModel, ", floatModel=", floatModel)
+        m <- anchor(depth=length) + wire(model=wireModel, length=length) + float(model=floatModel)
+        md <- discretise(m, 1)
+        mdk <- knockdown(md, u)
+        par(mfrow=c(1,2))
+        plot(mdk, which="tension", fancy=TRUE, showDepths=FALSE)
+        plot(mdk, fancy=TRUE)
+    }, pointsize=12)#, height=500)
 }
 
 #' Run a GUI app for interactive simulations
@@ -964,15 +1004,14 @@ server <- function(input, output, session)
 #' a depth-uniform current.  Sliders adjust line length and current speed.
 #' Pulldown menus adjust wire and float types.
 #'
-#' @param options List containing options that are provided
-#' to \code{\link[shiny]{shinyApp}}, which creates the GUI app.
-#'
 #' @importFrom shiny shinyApp
 #'
 #' @export
 #'
 #' @author Dan Kelley
-app <- function(options=list(height=500)) # NOTE: height has no effect
+app <- function()
 {
-    shinyApp(ui=ui, server=server, options=options)
+    shinyApp(ui=ui, server=server)
 }
+
+

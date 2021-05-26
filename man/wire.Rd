@@ -7,7 +7,7 @@
 wire(
   model = "1/4 wire/jack",
   buoyancy = NULL,
-  length = NULL,
+  length = 1,
   width = NULL,
   CD = NULL
 )

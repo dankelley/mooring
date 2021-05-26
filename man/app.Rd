@@ -4,11 +4,7 @@
 \alias{app}
 \title{Run a GUI app for interactive simulations}
 \usage{
-app(options = list(height = 500))
-}
-\arguments{
-\item{options}{List containing options that are provided
-to \code{\link[shiny]{shinyApp}}, which creates the GUI app.}
+app()
 }
 \description{
 This makes a simple mooring with an anchor, a line, and a float, in

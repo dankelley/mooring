@@ -14,10 +14,10 @@ Users will seldom need to consult this table directly, but those that
 do should note that Dewey's lengths in cm have been converted to m.
 }
 \references{
-Dewey, Richard K. “Mooring Design & Dynamics—a Matlab® Package for
-Designing and Analyzing Oceanographic Moorings.” Marine Models 1, no. 1
-(December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X.
+Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
+Designing and Analyzing Oceanographic Moorings." Marine Models 1, no. 1
+(December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
 
-Dewey, Richard. “Mooring Design and Dynamics.” Accessed May 15, 2021.
-http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php.
+Dewey, Richard. "Mooring Design and Dynamics." Accessed May 15, 2021.
+http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
 }
