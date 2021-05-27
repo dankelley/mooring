@@ -933,15 +933,18 @@ indent <- paste0(rep("&nbsp;", 8), collapse="")
 help <- paste0("Use sliders and pulldown menus to adjust conditions. Click the <b>Code</b> button to see code to reproduce the simulation. To learn more about the properties of a given float or wire, open an R console and type e.g. <br>", indent, "<tt>float(\"Kiel SFS40in\")</tt><br>or<br>", indent, "<tt>wire(\"1/4 wire/jack\")</tt><br>A list of float types is obtained with <br>", indent, "<tt>float(\"?\")</tt><br>and <br>", indent, "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Deweey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>", dewey1999, "<li>", dewey2021, "</ul>")
 
 ui <- fluidPage(tags$style(HTML("body {font-family: 'Arial'; font-size: 12px; margin-left:1ex}")),
-                fluidRow(column(5,
-                                sliderInput("length",  h6("Wire length [m]"),
+                fluidRow(column(4,
+                                sliderInput("depth",  h6("Water Depth [m]"),
                                             min=10,  max=1000, value=200, step=1)),
-                         column(5,
+                         column(4,
                                 sliderInput("u",  h6("Current [m/s]"),
                                             min=0, max=5,  value=0.5, step=0.1)),
                          shiny::actionButton("help", "Help"),
                          shiny::actionButton("code", "Code")),
                 fluidRow(column(3,
+                                sliderInput("length",  h6("Wire length [m]"),
+                                            min=10,  max=1000, value=200, step=1)),
+                         column(3,
                                 selectInput("wireModel", "Wire Type",
                                             choices=wireChoices,
                                             selected="1/4 wire/jack")),
@@ -970,11 +973,12 @@ server <- function(input, output, session)
                 })
 
     observeEvent(input$code, {
+                 depth <- input$depth
                  length <- input$length
                  u <- input$u
                  wireModel <- input$wireModel
                  floatModel <- input$floatModel
-                 msg <- sprintf("%s<br>m <- anchor(depth=%g) + wire(model=\"%s\", length=%g) + float(model=\"%s\")<br>", "library(mooring)", length, wireModel, length, floatModel)
+                 msg <- sprintf("%s<br>m <- anchor(depth=%g) + wire(model=\"%s\", length=%g) + float(model=\"%s\")<br>", "library(mooring)", depth, wireModel, length, floatModel)
                  msg <- paste0(msg, "md <- discretise(m, 1)<br>")
                  msg <- paste0(msg, "mdk <- knockdown(md, ", u, ")<br>")
                  msg <- paste0(msg, "par(mfrow=c(1, 2))<br>")
@@ -984,12 +988,13 @@ server <- function(input, output, session)
                 })
 
     output$plot <- renderPlot({
+        depth <- input$depth
         length <- input$length
         u <- input$u
         wireModel <- input$wireModel
         floatModel <- input$floatModel
         # message("wireModel=", wireModel, ", floatModel=", floatModel)
-        m <- anchor(depth=length) + wire(model=wireModel, length=length) + float(model=floatModel)
+        m <- anchor(depth=depth) + wire(model=wireModel, length=length) + float(model=floatModel)
         md <- discretise(m, 1)
         mdk <- knockdown(md, u)
         par(mfrow=c(1,2))
