@@ -9,6 +9,7 @@ for (file in list.files(pattern="^chains.*csv$"))
 floats <- NULL
 for (file in list.files(pattern="^floats.*csv$"))
     floats <- rbind(floats, read.csv(file))
+
 mooringElements <- list(wires=wires, chains=chains, floats=floats)
 save(mooringElements, file="mooringElements.rda")
 

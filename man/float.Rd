@@ -9,7 +9,8 @@ float(
   buoyancy = NULL,
   height = NULL,
   diameter = NULL,
-  CD = NULL
+  CD = NULL,
+  source = NULL
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ This is ignored if \code{model} is recognized.}
 This is ignored if \code{model} is recognized.}
 
 \item{CD}{numeric value for the drag coefficient for the item.}
+
+\item{source}{character value indicating the source of the data.}
 }
 \value{
 \link{float} returns an object of the \code{"mooring"} class, with \code{type} equal to \code{"float"}.
@@ -56,7 +59,6 @@ float("?")
 }
 \seealso{
 Other functions that create mooring objects: 
-\code{\link{+.mooring}()},
 \code{\link{anchor}()},
 \code{\link{chain}()},
 \code{\link{release}()},

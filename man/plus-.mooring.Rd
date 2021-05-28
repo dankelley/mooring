@@ -2,47 +2,19 @@
 % Please edit documentation in R/mooring.R
 \name{+.mooring}
 \alias{+.mooring}
-\title{Combine two mooring objects}
+\title{Combine two mooring objects (DEFUNCT)}
 \usage{
 \method{+}{mooring}(m1, m2)
 }
 \arguments{
-\item{m1, m2}{objects of \code{"mooring"} class.  Each can be a single element,
-e.g. as created by \code{\link[=wire]{wire()}}, etc., or a combination of elements, as are
-returned by the present function.}
+\item{m1, m2}{DEFUNCT.}
 }
 \value{
-an object of the \code{"mooring"} class that holds the
-combination of \code{m1} and \code{m2}.
+DEFUNCT
 }
 \description{
-The first object is "placed" above the second (see Examples).  Note that
-the first element of the first object must be the result of a call
-to \code{\link[=anchor]{anchor()}}.
-}
-\examples{
-library(mooring)
-m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
-print(m)
-plot(m)
-
-}
-\seealso{
-Other functions that create mooring objects: 
-\code{\link{anchor}()},
-\code{\link{chain}()},
-\code{\link{float}()},
-\code{\link{release}()},
-\code{\link{wire}()}
-
-Other functions that create mooring objects: 
-\code{\link{anchor}()},
-\code{\link{chain}()},
-\code{\link{float}()},
-\code{\link{release}()},
-\code{\link{wire}()}
+This has been replaced by \code{\link[=mooring]{mooring()}}.
 }
 \author{
 Dan Kelley
 }
-\concept{functions that create mooring objects}
