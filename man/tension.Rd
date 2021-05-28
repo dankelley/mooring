@@ -21,7 +21,7 @@ length of the returned result matches the length of \code{m}.
 }
 \examples{
 library(mooring)
-m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 md <- discretise(m)
 mdk <- knockdown(md, u=0.5)
 depth <- depth(mdk)

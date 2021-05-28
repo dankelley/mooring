@@ -19,7 +19,7 @@ the length of the wire is multiplied by that value.
 }
 \examples{
 library(mooring)
-m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 buoyancy(m)
 
 }
