@@ -12,7 +12,7 @@
 #' # Illustrate the deformation of a 100-m mooring in a 0.5 m/s
 #' # (roughly 1 knot) current. Buoyancy is provided with a float
 #' # of diameter 20 inches.
-#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 #' par(mfrow=c(1, 3))
 #' plot(m)
 #' # Must discretise the wire portion to resolve the shape.
@@ -79,10 +79,10 @@ anchor <- function(model="default", depth=0)
     if (model != "default")
         stop("'model' must be \"default\"")
     # a train wheel weighs 1000kg and is a foot wide, but we set height=0
-    rval <- list(list(type="anchor", model=model, buoyancy=-1000, height=0, depth=depth, x=0, z=0))
-    class(rval) <- "mooring"
+    rval <- list(type="anchor", model=model, buoyancy=-1000, height=0, depth=depth, x=0, z=0)
+    class(rval) <- c("mooring", "anchor")
     rval
-}
+}                                      # anchor()
 
 #' Create a mooring-release object
 #'
@@ -98,10 +98,10 @@ anchor <- function(model="default", depth=0)
 #' @author Dan Kelley
 release <- function(model="default_release")
 {
-    rval <- list(list(type="anchor", model=model, height=1.0, x=0, z=0)) # guess on length
-    class(rval) <- "mooring"
+    rval <- list(type="anchor", model=model, height=1.0, x=0, z=0) # guess on length
+    class(rval) <- c("mooring", "release")
     rval
-}
+}                                      # release()
 
 #' Create a wire object
 #'
@@ -165,10 +165,10 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=1, width=NULL, CD=
         if (is.null(width)) stop("must supply width, if creating a new wire model")
         if (is.null(CD)) stop("must supply CD, if creating a new wire model")
     }
-    rval <- list(list(type="wire", model=model, buoyancy=buoyancy, height=length, width=width, CD=CD, x=0, z=0))
-    class(rval) <- "mooring"
+    rval <- list(type="wire", model=model, buoyancy=buoyancy, height=length, width=width, CD=CD, x=0, z=0)
+    class(rval) <- c("mooring", "wire")
     rval
-}
+}                                      # wire()
 
 #' Create a chain object
 #'
@@ -237,10 +237,10 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
         if (is.null(width)) stop("must supply width, if creating a new chain model")
         if (is.null(CD)) stop("must supply CD, if creating a new chain model")
     }
-    rval <- list(list(type="chain", model=model, buoyancy=buoyancy, height=height, width=width, CD=CD, x=0, z=0))
-    class(rval) <- "mooring"
+    rval <- list(type="chain", model=model, buoyancy=buoyancy, height=height, width=width, CD=CD, x=0, z=0)
+    class(rval) <- c("mooring", "chain")
     rval
-}
+}                                      # chain()
 
 
 #' Create a float object
@@ -313,10 +313,10 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
         if (is.null(diameter)) stop("must supply diameter, if creating a new float model")
         if (is.null(CD)) stop("must supply CD, if creating a new float model")
     }
-    rval <- list(list(type="float", model=model, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, x=0, z=0))
-    class(rval) <- "mooring"
+    rval <- list(type="float", model=model, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, x=0, z=0)
+    class(rval) <- c("mooring", "float")
     rval
-}
+}                                      # float()
 
 #' Combine two mooring objects
 #'
@@ -337,7 +337,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
+#' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 #' print(m)
 #' plot(m)
 #'
@@ -345,6 +345,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #' @author Dan Kelley
 `+.mooring` <- function(m1, m2)
 {
+    stop("+ no longer works. Use mooring() instead")
     n1 <- length(m1)
     if (length(n1) < 1L)
         stop("n1 must have 1 or more elements")
@@ -376,6 +377,40 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
     rval
 }                                      # +.mooring
 
+#' Create a mooring
+#'
+#' @param ... two or more elementary objects, e.g. as created by [anchor()],
+#' [chain()], [wire()], or [float()].
+#'
+#' @examples
+#' library(mooring)
+#' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
+#' print(m)
+#'
+#' @export
+#'
+#' @author Dan Kelley
+mooring <- function(...)
+{
+    dots <- list(...)
+    w <- which(sapply(dots, function(x) !inherits(x, "mooring")))
+    if (length(w))
+        stop("these are the indices of elements that are not of class 'mooringElement': ", paste(w, collapse=" "))
+    rval <- dots
+    height <- cumsum(sapply(rval, function(x) x$height))
+    #> cat("height: ", paste(height, collapse=" "), "\n")
+    depth <- if ("anchor" == rval[[1]]$type) rval[[1]]$depth else sum(sapply(rval, function(x) x$height))
+    T <- rev(cumsum(rev(buoyancy(rval[-1]))))
+    T <- c(T[1], T)
+    for (i in seq_along(rval)) {
+        rval[[i]]$x <- 0
+        rval[[i]]$z <- height[i] - depth
+        rval[[i]]$T <- T[i]
+    }
+    class(rval) <- "mooring"
+    rval
+}
+
 #' Print a mooring object
 #'
 #' @param x an object of the `"mooring"` class.
@@ -384,7 +419,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
+#' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 #' print(m)
 #'
 #' @export
@@ -392,6 +427,8 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #' @author Dan Kelley
 print.mooring <- function(x, ...)
 {
+    message("FIXME: print a mooring object")
+    return()
     m <- x # we only use 'x' above to obey the R rules on generics.
     n <- length(x)
     if (0 == n)
@@ -452,7 +489,7 @@ print.mooring <- function(x, ...)
 #' # Create, summarize, and plot a simple mooring comprising
 #' # a bottom anchor, a 100-metre wire, and a float.
 #' library(mooring)
-#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
+#' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 #' md <- discretise(m)
 #' par(mfrow=c(1, 2))
 #' plot(md)
@@ -622,7 +659,7 @@ discretise <- function(m, by=1)
 #' @examples
 #' # Illustrate importance of drag on the wire.
 #' library(mooring)
-#' m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
+#' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 #' md <- discretise(m)
 #' par(mfrow=c(1, 3))
 #'
@@ -808,7 +845,7 @@ mooringDebug <- function(debug, v, ..., overview=FALSE, round=FALSE)
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 #' depth(m)
 #'
 #' @export
@@ -827,7 +864,7 @@ depth <- function(m)
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 #' x(m)
 #'
 #' @export
@@ -848,7 +885,7 @@ x <- function(m)
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 #' z(m)
 #'
 #' @export
@@ -873,7 +910,7 @@ z <- function(m)
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 #' md <- discretise(m)
 #' mdk <- knockdown(md, u=0.5)
 #' depth <- depth(mdk)
@@ -906,7 +943,7 @@ tension <- function(m, stagnant=FALSE)
 #'
 #' @examples
 #' library(mooring)
-#' m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 #' buoyancy(m)
 #'
 #' @export
@@ -978,7 +1015,7 @@ server <- function(input, output, session)
                  u <- input$u
                  wireModel <- input$wireModel
                  floatModel <- input$floatModel
-                 msg <- sprintf("%s<br>m <- anchor(depth=%g) + wire(model=\"%s\", length=%g) + float(model=\"%s\")<br>", "library(mooring)", waterDepth, wireModel, wireLength, floatModel)
+                 msg <- sprintf("%s<br>m <- mooring(anchor(depth=%g), wire(model=\"%s\", length=%g), float(model=\"%s\"))<br>", "library(mooring)", waterDepth, wireModel, wireLength, floatModel)
                  msg <- paste0(msg, "md <- discretise(m, by=1)<br>")
                  msg <- paste0(msg, "mdk <- knockdown(md, u=", u, ")<br>")
                  msg <- paste0(msg, "par(mfrow=c(1, 2))<br>")
@@ -1003,7 +1040,7 @@ server <- function(input, output, session)
             #> message("  u=", u)
             #> message("  wireModel=", wireModel)
             #> message("  floatModel=", floatModel)
-            m <- anchor(depth=waterDepth) + wire(model=wireModel, length=wireLength) + float(model=floatModel)
+            m <- mooring(anchor(depth=waterDepth), wire(model=wireModel, length=wireLength), float(model=floatModel))
             md <- discretise(m, 1)
             mdk <- knockdown(md, u)
             par(mfrow=c(1,2))

@@ -4,6 +4,13 @@
 \name{mooring}
 \alias{mooring}
 \title{mooring: A Package for Analysing Oceanographic Moorings.}
+\usage{
+mooring(...)
+}
+\arguments{
+\item{...}{two or more elementary objects, e.g. as created by \code{\link[=anchor]{anchor()}},
+\code{\link[=chain]{chain()}}, \code{\link[=wire]{wire()}}, or \code{\link[=float]{float()}}.}
+}
 \description{
 The mooring package provides functions for working with
 oceanographic moorings.
@@ -13,7 +20,7 @@ library(mooring)
 # Illustrate the deformation of a 100-m mooring in a 0.5 m/s
 # (roughly 1 knot) current. Buoyancy is provided with a float
 # of diameter 20 inches.
-m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 par(mfrow=c(1, 3))
 plot(m)
 # Must discretise the wire portion to resolve the shape.
@@ -21,4 +28,11 @@ md <- discretise(m)
 mdk <- knockdown(md, u=0.5)
 plot(mdk)
 
+library(mooring)
+m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
+print(m)
+
+}
+\author{
+Dan Kelley
 }

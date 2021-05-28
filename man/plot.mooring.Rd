@@ -31,7 +31,7 @@ Plot a mooring object
 # Create, summarize, and plot a simple mooring comprising
 # a bottom anchor, a 100-metre wire, and a float.
 library(mooring)
-m <- anchor(depth=100) + wire(length=80) + float("HMB 20")
+m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 md <- discretise(m)
 par(mfrow=c(1, 2))
 plot(md)
