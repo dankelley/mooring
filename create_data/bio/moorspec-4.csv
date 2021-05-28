@@ -1,4 +1,4 @@
-number,description,length1,LBS,NEWTONS,length2,area_per_metre,weight_per_m,area,DRAG_N,DRAG_T,,,,,,,,,,,,,,
+number,description,length1,LBS,NEWTONS,length2,area1,W,area2,DRAG_N,DRAG_T,,,,,,,,,,,,,,
 3,"3/16"" GALVANIZED WIRE COATED TO 1/4""",**,**,0.76nt/m,,0.00635,-0.76,0.000032,2.6,0.00756,,,,,,,,,,,,,,
 5,"1/4"" GALVANIZED WIRE COATED TO 5/16""",**,**,**,,0.0079375,**,0.000198,2.6,0.00756,,,,,,,,,,,,,,
 ,SWIVEL,,2.1,9.3408,,,,,,,,,,,,,,,,,,,,

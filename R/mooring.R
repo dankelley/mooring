@@ -413,7 +413,7 @@ mooring <- function(...)
 #' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 #' print(m)
 #'
-#' @export
+## @export
 #'
 #' @author Dan Kelley
 print.mooring <- function(x, ...)
