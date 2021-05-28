@@ -3,17 +3,17 @@ library(mooring)
 u <- 0.50                                # current [m/s]
 
 f <- float("HMB 20")
-dzfloat <- f[[1]]$height
-Rfloat <- f[[1]]$height / 2
+dzfloat <- f$height
+Rfloat <- f$height / 2
 Afloat <- pi * Rfloat^2
-Bfloat <- f[[1]]$buoyancy
+Bfloat <- f$buoyancy
 
 w <- wire(length=100)
 dzcable <- 1
-Rcable <- w[[1]]$width / 2
+Rcable <- w$width / 2
 Acable <- 2 * dzcable * Rcable
-Bcable <- w[[1]]$buoyancy
-CD <- w[[1]]$CD
+Bcable <- w$buoyancy
+CD <- w$CD
 g <- 9.8                               # m/s^2
 rho <- 1027                            # kg/m^3 nominal
 
@@ -66,7 +66,7 @@ lines(c(0, 0), range(z, na.rm=TRUE), col=colStagnant, lwd=lwdStagnant)
 points(0, max(z, na.rm=TRUE), pch=20, col="gray")
 points(X[2], Z[2], pch=20)
 knockdown <- max(z,na.rm=TRUE) - max(Z,na.rm=TRUE)
-mtext(sprintf("%s with u=%.1fm/s", f[[1]]$model, u), cex=par("cex"), line=1)
+mtext(sprintf("%s with u=%.1fm/s", f$model, u), cex=par("cex"), line=1)
 mtext(sprintf("Knockdown %.1fm ", knockdown), cex=par("cex"), line=0)
 #if (!interactive()) dev.off()
 

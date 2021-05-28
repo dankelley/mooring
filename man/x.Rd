@@ -17,7 +17,7 @@ Return horizontal coordinate, in m, of elements in mooring.
 }
 \examples{
 library(mooring)
-m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 x(m)
 
 }

@@ -17,7 +17,7 @@ This is the negative of \code{\link[=z]{z()}}.
 }
 \examples{
 library(mooring)
-m <- anchor(depth=120) + wire(length=100) + float("HMB 20")
+m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 depth(m)
 
 }

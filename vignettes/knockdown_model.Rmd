@@ -191,8 +191,8 @@ w <- wire(length=100)
 
 
 Figure 1 shows the result of simulating a 20-inch Hydro Float Mooring Buoy
-(with $`r f[[1]]$buoyancy`$kg buoyancy) connected to a bottom anchor with 100 m
-of quarter-inch jacketed wire (with $`r w[[1]]$buoyancy`$kg/m of buoyancy), in
+(with $`r f$buoyancy`$kg buoyancy) connected to a bottom anchor with 100 m
+of quarter-inch jacketed wire (with $`r w$buoyancy`$kg/m of buoyancy), in
 a depth-independent 0.5 m/s (roughly 1 knot) current.  Note that the float is
 predicted to sink $7.7$m with this current.  However, the predicted knockdown
 increases to $41.2$m with a $1$m/s current, suggesting that this float would be
