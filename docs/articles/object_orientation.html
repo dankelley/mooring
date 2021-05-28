@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Object-orientation Scheme</h1>
                         <h4 class="author">Dan Kelley</h4>
             
-            <h4 class="date">2021-05-27</h4>
+            <h4 class="date">2021-05-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/object_orientation.Rmd"><code>vignettes/object_orientation.Rmd</code></a></small>
       <div class="hidden name"><code>object_orientation.Rmd</code></div>
@@ -98,13 +98,13 @@
     
     
 <p>The S3 scheme is used for objects created by functions in the <code>mooring</code> package. These objects inherit from the <code>"mooring"</code> class. The contents consist of a list that in turn contains one or more lists.</p>
-<p>The elementary functions such as [anchor()], [wire()] and [float()] all produce a list that contains a single list describing the item. That item contains elements called <code>type</code> that indicate the meaning (e.g. [wire()] produces objects with type equal to <code>"cable"</code>), as well as an element called <code>model</code>, which is a string indicating the particular variety of wire</p>
-<p>The combination function, [+,mooring()], produces a list that contains 2 or more lists, one for each element. For example,</p>
+<p>The elementary functions, [anchor()], [chain()], [wire()] and [float()], produce objects with main class <code>"mooring"</code> and sub-class with the function name. The contents vary from subclass to subclass. For example, a discrete object like an anchor or a float has a certain buoyancy, so that is saved in a field called <code>buoyancy</code> that has units of kg (converted from Newtons by dividing by the acceleration due to gravity). However, a wire’s <code>buoyancy</code> field in units of kg/m, representing buoyancy per length. Another difference relates to size. Following Dewey’s convention, a float is stored with a diameter, whereas a wire or a chain is stored with a width. Allowances for these different aspects are made in [knockdown()], as it computes drag and buoyancy forces on elements.</p>
+<p>For example,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/">mooring</a></span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required package: shiny</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">100</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length<span class="op">=</span><span class="fl">75</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length<span class="op">=</span><span class="fl">75</span><span class="op">)</span>, <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>produces a list with 3 elements, one that holds information on the anchor, a second that holds information on the wire, and a third that holds information on the float.</p>
   </div>
 
