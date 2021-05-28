@@ -79,7 +79,7 @@ anchor <- function(model="default", depth=0)
     if (model != "default")
         stop("'model' must be \"default\"")
     # a train wheel weighs 1000kg and is a foot wide, but we set height=0
-    rval <- list(type="anchor", model=model, buoyancy=-1000, height=0, depth=depth, x=0, z=0)
+    rval <- list(type="anchor", model=model, source="Kelley", buoyancy=-1000, height=0, depth=depth, x=0, z=0)
     class(rval) <- c("mooring", "anchor")
     rval
 }                                      # anchor()
@@ -98,7 +98,7 @@ anchor <- function(model="default", depth=0)
 #' @author Dan Kelley
 release <- function(model="default_release")
 {
-    rval <- list(type="anchor", model=model, height=1.0, x=0, z=0) # guess on length
+    rval <- list(type="anchor", model=model, source="Kelley", height=1.0, x=0, z=0) # guess on length
     class(rval) <- c("mooring", "release")
     rval
 }                                      # release()
@@ -144,10 +144,8 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=1, width=NULL, CD=
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
-    if (model == "?") {
-        #cat("wire() takes the following strings for its 'model' argument:\n")
+    if (model == "?")
         return(sort(mooringElements$wires$name))
-    }
     w <- which(mooringElements$wires$name == model)
     if (1 == length(w)) {
         me <- mooringElements$wires[w,]
@@ -160,12 +158,14 @@ wire <- function(model="1/4 wire/jack", buoyancy=NULL, length=1, width=NULL, CD=
         buoyancy <- me$buoyancy
         width <- me$width
         CD <- me$CD
+        source <- me$source
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new wire model")
         if (is.null(width)) stop("must supply width, if creating a new wire model")
         if (is.null(CD)) stop("must supply CD, if creating a new wire model")
+        source <- rep("", length(buoyancy))
     }
-    rval <- list(type="wire", model=model, buoyancy=buoyancy, height=length, width=width, CD=CD, x=0, z=0)
+    rval <- list(type="wire", model=model, source=source, buoyancy=buoyancy, height=length, width=width, CD=CD, x=0, z=0)
     class(rval) <- c("mooring", "wire")
     rval
 }                                      # wire()
@@ -212,10 +212,8 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
-    if (model == "?") {
-        #cat("chain() takes the following strings for its 'model' argument:\n")
+    if (model == "?")
         return(sort(mooringElements$chains$name))
-    }
     w <- which(mooringElements$chains$name == model)
     if (1 == length(w)) {
         me <- mooringElements$chains[w,]
@@ -227,17 +225,21 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
             warning("ignoring supplied width, because \"", model, "\" is already in the database\n")
         if (!is.null(CD))
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
+        if (!is.null(source))
+            warning("ignoring supplied source, because \"", model, "\" is already in the database\n")
         buoyancy <- me$buoyancy
         height <- me$height
         width <- me$cylinderWidth
         CD <- me$CD
+        source <- me$source
     } else {
         if (is.null(height)) stop("must supply buoyancy, if creating a new chain model")
         if (is.null(height)) stop("must supply height, if creating a new chain model")
         if (is.null(width)) stop("must supply width, if creating a new chain model")
         if (is.null(CD)) stop("must supply CD, if creating a new chain model")
+        if (is.null(source)) stop("must supply source, if creating a new float model")
     }
-    rval <- list(type="chain", model=model, buoyancy=buoyancy, height=height, width=width, CD=CD, x=0, z=0)
+    rval <- list(type="chain", model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD, x=0, z=0)
     class(rval) <- c("mooring", "chain")
     rval
 }                                      # chain()
@@ -269,6 +271,8 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
 #'
 #' @param CD numeric value for the drag coefficient for the item.
 #'
+#' @param source character value indicating the source of the data.
+#'
 #' @return [float] returns an object of the `"mooring"` class, with `type` equal to `"float"`.
 #'
 #' @references
@@ -284,14 +288,12 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
 #' @export
 #'
 #' @author Dan Kelley
-float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NULL, CD=NULL)
+float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NULL, CD=NULL, source=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
-    if (model == "?") {
-        #cat("float() takes the following strings for its 'model' argument:\n")
+    if (model == "?")
         return(sort(mooringElements$floats$name))
-    }
     w <- which(mooringElements$floats$name == model)
     if (1 == length(w)) {
         me <- mooringElements$floats[w,]
@@ -303,43 +305,32 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
             warning("ignoring supplied diameter, because \"", model, "\" is already in the database\n")
         if (!is.null(CD))
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
+        if (!is.null(source))
+            warning("ignoring supplied source, because \"", model, "\" is already in the database\n")
         buoyancy <- me$buoyancy
         height <- me$height
         diameter <- me$diameter
         CD <- me$CD
+        source <- me$source
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new float model")
         if (is.null(height)) stop("must supply height, if creating a new float model")
         if (is.null(diameter)) stop("must supply diameter, if creating a new float model")
         if (is.null(CD)) stop("must supply CD, if creating a new float model")
+        if (is.null(source)) stop("must supply source, if creating a new float model")
     }
-    rval <- list(type="float", model=model, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, x=0, z=0)
+    rval <- list(type="float", model=model, source=source, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, x=0, z=0)
     class(rval) <- c("mooring", "float")
     rval
 }                                      # float()
 
-#' Combine two mooring objects
+#' Combine two mooring objects (DEFUNCT)
 #'
-#' The first object is "placed" above the second (see Examples).  Note that
-#' the first element of the first object must be the result of a call
-#' to [anchor()].
+#' This has been replaced by [mooring()].
 #'
-#' @param m1,m2 objects of `"mooring"` class.  Each can be a single element,
-#' e.g. as created by [wire()], etc., or a combination of elements, as are
-#' returned by the present function.
+#' @param m1,m2 DEFUNCT.
 #'
-#' @return an object of the `"mooring"` class that holds the
-#' combination of `m1` and `m2`.
-#'
-#' @family functions that create mooring objects
-#'
-#' @family functions that create mooring objects
-#'
-#' @examples
-#' library(mooring)
-#' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
-#' print(m)
-#' plot(m)
+#' @return DEFUNCT
 #'
 #' @export
 #' @author Dan Kelley
@@ -422,7 +413,7 @@ mooring <- function(...)
 #' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 #' print(m)
 #'
-#' @export
+## @export
 #'
 #' @author Dan Kelley
 print.mooring <- function(x, ...)

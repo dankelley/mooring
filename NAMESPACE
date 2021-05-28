@@ -2,7 +2,6 @@
 
 S3method("+",mooring)
 S3method(plot,mooring)
-S3method(print,mooring)
 export(anchor)
 export(app)
 export(buoyancy)

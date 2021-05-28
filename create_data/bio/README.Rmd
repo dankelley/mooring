@@ -1,0 +1,81 @@
+---
+title: Ingesting object data from a BIO excel file
+author: Dan Kelley
+date: 2021-05-28
+---
+
+
+There is a .R file here in which I tried to decode things automatically.  This
+proved very difficult, because the meanings of things were (I think) indicated
+by colour underlays.  Also, there were *lots* of weird things in the file, like
+text in numeric fields, negative lengths, etc.  In the end, I decided that
+hand-editing would be superior.
+
+I used lower-case, which is easier to type, and fits with the Dewey names.  I
+also removed the `"` symbols, which are hard to type in code, and appear in
+some instances and not in others.
+
+
+# wires_bio.csv
+
+There are just two listings.
+
+## Buoyancy/metre
+
+The 3/16 case has -0.76 in a column named "W Nt/m", so I've converted that to
+-0.76/9.8=-0.0776 (rounded to 4 places), to get kg/m instead of N/m.
+
+There is no listing for the 1/4 case, but I estimated (guessed) that as
+
+```{r}
+round(-0.0776 * ((4/16)/(3/16))^2, 4)
+```
+This is based on an assumption that the metal inside is similar, etc.
+
+## Diameter
+
+For the diameter, I looked at the column labeled `A (m*2/m)`. I assume that is
+the horizontally-projected area. To test that, I computed 
+```{r}
+16*c(0.00635,0.0079375)/0.0254
+```
+which yields the expected, for the outside diameters in 16-ths of inch.
+
+## CD
+
+There are no entries in the file and I did not know what `DRAG -N` and `DRAG
+-T` meant and so I just used the value $C_D=1.3$, used in Dewey's work.
+
+## Result for wire
+```{r}
+knitr::kable(read.csv("wires_bio.csv"))
+```
+
+
+# wires_bio.csv
+
+These seem to be in the yellow-background part of the spreadsheet.
+
+The first of these, named `"new glass streamlined float"`, has no listed weight
+in pounds or newtons, so I ignored that entry.
+
+There are two length columns in the file, but the values are either identical
+or relatable by rounding, so I could choose either.  But is that in the x or
+the y direction?
+
+Two columns contain things related to area, one with name `A (m*2/m)` and other
+with name `AW (m*2)`.  I think the former is the projected area per meter of z
+(as it is for wires).  So, if we assume that the length is in the z direction,
+or that the object is roughly spherical, we can infer what the package needs,
+namely `height` and `width`, from the ratio of the second area to the first
+length.  Whether that's sensible, I just don't know.
+```{r}
+A<-c(0.164,0.5,0.073,0.5,0.164,1.5,1.5,1.86,2.84,2.474,1.67,2.7,2.7)
+L<-c(0.74,0.563,1,0.563,1.187,1,1,1.286,1.286,1.286,1.286,2.42,2.42)
+round(A/L,3)
+```
+
+```{r}
+knitr::kable(read.csv("floats_bio.csv"))
+```
+

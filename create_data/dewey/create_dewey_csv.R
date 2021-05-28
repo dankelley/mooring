@@ -26,6 +26,7 @@ floats$name <- trimws(floats$name)
 floats$height <- floats$height / 100
 floats$width <- floats$width / 100
 floats$diameter <- floats$diameter / 100
+floats <- cbind(floats, source="Dewey")
 write.csv(floats, "floats_dewey.csv", row.names=FALSE)
 
 # Wires
@@ -34,6 +35,7 @@ wires$name <- trimws(wires$name)
 wires$height <- wires$height / 100
 wires$width <- wires$width / 100
 wires$diameter <- wires$diameter / 100
+wires <- cbind(wires, source="Dewey")
 write.csv(wires, "wires_dewey.csv", row.names=FALSE)
 
 # Chains
@@ -42,6 +44,7 @@ chains$name <- trimws(chains$name)
 chains$height <- chains$height / 100
 chains$width <- chains$width / 100
 chains$diameter <- chains$diameter / 100
+chains <- cbind(chains, source="Dewey")
 write.csv(chains, "chains_dewey.csv", row.names=FALSE)
 
 

@@ -21,7 +21,6 @@ This must be the first element of a mooring constructed with \code{\link{+.moori
 }
 \seealso{
 Other functions that create mooring objects: 
-\code{\link{+.mooring}()},
 \code{\link{chain}()},
 \code{\link{float}()},
 \code{\link{release}()},

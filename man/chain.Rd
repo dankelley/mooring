@@ -47,7 +47,6 @@ chain("?")
 }
 \seealso{
 Other functions that create mooring objects: 
-\code{\link{+.mooring}()},
 \code{\link{anchor}()},
 \code{\link{float}()},
 \code{\link{release}()},
