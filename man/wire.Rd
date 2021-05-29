@@ -13,25 +13,34 @@ wire(
 )
 }
 \arguments{
-\item{model}{character value indicating the model name of the wire. The
-default, \code{"1/4 wire/jack"}, is for quarter-inch jacketed steel wire.
-Use \code{wire("?")} to get a listing of permitted values.
-If \code{model} is not recognized, then
-\link{wire} creates a new type, using the stated diameter and CD values;
-otherwise, these arguments are ignored.}
+\item{model}{character value indicating the type of wire.
+There are three possibilities for \code{model}.
+(1) If this is \code{"?"}, then the function returns a vector of permitted
+character values. (2) If it is recognized, i.e. if that type is
+stored in \code{data(mooringElements)}, then the that stored value
+is used, and all other arguments to this function are ignored.
+(3) Otherwise, a new wire object is created, using
+values specified in the other arguments (all of which must
+be supplied).}
 
-\item{buoyancy}{numeric value of the buoyancy per length of wire, in kg/m.}
+\item{buoyancy}{numeric value indicating buoyancy.  For
+wire elements, this is buoyancy per length, expressed in kg/m.
+For other elements, it is buoyancy, expressed in kg.
+Note that \code{buoyancy} is ignored if \code{model} is recognized.}
 
-\item{length}{numeric value indicating the length of the wire, in metres.}
+\item{length}{numeric value indicating the length (in m) of the wire.}
 
-\item{width}{numeric value for the width of the wire, in m.
-This is ignored if \code{model} is recognized.}
+\item{width}{numeric value for the width (in m)
+of the element as viewed from above.
+This is multiplied by \code{height} to compute the
+area of the element, as part of the drag computation.
+Note that \code{width} is ignored if \code{model} is recognized.}
 
-\item{CD}{numeric value for the drag coefficient for the wire.
-This is ignored if \code{model} is recognized.}
+\item{CD}{numeric value (unitless) for the drag coefficient.
+Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \value{
-\link{wire} returns an object of the \code{"mooring"} class, with \code{type} equal to \code{"wire"}.
+\code{wire} returns an object of the \code{"mooring"} class and \code{"wire"} subclass.
 }
 \description{
 Creates an object that describes a mooring wire, or other type of line, e.g.

@@ -1,5 +1,6 @@
 ^create_data$
 ^.github$
+^man-roxygen$
 ^mooring\.Rproj$
 ^\.Rproj\.user$
 ^sandbox$

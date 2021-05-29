@@ -2,8 +2,12 @@
 title: Ingesting object data from a BIO excel file
 author: Dan Kelley
 date: 2021-05-28
+output:
+    toc: true
+    number_sections: true
 ---
 
+# Introduction
 
 There is a .R file here in which I tried to decode things automatically.  This
 proved very difficult, because the meanings of things were (I think) indicated
@@ -15,12 +19,13 @@ I used lower-case, which is easier to type, and fits with the Dewey names.  I
 also removed the `"` symbols, which are hard to type in code, and appear in
 some instances and not in others.
 
+# Details
 
-# wires_bio.csv
+## wires_bio.csv
 
 There are just two listings.
 
-## Buoyancy/metre
+### Buoyancy/metre
 
 The 3/16 case has -0.76 in a column named "W Nt/m", so I've converted that to
 -0.76/9.8=-0.0776 (rounded to 4 places), to get kg/m instead of N/m.
@@ -32,7 +37,7 @@ round(-0.0776 * ((4/16)/(3/16))^2, 4)
 ```
 This is based on an assumption that the metal inside is similar, etc.
 
-## Diameter
+### Diameter
 
 For the diameter, I looked at the column labeled `A (m*2/m)`. I assume that is
 the horizontally-projected area. To test that, I computed 
@@ -41,18 +46,19 @@ the horizontally-projected area. To test that, I computed
 ```
 which yields the expected, for the outside diameters in 16-ths of inch.
 
-## CD
+### CD
 
 There are no entries in the file and I did not know what `DRAG -N` and `DRAG
 -T` meant and so I just used the value $C_D=1.3$, used in Dewey's work.
 
-## Result for wire
+### Result for wire
+
 ```{r}
 knitr::kable(read.csv("wires_bio.csv"))
 ```
 
 
-# wires_bio.csv
+## floats_bio.csv
 
 These seem to be in the yellow-background part of the spreadsheet.
 
@@ -78,4 +84,35 @@ round(A/L,3)
 ```{r}
 knitr::kable(read.csv("floats_bio.csv"))
 ```
+
+## `releases_bio.csv`
+
+### `height`
+Use `LENGTH` (col C).
+
+### `buoyancy`
+Use the negative of `NEWTONS` (col E).
+
+### `width`
+Use the ratio of `A (m&2/m)` (col G) to `LENGTH` (col C).
+```{r}
+G <- c(0.14,0.14,0.127,NA,0.112,0.199,0.237)
+C <- c(1.194,1.32,1.23,0.479,0.68,1,0.4)
+width <- round(G/C, 4)
+```
+Note the `NA` value -- this is "benthos 875 release", which we will not use
+here, since there's no point in guessing.  (Put another way, if someone at BIO
+wants to take a measuring tape to that thing to find it's diameter, we'll
+incorporate it!)
+
+### `CD`
+Use 0.65, i.e. Dewey's value for floats, on the assumption that the two might
+be similar.
+
+### Result for releases
+
+```{r}
+knitr::kable(read.csv("releases_bio.csv"))
+```
+
 

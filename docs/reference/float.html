@@ -152,8 +152,7 @@ value is used in Dewey's dataset for many floats.</p></li>
   buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
   height <span class='op'>=</span> <span class='cn'>NULL</span>,
   diameter <span class='op'>=</span> <span class='cn'>NULL</span>,
-  CD <span class='op'>=</span> <span class='cn'>NULL</span>,
-  source <span class='op'>=</span> <span class='cn'>NULL</span>
+  CD <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -161,41 +160,49 @@ value is used in Dewey's dataset for many floats.</p></li>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>character value indicating the model name of the float. The
-default is <code>"Kiel SFS40in"</code>.
-Use <code>float("?")</code> to get a listing of permitted values.
-If <code>model</code> is not recognized, then
-float creates a new type, using the stated diameter and CD values;
-otherwise, these arguments are ignored.</p></td>
+      <td><p>character value indicating the type of float.
+There are three possibilities for <code>model</code>.
+(1) If this is <code>"?"</code>, then the function returns a vector of permitted
+character values. (2) If it is recognized, i.e. if that type is
+stored in <code><a href='https://rdrr.io/r/utils/data.html'>data(mooringElements)</a></code>, then the that stored value
+is used, and all other arguments to this function are ignored.
+(3) Otherwise, a new float object is created, using
+values specified in the other arguments (all of which must
+be supplied).</p></td>
     </tr>
     <tr>
       <th>buoyancy</th>
-      <td><p>numeric value of the buoyancy of the float, in kg.
-This is ignored if <code>model</code> is recognized.</p></td>
+      <td><p>numeric value indicating buoyancy.  For
+wire elements, this is buoyancy per length, expressed in kg/m.
+For other elements, it is buoyancy, expressed in kg.
+Note that <code>buoyancy</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
       <th>height</th>
-      <td><p>numeric value for the height of the element, in m.
-This is ignored if <code>model</code> is recognized.</p></td>
+      <td><p>numeric value for the height (in m) of the element.
+This value is used in the computation of (a) the mooring geometry
+and (b) the area of the element (which is in turn used in
+the drag computation).
+Note that <code>height</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
       <th>diameter</th>
-      <td><p>numeric value for the diameter of the float, in m.
-This is ignored if <code>model</code> is recognized.</p></td>
+      <td><p>numeric value for the diameter (in m)
+of the element as viewed from above.
+This is multiplied by <code>height</code> to compute the
+area of the element, as part of the drag computation.
+Note that <code>diameter</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
       <th>CD</th>
-      <td><p>numeric value for the drag coefficient for the item.</p></td>
-    </tr>
-    <tr>
-      <th>source</th>
-      <td><p>character value indicating the source of the data.</p></td>
+      <td><p>numeric value (unitless) for the drag coefficient.
+Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>float returns an object of the <code>"mooring"</code> class, with <code>type</code> equal to <code>"float"</code>.</p>
+    <p><code>float</code> returns an object of the <code>"mooring"</code> class and <code>"float"</code> subclass.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
