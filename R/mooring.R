@@ -377,7 +377,6 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #' @examples
 #' library(mooring)
 #' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
-#' print(m)
 #'
 #' @export
 #'
@@ -412,7 +411,6 @@ mooring <- function(...)
 #' @examples
 #' library(mooring)
 #' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
-#' print(m)
 #'
 ## @export
 #'
