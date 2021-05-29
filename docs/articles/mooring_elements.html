@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Default Values for Mooring Elements</h1>
                         <h4 class="author">Dan Kelley</h4>
             
-            <h4 class="date">2021-05-27</h4>
+            <h4 class="date">2021-05-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/mooring_elements.Rmd"><code>vignettes/mooring_elements.Rmd</code></a></small>
       <div class="hidden name"><code>mooring_elements.Rmd</code></div>
@@ -107,6 +107,7 @@
 <p>Dewey lists meaningless values in the column named <code>width</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
 <table class="table">
 <thead><tr class="header">
+<th align="left"></th>
 <th align="left">name</th>
 <th align="right">buoyancy</th>
 <th align="right">height</th>
@@ -114,108 +115,11 @@
 <th align="right">diameter</th>
 <th align="right">CD</th>
 <th align="right">code</th>
+<th align="left">source</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">61in ORE</td>
-<td align="right">999.00</td>
-<td align="right">1.6500</td>
-<td align="right">0.00</td>
-<td align="right">1.6500</td>
-<td align="right">0.65</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">48in ORE</td>
-<td align="right">620.00</td>
-<td align="right">1.2340</td>
-<td align="right">0.00</td>
-<td align="right">1.2340</td>
-<td align="right">0.65</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">41in ORE</td>
-<td align="right">433.00</td>
-<td align="right">1.0400</td>
-<td align="right">0.00</td>
-<td align="right">1.0400</td>
-<td align="right">0.65</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">37in ORE</td>
-<td align="right">300.00</td>
-<td align="right">0.9400</td>
-<td align="right">0.00</td>
-<td align="right">0.9400</td>
-<td align="right">0.65</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">28in ORE</td>
-<td align="right">133.00</td>
-<td align="right">0.7100</td>
-<td align="right">0.00</td>
-<td align="right">0.7100</td>
-<td align="right">0.65</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">30in float</td>
-<td align="right">160.00</td>
-<td align="right">0.7600</td>
-<td align="right">0.00</td>
-<td align="right">0.7600</td>
-<td align="right">0.65</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">Kiel SFS40in</td>
-<td align="right">320.00</td>
-<td align="right">1.0000</td>
-<td align="right">0.00</td>
-<td align="right">1.0000</td>
-<td align="right">0.65</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">Torp. flt, 3-28</td>
-<td align="right">364.00</td>
-<td align="right">0.8300</td>
-<td align="right">0.00</td>
-<td align="right">0.8300</td>
-<td align="right">0.75</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">17 in glass</td>
-<td align="right">23.00</td>
-<td align="right">0.5700</td>
-<td align="right">0.00</td>
-<td align="right">0.5700</td>
-<td align="right">0.95</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">Billings-12in</td>
-<td align="right">10.00</td>
-<td align="right">0.3430</td>
-<td align="right">0.00</td>
-<td align="right">0.3430</td>
-<td align="right">0.95</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">BENTHOS 17in</td>
-<td align="right">23.00</td>
-<td align="right">0.5100</td>
-<td align="right">0.00</td>
-<td align="right">0.5100</td>
-<td align="right">0.95</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
+<td align="left">25</td>
 <td align="left">16in Viny</td>
 <td align="right">19.00</td>
 <td align="right">0.4000</td>
@@ -223,62 +127,87 @@
 <td align="right">0.4000</td>
 <td align="right">0.60</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
-<tr class="odd">
-<td align="left">Double 17in</td>
-<td align="right">48.00</td>
-<td align="right">0.5000</td>
+<tr class="even">
+<td align="left">22</td>
+<td align="left">17 in glass</td>
+<td align="right">23.00</td>
+<td align="right">0.5700</td>
 <td align="right">0.00</td>
-<td align="right">0.6500</td>
+<td align="right">0.5700</td>
 <td align="right">0.95</td>
 <td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">Double 16inViny</td>
-<td align="right">38.00</td>
-<td align="right">0.5000</td>
-<td align="right">0.00</td>
-<td align="right">0.6000</td>
-<td align="right">0.60</td>
-<td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="odd">
-<td align="left">Trpl 16 in Viny</td>
-<td align="right">56.00</td>
-<td align="right">1.5000</td>
+<td align="left">18</td>
+<td align="left">28in ORE</td>
+<td align="right">133.00</td>
+<td align="right">0.7100</td>
 <td align="right">0.00</td>
-<td align="right">0.7500</td>
-<td align="right">0.60</td>
+<td align="right">0.7100</td>
+<td align="right">0.65</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
-<td align="left">Trpl 12in glass</td>
-<td align="right">30.00</td>
-<td align="right">0.9500</td>
+<td align="left">3</td>
+<td align="left">3 pack viny 12b-3 floats</td>
+<td align="right">560.00</td>
+<td align="right">1.0000</td>
 <td align="right">0.00</td>
-<td align="right">0.6200</td>
-<td align="right">1.00</td>
-<td align="right">1</td>
+<td align="right">0.0730</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
 </tr>
 <tr class="odd">
-<td align="left">CDMS 1.2m sphere</td>
-<td align="right">682.00</td>
-<td align="right">1.2000</td>
+<td align="left">19</td>
+<td align="left">30in float</td>
+<td align="right">160.00</td>
+<td align="right">0.7600</td>
 <td align="right">0.00</td>
-<td align="right">1.2000</td>
-<td align="right">0.50</td>
+<td align="right">0.7600</td>
+<td align="right">0.65</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
-<td align="left">CDMS 2m sphere</td>
-<td align="right">2470.00</td>
-<td align="right">2.0000</td>
+<td align="left">17</td>
+<td align="left">37in ORE</td>
+<td align="right">300.00</td>
+<td align="right">0.9400</td>
 <td align="right">0.00</td>
-<td align="right">2.0000</td>
-<td align="right">0.50</td>
+<td align="right">0.9400</td>
+<td align="right">0.65</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="odd">
+<td align="left">16</td>
+<td align="left">41in ORE</td>
+<td align="right">433.00</td>
+<td align="right">1.0400</td>
+<td align="right">0.00</td>
+<td align="right">1.0400</td>
+<td align="right">0.65</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">15</td>
+<td align="left">48in ORE</td>
+<td align="right">620.00</td>
+<td align="right">1.2340</td>
+<td align="right">0.00</td>
+<td align="right">1.2340</td>
+<td align="right">0.65</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">32</td>
 <td align="left">54cm Alum CAP3</td>
 <td align="right">61.00</td>
 <td align="right">0.5500</td>
@@ -286,8 +215,10 @@
 <td align="right">0.5400</td>
 <td align="right">0.65</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
+<td align="left">33</td>
 <td align="left">54x30inClamShell</td>
 <td align="right">405.00</td>
 <td align="right">1.4000</td>
@@ -295,26 +226,43 @@
 <td align="right">0.7500</td>
 <td align="right">0.15</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="odd">
-<td align="left">Top of Tow Rope</td>
-<td align="right">0.01</td>
-<td align="right">0.0000</td>
+<td align="left">14</td>
+<td align="left">61in ORE</td>
+<td align="right">999.00</td>
+<td align="right">1.6500</td>
 <td align="right">0.00</td>
-<td align="right">0.0000</td>
-<td align="right">0.00</td>
+<td align="right">1.6500</td>
+<td align="right">0.65</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
-<td align="left">BPS Float</td>
-<td align="right">8000.00</td>
-<td align="right">1.5000</td>
-<td align="right">6.00</td>
-<td align="right">0.0000</td>
-<td align="right">1.60</td>
-<td align="right">1</td>
+<td align="left">2</td>
+<td align="left">a2 package adcp and 2 viny balls</td>
+<td align="right">285.00</td>
+<td align="right">0.5630</td>
+<td align="right">0.00</td>
+<td align="right">0.8880</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
 </tr>
 <tr class="odd">
+<td align="left">7</td>
+<td align="left">adcp / 2x c3 subs assembly</td>
+<td align="right">414.00</td>
+<td align="right">1.0000</td>
+<td align="right">0.00</td>
+<td align="right">1.5000</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="even">
+<td align="left">36</td>
 <td align="left">ADCP FloatTech</td>
 <td align="right">460.00</td>
 <td align="right">1.4200</td>
@@ -322,8 +270,98 @@
 <td align="right">1.4200</td>
 <td align="right">0.65</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">24</td>
+<td align="left">BENTHOS 17in</td>
+<td align="right">23.00</td>
+<td align="right">0.5100</td>
+<td align="right">0.00</td>
+<td align="right">0.5100</td>
+<td align="right">0.95</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
+<td align="left">23</td>
+<td align="left">Billings-12in</td>
+<td align="right">10.00</td>
+<td align="right">0.3430</td>
+<td align="right">0.00</td>
+<td align="right">0.3430</td>
+<td align="right">0.95</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">35</td>
+<td align="left">BPS Float</td>
+<td align="right">8000.00</td>
+<td align="right">1.5000</td>
+<td align="right">6.00</td>
+<td align="right">0.0000</td>
+<td align="right">1.60</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">bub 2x17 glass</td>
+<td align="right">429.00</td>
+<td align="right">1.1870</td>
+<td align="right">0.00</td>
+<td align="right">0.1380</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="odd">
+<td align="left">30</td>
+<td align="left">CDMS 1.2m sphere</td>
+<td align="right">682.00</td>
+<td align="right">1.2000</td>
+<td align="right">0.00</td>
+<td align="right">1.2000</td>
+<td align="right">0.50</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">31</td>
+<td align="left">CDMS 2m sphere</td>
+<td align="right">2470.00</td>
+<td align="right">2.0000</td>
+<td align="right">0.00</td>
+<td align="right">2.0000</td>
+<td align="right">0.50</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">Double 16inViny</td>
+<td align="right">38.00</td>
+<td align="right">0.5000</td>
+<td align="right">0.00</td>
+<td align="right">0.6000</td>
+<td align="right">0.60</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">26</td>
+<td align="left">Double 17in</td>
+<td align="right">48.00</td>
+<td align="right">0.5000</td>
+<td align="right">0.00</td>
+<td align="right">0.6500</td>
+<td align="right">0.95</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">37</td>
 <td align="left">FloatTech CF-12</td>
 <td align="right">11.00</td>
 <td align="right">0.3000</td>
@@ -331,17 +369,10 @@
 <td align="right">0.0000</td>
 <td align="right">1.00</td>
 <td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">Tripple FT CF-12</td>
-<td align="right">33.00</td>
-<td align="right">0.9000</td>
-<td align="right">0.20</td>
-<td align="right">0.0000</td>
-<td align="right">1.00</td>
-<td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
+<td align="left">39</td>
 <td align="left">Geodyn 8’ Toroid</td>
 <td align="right">1950.00</td>
 <td align="right">0.7620</td>
@@ -349,8 +380,10 @@
 <td align="right">0.0000</td>
 <td align="right">0.65</td>
 <td align="right">3</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="odd">
+<td align="left">40</td>
 <td align="left">HMB 20</td>
 <td align="right">34.50</td>
 <td align="right">0.5080</td>
@@ -358,8 +391,10 @@
 <td align="right">0.5080</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
 </tr>
 <tr class="even">
+<td align="left">41</td>
 <td align="left">HMB 25</td>
 <td align="right">68.50</td>
 <td align="right">0.6350</td>
@@ -367,8 +402,10 @@
 <td align="right">0.6350</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
 </tr>
 <tr class="odd">
+<td align="left">42</td>
 <td align="left">HMB 31</td>
 <td align="right">141.00</td>
 <td align="right">0.7874</td>
@@ -376,8 +413,10 @@
 <td align="right">0.7874</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
 </tr>
 <tr class="even">
+<td align="left">43</td>
 <td align="left">HMB 36</td>
 <td align="right">225.00</td>
 <td align="right">0.9144</td>
@@ -385,8 +424,10 @@
 <td align="right">0.9144</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
 </tr>
 <tr class="odd">
+<td align="left">44</td>
 <td align="left">HMB 40</td>
 <td align="right">300.00</td>
 <td align="right">1.0160</td>
@@ -394,8 +435,10 @@
 <td align="right">1.0160</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
 </tr>
 <tr class="even">
+<td align="left">45</td>
 <td align="left">HMB 44</td>
 <td align="right">413.00</td>
 <td align="right">1.1176</td>
@@ -403,8 +446,10 @@
 <td align="right">1.1176</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
 </tr>
 <tr class="odd">
+<td align="left">46</td>
 <td align="left">HMB 49</td>
 <td align="right">565.00</td>
 <td align="right">1.2446</td>
@@ -412,8 +457,10 @@
 <td align="right">1.2446</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
 </tr>
 <tr class="even">
+<td align="left">47</td>
 <td align="left">HMB 51</td>
 <td align="right">633.00</td>
 <td align="right">1.2954</td>
@@ -421,8 +468,10 @@
 <td align="right">1.2954</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
 </tr>
 <tr class="odd">
+<td align="left">48</td>
 <td align="left">HMB 56</td>
 <td align="right">831.00</td>
 <td align="right">1.4224</td>
@@ -430,8 +479,10 @@
 <td align="right">1.4224</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
 </tr>
 <tr class="even">
+<td align="left">49</td>
 <td align="left">HMB 62</td>
 <td align="right">1122.00</td>
 <td align="right">1.5748</td>
@@ -439,6 +490,172 @@
 <td align="right">1.5748</td>
 <td align="right">0.65</td>
 <td align="right">0</td>
+<td align="left">Kelley</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="left">ips / 2x b3 subs assembly</td>
+<td align="right">773.00</td>
+<td align="right">1.0000</td>
+<td align="right">0.00</td>
+<td align="right">1.5000</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="even">
+<td align="left">20</td>
+<td align="left">Kiel SFS40in</td>
+<td align="right">320.00</td>
+<td align="right">1.0000</td>
+<td align="right">0.00</td>
+<td align="right">1.0000</td>
+<td align="right">0.65</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">stablemoor 1000 lb 3500 msw with adcp</td>
+<td align="right">3963.00</td>
+<td align="right">1.2860</td>
+<td align="right">0.00</td>
+<td align="right">2.2080</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">stablemoor 1015 lb 1500 msw with adcp</td>
+<td align="right">4030.00</td>
+<td align="right">1.2860</td>
+<td align="right">0.00</td>
+<td align="right">1.9240</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">stablemoor 533 lb 3500 msw with adcp</td>
+<td align="right">1886.00</td>
+<td align="right">1.2860</td>
+<td align="right">0.00</td>
+<td align="right">1.4460</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="even">
+<td align="left">11</td>
+<td align="left">stablemoor 580 lb 1500 msw with adcp</td>
+<td align="right">2095.00</td>
+<td align="right">1.2860</td>
+<td align="right">0.00</td>
+<td align="right">1.2990</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">streamlined bub 2 x 17 glass</td>
+<td align="right">445.00</td>
+<td align="right">0.7400</td>
+<td align="right">0.00</td>
+<td align="right">0.2220</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">streamlined bub 3 viny balls</td>
+<td align="right">516.00</td>
+<td align="right">0.5630</td>
+<td align="right">0.00</td>
+<td align="right">0.8880</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="odd">
+<td align="left">13</td>
+<td align="left">syn. float,bracket and 109 lb.adcp</td>
+<td align="right">7740.00</td>
+<td align="right">2.4200</td>
+<td align="right">0.00</td>
+<td align="right">1.1160</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">syntactic float with adcp bracket</td>
+<td align="right">8224.00</td>
+<td align="right">2.4200</td>
+<td align="right">0.00</td>
+<td align="right">1.1160</td>
+<td align="right">0.65</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="odd">
+<td align="left">34</td>
+<td align="left">Top of Tow Rope</td>
+<td align="right">0.01</td>
+<td align="right">0.0000</td>
+<td align="right">0.00</td>
+<td align="right">0.0000</td>
+<td align="right">0.00</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">21</td>
+<td align="left">Torp. flt, 3-28</td>
+<td align="right">364.00</td>
+<td align="right">0.8300</td>
+<td align="right">0.00</td>
+<td align="right">0.8300</td>
+<td align="right">0.75</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">38</td>
+<td align="left">Tripple FT CF-12</td>
+<td align="right">33.00</td>
+<td align="right">0.9000</td>
+<td align="right">0.20</td>
+<td align="right">0.0000</td>
+<td align="right">1.00</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">29</td>
+<td align="left">Trpl 12in glass</td>
+<td align="right">30.00</td>
+<td align="right">0.9500</td>
+<td align="right">0.00</td>
+<td align="right">0.6200</td>
+<td align="right">1.00</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">28</td>
+<td align="left">Trpl 16 in Viny</td>
+<td align="right">56.00</td>
+<td align="right">1.5000</td>
+<td align="right">0.00</td>
+<td align="right">0.7500</td>
+<td align="right">0.60</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 </tbody>
 </table>
@@ -450,6 +667,7 @@
 <p>Dewey lists meaningless values in the columns that are named <code>height</code> and <code>diameter</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
 <table class="table">
 <thead><tr class="header">
+<th align="left"></th>
 <th align="left">name</th>
 <th align="right">buoyancy</th>
 <th align="right">height</th>
@@ -457,331 +675,426 @@
 <th align="right">diameter</th>
 <th align="right">CD</th>
 <th align="right">code</th>
+<th align="left">source</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">1/4 Kevlar</td>
-<td align="right">-0.009</td>
-<td align="right">1</td>
-<td align="right">0.007</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">5/16 Kevlar</td>
-<td align="right">-0.014</td>
-<td align="right">1</td>
-<td align="right">0.008</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">3/8 Kevlar</td>
-<td align="right">-0.023</td>
-<td align="right">1</td>
-<td align="right">0.009</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">7/16 Kevlar</td>
-<td align="right">-0.026</td>
-<td align="right">1</td>
-<td align="right">0.011</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">1/2 Kevlar</td>
-<td align="right">-0.032</td>
-<td align="right">1</td>
-<td align="right">0.013</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">9/16 Kevlar</td>
-<td align="right">-0.043</td>
-<td align="right">1</td>
-<td align="right">0.014</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">5/8 Kevlar</td>
-<td align="right">-0.054</td>
-<td align="right">1</td>
-<td align="right">0.016</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">3/16 wire rope</td>
-<td align="right">-0.120</td>
-<td align="right">1</td>
-<td align="right">0.007</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1/4 wire rope</td>
-<td align="right">-0.140</td>
-<td align="right">1</td>
-<td align="right">0.007</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">5/16 wire rope</td>
-<td align="right">-0.190</td>
-<td align="right">1</td>
-<td align="right">0.008</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">3/8 wire rope</td>
-<td align="right">-0.330</td>
-<td align="right">1</td>
-<td align="right">0.009</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">1/4 wire/jack</td>
-<td align="right">-0.130</td>
-<td align="right">1</td>
-<td align="right">0.008</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">5/16 wire/jack</td>
-<td align="right">-0.186</td>
-<td align="right">1</td>
-<td align="right">0.011</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">3/8 wire/jack</td>
-<td align="right">-0.318</td>
-<td align="right">1</td>
-<td align="right">0.013</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1/2 wire/jack</td>
-<td align="right">-0.547</td>
-<td align="right">1</td>
-<td align="right">0.017</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">7/16 VLS</td>
-<td align="right">-0.023</td>
-<td align="right">1</td>
-<td align="right">0.011</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1/2 VLS</td>
-<td align="right">-0.041</td>
-<td align="right">1</td>
-<td align="right">0.013</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">11mm Perlon</td>
-<td align="right">-0.005</td>
-<td align="right">1</td>
-<td align="right">0.011</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">7/16 Dacron</td>
-<td align="right">-0.032</td>
-<td align="right">1</td>
-<td align="right">0.011</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">3</td>
-</tr>
-<tr class="even">
-<td align="left">1/2 Dacron</td>
-<td align="right">-0.041</td>
-<td align="right">1</td>
-<td align="right">0.013</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">9/16 Dacron</td>
-<td align="right">-0.058</td>
-<td align="right">1</td>
-<td align="right">0.014</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">3</td>
-</tr>
-<tr class="even">
-<td align="left">3/4 Dacron</td>
-<td align="right">-0.099</td>
-<td align="right">1</td>
-<td align="right">0.019</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">5/8 Nylon</td>
-<td align="right">-0.022</td>
-<td align="right">1</td>
-<td align="right">0.016</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">3/4 Nylon</td>
-<td align="right">-0.030</td>
-<td align="right">1</td>
-<td align="right">0.019</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
+<td align="left">27</td>
 <td align="left">1 Nylon</td>
-<td align="right">-0.050</td>
+<td align="right">-0.0500</td>
 <td align="right">1</td>
-<td align="right">0.025</td>
+<td align="right">0.0250000</td>
 <td align="right">0</td>
 <td align="right">1.3</td>
 <td align="right">2</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
-<td align="left">3/4 Polyprop</td>
-<td align="right">0.016</td>
-<td align="right">1</td>
-<td align="right">0.019</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="left">1/2 Neutral Wire</td>
-<td align="right">0.000</td>
-<td align="right">1</td>
-<td align="right">0.013</td>
-<td align="right">0</td>
-<td align="right">1.5</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">1in Neutral Wire</td>
-<td align="right">0.000</td>
-<td align="right">1</td>
-<td align="right">0.025</td>
-<td align="right">0</td>
-<td align="right">0.0</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">1/4 AmSteel-Blue</td>
-<td align="right">0.002</td>
-<td align="right">1</td>
-<td align="right">0.007</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">3</td>
-</tr>
-<tr class="even">
-<td align="left">3/8 AmSteel-Blue</td>
-<td align="right">0.003</td>
-<td align="right">1</td>
-<td align="right">0.009</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
+<td align="left">33</td>
 <td align="left">1/2 AmSteel-Blue</td>
-<td align="right">0.006</td>
+<td align="right">0.0060</td>
 <td align="right">1</td>
-<td align="right">0.012</td>
+<td align="right">0.0120000</td>
 <td align="right">0</td>
 <td align="right">1.3</td>
 <td align="right">3</td>
-</tr>
-<tr class="even">
-<td align="left">BPS Cable</td>
-<td align="right">-0.124</td>
-<td align="right">1</td>
-<td align="right">0.007</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="odd">
-<td align="left">5/8 AmSteel-Blue</td>
-<td align="right">0.009</td>
+<td align="left">22</td>
+<td align="left">1/2 Dacron</td>
+<td align="right">-0.0410</td>
 <td align="right">1</td>
-<td align="right">0.016</td>
+<td align="right">0.0130000</td>
 <td align="right">0</td>
 <td align="right">1.3</td>
 <td align="right">3</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
-<td align="left">BPS Power/Coms</td>
-<td align="right">-0.384</td>
-<td align="right">1</td>
-<td align="right">0.028</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">1/4-1/2 WarpSpd</td>
-<td align="right">-0.009</td>
-<td align="right">1</td>
-<td align="right">0.009</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
+<td align="left">38</td>
 <td align="left">1/2 Dyneema</td>
-<td align="right">0.020</td>
+<td align="right">0.0200</td>
 <td align="right">1</td>
-<td align="right">0.012</td>
+<td align="right">0.0120000</td>
 <td align="right">0</td>
 <td align="right">1.3</td>
 <td align="right">8</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">1/2 Kevlar</td>
+<td align="right">-0.0320</td>
+<td align="right">1</td>
+<td align="right">0.0130000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">29</td>
+<td align="left">1/2 Neutral Wire</td>
+<td align="right">0.0000</td>
+<td align="right">1</td>
+<td align="right">0.0130000</td>
+<td align="right">0</td>
+<td align="right">1.5</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">19</td>
+<td align="left">1/2 VLS</td>
+<td align="right">-0.0410</td>
+<td align="right">1</td>
+<td align="right">0.0130000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">17</td>
+<td align="left">1/2 wire/jack</td>
+<td align="right">-0.5470</td>
+<td align="right">1</td>
+<td align="right">0.0170000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">31</td>
+<td align="left">1/4 AmSteel-Blue</td>
+<td align="right">0.0020</td>
+<td align="right">1</td>
+<td align="right">0.0070000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">3</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">1/4 galvanized wire coated to 5/16</td>
+<td align="right">-0.1380</td>
+<td align="right">1</td>
+<td align="right">0.0079375</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">1/4 Kevlar</td>
+<td align="right">-0.0090</td>
+<td align="right">1</td>
+<td align="right">0.0070000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">11</td>
+<td align="left">1/4 wire rope</td>
+<td align="right">-0.1400</td>
+<td align="right">1</td>
+<td align="right">0.0070000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">14</td>
+<td align="left">1/4 wire/jack</td>
+<td align="right">-0.1300</td>
+<td align="right">1</td>
+<td align="right">0.0080000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">37</td>
+<td align="left">1/4-1/2 WarpSpd</td>
+<td align="right">-0.0090</td>
+<td align="right">1</td>
+<td align="right">0.0090000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">20</td>
+<td align="left">11mm Perlon</td>
+<td align="right">-0.0050</td>
+<td align="right">1</td>
+<td align="right">0.0110000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">3</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">30</td>
+<td align="left">1in Neutral Wire</td>
+<td align="right">0.0000</td>
+<td align="right">1</td>
+<td align="right">0.0250000</td>
+<td align="right">0</td>
+<td align="right">0.0</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">3/16 galvanized wire coated to 1/4</td>
+<td align="right">-0.0775</td>
+<td align="right">1</td>
+<td align="right">0.0063500</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">3/16 wire rope</td>
+<td align="right">-0.1200</td>
+<td align="right">1</td>
+<td align="right">0.0070000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">24</td>
+<td align="left">3/4 Dacron</td>
+<td align="right">-0.0990</td>
+<td align="right">1</td>
+<td align="right">0.0190000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">3</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">26</td>
+<td align="left">3/4 Nylon</td>
+<td align="right">-0.0300</td>
+<td align="right">1</td>
+<td align="right">0.0190000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">2</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">28</td>
+<td align="left">3/4 Polyprop</td>
+<td align="right">0.0160</td>
+<td align="right">1</td>
+<td align="right">0.0190000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">4</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">32</td>
+<td align="left">3/8 AmSteel-Blue</td>
+<td align="right">0.0030</td>
+<td align="right">1</td>
+<td align="right">0.0090000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">3</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">3/8 Kevlar</td>
+<td align="right">-0.0230</td>
+<td align="right">1</td>
+<td align="right">0.0090000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">13</td>
+<td align="left">3/8 wire rope</td>
+<td align="right">-0.3300</td>
+<td align="right">1</td>
+<td align="right">0.0090000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">16</td>
+<td align="left">3/8 wire/jack</td>
+<td align="right">-0.3180</td>
+<td align="right">1</td>
+<td align="right">0.0130000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">5/16 Kevlar</td>
+<td align="right">-0.0140</td>
+<td align="right">1</td>
+<td align="right">0.0080000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">12</td>
+<td align="left">5/16 wire rope</td>
+<td align="right">-0.1900</td>
+<td align="right">1</td>
+<td align="right">0.0080000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">15</td>
+<td align="left">5/16 wire/jack</td>
+<td align="right">-0.1860</td>
+<td align="right">1</td>
+<td align="right">0.0110000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">35</td>
+<td align="left">5/8 AmSteel-Blue</td>
+<td align="right">0.0090</td>
+<td align="right">1</td>
+<td align="right">0.0160000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">3</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="left">5/8 Kevlar</td>
+<td align="right">-0.0540</td>
+<td align="right">1</td>
+<td align="right">0.0160000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">25</td>
+<td align="left">5/8 Nylon</td>
+<td align="right">-0.0220</td>
+<td align="right">1</td>
+<td align="right">0.0160000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">2</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">21</td>
+<td align="left">7/16 Dacron</td>
+<td align="right">-0.0320</td>
+<td align="right">1</td>
+<td align="right">0.0110000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">3</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="left">7/16 Kevlar</td>
+<td align="right">-0.0260</td>
+<td align="right">1</td>
+<td align="right">0.0110000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">7/16 VLS</td>
+<td align="right">-0.0230</td>
+<td align="right">1</td>
+<td align="right">0.0110000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">23</td>
+<td align="left">9/16 Dacron</td>
+<td align="right">-0.0580</td>
+<td align="right">1</td>
+<td align="right">0.0140000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">3</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">9/16 Kevlar</td>
+<td align="right">-0.0430</td>
+<td align="right">1</td>
+<td align="right">0.0140000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">34</td>
+<td align="left">BPS Cable</td>
+<td align="right">-0.1240</td>
+<td align="right">1</td>
+<td align="right">0.0070000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">36</td>
+<td align="left">BPS Power/Coms</td>
+<td align="right">-0.3840</td>
+<td align="right">1</td>
+<td align="right">0.0280000</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">6</td>
+<td align="left">Dewey</td>
 </tr>
 </tbody>
 </table>
@@ -793,6 +1106,7 @@
 <p>Dewey lists meaningless values in the column that is named <code>diameter</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
 <table class="table">
 <thead><tr class="header">
+<th align="left"></th>
 <th align="left">name</th>
 <th align="right">buoyancy</th>
 <th align="right">height</th>
@@ -800,54 +1114,11 @@
 <th align="right">diameter</th>
 <th align="right">CD</th>
 <th align="right">code</th>
+<th align="left">source</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">shac-ring-shac</td>
-<td align="right">-0.750</td>
-<td align="right">0.300</td>
-<td align="right">0.025</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">shac-3link-shac</td>
-<td align="right">-1.000</td>
-<td align="right">0.400</td>
-<td align="right">0.020</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1/4 chain SL</td>
-<td align="right">-1.690</td>
-<td align="right">1.000</td>
-<td align="right">0.015</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">3/8 chain SL</td>
-<td align="right">-2.330</td>
-<td align="right">1.000</td>
-<td align="right">0.022</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1/2 chain SL</td>
-<td align="right">-4.120</td>
-<td align="right">1.000</td>
-<td align="right">0.030</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
+<td align="left">6</td>
 <td align="left">1 chain SL</td>
 <td align="right">-13.000</td>
 <td align="right">1.000</td>
@@ -855,134 +1126,10 @@
 <td align="right">0</td>
 <td align="right">1.3</td>
 <td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1/2 chain LL</td>
-<td align="right">-3.100</td>
-<td align="right">1.000</td>
-<td align="right">0.030</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
-<td align="left">1/2 SS link</td>
-<td align="right">-0.200</td>
-<td align="right">0.100</td>
-<td align="right">0.025</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1/2 galv link</td>
-<td align="right">-0.200</td>
-<td align="right">0.100</td>
-<td align="right">0.025</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">1/2 shackle</td>
-<td align="right">-0.300</td>
-<td align="right">0.080</td>
-<td align="right">0.025</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">3/8 shackle</td>
-<td align="right">-0.125</td>
-<td align="right">0.040</td>
-<td align="right">0.025</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">5/8 shackle</td>
-<td align="right">-0.650</td>
-<td align="right">0.065</td>
-<td align="right">0.050</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">1" shackle</td>
-<td align="right">-2.200</td>
-<td align="right">0.080</td>
-<td align="right">0.030</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">1/2 swivel</td>
-<td align="right">-0.650</td>
-<td align="right">0.140</td>
-<td align="right">0.050</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">3/4 swivel</td>
-<td align="right">-1.500</td>
-<td align="right">0.140</td>
-<td align="right">0.040</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">1/2 shac+3/8shac</td>
-<td align="right">-0.425</td>
-<td align="right">0.120</td>
-<td align="right">0.025</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">3/8" buoy chain</td>
-<td align="right">-1.677</td>
-<td align="right">1.000</td>
-<td align="right">0.020</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">1/2" buoy chain</td>
-<td align="right">-3.070</td>
-<td align="right">1.000</td>
-<td align="right">0.025</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">5/8" buoy chain</td>
-<td align="right">-4.730</td>
-<td align="right">1.000</td>
-<td align="right">0.035</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">3/4" buoy chain</td>
-<td align="right">-6.870</td>
-<td align="right">1.000</td>
-<td align="right">0.040</td>
-<td align="right">0</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
+<td align="left">21</td>
 <td align="left">1" buoy chain</td>
 <td align="right">-12.250</td>
 <td align="right">1.000</td>
@@ -990,17 +1137,142 @@
 <td align="right">0</td>
 <td align="right">1.3</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">13</td>
+<td align="left">1" shackle</td>
+<td align="right">-2.200</td>
+<td align="right">0.080</td>
+<td align="right">0.030</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
-<td align="left">3T SeineSwivel</td>
+<td align="left">7</td>
+<td align="left">1/2 chain LL</td>
+<td align="right">-3.100</td>
+<td align="right">1.000</td>
+<td align="right">0.030</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">1/2 chain SL</td>
+<td align="right">-4.120</td>
+<td align="right">1.000</td>
+<td align="right">0.030</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="left">1/2 galv link</td>
+<td align="right">-0.200</td>
+<td align="right">0.100</td>
+<td align="right">0.025</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">16</td>
+<td align="left">1/2 shac+3/8shac</td>
+<td align="right">-0.425</td>
+<td align="right">0.120</td>
+<td align="right">0.025</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">1/2 shackle</td>
+<td align="right">-0.300</td>
+<td align="right">0.080</td>
+<td align="right">0.025</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">1/2 SS link</td>
+<td align="right">-0.200</td>
+<td align="right">0.100</td>
+<td align="right">0.025</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">14</td>
+<td align="left">1/2 swivel</td>
 <td align="right">-0.650</td>
-<td align="right">0.105</td>
+<td align="right">0.140</td>
+<td align="right">0.050</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">18</td>
+<td align="left">1/2" buoy chain</td>
+<td align="right">-3.070</td>
+<td align="right">1.000</td>
+<td align="right">0.025</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">1/4 chain SL</td>
+<td align="right">-1.690</td>
+<td align="right">1.000</td>
+<td align="right">0.015</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">3/4 swivel</td>
+<td align="right">-1.500</td>
+<td align="right">0.140</td>
 <td align="right">0.040</td>
 <td align="right">0</td>
 <td align="right">1.3</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">20</td>
+<td align="left">3/4" buoy chain</td>
+<td align="right">-6.870</td>
+<td align="right">1.000</td>
+<td align="right">0.040</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="odd">
+<td align="left">23</td>
 <td align="left">3/4" shackle</td>
 <td align="right">-0.880</td>
 <td align="right">0.060</td>
@@ -1008,8 +1280,87 @@
 <td align="right">0</td>
 <td align="right">1.3</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 <tr class="even">
+<td align="left">4</td>
+<td align="left">3/8 chain SL</td>
+<td align="right">-2.330</td>
+<td align="right">1.000</td>
+<td align="right">0.022</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">3/8 shackle</td>
+<td align="right">-0.125</td>
+<td align="right">0.040</td>
+<td align="right">0.025</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">17</td>
+<td align="left">3/8" buoy chain</td>
+<td align="right">-1.677</td>
+<td align="right">1.000</td>
+<td align="right">0.020</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">22</td>
+<td align="left">3T SeineSwivel</td>
+<td align="right">-0.650</td>
+<td align="right">0.105</td>
+<td align="right">0.040</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">5/8 shackle</td>
+<td align="right">-0.650</td>
+<td align="right">0.065</td>
+<td align="right">0.050</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">19</td>
+<td align="left">5/8" buoy chain</td>
+<td align="right">-4.730</td>
+<td align="right">1.000</td>
+<td align="right">0.035</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">shac-3link-shac</td>
+<td align="right">-1.000</td>
+<td align="right">0.400</td>
+<td align="right">0.020</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">24</td>
 <td align="left">shac-Pring-shac</td>
 <td align="right">-0.500</td>
 <td align="right">0.200</td>
@@ -1017,6 +1368,18 @@
 <td align="right">0</td>
 <td align="right">1.3</td>
 <td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">shac-ring-shac</td>
+<td align="right">-0.750</td>
+<td align="right">0.300</td>
+<td align="right">0.025</td>
+<td align="right">0</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
 </tr>
 </tbody>
 </table>

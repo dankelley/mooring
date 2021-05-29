@@ -152,7 +152,8 @@ value is used in Dewey's dataset for many floats.</p></li>
   buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
   height <span class='op'>=</span> <span class='cn'>NULL</span>,
   diameter <span class='op'>=</span> <span class='cn'>NULL</span>,
-  CD <span class='op'>=</span> <span class='cn'>NULL</span>
+  CD <span class='op'>=</span> <span class='cn'>NULL</span>,
+  source <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -186,6 +187,10 @@ This is ignored if <code>model</code> is recognized.</p></td>
       <th>CD</th>
       <td><p>numeric value for the drag coefficient for the item.</p></td>
     </tr>
+    <tr>
+      <th>source</th>
+      <td><p>character value indicating the source of the data.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -201,7 +206,6 @@ This is ignored if <code>model</code> is recognized.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions that create mooring objects: 
-<code><a href='+.mooring.html'>+.mooring</a>()</code>,
 <code><a href='anchor.html'>anchor</a>()</code>,
 <code><a href='chain.html'>chain</a>()</code>,
 <code><a href='release.html'>release</a>()</code>,
@@ -214,15 +218,55 @@ This is ignored if <code>model</code> is recognized.</p></td>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
 <span class='co'># List known float types</span>
 <span class='fu'>float</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "16in Viny"        "17 in glass"      "28in ORE"         "30in float"      
-#&gt;  [5] "37in ORE"         "41in ORE"         "48in ORE"         "54cm Alum CAP3"  
-#&gt;  [9] "54x30inClamShell" "61in ORE"         "ADCP FloatTech"   "BENTHOS 17in"    
-#&gt; [13] "Billings-12in"    "BPS Float"        "CDMS 1.2m sphere" "CDMS 2m sphere"  
-#&gt; [17] "Double 16inViny"  "Double 17in"      "FloatTech CF-12"  "Geodyn 8' Toroid"
-#&gt; [21] "HMB 20"           "HMB 25"           "HMB 31"           "HMB 36"          
-#&gt; [25] "HMB 40"           "HMB 44"           "HMB 49"           "HMB 51"          
-#&gt; [29] "HMB 56"           "HMB 62"           "Kiel SFS40in"     "Top of Tow Rope" 
-#&gt; [33] "Torp. flt, 3-28"  "Tripple FT CF-12" "Trpl 12in glass"  "Trpl 16 in Viny" </div><div class='input'>
+</div><div class='output co'>#&gt;  [1] "16in Viny"                            
+#&gt;  [2] "17 in glass"                          
+#&gt;  [3] "28in ORE"                             
+#&gt;  [4] "3 pack viny 12b-3 floats"             
+#&gt;  [5] "30in float"                           
+#&gt;  [6] "37in ORE"                             
+#&gt;  [7] "41in ORE"                             
+#&gt;  [8] "48in ORE"                             
+#&gt;  [9] "54cm Alum CAP3"                       
+#&gt; [10] "54x30inClamShell"                     
+#&gt; [11] "61in ORE"                             
+#&gt; [12] "a2 package adcp and 2 viny balls"     
+#&gt; [13] "adcp / 2x c3 subs assembly"           
+#&gt; [14] "ADCP FloatTech"                       
+#&gt; [15] "BENTHOS 17in"                         
+#&gt; [16] "Billings-12in"                        
+#&gt; [17] "BPS Float"                            
+#&gt; [18] "bub 2x17 glass"                       
+#&gt; [19] "CDMS 1.2m sphere"                     
+#&gt; [20] "CDMS 2m sphere"                       
+#&gt; [21] "Double 16inViny"                      
+#&gt; [22] "Double 17in"                          
+#&gt; [23] "FloatTech CF-12"                      
+#&gt; [24] "Geodyn 8' Toroid"                     
+#&gt; [25] "HMB 20"                               
+#&gt; [26] "HMB 25"                               
+#&gt; [27] "HMB 31"                               
+#&gt; [28] "HMB 36"                               
+#&gt; [29] "HMB 40"                               
+#&gt; [30] "HMB 44"                               
+#&gt; [31] "HMB 49"                               
+#&gt; [32] "HMB 51"                               
+#&gt; [33] "HMB 56"                               
+#&gt; [34] "HMB 62"                               
+#&gt; [35] "ips / 2x b3 subs assembly"            
+#&gt; [36] "Kiel SFS40in"                         
+#&gt; [37] "stablemoor 1000 lb 3500 msw with adcp"
+#&gt; [38] "stablemoor 1015 lb 1500 msw with adcp"
+#&gt; [39] "stablemoor 533 lb 3500 msw with adcp" 
+#&gt; [40] "stablemoor 580 lb 1500 msw with adcp" 
+#&gt; [41] "streamlined bub 2 x 17 glass"         
+#&gt; [42] "streamlined bub 3 viny balls"         
+#&gt; [43] "syn. float,bracket and 109 lb.adcp"   
+#&gt; [44] "syntactic float with adcp bracket"    
+#&gt; [45] "Top of Tow Rope"                      
+#&gt; [46] "Torp. flt, 3-28"                      
+#&gt; [47] "Tripple FT CF-12"                     
+#&gt; [48] "Trpl 12in glass"                      
+#&gt; [49] "Trpl 16 in Viny"                      </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

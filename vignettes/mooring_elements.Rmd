@@ -43,7 +43,8 @@ retained in the dataset.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
-knitr::kable(mooringElements$floats)
+o <- order(mooringElements$floats$name)
+knitr::kable(mooringElements$floats[o,])
 ```
 
 ## Wire characteristics
@@ -56,7 +57,9 @@ Dewey lists meaningless values in the columns that are named `height` and
 package, although they are retained in the dataset.
 
 ```{r echo=FALSE}
-knitr::kable(mooringElements$wires)
+data(mooringElements, package="mooring")
+o <- order(mooringElements$wires$name)
+knitr::kable(mooringElements$wires[o,])
 ```
 
 ## Chain characteristics
@@ -70,6 +73,8 @@ those values are not used in this code provided in this package, although they
 are retained in the dataset.
 
 ```{r echo=FALSE}
-knitr::kable(mooringElements$chains)
+data(mooringElements, package="mooring")
+o <- order(mooringElements$chains$name)
+knitr::kable(mooringElements$chains[o,])
 ```
 
