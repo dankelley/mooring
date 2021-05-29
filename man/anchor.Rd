@@ -4,21 +4,46 @@
 \alias{anchor}
 \title{Create an anchor object}
 \usage{
-anchor(model = "default", depth = 0)
+anchor(model = "trainwheel", buoyancy = NULL, height = NULL, depth = 0)
 }
 \arguments{
-\item{model}{character value indicating the model of the anchor.
-At present, only \code{"default"} is permitted, and this is just
-based on a guess on height (when laid on its side).}
+\item{model}{character value indicating the type of anchor.
+There are three possibilities for \code{model}.
+(1) If this is \code{"?"}, then the function returns a vector of permitted
+character values. (2) If it is recognized, i.e. if that type is
+stored in \code{data(mooringElements)}, then the that stored value
+is used, and all other arguments to this function are ignored.
+(3) Otherwise, a new anchor object is created, using
+values specified in the other arguments (all of which must
+be supplied).}
+
+\item{buoyancy}{numeric value indicating buoyancy.  For
+wire elements, this is buoyancy per length, expressed in kg/m.
+For other elements, it is buoyancy, expressed in kg.
+Note that \code{buoyancy} is ignored if \code{model} is recognized.}
+
+\item{height}{numeric value for the height (in m) of the element.
+This value is used in the computation of (a) the mooring geometry
+and (b) the area of the element (which is in turn used in
+the drag computation).
+Note that \code{height} is ignored if \code{model} is recognized.}
 
 \item{depth}{numeric value giving water depth in m.}
 }
 \value{
-an object of the \code{"mooring"} class, with \code{type} equal to \code{"anchor"}.
+\code{anchor} returns an object of the \code{"mooring"} class and \code{"anchor"} subclass.
 }
 \description{
 This must be the first element of a mooring constructed with
 \code{\link[=mooring]{mooring()}}.
+Note that \code{depth} is not a characteristic of the anchor, but rather of
+the domain into which it is placed.
+}
+\examples{
+library(mooring)
+# List known anchor types
+anchor("?")
+
 }
 \seealso{
 Other functions that create mooring objects: 

@@ -4,18 +4,56 @@
 \alias{release}
 \title{Create a mooring-release object}
 \usage{
-release(model = "default_release")
+release(
+  model = "eg&g 723a",
+  buoyancy = NULL,
+  height = NULL,
+  width = NULL,
+  CD = NULL
+)
 }
 \arguments{
-\item{model}{character value indicating the model of the acoustic release.
-At present, only \code{"default"} is permitted, and this is just
-based on a guess on height (when laid on its side).}
+\item{model}{character value indicating the type of release.
+There are three possibilities for \code{model}.
+(1) If this is \code{"?"}, then the function returns a vector of permitted
+character values. (2) If it is recognized, i.e. if that type is
+stored in \code{data(mooringElements)}, then the that stored value
+is used, and all other arguments to this function are ignored.
+(3) Otherwise, a new release object is created, using
+values specified in the other arguments (all of which must
+be supplied).}
+
+\item{buoyancy}{numeric value indicating buoyancy.  For
+wire elements, this is buoyancy per length, expressed in kg/m.
+For other elements, it is buoyancy, expressed in kg.
+Note that \code{buoyancy} is ignored if \code{model} is recognized.}
+
+\item{height}{numeric value for the height (in m) of the element.
+This value is used in the computation of (a) the mooring geometry
+and (b) the area of the element (which is in turn used in
+the drag computation).
+Note that \code{height} is ignored if \code{model} is recognized.}
+
+\item{width}{numeric value for the width (in m)
+of the element as viewed from above.
+This is multiplied by \code{height} to compute the
+area of the element, as part of the drag computation.
+Note that \code{width} is ignored if \code{model} is recognized.}
+
+\item{CD}{numeric value (unitless) for the drag coefficient.
+Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \value{
-an object of the \code{"mooring"} class, with \code{type} equal to \code{"release"}.
+\code{release} returns an object of the \code{"mooring"} class and \code{"release"} subclass.
 }
 \description{
 Create a mooring-release object
+}
+\examples{
+library(mooring)
+# List known wire types
+release("?")
+
 }
 \seealso{
 Other functions that create mooring objects: 

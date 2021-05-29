@@ -13,27 +13,38 @@ chain(
 )
 }
 \arguments{
-\item{model}{character value indicating the model name of the chain. The
-default is \verb{"1\\" buoy chain"}.
-Use \code{chain("?")} to get a listing of permitted values.
-If \code{model} is not recognized, then
-\link{chain} creates a new type, using the stated diameter and CD values;
-otherwise, these arguments are ignored.}
+\item{model}{character value indicating the type of chain.
+There are three possibilities for \code{model}.
+(1) If this is \code{"?"}, then the function returns a vector of permitted
+character values. (2) If it is recognized, i.e. if that type is
+stored in \code{data(mooringElements)}, then the that stored value
+is used, and all other arguments to this function are ignored.
+(3) Otherwise, a new chain object is created, using
+values specified in the other arguments (all of which must
+be supplied).}
 
-\item{buoyancy}{numeric value of the buoyancy of the item, in kg.
-This is ignored if \code{model} is recognized.}
+\item{buoyancy}{numeric value indicating buoyancy.  For
+wire elements, this is buoyancy per length, expressed in kg/m.
+For other elements, it is buoyancy, expressed in kg.
+Note that \code{buoyancy} is ignored if \code{model} is recognized.}
 
-\item{height}{numeric value for the height of the element, in m.
-This is ignored if \code{model} is recognized.}
+\item{height}{numeric value for the height (in m) of the element.
+This value is used in the computation of (a) the mooring geometry
+and (b) the area of the element (which is in turn used in
+the drag computation).
+Note that \code{height} is ignored if \code{model} is recognized.}
 
-\item{width}{numeric value for the width of the element, in m.
-This is ignored if \code{model} is recognized.}
+\item{width}{numeric value for the width (in m)
+of the element as viewed from above.
+This is multiplied by \code{height} to compute the
+area of the element, as part of the drag computation.
+Note that \code{width} is ignored if \code{model} is recognized.}
 
-\item{CD}{numeric value for the drag coefficient for the item.
-This is ignored if \code{model} is recognized.}
+\item{CD}{numeric value (unitless) for the drag coefficient.
+Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \value{
-\link{chain} returns an object of the \code{"mooring"} class, with \code{type} equal to \code{"chain"}.
+\code{chain} returns an object of the \code{"mooring"} class and \code{"chain"} subclass.
 }
 \description{
 Creates an object that describes mooring chain elements such as shackles.
