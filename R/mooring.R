@@ -59,7 +59,8 @@ g <- 9.8
 
 #' Create an anchor object
 #'
-#' This must be the first element of a mooring constructed with \code{\link{+.mooring}}.
+#' This must be the first element of a mooring constructed with
+#' [mooring()].
 #'
 #' @param model character value indicating the model of the anchor.
 #' At present, only `"default"` is permitted, and this is just
