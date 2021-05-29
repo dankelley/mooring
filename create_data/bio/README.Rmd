@@ -58,12 +58,18 @@ knitr::kable(read.csv("wires_bio.csv"))
 ```
 
 
-## floats_bio.csv
+## `floats_bio.csv`
 
 These seem to be in the yellow-background part of the spreadsheet.
-
 The first of these, named `"new glass streamlined float"`, has no listed weight
 in pounds or newtons, so I ignored that entry.
+
+For buoyancy, I took `NEWTONS` (col E) and divided by 9.8m/s^2 to get kg, rounding
+to 2 digits after the decimal place.
+```{r}
+N <- c(445,285,560,516,429,773,414,1886,3963,4030,2095,8224,7740)
+round(N/9.8, 2)
+```
 
 There are two length columns in the file, but the values are either identical
 or relatable by rounding, so I could choose either.  But is that in the x or

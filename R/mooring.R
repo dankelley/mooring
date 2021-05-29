@@ -2,7 +2,7 @@
 # 1. overall docs #
 ###################
 
-#' mooring: A Package for Analysing Oceanographic Moorings.
+#' mooring: A Package for Analysing Oceanographic Moorings
 #'
 #' The mooring package provides functions for working with
 #' oceanographic moorings.
@@ -51,7 +51,22 @@ NULL
 ###################
 
 g <- 9.8
-isMooring <- function(m) !missing(m) && length(class(m)) == 1 && class(m) == "mooring"
+
+#' Detect whether an object is a mooring
+#'
+#' An object is a mooring if it inherits from the `"mooring"` class,
+#' and if it has no sub-classes.  For example, the output of [mooring()]
+#' is a mooring, but the output of [anchor()] is not because the latter
+#' has a sub-class (equal to `"anchor"`).  This function is mainly
+#' designed for use within the package that that, e.g. [knockdown()]
+#' will produce an error if its first argument is not a mooring.
+#'
+#' @param m an object to be tested
+#'
+#' @export
+isMooring <- function(m=NULL) {
+    !is.null(m) && length(class(m)) == 1 && class(m) == "mooring"
+}
 
 
 ##################
@@ -534,7 +549,7 @@ print.mooring <- function(x, ...)
 #' @author Dan Kelley
 plot.mooring <- function(x, which="shape", showDepths=TRUE, fancy=FALSE, title="", ...)
 {
-    if (!isMooring(m))
+    if (!isMooring(x))
         stop("only works for objects created by mooring()")
     if (!which %in% c("shape", "tension"))
         stop("which must be \"shape\" or \"tension\"")
