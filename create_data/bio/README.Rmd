@@ -91,7 +91,12 @@ knitr::kable(read.csv("floats_bio.csv"))
 Use `LENGTH` (col C).
 
 ### `buoyancy`
-Use the negative of `NEWTONS` (col E).
+Use the negative of `NEWTONS` (col E), divided by g=9.8m/s^2, rounded to 2 decimal
+places.
+```{r}
+N <- c(149, 253.5, 360,	129, 273, 118.7)
+round(N/9.8, 2)
+```
 
 ### `width`
 Use the ratio of `A (m&2/m)` (col G) to `LENGTH` (col C).
