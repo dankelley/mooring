@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{buoyancy}
 \alias{buoyancy}
-\title{Return buoyancy of elements in mooring, in kg.}
+\title{Buoyancy of elements in mooring, expressed in kg.}
 \usage{
 buoyancy(m)
 }
@@ -10,18 +10,35 @@ buoyancy(m)
 \item{m}{an object of the \code{"mooring"} class.}
 }
 \value{
-a numeric vector of buoyancy, in kg.
+a numeric vector of buoyancy, expressed in kg.
 }
 \description{
-This is a direct lookup for all types except \code{"wire"}.
-In the wire case, the stored buoyancy is in kg/m and therefore
-the length of the wire is multiplied by that value.
+The nonphysical unit of kg reflects a common convention used
+by manufacturers of oceanographic mooring equipment. For calculations
+of buoyancy \emph{force}, the return value from this function
+must be multiplied by the acceleration due to gravity,
+g=9.8m/s^2.
+}
+\details{
+Note that the present version of this function
+does not account for depth variations in seawater density,
+for those tend to be well under 1 percent, and other
+forces involved in mooring dynamics are much more uncertain
+than that.  For example, Hamilton (1989) found that oscillations
+in mooring lines could lead to enhanced drag, in some cases
+necessitating an increase in CD for wire from 1.4 to 2.6
+(see captions of his figures 12 and 13).
 }
 \examples{
 library(mooring)
 m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 buoyancy(m)
 
+}
+\references{
+Hamilton, J. M. "The Validation and Practical Applications of a Sub-Surface
+Mooring Model." Canadian Technical Report of Hydrography and Ocean
+Sciences. Bedford Institute of Oceanography, 1989.
 }
 \author{
 Dan Kelley
