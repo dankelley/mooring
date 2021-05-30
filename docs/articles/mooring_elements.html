@@ -99,11 +99,11 @@
     
 <p>The data stored in <code><a href="https://rdrr.io/r/utils/data.html">data(mooringElements)</a></code> were extracted from Dewey’s Matlab matlab file named <code>mdcodes.mat</code>, which were apparently extracted from more primary sources. Neither the provenance and accuracy of individual items was checked before inclusion here.</p>
 <p>Dewey reports dimensions in centimetres, but these are converted to metres here.</p>
-<p>The column names are not the same as Dewey uses. The meaning of the final column is unknown, so it is just called <code>code</code> here.</p>
+<p>The column names are not the same as Dewey uses. The meaning of the final column is unknown, so it is just called <code>code</code> here, and its values are not are used in this package.</p>
 <div id="anchor-characteristics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#anchor-characteristics" class="anchor"></a>Anchor characteristics</h2>
-<p>The <code>buoyancy</code> values are in kg and the <code>height</code> values are in m.</p>
+<p>The <code>buoyancy</code> values are in kg and the <code>height</code> values are in m. Note that the values shown below have no affect on the computation of mooring knockdown.</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">name</th>
@@ -381,8 +381,7 @@
 <div id="float-characteristics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#float-characteristics" class="anchor"></a>Float characteristics</h2>
-<p>The <code>buoyancy</code> values are in kg, the next three quantities are in m, and <code>CD</code> is unitless.</p>
-<p>Dewey lists meaningless values in the column named <code>width</code> here, and those values are not used in this code provided in this package, although they are retained in the dataset.</p>
+<p>The <code>buoyancy</code> values are in kg, while <code>height</code> and <code>diameter</code> are in m, and <code>CD</code> is unitless. The <code>code</code> values are listed for data from Dewey only, and they are not used in this package.</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -891,7 +890,7 @@
 <div id="release-characteristics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#release-characteristics" class="anchor"></a>Release characteristics</h2>
-<p>The <code>buoyancy</code> values are in kg, while <code>height</code> and <code>width</code> are in m, and <code>CD</code> is unitless. The <code>code</code> values are unused in this package.</p>
+<p>The <code>buoyancy</code> values are in kg, while <code>height</code> and <code>width</code> are in m, and <code>CD</code> is unitless. The <code>code</code> values are listed for data from Dewey only, and they are not used in this package.</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left"></th>
@@ -906,9 +905,9 @@
 <tbody>
 <tr class="odd">
 <td align="left">5</td>
-<td align="left">benthos 865a releas 1</td>
+<td align="left">benthos 865a release</td>
 <td align="right">-27.86</td>
-<td align="right">61.250</td>
+<td align="right">1.000</td>
 <td align="right">0.1990</td>
 <td align="right">0.65</td>
 <td align="left">NA</td>

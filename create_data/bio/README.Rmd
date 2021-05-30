@@ -58,6 +58,9 @@ knitr::kable(read.csv("floats_bio.csv"))
 
 ## `releases_bio.csv`
 
+Note the ommision of an entry for type `BENTHOS 875 RELEASE`, because it has no
+value listed in col G (area `A (m*2/m)`) or col I (area `AW (m*2)`).
+
 ### `height`
 Use `LENGTH` (col C).
 
@@ -72,8 +75,8 @@ round(N/9.8, 2)
 ### `width`
 Use the ratio of `A (m&2/m)` (col G) to `LENGTH` (col C).
 ```{r}
-G <- c(0.14,0.14,0.127,NA,0.112,0.199,0.237)
-C <- c(1.194,1.32,1.23,0.479,0.68,1,0.4)
+G <- c(0.14,0.14,0.127,0.112,0.199,0.237)
+C <- c(1.194,1.32,1.23,0.68,1,0.4)
 width <- round(G/C, 4)
 ```
 Note the `NA` value -- this is "benthos 875 release", which we will not use

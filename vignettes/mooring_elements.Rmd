@@ -27,11 +27,13 @@ Dewey reports dimensions in centimetres, but these are converted to metres
 here.
 
 The column names are not the same as Dewey uses.  The meaning of the final
-column is unknown, so it is just called `code` here.
+column is unknown, so it is just called `code` here, and its values are not are
+used in this package.
 
 ## Anchor characteristics
 
-The `buoyancy` values are in kg and the `height` values are in m.
+The `buoyancy` values are in kg and the `height` values are in m.  Note that
+the values shown below have no affect on the computation of mooring knockdown.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
@@ -54,12 +56,9 @@ knitr::kable(mooringElements$chains[o,])
 
 ## Float characteristics
 
-The `buoyancy` values are in kg, the next three quantities are in m, and `CD`
-is unitless.
-
-Dewey lists meaningless values in the column named `width` here, and those
-values are not used in this code provided in this package, although they are
-retained in the dataset.
+The `buoyancy` values are in kg, while `height` and `diameter` are in m, and
+`CD` is unitless.  The `code` values are listed for data from Dewey only, and
+they are not used in this package.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
@@ -70,7 +69,8 @@ knitr::kable(mooringElements$floats[o,])
 ## Release characteristics
 
 The `buoyancy` values are in kg, while `height` and `width` are in m, and `CD`
-is unitless.  The `code` values are unused in this package.
+is unitless.  The `code` values are listed for data from Dewey only, and they
+are not used in this package.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
@@ -81,10 +81,13 @@ knitr::kable(mooringElements$releases[o,])
 ## Wire characteristics
 
 The `buoyancyPerMeter` values are in kg/m, while `diameter` is in m, and `CD`
-is unitless.  Note that Dewey sets diameter to 0 for wires, saves diameter in a
-width field, and lists a nonsense value for height, evidently so his code can
-distinguish floats from wires; we needn't copy this convention the data are
-stored in `list` objects.
+is unitless.  The `code` values are listed for data from Dewey only, and they
+are not used in this package.
+
+Note that Dewey sets diameter to 0 for wires, saves diameter in a width field,
+and lists a nonsense value for height.  These are signals that let his code
+distinguish between floats, wires, etc., but the present package handles this
+differently.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
