@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a chain object — chain • mooring</title>
+<title>CD of mooring elements — CD • mooring</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="Create a chain object — chain" />
-<meta property="og:description" content="Creates an object that describes mooring chain elements such as shackles.
-Note that all dimensions are specified in m, not cm." />
+<meta property="og:title" content="CD of mooring elements — CD" />
+<meta property="og:description" content="This looks up element CD values for the elements
+in a mooring.  For anchor items, which are assumed to
+have no drag, it fills in 0." />
 
 
 
@@ -127,95 +128,32 @@ Note that all dimensions are specified in m, not cm." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a chain object</h1>
+    <h1>CD of mooring elements</h1>
     <small class="dont-index">Source: <a href='https://github.com/dankelley/mooring/blob/master/R/mooring.R'><code>R/mooring.R</code></a></small>
-    <div class="hidden name"><code>chain.Rd</code></div>
+    <div class="hidden name"><code>CD.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates an object that describes mooring chain elements such as shackles.
-Note that all dimensions are specified in m, not cm.</p>
+    <p>This looks up element <code>CD</code> values for the elements
+in a mooring.  For anchor items, which are assumed to
+have no drag, it fills in 0.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>chain</span><span class='op'>(</span>
-  model <span class='op'>=</span> <span class='st'>"1\" buoy chain"</span>,
-  buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
-  height <span class='op'>=</span> <span class='cn'>NULL</span>,
-  width <span class='op'>=</span> <span class='cn'>NULL</span>,
-  CD <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>CD</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>character value indicating the type of chain.
-There are three possibilities for <code>model</code>.
-(1) If this is <code>"?"</code>, then the function returns a vector of permitted
-character values. (2) If it is recognized, i.e. if that type is
-stored in <code><a href='https://rdrr.io/r/utils/data.html'>data(mooringElements)</a></code>, then the that stored value
-is used, and all other arguments to this function are ignored.
-(3) Otherwise, a new chain object is created, using
-values specified in the other arguments (all of which must
-be supplied).</p></td>
-    </tr>
-    <tr>
-      <th>buoyancy</th>
-      <td><p>numeric value indicating buoyancy.  For
-wire elements, this is buoyancy per length, expressed in kg/m.
-For other elements, it is buoyancy, expressed in kg.
-Note that <code>buoyancy</code> is ignored if <code>model</code> is recognized.</p></td>
-    </tr>
-    <tr>
-      <th>height</th>
-      <td><p>numeric value for the height (in m) of the element.
-This value is used in the computation of (a) the mooring geometry
-and (b) the area of the element (which is in turn used in
-the drag computation).
-Note that <code>height</code> is ignored if <code>model</code> is recognized.</p></td>
-    </tr>
-    <tr>
-      <th>width</th>
-      <td><p>numeric value for the width (in m)
-of the element as viewed from above.
-This is multiplied by <code>height</code> to compute the
-area of the element, as part of the drag computation.
-Note that <code>width</code> is ignored if <code>model</code> is recognized.</p></td>
-    </tr>
-    <tr>
-      <th>CD</th>
-      <td><p>numeric value (unitless) for the drag coefficient.
-Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></td>
+      <th>m</th>
+      <td><p>a mooring object, created by <code><a href='mooring.html'>mooring()</a></code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code>chain</code> returns an object of the <code>"mooring"</code> class and <code>"chain"</code> subclass.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other functions that create mooring objects: 
-<code><a href='anchor.html'>anchor</a>()</code>,
-<code><a href='float.html'>float</a>()</code>,
-<code><a href='instrument.html'>instrument</a>()</code>,
-<code><a href='release.html'>release</a>()</code>,
-<code><a href='wire.html'>wire</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
-<span class='co'># List known chain types</span>
-<span class='fu'>chain</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "1 chain SL"       "1\" buoy chain"   "1\" shackle"      "1/2 chain LL"    
-#&gt;  [5] "1/2 chain SL"     "1/2 galv link"    "1/2 shac+3/8shac" "1/2 shackle"     
-#&gt;  [9] "1/2 SS link"      "1/2 swivel"       "1/2\" buoy chain" "1/4 chain SL"    
-#&gt; [13] "3/4 swivel"       "3/4\" buoy chain" "3/4\" shackle"    "3/8 chain SL"    
-#&gt; [17] "3/8 shackle"      "3/8\" buoy chain" "3T SeineSwivel"   "5/8 shackle"     
-#&gt; [21] "5/8\" buoy chain" "shac-3link-shac"  "shac-Pring-shac"  "shac-ring-shac"  </div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
