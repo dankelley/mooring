@@ -1,6 +1,6 @@
 ---
 title: Object-orientation Scheme
-author: Dan Kelley
+author: "Dan Kelley (https://orcid.org/0000-0001-7808-5911)"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
@@ -13,11 +13,8 @@ output:
     dev.args: list(pointsize=11)
 vignette: >
   %\VignetteIndexEntry{Object-orientation Scheme}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options:
-  markdown:
-    wrap: 72
+  %\VignetteEncoding{UTF-8}
 ---
 
 The S3 scheme is used for objects created by functions in the `mooring`

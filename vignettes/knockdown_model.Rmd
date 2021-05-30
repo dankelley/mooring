@@ -1,6 +1,6 @@
 ---
 title: Mooring Response to Unidirectional Flow
-author: Dan Kelley
+author: "Dan Kelley (https://orcid.org/0000-0001-7808-5911)"
 date: "`r Sys.Date()`"
 bibliography: model.bib
 output:
@@ -14,11 +14,8 @@ output:
     dev.args: list(pointsize=11)
 vignette: >
   %\VignetteIndexEntry{Mooring Response to Unidirectional Flow}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options:
-  markdown:
-    wrap: 72
+  %\VignetteEncoding{UTF-8}
 ---
 \newcommand{\D}{{\cal D}}
 \newcommand{\B}{{\cal B}}
