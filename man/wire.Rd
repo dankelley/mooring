@@ -6,9 +6,9 @@
 \usage{
 wire(
   model = "1/4 wire/jack",
-  buoyancy = NULL,
-  length = 1,
-  width = NULL,
+  buoyancyPerMeter = NULL,
+  length = NULL,
+  diameter = NULL,
   CD = NULL
 )
 }
@@ -23,18 +23,17 @@ is used, and all other arguments to this function are ignored.
 values specified in the other arguments (all of which must
 be supplied).}
 
-\item{buoyancy}{numeric value indicating buoyancy.  For
-wire elements, this is buoyancy per length, expressed in kg/m.
-For other elements, it is buoyancy, expressed in kg.
+\item{buoyancyPerMeter}{numeric value indicating buoyancy per meter
+of length, expressed as kg/m.
 Note that \code{buoyancy} is ignored if \code{model} is recognized.}
 
 \item{length}{numeric value indicating the length (in m) of the wire.}
 
-\item{width}{numeric value for the width (in m)
+\item{diameter}{numeric value for the diameter (in m)
 of the element as viewed from above.
 This is multiplied by \code{height} to compute the
 area of the element, as part of the drag computation.
-Note that \code{width} is ignored if \code{model} is recognized.}
+Note that \code{diameter} is ignored if \code{model} is recognized.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}

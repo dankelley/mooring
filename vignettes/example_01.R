@@ -10,8 +10,7 @@ Bfloat <- f$buoyancy
 
 w <- wire(length=100)
 dzcable <- 1
-Rcable <- w$width / 2
-Acable <- 2 * dzcable * Rcable
+Acable <-  dzcable * w$diameter
 Bcable <- w$buoyancy
 CD <- w$CD
 g <- 9.8                               # m/s^2

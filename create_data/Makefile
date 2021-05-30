@@ -1,5 +1,5 @@
 all:
-	echo "Use 'make rda' and then 'make install'."
+	echo "author: use 'make rda' and then 'make install'; others: leave"
 rda: force
 	Rscript create_rda.R
 install: force
