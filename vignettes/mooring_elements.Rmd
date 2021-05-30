@@ -1,6 +1,6 @@
 ---
 title: Default Values for Mooring Elements
-author: Dan Kelley
+author: "Dan Kelley (https://orcid.org/0000-0001-7808-5911)"
 date: "`r Sys.Date()`"
 bibliography: model.bib
 output:
@@ -14,11 +14,8 @@ output:
     dev.args: list(pointsize=11)
 vignette: >
   %\VignetteIndexEntry{Default Values for Mooring Elements}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options:
-  markdown:
-    wrap: 72
+  %\VignetteEncoding{UTF-8}
 ---
 
 The data stored in `data(mooringElements)` were extracted from Dewey's Matlab
@@ -30,16 +27,18 @@ Dewey reports dimensions in centimetres, but these are converted to metres
 here.
 
 The column names are not the same as Dewey uses.  The meaning of the final
-column is unknown, so it is just called `code` here.
+column is unknown, so it is just called `code` here, and its values are not are
+used in this package.
 
 ## Anchor characteristics
 
-The `buoyancy` values are in kg and the `height` values are in m.
+The `buoyancy` values are in kg and the `height` values are in m.  Note that
+the values shown below have no affect on the computation of mooring knockdown.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$anchors$name)
-knitr::kable(mooringElements$anchors[o,])
+knitr::kable(mooringElements$anchors[o,], row.names=FALSE)
 ```
 
 ## Chain characteristics
@@ -51,46 +50,61 @@ are not used in this package.
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$chains$name)
-knitr::kable(mooringElements$chains[o,])
+knitr::kable(mooringElements$chains[o,], row.names=FALSE)
 ```
 
 
 ## Float characteristics
 
-The `buoyancy` values are in kg, the next three quantities are in m, and `CD`
-is unitless.
-
-Dewey lists meaningless values in the column named `width` here, and those
-values are not used in this code provided in this package, although they are
-retained in the dataset.
+The `buoyancy` values are in kg, while `height` and `diameter` are in m, and
+`CD` is unitless.  The `code` values are listed for data from Dewey only, and
+they are not used in this package.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$floats$name)
-knitr::kable(mooringElements$floats[o,])
+knitr::kable(mooringElements$floats[o,], row.names=FALSE)
 ```
+
+
+## Instrument characteristics
+
+The `buoyancy` values are in kg, while `area` is in \eqn{m^2}{m^2}, and `CD` is
+unitless.  The `code` values are listed for data from Dewey only, and they are
+not used in this package.
+
+```{r echo=FALSE}
+data(mooringElements, package="mooring")
+o <- order(mooringElements$instruments$name)
+knitr::kable(mooringElements$instruments[o,], row.names=FALSE)
+```
+
 
 ## Release characteristics
 
 The `buoyancy` values are in kg, while `height` and `width` are in m, and `CD`
-is unitless.  The `code` values are unused in this package.
+is unitless.  The `code` values are listed for data from Dewey only, and they
+are not used in this package.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$releases$name)
-knitr::kable(mooringElements$releases[o,])
+knitr::kable(mooringElements$releases[o,], row.names=FALSE)
 ```
 
 ## Wire characteristics
 
 The `buoyancyPerMeter` values are in kg/m, while `diameter` is in m, and `CD`
-is unitless.  Note that Dewey sets diameter to 0 for wires, saves diameter in a
-width field, and lists a nonsense value for height, evidently so his code can
-distinguish floats from wires; we needn't copy this convention the data are
-stored in `list` objects.
+is unitless.  The `code` values are listed for data from Dewey only, and they
+are not used in this package.
+
+Note that Dewey sets diameter to 0 for wires, saves diameter in a width field,
+and lists a nonsense value for height.  These are signals that let his code
+distinguish between floats, wires, etc., but the present package handles this
+differently.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$wires$name)
-knitr::kable(mooringElements$wires[o,])
+knitr::kable(mooringElements$wires[o,], row.names=FALSE)
 ```

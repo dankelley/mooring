@@ -60,6 +60,7 @@ chain("?")
 Other functions that create mooring objects: 
 \code{\link{anchor}()},
 \code{\link{float}()},
+\code{\link{instrument}()},
 \code{\link{release}()},
 \code{\link{wire}()}
 }

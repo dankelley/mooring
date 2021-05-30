@@ -142,9 +142,9 @@ Note that all dimensions are specified in m, not cm.</p>
     <pre class="usage"><span class='fu'>wire</span><span class='op'>(</span>
   model <span class='op'>=</span> <span class='st'>"1/4 wire/jack"</span>,
   buoyancyPerMeter <span class='op'>=</span> <span class='cn'>NULL</span>,
-  length <span class='op'>=</span> <span class='cn'>NULL</span>,
   diameter <span class='op'>=</span> <span class='cn'>NULL</span>,
-  CD <span class='op'>=</span> <span class='cn'>NULL</span>
+  CD <span class='op'>=</span> <span class='cn'>NULL</span>,
+  length <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -169,10 +169,6 @@ of length, expressed as kg/m.
 Note that <code>buoyancy</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
-      <th>length</th>
-      <td><p>numeric value indicating the length (in m) of the wire.</p></td>
-    </tr>
-    <tr>
       <th>diameter</th>
       <td><p>numeric value for the diameter (in m)
 of the element as viewed from above.
@@ -185,6 +181,10 @@ Note that <code>diameter</code> is ignored if <code>model</code> is recognized.<
       <td><p>numeric value (unitless) for the drag coefficient.
 Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
+    <tr>
+      <th>length</th>
+      <td><p>numeric value indicating the length (in m) of the wire.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -196,6 +196,7 @@ Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></t
 <code><a href='anchor.html'>anchor</a>()</code>,
 <code><a href='chain.html'>chain</a>()</code>,
 <code><a href='float.html'>float</a>()</code>,
+<code><a href='instrument.html'>instrument</a>()</code>,
 <code><a href='release.html'>release</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 

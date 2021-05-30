@@ -12,11 +12,11 @@ knockdown(m, u = 1, debug = 0L)
 
 \item{u}{either a non-negative number indicating depth-independent velocity,
 or a function that returns that velocity as a function of depth (m)
-below the ocean surface; see Example 3.}
+below the ocean surface.}
 
-\item{debug}{an integer controlling debugging.  The default value of 0
-means to work silently. Use a positive value to cause the function to
-print some information about intermediate results.}
+\item{debug}{an integer value (or a numeric that can be converted to an
+integer) that controls debugging. If this is positive, then some debugging
+information may be printed by the function.}
 }
 \description{
 The current may be a depth-independent or depth-dependent,

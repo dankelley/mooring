@@ -70,6 +70,7 @@ float("?")
 Other functions that create mooring objects: 
 \code{\link{anchor}()},
 \code{\link{chain}()},
+\code{\link{instrument}()},
 \code{\link{release}()},
 \code{\link{wire}()}
 }

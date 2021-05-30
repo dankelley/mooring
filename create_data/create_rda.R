@@ -14,6 +14,12 @@ for (file in list.files(pattern="^floats.*csv$")) {
     floats <- rbind(floats, read.csv(file))
 }
 
+instruments <- NULL
+for (file in list.files(pattern="^instruments.*csv$")) {
+    message(file)
+    instruments <- rbind(instruments, read.csv(file))
+}
+
 releases <- NULL
 for (file in list.files(pattern="^releases.*csv$"))
     releases <- rbind(releases, read.csv(file))
@@ -22,6 +28,6 @@ wires <- NULL
 for (file in list.files(pattern="^wires.*csv$"))
     wires <- rbind(wires, read.csv(file))
 
-mooringElements <- list(anchors=anchors, floats=floats, chains=chains, releases=releases, wires=wires)
+mooringElements <- list(anchors=anchors, chains=chains, floats=floats, instruments=instruments, releases=releases, wires=wires)
 save(mooringElements, file="mooringElements.rda")
 
