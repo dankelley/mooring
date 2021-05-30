@@ -60,6 +60,7 @@ Other functions that create mooring objects:
 \code{\link{anchor}()},
 \code{\link{chain}()},
 \code{\link{float}()},
+\code{\link{instrument}()},
 \code{\link{wire}()}
 }
 \author{

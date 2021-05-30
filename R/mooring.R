@@ -387,6 +387,64 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
     rval
 }                                      # float()
 
+#' Create a instrument object
+#'
+#' @templateVar model instrument
+#' @template modelTemplate
+#'
+#' @template buoyancyTemplate
+#'
+#' @template heightTemplate
+#'
+#' @template areaTemplate
+#'
+#' @template CDTemplate
+#'
+#' @return `instrument` returns an object of the `"mooring"` class and `"instrument"` subclass.
+#'
+#' @family functions that create mooring objects
+#'
+#' @examples
+#' library(mooring)
+#' # List known instrument types
+#' instrument("?")
+#'
+#' @export
+#'
+#' @author Dan Kelley
+instrument <- function(model="sbe37 microcat clamp-on style", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
+{
+    data("mooringElements", package="mooring", envir=environment())
+    mooringElements <- get("mooringElements")
+    if (model == "?")
+        return(sort(mooringElements$instruments$name))
+    w <- which(mooringElements$instruments$name == model)
+    if (1 == length(w)) {
+        me <- mooringElements$instruments[w,]
+        if (!is.null(buoyancy))
+            warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
+        if (!is.null(height))
+            warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
+        if (!is.null(area))
+            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
+        if (!is.null(CD))
+            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
+        buoyancy <- me$buoyancy
+        height <- me$height
+        area <- me$area
+        CD <- me$CD
+        source <- me$source
+    } else {
+        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new float model")
+        if (is.null(height)) stop("must supply height, if creating a new float model")
+        if (is.null(area)) stop("must supply area, if creating a new float model")
+        if (is.null(CD)) stop("must supply CD, if creating a new float model")
+    }
+    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, area=area, CD=CD)
+    class(rval) <- c("mooring", "instrument")
+    rval
+}                                      # instrument()
+
 #' Combine two mooring objects (DEFUNCT)
 #'
 #' This has been replaced by [mooring()].
@@ -553,6 +611,9 @@ print.mooring <- function(x, ...)
         } else if (inherits(xi, "float")) {
             cat(sprintf("  float:   model=\"%s\", buoyancy=%g kg, height=%g m, diameter=%g m",
                          xi$model, xi$buoyancy, xi$height, xi$diameter), sep="")
+        } else if (inherits(xi, "instrument")) {
+            cat(sprintf("  instrument:   model=\"%s\", buoyancy=%g kg, area=%g m^2",
+                         xi$model, xi$buoyancy, xi$area), sep="")
         } else if (inherits(xi, "release")) {
             cat(sprintf("  release: model=\"%s\", buoyancy=%g kg, height=%g m, width=%g m",
                         xi$model, xi$buoyancy, xi$height, xi$width), sep="")

@@ -56,6 +56,47 @@ round(A/L,3)
 knitr::kable(read.csv("floats_bio.csv"))
 ```
 
+## `instruments_bio.csv`
+
+### Processing
+
+The entry for `DVS CURRENT METER` had height listed as `0.7 (2)`. The
+parenthetic value is not explained, and so it is ignored here, perhaps
+incurring an error.
+
+The entry for `SBE37 MICROCAT CLAMP-ON STYLE*` (row 33) lists the value `(15)*`
+for Newtons, and the value 15N is used here, based on my interpretation of the
+footnote.
+
+All names are converted to lower-case, and double spaces are converted to
+single spaces.
+
+The entries in rows 34 and 35 seem to refer to one item. I ignore row 34, since
+so many things are not filled in for it, and I do not understand what the
+meaning is.
+
+The `height` value is copied from the first `LENGTH` column (col C).
+
+The `buoyancy` value is inferred by dividing the `NEWTONS` (col E) by 9.8m/s^2.
+```{r}
+E <- c(73.392,106.752,131.216,177.92,44.48,200.16,444.8,209.056,199,192,21.8,45.6,600.48,15,144,216)
+round(E/9.8, 2)
+```
+
+The `area` is computed as the product of `LENGTH` (col C) and `A (m&2/m)` (col G).
+
+The `CD` is assigned the value 0.65, matching the Dewey assumption for floats.
+
+A `code` entry is made, to make this compatible with Dewey values, if I can
+find them.
+
+### Results
+
+```{r}
+knitr::kable(read.csv("instruments_bio.csv"))
+```
+
+
 ## `releases_bio.csv`
 
 Note the ommision of an entry for type `BENTHOS 875 RELEASE`, because it has no

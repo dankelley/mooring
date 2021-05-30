@@ -38,7 +38,7 @@ the values shown below have no affect on the computation of mooring knockdown.
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$anchors$name)
-knitr::kable(mooringElements$anchors[o,])
+knitr::kable(mooringElements$anchors[o,], row.names=FALSE)
 ```
 
 ## Chain characteristics
@@ -50,7 +50,7 @@ are not used in this package.
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$chains$name)
-knitr::kable(mooringElements$chains[o,])
+knitr::kable(mooringElements$chains[o,], row.names=FALSE)
 ```
 
 
@@ -63,8 +63,22 @@ they are not used in this package.
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$floats$name)
-knitr::kable(mooringElements$floats[o,])
+knitr::kable(mooringElements$floats[o,], row.names=FALSE)
 ```
+
+
+## Instrument characteristics
+
+The `buoyancy` values are in kg, while `area` is in \eqn{m^2}{m^2}, and `CD` is
+unitless.  The `code` values are listed for data from Dewey only, and they are
+not used in this package.
+
+```{r echo=FALSE}
+data(mooringElements, package="mooring")
+o <- order(mooringElements$instruments$name)
+knitr::kable(mooringElements$instruments[o,], row.names=FALSE)
+```
+
 
 ## Release characteristics
 
@@ -75,7 +89,7 @@ are not used in this package.
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$releases$name)
-knitr::kable(mooringElements$releases[o,])
+knitr::kable(mooringElements$releases[o,], row.names=FALSE)
 ```
 
 ## Wire characteristics
@@ -92,5 +106,5 @@ differently.
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$wires$name)
-knitr::kable(mooringElements$wires[o,])
+knitr::kable(mooringElements$wires[o,], row.names=FALSE)
 ```
