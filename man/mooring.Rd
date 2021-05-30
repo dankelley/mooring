@@ -3,7 +3,7 @@
 \docType{package}
 \name{mooring}
 \alias{mooring}
-\title{mooring: A Package for Analysing Oceanographic Moorings.}
+\title{mooring: A Package for Analysing Oceanographic Moorings}
 \usage{
 mooring(...)
 }

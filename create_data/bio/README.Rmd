@@ -21,49 +21,20 @@ some instances and not in others.
 
 # Details
 
-## wires_bio.csv
-
-There are just two listings.
-
-### Buoyancy/metre
-
-The 3/16 case has -0.76 in a column named "W Nt/m", so I've converted that to
--0.76/9.8=-0.0776 (rounded to 4 places), to get kg/m instead of N/m.
-
-There is no listing for the 1/4 case, but I estimated (guessed) that as
-
-```{r}
-round(-0.0776 * ((4/16)/(3/16))^2, 4)
-```
-This is based on an assumption that the metal inside is similar, etc.
-
-### Diameter
-
-For the diameter, I looked at the column labeled `A (m*2/m)`. I assume that is
-the horizontally-projected area. To test that, I computed 
-```{r}
-16*c(0.00635,0.0079375)/0.0254
-```
-which yields the expected, for the outside diameters in 16-ths of inch.
-
-### CD
-
-There are no entries in the file and I did not know what `DRAG -N` and `DRAG
--T` meant and so I just used the value $C_D=1.3$, used in Dewey's work.
-
-### Result for wire
-
-```{r}
-knitr::kable(read.csv("wires_bio.csv"))
-```
 
 
-## floats_bio.csv
+## `floats_bio.csv`
 
 These seem to be in the yellow-background part of the spreadsheet.
-
 The first of these, named `"new glass streamlined float"`, has no listed weight
 in pounds or newtons, so I ignored that entry.
+
+For buoyancy, I took `NEWTONS` (col E) and divided by 9.8m/s^2 to get kg, rounding
+to 2 digits after the decimal place.
+```{r}
+N <- c(445,285,560,516,429,773,414,1886,3963,4030,2095,8224,7740)
+round(N/9.8, 2)
+```
 
 There are two length columns in the file, but the values are either identical
 or relatable by rounding, so I could choose either.  But is that in the x or
@@ -73,7 +44,7 @@ Two columns contain things related to area, one with name `A (m*2/m)` and other
 with name `AW (m*2)`.  I think the former is the projected area per meter of z
 (as it is for wires).  So, if we assume that the length is in the z direction,
 or that the object is roughly spherical, we can infer what the package needs,
-namely `height` and `width`, from the ratio of the second area to the first
+namely `height` and `diameter`, from the ratio of the second area to the first
 length.  Whether that's sensible, I just don't know.
 ```{r}
 A<-c(0.164,0.5,0.073,0.5,0.164,1.5,1.5,1.86,2.84,2.474,1.67,2.7,2.7)
@@ -91,7 +62,12 @@ knitr::kable(read.csv("floats_bio.csv"))
 Use `LENGTH` (col C).
 
 ### `buoyancy`
-Use the negative of `NEWTONS` (col E).
+Use the negative of `NEWTONS` (col E), divided by g=9.8m/s^2, rounded to 2 decimal
+places.
+```{r}
+N <- c(149, 253.5, 360,	129, 273, 118.7)
+round(N/9.8, 2)
+```
 
 ### `width`
 Use the ratio of `A (m&2/m)` (col G) to `LENGTH` (col C).
@@ -113,6 +89,41 @@ be similar.
 
 ```{r}
 knitr::kable(read.csv("releases_bio.csv"))
+```
+
+## wires_bio.csv
+
+
+### `buoyancyPerMeter`
+
+The 3/16 case has -0.76 in a column named "W Nt/m", so I've converted that to
+-0.76/9.8=-0.0776 (rounded to 4 places), to get kg/m instead of N/m.
+
+There is no listing for the 1/4 case, but I estimated (guessed) that as
+
+```{r}
+round(-0.0776 * ((4/16)/(3/16))^2, 4)
+```
+This is based on an assumption that the metal inside is similar, etc.
+
+### `diameter`
+
+For the diameter, I looked at the column labeled `A (m*2/m)`. I assume that is
+the horizontally-projected area. To test that, I computed 
+```{r}
+16*c(0.00635,0.0079375)/0.0254
+```
+which yields the expected, for the outside diameters in 16-ths of inch.
+
+### `CD`
+
+There are no entries in the file and I did not know what `DRAG -N` and `DRAG
+-T` meant and so I just used the value $C_D=1.3$, used in Dewey's work.
+
+### Result for `wires`
+
+```{r}
+knitr::kable(read.csv("wires_bio.csv"))
 ```
 
 

@@ -1,19 +1,18 @@
 # Using the files in this directory.
 
-* `make csv` reads the `mdcodes.mat` file from Dewey's Matlab package [Dewey
-  1999; 2021], creating `cables_dewey.csv`, `floats_dewey.csv` and
-`wires_dewey.csv`.
+Go into each subdirectory and use its Makefile to update things as follows:
+* In `dewey` (which handles data from Dewey's matlab package; see refereneces),
+  do `make csv` and then `make install`.  The first of these operations the
+`mdcodes.mat` file from Dewey's Matlab package [Dewey 1999; 2021], creating
+`cables_dewey.csv`, `floats_dewey.csv` and `wires_dewey.csv`.  The second
+operation copies them here.
+* In `bio`, do `make install` since the csv files are hand-crafted there, so
+  the only required action is to copy them here.
 
-* `make rda` takes the `*_dewey.csv` files *plus* `chain.csv`, `float.csv`, and
-  `wire.csv` (to which new items may be added), creating `mooringElements.rda`.
-
-* `make install` copies `mooringElements.rda` to `../data`, so it can be
-  accessed with `data(mooring_elements)`.
-
-AUTHOR/CONTRIBUTOR NOTE: if new items are added to `chain.csv`, `float.csv` or
-`wire.csv`, the author must rebuild, then use e.g. `float("?")` to get a list,
-and then put that list into the docs for the function (look for the lines
-containing the string `"FIXME: rebuild"`).
+Once these things are done (and similar for other subdirectories, if they are
+added), return here and do `make rda` to create a local rda file.  Examine it
+as a cautionary measure, and then do `make install` to copy it into `../data`.
+Then rebuild the package.
 
 # References
 

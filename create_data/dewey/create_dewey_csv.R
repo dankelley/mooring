@@ -21,20 +21,27 @@ names <- c("name","buoyancy","height","width","diameter","CD","code")
 #> count <- "      0.........1........2.........3.........4.........5.\n"
 #> print(head(d$floats, 3))
 #> cat(count, sep="")
-floats<- read.fwf(textConnection(d$floats),widths=c(18,7,6,6,6,5,4), col.names=names)
+floats <- read.fwf(textConnection(d$floats),widths=c(18,7,6,6,6,5,4), col.names=names)
 floats$name <- trimws(floats$name)
 floats$height <- floats$height / 100
-floats$width <- floats$width / 100
+floats$width <- NULL # this is always 0, and we don't use it in this package
 floats$diameter <- floats$diameter / 100
 floats <- cbind(floats, source="Dewey")
 write.csv(floats, "floats_dewey.csv", row.names=FALSE)
 
-# Wires
+# Wires. Dewey lists all diameters as zero, as a way to decode things
+# later (I guess, to distinguish from floats) but we are not trying
+# to make tidy data and there's no need for such tricks, so we call
+# his 'width' as 'diameter'.
 wires <- read.fwf(textConnection(d$wires),widths=c(18,7,6,6,6,5,4), col.names=names)
 wires$name <- trimws(wires$name)
-wires$height <- wires$height / 100
-wires$width <- wires$width / 100
-wires$diameter <- wires$diameter / 100
+# Remove 'height', because it's meaningless for a wire.  (It's always 100 in the file.)
+wires$height <- NULL
+wires$diameter <- wires$width / 100 # we will call it diameter, which makes more sense
+wires$width <- NULL
+n <- names(wires)
+n[n == "buoyancy"] <- "buoyancyPerMeter"
+names(wires) <- n
 wires <- cbind(wires, source="Dewey")
 write.csv(wires, "wires_dewey.csv", row.names=FALSE)
 
@@ -43,7 +50,7 @@ chains <- read.fwf(textConnection(d$chains),widths=c(18,7,6,6,6,5,4), col.names=
 chains$name <- trimws(chains$name)
 chains$height <- chains$height / 100
 chains$width <- chains$width / 100
-chains$diameter <- chains$diameter / 100
+chains$diameter <- NULL # this is always 0, and we don't use it in this package
 chains <- cbind(chains, source="Dewey")
 write.csv(chains, "chains_dewey.csv", row.names=FALSE)
 

@@ -1,5 +1,5 @@
 all:
-	echo "Please inspect the Makefile to find what you can do here"
+	echo "author: do 'make csv' and then 'make install'; others: leave"
 csv: force
 	Rscript create_dewey_csv.R
 install: force

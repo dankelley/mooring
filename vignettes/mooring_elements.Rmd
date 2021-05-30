@@ -32,6 +32,29 @@ here.
 The column names are not the same as Dewey uses.  The meaning of the final
 column is unknown, so it is just called `code` here.
 
+## Anchor characteristics
+
+The `buoyancy` values are in kg and the `height` values are in m.
+
+```{r echo=FALSE}
+data(mooringElements, package="mooring")
+o <- order(mooringElements$anchors$name)
+knitr::kable(mooringElements$anchors[o,])
+```
+
+## Chain characteristics
+
+The `buoyancy` values are in kg, while `height` and `width` are in m, and `CD`
+is unitless.  The `code` values are listed for data from Dewey only, and they
+are not used in this package.
+
+```{r echo=FALSE}
+data(mooringElements, package="mooring")
+o <- order(mooringElements$chains$name)
+knitr::kable(mooringElements$chains[o,])
+```
+
+
 ## Float characteristics
 
 The `buoyancy` values are in kg, the next three quantities are in m, and `CD`
@@ -47,34 +70,27 @@ o <- order(mooringElements$floats$name)
 knitr::kable(mooringElements$floats[o,])
 ```
 
+## Release characteristics
+
+The `buoyancy` values are in kg, while `height` and `width` are in m, and `CD`
+is unitless.  The `code` values are unused in this package.
+
+```{r echo=FALSE}
+data(mooringElements, package="mooring")
+o <- order(mooringElements$releases$name)
+knitr::kable(mooringElements$releases[o,])
+```
+
 ## Wire characteristics
 
-The `buoyancy` values are in kg/m, the next three quantities are in m, and `CD`
-is unitless.
-
-Dewey lists meaningless values in the columns that are named `height` and
-`diameter` here, and those values are not used in this code provided in this
-package, although they are retained in the dataset.
+The `buoyancyPerMeter` values are in kg/m, while `diameter` is in m, and `CD`
+is unitless.  Note that Dewey sets diameter to 0 for wires, saves diameter in a
+width field, and lists a nonsense value for height, evidently so his code can
+distinguish floats from wires; we needn't copy this convention the data are
+stored in `list` objects.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$wires$name)
 knitr::kable(mooringElements$wires[o,])
 ```
-
-## Chain characteristics
-
-
-The `buoyancy` values are in kg, the next three quantities are in m, and `CD`
-is unitless.
-
-Dewey lists meaningless values in the column that is named `diameter` here, and
-those values are not used in this code provided in this package, although they
-are retained in the dataset.
-
-```{r echo=FALSE}
-data(mooringElements, package="mooring")
-o <- order(mooringElements$chains$name)
-knitr::kable(mooringElements$chains[o,])
-```
-

@@ -9,8 +9,10 @@ for (file in list.files(pattern="^chains.*csv$"))
     chains <- rbind(chains, read.csv(file))
 
 floats <- NULL
-for (file in list.files(pattern="^floats.*csv$"))
+for (file in list.files(pattern="^floats.*csv$")) {
+    message(file)
     floats <- rbind(floats, read.csv(file))
+}
 
 releases <- NULL
 for (file in list.files(pattern="^releases.*csv$"))
