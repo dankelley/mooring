@@ -126,7 +126,7 @@ anchor <- function(model="trainwheel", buoyancy=NULL, height=NULL, depth=0)
         if (is.null(height)) stop("must supply height, if creating a new anchor model")
         source <- ""
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, depth=depth, x=0, z=0)
+    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, depth=depth)
     class(rval) <- c("mooring", "anchor")
     rval
 }                                      # anchor()
@@ -185,7 +185,7 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
         if (is.null(CD)) stop("must supply CD, if creating a new float model")
         if (is.null(source)) stop("must supply source, if creating a new float model")
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD, x=0, z=0)
+    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD)
     class(rval) <- c("mooring", "release")
     rval
 }                                      # release()
@@ -201,11 +201,11 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
 #'
 #' @template buoyancyPerMeterTemplate
 #'
-#' @param length numeric value indicating the length (in m) of the wire.
-#'
 #' @template diameterTemplate
 #'
 #' @template CDTemplate
+#'
+#' @param length numeric value indicating the length (in m) of the wire.
 #'
 #' @return `wire` returns an object of the `"mooring"` class and `"wire"` subclass.
 #'
@@ -221,7 +221,7 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
 #' @importFrom utils data
 #'
 #' @author Dan Kelley
-wire <- function(model="1/4 wire/jack", buoyancyPerMeter=NULL, length=NULL, diameter=NULL, CD=NULL)
+wire <- function(model="1/4 wire/jack", buoyancyPerMeter=NULL, diameter=NULL, CD=NULL, length=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -248,7 +248,7 @@ wire <- function(model="1/4 wire/jack", buoyancyPerMeter=NULL, length=NULL, diam
         if (is.null(CD)) stop("must supply CD, if creating a new wire model")
         source <- rep("", length(buoyancy))
     }
-    rval <- list( model=model, source=source, buoyancyPerMeter=buoyancyPerMeter, height=length, diameter=diameter, CD=CD, x=0, z=0)
+    rval <- list( model=model, source=source, buoyancyPerMeter=buoyancyPerMeter, diameter=diameter, CD=CD, height=length)
     class(rval) <- c("mooring", "wire")
     rval
 }                                      # wire()
@@ -314,7 +314,7 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
         if (is.null(CD)) stop("must supply CD, if creating a new chain model")
         if (is.null(source)) stop("must supply source, if creating a new float model")
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD, x=0, z=0)
+    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD)
     class(rval) <- c("mooring", "chain")
     rval
 }                                      # chain()
@@ -382,7 +382,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
         if (is.null(diameter)) stop("must supply diameter, if creating a new float model")
         if (is.null(CD)) stop("must supply CD, if creating a new float model")
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, x=0, z=0)
+    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD)
     class(rval) <- c("mooring", "float")
     rval
 }                                      # float()
@@ -454,7 +454,6 @@ mooring <- function(...)
         stop("these are the indices of elements that are not of class 'mooringElement': ", paste(w, collapse=" "))
     rval <- dots
     height <- cumsum(sapply(rval, function(x) x$height))
-    #> cat("height: ", paste(height, collapse=" "), "\n")
     depth <- if ("anchor" == class(rval[[1]])[2]) rval[[1]]$depth
         else sum(sapply(rval, function(x) x$height))
     T <- rev(cumsum(rev(buoyancy(rval[-1]))))

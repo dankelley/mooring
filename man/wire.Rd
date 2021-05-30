@@ -7,9 +7,9 @@
 wire(
   model = "1/4 wire/jack",
   buoyancyPerMeter = NULL,
-  length = NULL,
   diameter = NULL,
-  CD = NULL
+  CD = NULL,
+  length = NULL
 )
 }
 \arguments{
@@ -27,8 +27,6 @@ be supplied).}
 of length, expressed as kg/m.
 Note that \code{buoyancy} is ignored if \code{model} is recognized.}
 
-\item{length}{numeric value indicating the length (in m) of the wire.}
-
 \item{diameter}{numeric value for the diameter (in m)
 of the element as viewed from above.
 This is multiplied by \code{height} to compute the
@@ -37,6 +35,8 @@ Note that \code{diameter} is ignored if \code{model} is recognized.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
+
+\item{length}{numeric value indicating the length (in m) of the wire.}
 }
 \value{
 \code{wire} returns an object of the \code{"mooring"} class and \code{"wire"} subclass.
