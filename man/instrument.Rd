@@ -44,7 +44,8 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \code{instrument} returns an object of the \code{"mooring"} class and \code{"instrument"} subclass.
 }
 \description{
-Create a instrument object
+Create an instrument object,
+either by looking up a known object from the database, or defining a new type.
 }
 \examples{
 library(mooring)

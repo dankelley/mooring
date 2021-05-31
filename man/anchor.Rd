@@ -34,6 +34,10 @@ Note that \code{height} is ignored if \code{model} is recognized.}
 \code{anchor} returns an object of the \code{"mooring"} class and \code{"anchor"} subclass.
 }
 \description{
+Create a anchor object,
+either by looking up a known object from the database, or defining a new type.
+}
+\details{
 This must be the first element of a mooring constructed with
 \code{\link[=mooring]{mooring()}}.
 Note that \code{depth} is not a characteristic of the anchor, but rather of

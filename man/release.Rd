@@ -47,7 +47,8 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \code{release} returns an object of the \code{"mooring"} class and \code{"release"} subclass.
 }
 \description{
-Create a mooring-release object
+Create a mooring-release object,
+either by looking up a known object from the database, or defining a new type.
 }
 \examples{
 library(mooring)

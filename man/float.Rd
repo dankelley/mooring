@@ -47,13 +47,14 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \code{float} returns an object of the \code{"mooring"} class and \code{"float"} subclass.
 }
 \description{
-Create a float object.  Some notes follow.
-\enumerate{
-\item \code{HMB} in a name is a short-hand for \verb{Hydrofloat Mooring Buoy}.  Data for these
+Create a float object,
+either by looking up a known object from the database, or defining a new type.
+}
+\details{
+Note that \code{HMB} in a name is a short-hand for \verb{Hydrofloat Mooring Buoy}.  Data for these
 floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the \code{CD} value
 being set at 0.65 (in the absence of any data from the manufacture) because that
 value is used in Dewey's dataset for many floats.
-}
 }
 \examples{
 library(mooring)

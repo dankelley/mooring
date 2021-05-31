@@ -79,6 +79,9 @@ isMooring <- function(m=NULL) {
 
 #' Create an anchor object
 #'
+#' Create a anchor object,
+#' either by looking up a known object from the database, or defining a new type.
+#'
 #' This must be the first element of a mooring constructed with
 #' [mooring()].
 #' Note that `depth` is not a characteristic of the anchor, but rather of
@@ -133,6 +136,9 @@ anchor <- function(model="trainwheel", buoyancy=NULL, height=NULL, depth=0)
 
 #' Create a mooring-release object
 #'
+#' Create a mooring-release object,
+#' either by looking up a known object from the database, or defining a new type.
+#'
 #' @templateVar model release
 #' @template modelTemplate
 #'
@@ -179,11 +185,11 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
         CD <- me$CD
         source <- me$source
     } else {
-        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new float model")
-        if (is.null(height)) stop("must supply height, if creating a new float model")
-        if (is.null(width)) stop("must supply width, if creating a new float model")
-        if (is.null(CD)) stop("must supply CD, if creating a new float model")
-        if (is.null(source)) stop("must supply source, if creating a new float model")
+        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new release model")
+        if (is.null(height)) stop("must supply height, if creating a new release model")
+        if (is.null(width)) stop("must supply width, if creating a new release model")
+        if (is.null(CD)) stop("must supply CD, if creating a new release model")
+        source <- ""
     }
     rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD, area=height*width)
     class(rval) <- c("mooring", "release")
@@ -192,9 +198,8 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
 
 #' Create a wire object
 #'
-#' Creates an object that describes a mooring wire, or other type of line, e.g.
-#' nylon ropes are considered wires, for this purpose.
-#' Note that all dimensions are specified in m, not cm.
+#' Creates a wire (or rope, etc.) object,
+#' either by looking up a known object from the database, or defining a new type.
 #'
 #' @templateVar model wire
 #' @template modelTemplate
@@ -246,7 +251,7 @@ wire <- function(model="1/4 wire/jack", buoyancyPerMeter=NULL, diameter=NULL, CD
         if (is.null(buoyancyPerMeter)) stop("must supply buoyancyPerMeter, if creating a new wire model")
         if (is.null(diameter)) stop("must supply diameter, if creating a new wire model")
         if (is.null(CD)) stop("must supply CD, if creating a new wire model")
-        source <- rep("", length(buoyancy))
+        source <- ""
     }
     rval <- list( model=model, source=source, buoyancyPerMeter=buoyancyPerMeter, diameter=diameter, CD=CD, height=length, diameter=diameter, area=length*diameter)
     class(rval) <- c("mooring", "wire")
@@ -255,8 +260,8 @@ wire <- function(model="1/4 wire/jack", buoyancyPerMeter=NULL, diameter=NULL, CD
 
 #' Create a chain object
 #'
-#' Creates an object that describes mooring chain elements such as shackles.
-#' Note that all dimensions are specified in m, not cm.
+#' Create an object that describes mooring chain elements such as shackles,
+#' either by looking up a known object from the database, or defining a new type.
 #'
 #' @templateVar model chain
 #' @template modelTemplate
@@ -300,11 +305,9 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
             warning("ignoring supplied width, because \"", model, "\" is already in the database\n")
         if (!is.null(CD))
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
-        if (!is.null(source))
-            warning("ignoring supplied source, because \"", model, "\" is already in the database\n")
         buoyancy <- me$buoyancy
         height <- me$height
-        width <- me$cylinderWidth
+        width <- me$width
         CD <- me$CD
         source <- me$source
     } else {
@@ -312,7 +315,7 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
         if (is.null(height)) stop("must supply height, if creating a new chain model")
         if (is.null(width)) stop("must supply width, if creating a new chain model")
         if (is.null(CD)) stop("must supply CD, if creating a new chain model")
-        if (is.null(source)) stop("must supply source, if creating a new float model")
+        source <- ""
     }
     rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD, area=height*width)
     class(rval) <- c("mooring", "chain")
@@ -322,8 +325,10 @@ chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL
 
 #' Create a float object
 #'
-#' Create a float object.  Some notes follow.
-#' 1. `HMB` in a name is a short-hand for `Hydrofloat Mooring Buoy`.  Data for these
+#' Create a float object,
+#' either by looking up a known object from the database, or defining a new type.
+#'
+#' Note that `HMB` in a name is a short-hand for `Hydrofloat Mooring Buoy`.  Data for these
 #' floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the `CD` value
 #' being set at 0.65 (in the absence of any data from the manufacture) because that
 #' value is used in Dewey's dataset for many floats.
@@ -381,6 +386,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
         if (is.null(height)) stop("must supply height, if creating a new float model")
         if (is.null(diameter)) stop("must supply diameter, if creating a new float model")
         if (is.null(CD)) stop("must supply CD, if creating a new float model")
+        source <- ""
     }
     rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, area=height*diameter)
     class(rval) <- c("mooring", "float")
@@ -388,6 +394,9 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 }                                      # float()
 
 #' Create a instrument object
+#'
+#' Create an instrument object,
+#' either by looking up a known object from the database, or defining a new type.
 #'
 #' @templateVar model instrument
 #' @template modelTemplate
@@ -435,10 +444,11 @@ instrument <- function(model="sbe37 microcat clamp-on style", buoyancy=NULL, hei
         CD <- me$CD
         source <- me$source
     } else {
-        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new float model")
-        if (is.null(height)) stop("must supply height, if creating a new float model")
-        if (is.null(area)) stop("must supply area, if creating a new float model")
-        if (is.null(CD)) stop("must supply CD, if creating a new float model")
+        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new instrument model")
+        if (is.null(height)) stop("must supply height, if creating a new instrument model")
+        if (is.null(area)) stop("must supply area, if creating a new instrument model")
+        if (is.null(CD)) stop("must supply CD, if creating a new instrument model")
+        source <- ""
     }
     rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, area=area, CD=CD)
     class(rval) <- c("mooring", "instrument")
@@ -541,6 +551,10 @@ drag <- function(m, u, rho=1027)
 
 #' Create a mooring
 #'
+#' Assemble components into a mooring, starting with an anchor, created with [anchor()],
+#' and addind in wires, created with [wire()], instruments, created with [instrument()],
+#' floats, created with [float()], and so forth.
+#'
 #' @param ... two or more elementary objects, e.g. as created by [anchor()],
 #' [chain()], [wire()], or [float()].
 #'
@@ -592,34 +606,35 @@ print.mooring <- function(x, ...)
     elementary <- 2 == length(class(x))
     n <- if (elementary) 1 else length(x)
     if (elementary) {
-        cat("Single element:\n")
+        prefix <- ""
     } else {
         if (inherits(x[[1]], "anchor")) {
             cat("Mooring in", x[[1]]$depth, "m of water, with", n, "elements, listed top-down:\n")
         } else {
             cat("Mooring with", n, "elements, listed top-down:\n")
         }
+        prefix <- "  "
     }
     for (i in rev(seq_len(n))) {
         xi <- if (elementary) x else x[[i]]
         if (inherits(xi, "anchor")) {
-            cat(sprintf("  anchor:  model=\"%s\", buoyancy=%g kg, height=%g m, depth=%g m",
-                        xi$model, xi$buoyancy, xi$height, xi$depth), sep="")
-        } else if (inherits(xi, "chain")) {
-            cat(sprintf("  chain:   model=\"%s\", buoyancy=%g kg/m, length=%g m, width=%g m",
-                        xi$model, xi$buoyancy, xi$height, xi$width), sep="")
-        } else if (inherits(xi, "float")) {
-            cat(sprintf("  float:   model=\"%s\", buoyancy=%g kg, height=%g m, diameter=%g m",
-                         xi$model, xi$buoyancy, xi$height, xi$diameter), sep="")
-        } else if (inherits(xi, "instrument")) {
-            cat(sprintf("  instrument:   model=\"%s\", buoyancy=%g kg, area=%g m^2",
-                         xi$model, xi$buoyancy, xi$area), sep="")
-        } else if (inherits(xi, "release")) {
-            cat(sprintf("  release: model=\"%s\", buoyancy=%g kg, height=%g m, width=%g m",
-                        xi$model, xi$buoyancy, xi$height, xi$width), sep="")
-        } else if (inherits(xi, "wire")) {
-            cat(sprintf("  wire:    model=\"%s\", buoyancyPerMeter=%g kg/m, height=%g m, diameter=%g m",
-                        xi$model, xi$buoyancyPerMeter, xi$height, xi$diameter), sep="")
+            cat(sprintf("%s'%s' anchor, %gkg, height %gm, in %gm water depth",
+                        prefix, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
+        } else if (inherits(xi, 'chain')) {
+            cat(sprintf("%s'%s' chain, %gkg/m, height %gm, width %gm",
+                        prefix, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+        } else if (inherits(xi, 'float')) {
+            cat(sprintf("%s'%s' float, %gkg, height %gm, diameter %gm",
+                         prefix, xi$model, xi$buoyancy, xi$height, xi$diameter), sep='')
+        } else if (inherits(xi, 'instrument')) {
+            cat(sprintf("%s'%s' instrument, %gkg, area %gm^2",
+                         prefix, xi$model, xi$buoyancy, xi$area), sep='')
+        } else if (inherits(xi, 'release')) {
+            cat(sprintf("%s'%s' release, %gkg, height %gm, width %gm",
+                        prefix, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+        } else if (inherits(xi, 'wire')) {
+            cat(sprintf("%s%gm of '%s' wire, %gkg, diameter %gm",
+                        prefix, xi$height, xi$model, xi$buoyancyPerMeter*xi$height, xi$diameter), sep="")
         } else {
             stop("unknown class c(\"", paste(class(xi), collapse="\", \""), "\")")
         }
