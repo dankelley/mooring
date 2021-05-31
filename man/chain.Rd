@@ -5,7 +5,7 @@
 \title{Create a chain object}
 \usage{
 chain(
-  model = "1\\" buoy chain",
+  model = "1in buoy chain",
   buoyancy = NULL,
   height = NULL,
   width = NULL,
