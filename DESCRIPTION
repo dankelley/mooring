@@ -11,8 +11,10 @@ BugReports: https://github.com/dankelley/mooring/issues
 Description: Calculates the response of oceanographic moorings to horizontal currents.
 Depends:
     R (>= 3.5.0),
+Imports:
     shiny
 Suggests:
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown
 License: GPL (>= 3)
@@ -23,4 +25,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 BuildVignettes: true
 VignetteBuilder: knitr
-
+Config/testthat/edition: 3
