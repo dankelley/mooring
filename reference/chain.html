@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Create a chain object — chain" />
-<meta property="og:description" content="Creates an object that describes mooring chain elements such as shackles.
-Note that all dimensions are specified in m, not cm." />
+<meta property="og:description" content="Create an object that describes mooring chain elements such as shackles,
+either by looking up a known object from the database, or defining a new type." />
 
 
 
@@ -133,8 +133,8 @@ Note that all dimensions are specified in m, not cm." />
     </div>
 
     <div class="ref-description">
-    <p>Creates an object that describes mooring chain elements such as shackles.
-Note that all dimensions are specified in m, not cm.</p>
+    <p>Create an object that describes mooring chain elements such as shackles,
+either by looking up a known object from the database, or defining a new type.</p>
     </div>
 
     <pre class="usage"><span class='fu'>chain</span><span class='op'>(</span>
@@ -209,19 +209,19 @@ Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></t
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
 <span class='co'># List known chain types</span>
 <span class='fu'>chain</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "1 chain SL"               "1\" buoy chain"          
-#&gt;  [3] "1\" shackle"              "1/2 chain LL"            
-#&gt;  [5] "1/2 chain SL"             "1/2 galv link"           
-#&gt;  [7] "1/2 shac+3/8shac"         "1/2 shackle"             
-#&gt;  [9] "1/2 SS link"              "1/2 swivel"              
-#&gt; [11] "1/2\" buoy chain"         "1/4 chain SL"            
-#&gt; [13] "1/4\" nicopress sleeve"   "3/4 swivel"              
-#&gt; [15] "3/4\" buoy chain"         "3/4\" shackle"           
-#&gt; [17] "3/8 chain SL"             "3/8 shackle"             
-#&gt; [19] "3/8\" buoy chain"         "3T SeineSwivel"          
-#&gt; [21] "5/16\" heavy ss thimbles" "5/8 shackle"             
-#&gt; [23] "5/8\" buoy chain"         "5/8\" galvanized chain"  
-#&gt; [25] "7/16\" shackle"           "ballast weight"          
+</div><div class='output co'>#&gt;  [1] "1/2in buoy chain"         "1/2in chain LL"          
+#&gt;  [3] "1/2in chain SL"           "1/2in galv link"         
+#&gt;  [5] "1/2in shac+3/8in shac"    "1/2in shackle"           
+#&gt;  [7] "1/2in SS link"            "1/2in swivel"            
+#&gt;  [9] "1/4in chain SL"           "1/4in nicopress sleeve"  
+#&gt; [11] "1in buoy chain"           "1in chain SL"            
+#&gt; [13] "1in shackle"              "3/4in buoy chain"        
+#&gt; [15] "3/4in shackle"            "3/4in swivel"            
+#&gt; [17] "3/8in buoy chain"         "3/8in chain SL"          
+#&gt; [19] "3/8in shackle"            "3T SeineSwivel"          
+#&gt; [21] "5/16in heavy ss thimbles" "5/8in buoy chain"        
+#&gt; [23] "5/8in galvanized chain"   "5/8in shackle"           
+#&gt; [25] "7/16in shackle"           "ballast weight"          
 #&gt; [27] "shac-3link-shac"          "shac-Pring-shac"         
 #&gt; [29] "shac-ring-shac"           "swivel"                  </div><div class='input'>
 </div></pre>
