@@ -288,7 +288,7 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
 #' chain("?")
 #'
 #' @author Dan Kelley
-chain <- function(model="1\" buoy chain", buoyancy=NULL, height=NULL, width=NULL, CD=NULL)
+chain <- function(model="1in buoy chain", buoyancy=NULL, height=NULL, width=NULL, CD=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
