@@ -5,7 +5,7 @@
 \title{Create a wire object}
 \usage{
 wire(
-  model = "1/4 wire/jack",
+  model = "1/4in wire/jack",
   buoyancyPerMeter = NULL,
   diameter = NULL,
   CD = NULL,
@@ -42,9 +42,8 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \code{wire} returns an object of the \code{"mooring"} class and \code{"wire"} subclass.
 }
 \description{
-Creates an object that describes a mooring wire, or other type of line, e.g.
-nylon ropes are considered wires, for this purpose.
-Note that all dimensions are specified in m, not cm.
+Creates a wire (or rope, etc.) object,
+either by looking up a known object from the database, or defining a new type.
 }
 \examples{
 library(mooring)

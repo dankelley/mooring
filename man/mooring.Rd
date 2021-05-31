@@ -14,6 +14,10 @@ mooring(...)
 \description{
 The mooring package provides functions for working with
 oceanographic moorings.
+
+Assemble components into a mooring, starting with an anchor, created with \code{\link[=anchor]{anchor()}},
+and addind in wires, created with \code{\link[=wire]{wire()}}, instruments, created with \code{\link[=instrument]{instrument()}},
+floats, created with \code{\link[=float]{float()}}, and so forth.
 }
 \examples{
 library(mooring)

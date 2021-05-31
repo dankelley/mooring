@@ -47,8 +47,8 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \code{chain} returns an object of the \code{"mooring"} class and \code{"chain"} subclass.
 }
 \description{
-Creates an object that describes mooring chain elements such as shackles.
-Note that all dimensions are specified in m, not cm.
+Create an object that describes mooring chain elements such as shackles,
+either by looking up a known object from the database, or defining a new type.
 }
 \examples{
 library(mooring)

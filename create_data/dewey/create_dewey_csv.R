@@ -17,24 +17,50 @@ d <- readMat("mdcodes.mat")
 # Set up names for columns.
 names <- c("name","buoyancy","height","width","diameter","CD","code")
 
+fixnames <- function(names)
+{
+    orig <- names
+    names <- trimws(names)
+    names <- gsub("\"", "in", names)
+    names <- gsub("  ", " ", names)
+    names <- gsub("^1 ", "1in ", names)
+    names <- gsub("([0-9]) in", "\\1in", names)
+    names <- gsub("Billings-12in", "Billings 12in", names)
+    names <- gsub("inViny", "in Viny", names)
+    names <- gsub("^1/2 ", "1/2in ", names)
+    names <- gsub("^1/4 ", "1/4in ", names)
+    names <- gsub("^3/4 ", "3/4in ", names)
+    names <- gsub("3/8 ", "3/8in ", names)
+    names <- gsub("16 ", "16in ", names)
+    names <- gsub("3/8shac", "3/8in shac", names)
+    names <- gsub("^5/8 ", "5/8in ", names)
+    names <- gsub("8' ", "8ft ", names)
+    # Not sure whether the 1/2 in Dyneema is a width, so for caution change back.
+    names <- gsub("1/2in Dyneema", "1/2 Dyneema ", names)
+    print(data.frame(orig=orig, later=names))
+    names
+}
+
 #> Use next to count spaces
 #> count <- "      0.........1........2.........3.........4.........5.\n"
 #> print(head(d$floats, 3))
 #> cat(count, sep="")
+cat("# Floats\n")
 floats <- read.fwf(textConnection(d$floats),widths=c(18,7,6,6,6,5,4), col.names=names)
-floats$name <- trimws(floats$name)
+floats$name <- fixnames(floats$name)
 floats$height <- floats$height / 100
 floats$width <- NULL # this is always 0, and we don't use it in this package
 floats$diameter <- floats$diameter / 100
 floats <- cbind(floats, source="Dewey")
 write.csv(floats, "floats_dewey.csv", row.names=FALSE)
 
+cat("# Wires\n")
 # Wires. Dewey lists all diameters as zero, as a way to decode things
 # later (I guess, to distinguish from floats) but we are not trying
 # to make tidy data and there's no need for such tricks, so we call
 # his 'width' as 'diameter'.
 wires <- read.fwf(textConnection(d$wires),widths=c(18,7,6,6,6,5,4), col.names=names)
-wires$name <- trimws(wires$name)
+wires$name <- fixnames(wires$name)
 # Remove 'height', because it's meaningless for a wire.  (It's always 100 in the file.)
 wires$height <- NULL
 wires$diameter <- wires$width / 100 # we will call it diameter, which makes more sense
@@ -46,8 +72,9 @@ wires <- cbind(wires, source="Dewey")
 write.csv(wires, "wires_dewey.csv", row.names=FALSE)
 
 # Chains
+cat("# Chains\n")
 chains <- read.fwf(textConnection(d$chains),widths=c(18,7,6,6,6,5,4), col.names=names)
-chains$name <- trimws(chains$name)
+chains$name <- fixnames(chains$name)
 chains$height <- chains$height / 100
 chains$width <- chains$width / 100
 chains$diameter <- NULL # this is always 0, and we don't use it in this package

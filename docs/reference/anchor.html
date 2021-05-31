@@ -40,10 +40,8 @@
 
 
 <meta property="og:title" content="Create an anchor object — anchor" />
-<meta property="og:description" content="This must be the first element of a mooring constructed with
-mooring().
-Note that depth is not a characteristic of the anchor, but rather of
-the domain into which it is placed." />
+<meta property="og:description" content="Create a anchor object,
+either by looking up a known object from the database, or defining a new type." />
 
 
 
@@ -135,10 +133,8 @@ the domain into which it is placed." />
     </div>
 
     <div class="ref-description">
-    <p>This must be the first element of a mooring constructed with
-<code><a href='mooring.html'>mooring()</a></code>.
-Note that <code>depth</code> is not a characteristic of the anchor, but rather of
-the domain into which it is placed.</p>
+    <p>Create a anchor object,
+either by looking up a known object from the database, or defining a new type.</p>
     </div>
 
     <pre class="usage"><span class='fu'>anchor</span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"trainwheel"</span>, buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>, height <span class='op'>=</span> <span class='cn'>NULL</span>, depth <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
@@ -182,6 +178,12 @@ Note that <code>height</code> is ignored if <code>model</code> is recognized.</p
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>anchor</code> returns an object of the <code>"mooring"</code> class and <code>"anchor"</code> subclass.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This must be the first element of a mooring constructed with
+<code><a href='mooring.html'>mooring()</a></code>.
+Note that <code>depth</code> is not a characteristic of the anchor, but rather of
+the domain into which it is placed.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions that create mooring objects: 
