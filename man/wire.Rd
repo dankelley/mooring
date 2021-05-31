@@ -5,7 +5,7 @@
 \title{Create a wire object}
 \usage{
 wire(
-  model = "1/4 wire/jack",
+  model = "1/4in wire/jack",
   buoyancyPerMeter = NULL,
   diameter = NULL,
   CD = NULL,

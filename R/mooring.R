@@ -226,7 +226,7 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
 #' @importFrom utils data
 #'
 #' @author Dan Kelley
-wire <- function(model="1/4 wire/jack", buoyancyPerMeter=NULL, diameter=NULL, CD=NULL, length=NULL)
+wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, CD=NULL, length=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -1176,7 +1176,7 @@ dewey1999 <- "Dewey, Richard K. \"Mooring Design & Dynamics-a Matlab\" Package f
 dewey2021 <- "Dewey, Richard. \"Mooring Design and Dynamics.\" Accessed May 15, 2021.  http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php"
 
 indent <- paste0(rep("&nbsp;", 8), collapse="")
-help <- paste0("Use sliders and pulldown menus to adjust conditions. Click the <b>Code</b> button to see code to reproduce the simulation. To learn more about the properties of a given float or wire, open an R console and type e.g. <br>", indent, "<tt>float(\"Kiel SFS40in\")</tt><br>or<br>", indent, "<tt>wire(\"1/4 wire/jack\")</tt><br>A list of float types is obtained with <br>", indent, "<tt>float(\"?\")</tt><br>and <br>", indent, "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Deweey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>", dewey1999, "</li><li>", dewey2021, "</li></ul>")
+help <- paste0("Use sliders and pulldown menus to adjust conditions. Click the <b>Code</b> button to see code to reproduce the simulation. To learn more about the properties of a given float or wire, open an R console and type e.g. <br>", indent, "<tt>float(\"Kiel SFS40in\")</tt><br>or<br>", indent, "<tt>wire(\"1/4in wire/jack\")</tt><br>A list of float types is obtained with <br>", indent, "<tt>float(\"?\")</tt><br>and <br>", indent, "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Deweey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>", dewey1999, "</li><li>", dewey2021, "</li></ul>")
 
 #' @importFrom shiny actionButton renderUI sliderInput
 ui <- fluidPage(tags$style(HTML("body {font-family: 'Arial'; font-size: 12px; margin-left:1ex}")),
@@ -1193,7 +1193,7 @@ ui <- fluidPage(tags$style(HTML("body {font-family: 'Arial'; font-size: 12px; ma
                          column(3,
                                 selectInput("wireModel", "Wire Type",
                                             choices=wireChoices,
-                                            selected="1/4 wire/jack")),
+                                            selected="1/4in wire/jack")),
                          column(3,
                                 selectInput("floatModel", "Float Type",
                                             choices=floatChoices,
