@@ -1,0 +1,8 @@
+"name","buoyancy","height","width","CD","code","source"
+"swivel",                    0.953, 0, NA    , 1.3, NA, "BIO"
+"7/16"" shackle",            0.150, 0, NA    , 1.3, NA, "BIO"
+"1/4"" nicopress sleeve",    0.034, 0, NA    , 1.3, NA, "BIO"
+"5/16"" heavy ss thimbles",  0.041, 0, NA    , 1.3, NA, "BIO"
+"5/8"" galvanized chain",    4.323, 1, 0.0572, 1.3, NA, "BIO"
+"ballast weight",           45.408, 1, 0.0254, 1.3, NA, "BIO"
+

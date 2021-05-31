@@ -1,12 +1,16 @@
 # Combine csv files to produce RDA file.
 
 anchors <- NULL
-for (file in list.files(pattern="^anchors.*csv$"))
+for (file in list.files(pattern="^anchors.*csv$")) {
+    message(file)
     anchors <- rbind(anchors, read.csv(file))
+}
 
 chains <- NULL
-for (file in list.files(pattern="^chains.*csv$"))
+for (file in list.files(pattern="^chains.*csv$")) {
+    message(file)
     chains <- rbind(chains, read.csv(file))
+}
 
 floats <- NULL
 for (file in list.files(pattern="^floats.*csv$")) {
@@ -21,12 +25,16 @@ for (file in list.files(pattern="^instruments.*csv$")) {
 }
 
 releases <- NULL
-for (file in list.files(pattern="^releases.*csv$"))
+for (file in list.files(pattern="^releases.*csv$")) {
+    message(file)
     releases <- rbind(releases, read.csv(file))
+}
 
 wires <- NULL
-for (file in list.files(pattern="^wires.*csv$"))
+for (file in list.files(pattern="^wires.*csv$")) {
+    message(file)
     wires <- rbind(wires, read.csv(file))
+}
 
 mooringElements <- list(anchors=anchors, chains=chains, floats=floats, instruments=instruments, releases=releases, wires=wires)
 save(mooringElements, file="mooringElements.rda")

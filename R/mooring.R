@@ -646,6 +646,14 @@ print.mooring <- function(x, ...)
 #' @param title character value indicating a title to put above
 #' the plot.
 #'
+#' @param mar numeric vector of length 4, used to set margins.
+#' The default value makes allowance for the axis along the top,
+#' and tightens the margins on bottom and right.
+#'
+#' @param mgp numeric vector of length 3, used to set axis
+#' geometry.  The default value moves numbers and labels closer
+#' to the axes than the usual R default.
+#'
 #' @param ... optional arguments.
 #'
 #' @examples
@@ -664,7 +672,10 @@ print.mooring <- function(x, ...)
 #' @export
 #'
 #' @author Dan Kelley
-plot.mooring <- function(x, which="shape", showDepths=TRUE, fancy=FALSE, title="", ...)
+plot.mooring <- function(x, which="shape", showDepths=TRUE,
+                         fancy=FALSE, title="",
+                         mar=c(1.5, 3.5, 3.5, 1), mgp=c(2, 0.7, 0),
+                         ...)
 {
     if (!isMooring(x))
         stop("only works for objects created by mooring()")
@@ -687,9 +698,7 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE, fancy=FALSE, title="
     waterDepth <- if ("anchor" == class(m[[1]])[2]) m[[1]]$depth
         else abs(min(depth))
     mooringDebug(debug, waterDepth, overview=TRUE)
-    omar <- par("mar")
-    omgp <- par("mgp")
-    par(mar=c(1.5, 3.5, 3.5, 1), mgp=c(2, 0.7, 0))
+    par(mar=mar, mgp=mgp)
     xlim <- extendrange(c(x, xstagnant))
     ylim <- c(waterDepth, 0)
     plot(x, depth, xlim=xlim, ylim=ylim, asp=if (which=="shape") 1, type="l", xlab="", ylab="", axes=FALSE)
@@ -739,12 +748,18 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE, fancy=FALSE, title="
             text(xi, -zi, "F", pos=4)
             if (showDepths)
                 text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
-        } else if (type == "wire") {
+        } else if (type == "instrument") {
+            if (debug)
+                cat("i=", i, " (instrument at xi=", xi, ", zi=", zi, ")\n")
+            points(xi, -zi, pch=20, cex=1.4)
+            text(xi, -zi, "I", pos=4)
+            if (showDepths)
+                text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
+         } else if (type == "wire") {
             #> message("draw wire??")
         }
     }
     mtext(title, side=1, cex=par("cex"))
-    par(mar=omar, mgp=omgp)
 }
 
 #' Discretise the wire portions of a mooring

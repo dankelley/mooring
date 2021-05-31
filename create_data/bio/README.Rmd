@@ -9,25 +9,70 @@ output:
 
 # Introduction
 
-There is a .R file here in which I tried to decode things automatically.  This
-proved very difficult, because the meanings of things were (I think) indicated
-by colour underlays.  Also, there were *lots* of weird things in the file, like
-text in numeric fields, negative lengths, etc.  In the end, I decided that
-hand-editing would be superior.
+This directory contains an R file here in which I tried to decode things
+automatically.  This proved to be difficult, because the meanings of things
+were (I think) indicated by colour underlays, and I don't know how to catch
+that nuance in a program.  Also, there were *lots* of weird things in the file,
+like text in numeric fields, negative lengths, etc., and so the R file became a
+mess of special cases.  So, and partly because this work would not pay off for
+other datasets, I decided to drop the idea of decoding the excel file with R,
+instead doing the work "by hand" by copying cells into csv files. (In addition
+to copying cells, I had to do computations, e.g. converting Newtons to kg.)
 
-I used lower-case, which is easier to type, and fits with the Dewey names.  I
-also removed the `"` symbols, which are hard to type in code, and appear in
-some instances and not in others.
+For the names of items, I switched from all upper-case to all lower-case, which
+is easier to type, and fits with the Dewey names.  I also removed the `"`
+symbols, which are hard to type in code, and appear in some instances and not
+in others.  And I change groups of multiple spaces into single spaces.
 
 # Details
+
+## `chains_bio.csv`
+
+These are green-background in the excel file, rows 7 through 12.
+
+### `buoyancy`
+
+This is inferred as `NEWTONS` (col E) divided by 9.8 m/s^2 to get kg.
+```{r}
+N <- c(9.3408,1.46784,0.3336,0.40032,42.3672,445)
+round(N/9.8, 3)
+```
+
+### `height`
+
+The is copied directly from col B, with 0 for the first 4 entries.
+
+### `width`
+
+This is inferred as the ratio of `A (m*2/m)` (col G) to `LENGTH` (col C)
+```{r}
+G <- c(NA,NA,NA,NA,0.05715,0.0254)
+C <- c(NA,NA,NA,NA,1,1)
+length <- round(G/C, 4)
+length
+```
+
+### `CD`
+
+The `CD` is assigned the value 1.3, matching the Dewey assumption for chain elements. 
+
+### Results
+
+These are in the order of the spreadsheet; note that `chains("?")` merges all
+datasets, and orders by name.
+
+```{r}
+knitr::kable(read.csv("chains_bio.csv"))
+```
 
 
 
 ## `floats_bio.csv`
 
-These seem to be in the yellow-background part of the spreadsheet.
-The first of these, named `"new glass streamlined float"`, has no listed weight
-in pounds or newtons, so I ignored that entry.
+These are yellow-background in the excel file.
+
+The first item, named `"new glass streamlined float"`, has no listed weight in
+pounds or newtons, so I ignored that entry.
 
 For buoyancy, I took `NEWTONS` (col E) and divided by 9.8m/s^2 to get kg, rounding
 to 2 digits after the decimal place.
@@ -53,7 +98,9 @@ round(A/L,3)
 ```
 
 ```{r}
-knitr::kable(read.csv("floats_bio.csv"))
+f <- read.csv("floats_bio.csv")
+o <- order(f$name)
+knitr::kable(f[o,])
 ```
 
 ## `instruments_bio.csv`

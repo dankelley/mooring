@@ -4,7 +4,16 @@
 \alias{plot.mooring}
 \title{Plot a mooring object}
 \usage{
-\method{plot}{mooring}(x, which = "shape", showDepths = TRUE, fancy = FALSE, title = "", ...)
+\method{plot}{mooring}(
+  x,
+  which = "shape",
+  showDepths = TRUE,
+  fancy = FALSE,
+  title = "",
+  mar = c(1.5, 3.5, 3.5, 1),
+  mgp = c(2, 0.7, 0),
+  ...
+)
 }
 \arguments{
 \item{x}{an object of the \code{"mooring"} class.}
@@ -21,6 +30,14 @@ is a simpler plot.}
 
 \item{title}{character value indicating a title to put above
 the plot.}
+
+\item{mar}{numeric vector of length 4, used to set margins.
+The default value makes allowance for the axis along the top,
+and tightens the margins on bottom and right.}
+
+\item{mgp}{numeric vector of length 3, used to set axis
+geometry.  The default value moves numbers and labels closer
+to the axes than the usual R default.}
 
 \item{...}{optional arguments.}
 }
