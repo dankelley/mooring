@@ -1,5 +1,5 @@
 all:
-	echo "author: do 'make docs' and then 'make install'; others: leave"
+	echo "author: do 'make docs install' and then 'cd ..; make (ETC)'; others: leave"
 docs: force
 	R --no-save -e 'library(rmarkdown); render("README.Rmd", "pdf_document")'
 install: force
