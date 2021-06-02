@@ -16,32 +16,27 @@ app <- function()
     if (!requireNamespace("shiny"))
         stop("must install.packages(\"shiny\") for app() to work")
     floatChoices <- float("?")
+    floatBuoyancy <- unlist(lapply(floatChoices, function(f) float(f)$buoyancy))
     wireChoices <- wire("?")
+    wireBuoyancy <- unlist(lapply(wireChoices, function(w) wire(w, length=1)$buoyancyPerMeter))
     dewey1999 <- "Dewey, Richard K. \"Mooring Design & Dynamics-a Matlab\" Package for Designing and Analyzing Oceanographic Moorings.\" Marine Models 1, no. 1 (December 1, 1999): 103-57. https://doi.org/10.1016/S1369-9350(00)00002-X"
     dewey2021 <- "Dewey, Richard. \"Mooring Design and Dynamics.\" Accessed May 15, 2021.  http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php"
     indent <- paste0(rep("&nbsp;", 8), collapse="")
     help <- paste0("Use sliders and pulldown menus to adjust conditions. Click the <b>Code</b> button to see code to reproduce the simulation. To learn more about the properties of a given float or wire, open an R console and type e.g. <br>", indent, "<tt>float(\"Kiel SFS40in\")</tt><br>or<br>", indent, "<tt>wire(\"1/4in wire/jack\")</tt><br>A list of float types is obtained with <br>", indent, "<tt>float(\"?\")</tt><br>and <br>", indent, "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Deweey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>", dewey1999, "</li><li>", dewey2021, "</li></ul>")
     ui <- shiny::fluidPage(shiny::tags$style(shiny::HTML("body {font-family: 'Arial'; font-size: 12px; margin-left:1ex}")),
-                           shiny::fluidRow(shiny::column(4,
-                                                  shiny::sliderInput("waterDepth",
-                                                                     shiny::h6("Water Depth [m]"),
-                                                                     min=10,  max=1000, value=200, step=1)),
-                                           shiny::column(4,
-                                                         shiny::sliderInput("u",
-                                                                            shiny::h6("Current [m/s]"),
-                                                                            min=0, max=5,  value=0.5, step=0.1)),
+                           shiny::fluidRow(shiny::column(5, shiny::sliderInput("waterDepth",
+                                                                               shiny::h6("Water Depth [m]"),
+                                                                               min=10,  max=1000, value=200, step=1)),
+                                           shiny::column(5, shiny::sliderInput("u",
+                                                                               shiny::h6("Current [m/s]"),
+                                                                               min=0, max=5,  value=0.5, step=0.1)),
                                            shiny::actionButton("help", "Help"),
                                            shiny::actionButton("code", "Code")),
-                           shiny::fluidRow(shiny::column(4,
-                                                  shiny::uiOutput("wireSlider")),
-                                           shiny::column(3,
-                                                         shiny::selectInput("wireModel", "Wire Type",
-                                                                            choices=wireChoices,
-                                                                            selected="1/4in wire/jack")),
-                                           shiny::column(3,
-                                                         shiny::selectInput("floatModel", "Float Type",
-                                                                            choices=floatChoices,
-                                                                            selected="Kiel SFS40in"))),
+                           shiny::fluidRow(shiny::column(5, shiny::uiOutput("wireLength")),
+                                           shiny::column(2, shiny::radioButtons("wireOrder", "Order wire by", choices=c("name","buoyancy"),selected="name")),
+                                           shiny::column(5, shiny::uiOutput("wireType"))),
+                           shiny::fluidRow(shiny::column(2, shiny::radioButtons("floatOrder", "Order float by", choices=c("name","buoyancy"),selected="name")),
+                                           shiny::column(5, shiny::uiOutput("floatType"))),
                            shiny::fluidRow(shiny::plotOutput("plot")))
 
 
@@ -77,17 +72,32 @@ app <- function()
                             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title="R code", size="l"))
                            })
 
-        output$wireSlider <- shiny::renderUI({
+        output$wireLength <- shiny::renderUI({
             shiny::sliderInput("wireLength", "Wire Length [m]", min=1, max=input$waterDepth, value=input$waterDepth)
         })
+
+        output$wireType <- shiny::renderUI({
+            o <- if (input$wireOrder == "name") seq_along(wireChoices) else order(wireBuoyancy)
+            shiny::selectInput("wireModel", "Wire Type",
+                               choices=paste0(wireChoices[o], " [", wireBuoyancy[o], "kg/m]"),
+                               selected="1/4in wire/jack [-0.13kg/m]")
+        })
+
+        output$floatType <- shiny::renderUI({
+            o <- if (input$floatOrder == "name") seq_along(floatChoices) else order(floatBuoyancy)
+            shiny::selectInput("floatModel", "Float Type",
+                               choices=paste0(floatChoices[o], " [", floatBuoyancy[o], "kg]"),
+                               selected="Kiel SFS40in [320kg]")
+        })
+
 
         output$plot <- shiny::renderPlot({
             waterDepth <- input$waterDepth
             wireLength <- input$wireLength
             if (!is.null(wireLength)) {    # undefined at the start, since it depends on another slider
                 u <- input$u
-                wireModel <- input$wireModel
-                floatModel <- input$floatModel
+                wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
+                floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
                 #> message("waterDepth=", waterDepth)
                 #> message("  wireLength=", wireLength)
                 #> message("  u=", u)
