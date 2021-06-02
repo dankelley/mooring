@@ -69,7 +69,8 @@ g <- 9.8
 #'
 #' @export
 isMooring <- function(m=NULL) {
-    !is.null(m) && length(class(m)) == 1 && class(m) == "mooring"
+    is.list(m) && length(m) > 1 && inherits(m[[1]], "mooring")
+    #!is.null(m) && length(class(m)) == 1 && class(m) == "mooring"
 }
 
 
@@ -1143,6 +1144,8 @@ area <- function(m)
 #'
 #' @param m an object of the `"mooring"` class.
 #'
+#' @template debugTemplate
+#'
 #' @return a numeric vector of buoyancy, expressed in kg.
 #'
 #' @examples
@@ -1158,9 +1161,23 @@ area <- function(m)
 #' Sciences. Bedford Institute of Oceanography, 1989.
 #'
 #' @author Dan Kelley
-buoyancy <- function(m)
+buoyancy <- function(m, debug=0L)
 {
-    sapply(m, function(mi) mi$buoyancy)
+    mooringDebug(debug, "buoyancy() {\n  class(m): ", paste(class(m), collapse=" "), "\n")
+    rval <- if (isMooring(m)) {
+        mooringDebug(debug, "  object is a mooring with", length(m), "elements, so will analyse them individually\n")
+        sapply(m, function(mi) buoyancy(mi, debug=debug))
+    } else {
+        if (class(m)[2] == "wire") {
+            mooringDebug(debug, "  object is a wire, so returning buoyancyPerMeter*height\n")
+            m$buoyancyPerMeter * m$height
+        } else {
+            mooringDebug(debug, "  object is a not a wire, so returning buoyancy\n")
+            m$buoyancy
+        }
+    }
+    mooringDebug(debug, "} # buoyancy()\n")
+    rval
 }
 
 ###################

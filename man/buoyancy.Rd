@@ -4,10 +4,14 @@
 \alias{buoyancy}
 \title{Buoyancy of elements in mooring, expressed in kg.}
 \usage{
-buoyancy(m)
+buoyancy(m, debug = 0L)
 }
 \arguments{
 \item{m}{an object of the \code{"mooring"} class.}
+
+\item{debug}{an integer value (or a numeric that can be converted to an
+integer) that controls debugging. If this is positive, then some debugging
+information may be printed by the function.}
 }
 \value{
 a numeric vector of buoyancy, expressed in kg.
