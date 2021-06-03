@@ -211,7 +211,7 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
 #'
 #' @template CDTemplate
 #'
-#' @param length numeric value indicating the length (in m) of the wire.
+#' @param length (mandatory) numeric value indicating the length (in m) of the wire.
 #'
 #' @return `wire` returns an object of the `"mooring"` class and `"wire"` subclass.
 #'
