@@ -25,7 +25,7 @@ be supplied).}
 
 \item{buoyancyPerMeter}{numeric value indicating buoyancy per meter
 of length, expressed as kg/m.
-Note that \code{buoyancy} is ignored if \code{model} is recognized.}
+Note that \code{buoyancyPerMeter} is ignored if \code{model} is recognized.}
 
 \item{diameter}{numeric value for the diameter (in m)
 of the element as viewed from above.
@@ -36,7 +36,7 @@ Note that \code{diameter} is ignored if \code{model} is recognized.}
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
 
-\item{length}{numeric value indicating the length (in m) of the wire.}
+\item{length}{(mandatory) numeric value indicating the length (in m) of the wire.}
 }
 \value{
 \code{wire} returns an object of the \code{"mooring"} class and \code{"wire"} subclass.
