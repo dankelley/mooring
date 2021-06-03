@@ -30,13 +30,22 @@ app <- function()
                                            shiny::column(5, shiny::sliderInput("u",
                                                                                shiny::h6("Current [m/s]"),
                                                                                min=0, max=5,  value=0.5, step=0.05)),
-                                           shiny::actionButton("help", "Help"),
-                                           shiny::actionButton("code", "Code")),
+
+                                           shiny::column(2, shiny::selectInput("currentModel", "Current Model",
+                                                                               choices=c("Constant",
+                                                                                         "Linear",
+                                                                                         "exp(z/30)",
+                                                                                         "exp(z/100)",
+                                                                                         "exp(z/300)"),
+                                                                               selected="Constant"))),
                            shiny::fluidRow(shiny::column(5, shiny::uiOutput("wireLength")),
                                            shiny::column(2, shiny::radioButtons("wireOrder", "Order wire by", choices=c("name","buoyancy"),selected="name")),
                                            shiny::column(5, shiny::uiOutput("wireType"))),
                            shiny::fluidRow(shiny::column(2, shiny::radioButtons("floatOrder", "Order float by", choices=c("name","buoyancy"),selected="name")),
-                                           shiny::column(5, shiny::uiOutput("floatType"))),
+                                           shiny::column(5, shiny::uiOutput("floatType")),
+                                           shiny::actionButton("help", "Help"),
+                                           shiny::actionButton("code", "Code")),
+
                            shiny::fluidRow(shiny::plotOutput("plot")))
 
 
@@ -65,7 +74,15 @@ app <- function()
                             floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
                             msg <- sprintf("%s<br>m <- mooring(anchor(depth=%g), wire(model=\"%s\", length=%g), float(model=\"%s\"))<br>", "library(mooring)", waterDepth, wireModel, wireLength, floatModel)
                             msg <- paste0(msg, "md <- discretise(m, by=1)<br>")
-                            msg <- paste0(msg, "mdk <- knockdown(md, u=", u, ")<br>")
+                            msg <- paste0(msg,
+                                          "mdk <- knockdown(md, u=",
+                                          switch (input$currentModel,
+                                              "Constant"=sprintf("%g", input$u),
+                                              "Linear"=sprintf("function(depth) %g*(1-depth/%g)", input$u, input$waterDepth),
+                                              "exp(z/30)"=sprintf("function(depth) %g*exp(-depth/30)"),
+                                              "exp(z/100)"=sprintf("function(depth) %g*exp(-depth/100)"),
+                                              "exp(z/300)"=sprintf("function(depth) %g*exp(-depth/300)")),
+                                          ")<br>")
                             msg <- paste0(msg, "par(mfrow=c(1, 2))<br>")
                             msg <- paste0(msg, "plot(mdk, which=\"tension\", fancy=TRUE, showDepths=FALSE)<br>")
                             msg <- paste0(msg, "plot(mdk, which=\"shape\", fancy=TRUE)<br>")
@@ -98,6 +115,7 @@ app <- function()
                 u <- input$u
                 wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
                 floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
+                message("currentModel='", input$currentModel, "'")
                 #> message("waterDepth=", waterDepth)
                 #> message("  wireLength=", wireLength)
                 #> message("  u=", u)
@@ -105,6 +123,12 @@ app <- function()
                 #> message("  floatModel=", floatModel)
                 m <- mooring(anchor(depth=waterDepth), wire(model=wireModel, length=wireLength), float(model=floatModel))
                 md <- discretise(m, 1)
+                u <- switch(input$currentModel,
+                            "Constant"=input$u,
+                            "Linear"=function(depth) input$u*(1-depth/waterDepth),
+                            "exp(z/30)"=function(depth) input$u*exp(-depth/30),
+                            "exp(z/100)"=function(depth) input$u*exp(-depth/100),
+                            "exp(z/300)"=function(depth) input$u*exp(-depth/300))
                 mdk <- knockdown(md, u)
                 par(mfrow=c(1,2))
                 plot(mdk, which="tension", fancy=TRUE, showDepths=FALSE)
