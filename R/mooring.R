@@ -691,7 +691,7 @@ print.mooring <- function(x, ...)
 #' plot(md)
 #' plot(md, which="tension")
 #'
-#' @importFrom graphics abline axis box lines mtext par points rect text
+#' @importFrom graphics abline axis box lines mtext par plot.window points rect text
 #' @importFrom grDevices extendrange
 #'
 #' @export
@@ -714,10 +714,11 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
     debug <- 0L
     if ("debug" %in% names(dots))
         debug <- as.integer(max(0L, dots$debug))
-    x <- if (which == "shape") x(m) else if (which == "tension") tension(m)
-    xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant=TRUE)
-    #z <- sapply(m, function(mi) mi$z)
+    xshape <- x(m)
+    xtension <- tension(m)
     z <- z(m)
+    x <- if (which == "shape") xshape else if (which == "tension") xtension
+    xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant=TRUE)
     mooringDebug(debug, x, overview=TRUE, round=2)
     mooringDebug(debug, z, overview=TRUE, round=2)
     depth <- -z
@@ -727,7 +728,11 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
     par(mar=mar, mgp=mgp)
     xlim <- extendrange(c(x, xstagnant))
     ylim <- c(waterDepth, 0)
-    plot(x, depth, xlim=xlim, ylim=ylim, asp=if (which=="shape") 1, type="l", xlab="", ylab="", axes=FALSE)
+    # Determine depth scale by doing a sort of dry run of a shape plot
+    plot.window(0, 0, xlim=extendrange(xshape), ylim=ylim, asp=1, log="")
+    usrShape <- par("usr")
+    #> message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
+    plot(x, depth, xlim=xlim, ylim=usrShape[3:4], yaxs="i", asp=if (which=="shape") 1, type="l", xlab="", ylab="", axes=FALSE)
     xlab <- if (which == "shape") "Horizontal Coordinate [m]" else if (which == "tension") "Tension [kg]"
     ylab <- "Depth [m]"
     box()
