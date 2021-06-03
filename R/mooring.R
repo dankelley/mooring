@@ -580,9 +580,18 @@ mooring <- function(...)
         else sum(sapply(rval, function(x) x$height))
     T <- rev(cumsum(rev(buoyancy(rval[-1]))))
     T <- c(T[1], T)
+    x <- 0
     for (i in seq_along(rval)) {
-        rval[[i]]$x <- 0
-        rval[[i]]$z <- height[i] - depth
+        z <- height[i] - depth
+        # If the line is too heavy for the flotation, run some of it along
+        # the bottom.
+        if (z < (-depth)) {
+            message("DANNY i=", i, ", z=", z, ", depth=", depth)
+            z <- -depth
+            x <- x + depth
+        }
+        rval[[i]]$x <- x
+        rval[[i]]$z <- z
         rval[[i]]$T <- T[i]
     }
     class(rval) <- "mooring"
@@ -707,7 +716,8 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
         debug <- as.integer(max(0L, dots$debug))
     x <- if (which == "shape") x(m) else if (which == "tension") tension(m)
     xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant=TRUE)
-    z <- sapply(m, function(mi) mi$z)
+    #z <- sapply(m, function(mi) mi$z)
+    z <- z(m)
     mooringDebug(debug, x, overview=TRUE, round=2)
     mooringDebug(debug, z, overview=TRUE, round=2)
     depth <- -z
@@ -739,6 +749,10 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
     # Redraw to cover grid
     lines(x, depth, lwd=1.4*par("lwd"))
     # Draw conditions for u=0 case
+    if (fancy)
+        rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
+    # Redraw in case line runs along bottom
+    lines(x, depth, lwd=1.4*par("lwd"))
     if (which == "shape") {
         mooringLength <- sum(sapply(m, function(x) x$height))
         lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=1.4*par("lwd"))
@@ -746,8 +760,6 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
     } else if (which == "tension") {
         lines(tension(m, stagnant=TRUE), depth, col=colStagnant, lwd=1.4*par("lwd"))
     }
-    if (fancy)
-        rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
     for (i in seq_along(m)) {
         type <- class(m[[i]])[2]
         xi <- x[i]
@@ -921,6 +933,7 @@ knockdown <- function(m, u=1, debug=0L)
         }
     }
     phi <- tail(phi, -1L)
+    phi <- ifelse(phi > pi/2, pi/2, phi)
     T <- tail(T, -1L)
     mooringDebug(debug, "Original values:\n")
     mooringDebug(debug, phi*180/pi, overview=TRUE, round=1)

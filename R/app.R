@@ -29,7 +29,7 @@ app <- function()
                                                                                min=10,  max=1000, value=200, step=1)),
                                            shiny::column(5, shiny::sliderInput("u",
                                                                                shiny::h6("Current [m/s]"),
-                                                                               min=0, max=5,  value=0.5, step=0.1)),
+                                                                               min=0, max=5,  value=0.5, step=0.05)),
                                            shiny::actionButton("help", "Help"),
                                            shiny::actionButton("code", "Code")),
                            shiny::fluidRow(shiny::column(5, shiny::uiOutput("wireLength")),
@@ -61,8 +61,8 @@ app <- function()
                             waterDepth <- input$waterDepth
                             wireLength <- input$wireLength
                             u <- input$u
-                            wireModel <- input$wireModel
-                            floatModel <- input$floatModel
+                            wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
+                            floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
                             msg <- sprintf("%s<br>m <- mooring(anchor(depth=%g), wire(model=\"%s\", length=%g), float(model=\"%s\"))<br>", "library(mooring)", waterDepth, wireModel, wireLength, floatModel)
                             msg <- paste0(msg, "md <- discretise(m, by=1)<br>")
                             msg <- paste0(msg, "mdk <- knockdown(md, u=", u, ")<br>")
