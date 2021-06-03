@@ -1,7 +1,14 @@
 library(testthat)
 library(mooring)
 
-context("mooring x and y")
+test_that("mooring construction", {
+          m <- mooring(anchor(depth=200), wire(length=100), float())
+          b <- buoyancy(m)
+          expect_equal(b, c(-1000, -13, 320))
+          expect_equal(rep(0, 3), x(m))
+          expect_equal(c(-200, -100, -99), z(m))
+          expect_equal(c(200, 100, 99), depth(m))
+})
 
 test_that("plot with x-y superimposed", {
           expect_silent(m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20")))

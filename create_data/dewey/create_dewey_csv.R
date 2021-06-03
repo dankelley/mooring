@@ -36,7 +36,7 @@ fixnames <- function(names)
     names <- gsub("^5/8 ", "5/8in ", names)
     names <- gsub("8' ", "8ft ", names)
     # Not sure whether the 1/2 in Dyneema is a width, so for caution change back.
-    names <- gsub("1/2in Dyneema", "1/2 Dyneema ", names)
+    names <- gsub("1/2in Dyneema", "1/2 Dyneema", names)
     print(data.frame(orig=orig, later=names))
     names
 }

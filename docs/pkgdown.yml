@@ -3,7 +3,8 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   knockdown_model: knockdown_model.html
+  mooring: mooring.html
   mooring_elements: mooring_elements.html
   object_orientation: object_orientation.html
-last_built: 2021-05-31T21:43Z
+last_built: 2021-06-03T14:47Z
 

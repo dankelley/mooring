@@ -44,6 +44,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/mooring.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -88,7 +91,7 @@
       <h1 data-toc-skip>Mooring Response to Unidirectional Flow</h1>
                         <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-05-31</h4>
+            <h4 class="date">2021-06-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/knockdown_model.Rmd"><code>vignettes/knockdown_model.Rmd</code></a></small>
       <div class="hidden name"><code>knockdown_model.Rmd</code></div>
@@ -100,7 +103,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Anchored oceanographic mooring lines are deformed by currents, in much the same way as trees are bent by wind. For very simple moorings, e.g. consisting of a single float connected by a uniform cable to an anchor at the bottom, the deformation can be calculated if the current is uniform. The physics is analogous to the sagging of telephone lines between poles, and falls into the general category of a catenary. However, things are more complicated for depth-varying currents, and for mooring lines that consist of many elements connected by cables.</p>
+<p>Anchored oceanographic mooring lines are deformed by currents, in much the same way as trees are bent by wind. For very simple moorings, e.g. consisting of a single float connected by a uniform cable to an anchor at the bottom, the deformation can be calculated if the current is uniform. The physics is analogous to the sagging of telephone lines between poles, and falls into the general category of a catenary. However, things are more complicated for depth-varying currents, and for mooring lines that consist of many elements, of varying buoyancy and drag, connected by wires, chains, etc., of varying buoyancy and drag.</p>
 <p>An approach to analysing realistic oceanographic moorings is to use lumped-mass theory, in which elements such as floats and instrument packages are parameterized by their buoyancy and drag characteristics, and in which cables envisioned as connected line elements. This approach was taken by <span class="citation">Dewey (1999)</span> in a GUI-based Matlab system. The present treatment is of similar foundation, although with some added simplifications (such as unidirectional current) that are relevant to the basic problem of computing “knock-down,” i.e. the vertical displacement of instruments that is caused by slanting of the mooring line.</p>
 </div>
 <div id="model" class="section level1">

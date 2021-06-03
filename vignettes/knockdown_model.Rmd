@@ -30,8 +30,9 @@ single float connected by a uniform cable to an anchor at the bottom, the
 deformation can be calculated if the current is uniform.  The physics is
 analogous to the sagging of telephone lines between poles, and falls into the
 general category of a catenary.  However, things are more complicated for
-depth-varying currents, and for mooring lines that consist of many elements
-connected by cables.
+depth-varying currents, and for mooring lines that consist of many elements, of
+varying buoyancy and drag, connected by wires, chains, etc., of varying
+buoyancy and drag.
 
 An approach to analysing realistic oceanographic moorings is to use lumped-mass
 theory, in which elements such as floats and instrument packages are

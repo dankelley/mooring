@@ -89,6 +89,9 @@ g=9.8m/s^2." />
   </a>
 </li>
 <li>
+  <a href="../articles/mooring.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -143,7 +146,7 @@ must be multiplied by the acceleration due to gravity,
 g=9.8m/s^2.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>buoyancy</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>buoyancy</span><span class='op'>(</span><span class='va'>m</span>, debug <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,6 +154,12 @@ g=9.8m/s^2.</p>
     <tr>
       <th>m</th>
       <td><p>an object of the <code>"mooring"</code> class.</p></td>
+    </tr>
+    <tr>
+      <th>debug</th>
+      <td><p>an integer value (or a numeric that can be converted to an
+integer) that controls debugging. If this is positive, then some debugging
+information may be printed by the function.</p></td>
     </tr>
     </table>
 
@@ -180,7 +189,7 @@ Sciences. Bedford Institute of Oceanography, 1989.</p>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
 <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mooring.html'>mooring</a></span><span class='op'>(</span><span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>120</span><span class='op'>)</span>, <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>buoyancy</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] -1000.00    -0.13    34.50</div><div class='input'>
+</div><div class='output co'>#&gt; [1] -1000.0   -13.0    34.5</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

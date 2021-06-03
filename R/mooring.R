@@ -69,7 +69,8 @@ g <- 9.8
 #'
 #' @export
 isMooring <- function(m=NULL) {
-    !is.null(m) && length(class(m)) == 1 && class(m) == "mooring"
+    is.list(m) && length(m) > 1 && inherits(m[[1]], "mooring")
+    #!is.null(m) && length(class(m)) == 1 && class(m) == "mooring"
 }
 
 
@@ -579,9 +580,18 @@ mooring <- function(...)
         else sum(sapply(rval, function(x) x$height))
     T <- rev(cumsum(rev(buoyancy(rval[-1]))))
     T <- c(T[1], T)
+    x <- 0
     for (i in seq_along(rval)) {
-        rval[[i]]$x <- 0
-        rval[[i]]$z <- height[i] - depth
+        z <- height[i] - depth
+        # If the line is too heavy for the flotation, run some of it along
+        # the bottom.
+        if (z < (-depth)) {
+            message("DANNY i=", i, ", z=", z, ", depth=", depth)
+            z <- -depth
+            x <- x + depth
+        }
+        rval[[i]]$x <- x
+        rval[[i]]$z <- z
         rval[[i]]$T <- T[i]
     }
     class(rval) <- "mooring"
@@ -681,7 +691,7 @@ print.mooring <- function(x, ...)
 #' plot(md)
 #' plot(md, which="tension")
 #'
-#' @importFrom graphics abline axis box lines mtext par points rect text
+#' @importFrom graphics abline axis box lines mtext par plot.window points rect text
 #' @importFrom grDevices extendrange
 #'
 #' @export
@@ -704,9 +714,11 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
     debug <- 0L
     if ("debug" %in% names(dots))
         debug <- as.integer(max(0L, dots$debug))
-    x <- if (which == "shape") x(m) else if (which == "tension") tension(m)
+    xshape <- x(m)
+    xtension <- tension(m)
+    z <- z(m)
+    x <- if (which == "shape") xshape else if (which == "tension") xtension
     xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant=TRUE)
-    z <- sapply(m, function(mi) mi$z)
     mooringDebug(debug, x, overview=TRUE, round=2)
     mooringDebug(debug, z, overview=TRUE, round=2)
     depth <- -z
@@ -716,7 +728,11 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
     par(mar=mar, mgp=mgp)
     xlim <- extendrange(c(x, xstagnant))
     ylim <- c(waterDepth, 0)
-    plot(x, depth, xlim=xlim, ylim=ylim, asp=if (which=="shape") 1, type="l", xlab="", ylab="", axes=FALSE)
+    # Determine depth scale by doing a sort of dry run of a shape plot
+    plot.window(0, 0, xlim=extendrange(xshape), ylim=ylim, asp=1, log="")
+    usrShape <- par("usr")
+    #> message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
+    plot(x, depth, xlim=xlim, ylim=usrShape[3:4], yaxs="i", asp=if (which=="shape") 1, type="l", xlab="", ylab="", axes=FALSE)
     xlab <- if (which == "shape") "Horizontal Coordinate [m]" else if (which == "tension") "Tension [kg]"
     ylab <- "Depth [m]"
     box()
@@ -738,6 +754,10 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
     # Redraw to cover grid
     lines(x, depth, lwd=1.4*par("lwd"))
     # Draw conditions for u=0 case
+    if (fancy)
+        rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
+    # Redraw in case line runs along bottom
+    lines(x, depth, lwd=1.4*par("lwd"))
     if (which == "shape") {
         mooringLength <- sum(sapply(m, function(x) x$height))
         lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=1.4*par("lwd"))
@@ -745,8 +765,6 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
     } else if (which == "tension") {
         lines(tension(m, stagnant=TRUE), depth, col=colStagnant, lwd=1.4*par("lwd"))
     }
-    if (fancy)
-        rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
     for (i in seq_along(m)) {
         type <- class(m[[i]])[2]
         xi <- x[i]
@@ -920,6 +938,7 @@ knockdown <- function(m, u=1, debug=0L)
         }
     }
     phi <- tail(phi, -1L)
+    phi <- ifelse(phi > pi/2, pi/2, phi)
     T <- tail(T, -1L)
     mooringDebug(debug, "Original values:\n")
     mooringDebug(debug, phi*180/pi, overview=TRUE, round=1)
@@ -1143,6 +1162,8 @@ area <- function(m)
 #'
 #' @param m an object of the `"mooring"` class.
 #'
+#' @template debugTemplate
+#'
 #' @return a numeric vector of buoyancy, expressed in kg.
 #'
 #' @examples
@@ -1158,9 +1179,23 @@ area <- function(m)
 #' Sciences. Bedford Institute of Oceanography, 1989.
 #'
 #' @author Dan Kelley
-buoyancy <- function(m)
+buoyancy <- function(m, debug=0L)
 {
-    sapply(m, function(mi) mi$buoyancy)
+    mooringDebug(debug, "buoyancy() {\n  class(m): ", paste(class(m), collapse=" "), "\n")
+    rval <- if (isMooring(m)) {
+        mooringDebug(debug, "  object is a mooring with", length(m), "elements, so will analyse them individually\n")
+        sapply(m, function(mi) buoyancy(mi, debug=debug))
+    } else {
+        if (class(m)[2] == "wire") {
+            mooringDebug(debug, "  object is a wire, so returning buoyancyPerMeter*height\n")
+            m$buoyancyPerMeter * m$height
+        } else {
+            mooringDebug(debug, "  object is a not a wire, so returning buoyancy\n")
+            m$buoyancy
+        }
+    }
+    mooringDebug(debug, "} # buoyancy()\n")
+    rval
 }
 
 ###################

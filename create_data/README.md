@@ -1,7 +1,7 @@
 # Using the files in this directory.
 
 Go into each subdirectory and use its Makefile to update things as follows:
-* In `dewey` (which handles data from Dewey's matlab package; see refereneces),
+* In `dewey` (which handles data from Dewey's matlab package; see references),
   do `make csv` and then `make install`.  The first of these operations the
 `mdcodes.mat` file from Dewey's Matlab package [Dewey 1999; 2021], creating
 `cables_dewey.csv`, `floats_dewey.csv` and `wires_dewey.csv`.  The second
