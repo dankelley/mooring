@@ -73,7 +73,7 @@ app <- function()
                            })
 
         output$wireLength <- shiny::renderUI({
-            shiny::sliderInput("wireLength", "Wire Length [m]", min=1, max=input$waterDepth, value=input$waterDepth)
+            shiny::sliderInput("wireLength", "Wire Length [m]", min=1, max=input$waterDepth, value=input$waterDepth, step=1)
         })
 
         output$wireType <- shiny::renderUI({

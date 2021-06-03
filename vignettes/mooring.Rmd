@@ -1,0 +1,142 @@
+---
+title: The mooring package
+author: "Dan Kelley (https://orcid.org/0000-0001-7808-5911)"
+date: "`r Sys.Date()`"
+bibliography: model.bib
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+    fig_caption: yes
+    fig_width: 3.5
+    fig_height: 3.5
+    dpi: 72
+    dev.args: list(pointsize=11)
+vignette: >
+  %\VignetteIndexEntry{The mooring package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+\newcommand{\D}{{\cal D}}
+\newcommand{\B}{{\cal B}}
+\newcommand{\T}{{\cal T}}
+\newcommand{\Eq}{Equation}
+
+# Introduction
+
+The `mooring` package deals with oceanographic moorings and their deformation
+by horizontal currents. The theory for that deformation is laid out in the
+vignetted entitled *Mooring Response to Unidirectional Flow*, while the present
+vignette deals with using the package.
+
+# Constructing mooring objects
+
+Moorings are constructed with `mooring()`, the arguments of which, called
+'elemental` objects, are created by `anchor()`, `chain()`, `float()`,
+`instrument()`, `release()`, or `wire()`.  These are specified from bottom to
+top.  For example, consider a mooring in water of depth 200m, with a 150-m long wire
+connecting a bottom anchor to a float.  This could be created with
+```{r}
+library(mooring)
+m <- mooring(anchor(depth=200), wire(length=150), float())
+```
+where each of the function calls that construct the arguments has taken on a
+default value.  To learn the possible values for any of these, supply a first
+argument as the string `"?"`, e.g. the possible wire types (which include
+non-metallic wires) is:
+```{r}
+wire("?")
+```
+
+More details on the functions are provided with e.g. `?wire`.  Details of the
+objects are provided in the vignette called *Default Values for Mooring
+Elements*.  Each element has information that the package can use to find
+forces that control mooring shape.  The horizontal drag force at a given water
+speed depends on the object's frontal area and drag coefficient.  The vertical
+buoyancy force depends on the buoyancy of the element, which is expressed (in
+kg) mass equivalents (assuming $g=9.8$m/s$^2$ for the acceleration of gravity)
+for discrete elements such as floats and instruments, and in buoyancy per
+length (in kg/m) for wires.
+
+Note that new types of wire, float, etc. can be created easily, by supplying a name
+that is not matched in the list of built-in values. The help pages for the
+various functions explain what must be specified.
+
+Actual moorings are likely to have multiple instruments, along with multiple
+buoyancy elements, but the mooring just created is sufficient to continue the
+discussion here.
+
+
+# Calculating mooring shape in a current
+
+The `knockdown()` function is used to compute the shape of a mooring that is
+deformed by a horizontal current.  It takes just two arguments: the mooring,
+and the velocity. The latter may be a fixed value (in m/s), or a function that
+gives velocity as a function of depth below the water surface.
+
+But, before applying `knockdown()`, it is important to first subdivide any
+`wire` elements into smaller lengths, so that `knockdown()` can compute the
+shape more precisely.  This is done with the `discretise()` function.  The
+following shows how to do this with the mooring just created.
+```{r}
+md <- discretise(m) # breaks wire portions into approx. 1-m segments
+```
+and the knocked-down mooring is found with e.g.
+```{r}
+mdk <- knockdown(md, u=1)
+```
+for a 1 m/s current.
+
+# Accessing mooring shape and properties
+
+The functions `x()` and `z()` find the $x$ and $z$ locations of mooring
+elements.  Note that $z=0$ at the surface and negative in the water column; use
+`depth()` to get depth below the surface.
+
+For example, the shape of the knocked-over mooring from the previous code
+block could be plotted with
+```{r fig.width=7, fig.height=3, dev.args=list(pointsize=9)}
+plot(x(mdk), z(mdk), type="l")
+```
+
+Similarly, the tension between elements is found with `tension()`, and the angle that elements make to the vertical is found with `angle()`.
+
+# Plotting mooring
+
+The plot shown above is quite primitive, so the package offers a `plot()`
+function.  For example, this gives a view of tension and shape.
+```{r fig.width=7, fig.height=3, dev.args=list(pointsize=9)}
+par(mfrow=c(1, 2))
+plot(mdk, which="tension")
+plot(mdk, which="shape")
+```
+
+In both instances, the gray line is the shape that would occur with no current.
+Note that the shape plot uses a 1:1 aspect ratio, making it easier to
+understand the result.  Also, note that depth is plotted here, as opposed to
+the $z$ shown above.
+
+A fancier version is obtained with
+```{r fig.width=7, fig.height=3, dev.args=list(pointsize=9)}
+par(mfrow=c(1, 2))
+plot(mdk, which="tension", fancy=TRUE)
+plot(mdk, which="shape", fancy=TRUE)
+```
+
+# Interactive R-shiny app
+
+The package supplies `app()` as a convenient way to learn about the package.
+By design, it does not offer a way to make complex moorings.  For example, it
+only provides an anchor-wire-float mooring, with no way to add a bottom
+release, instruments, floats, etc., nor is it possible to specify
+depth-dependent currents.  Such things might be added later, of course.
+
+The following is a screenshot of the case studied so far, but with a weaker
+surface mooring (a 20-inch diameter Hydro-float Mooring
+Buoy^[https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf]).
+The knockdown is much higher than seen in the plots above, because the float
+buoyancy is less than for that of the default float.  (As a guide, the menus of
+app display the buoyancies of wire and float elements.)
+
+![Snapshot of the app() GUI application.](mooring_app_snapshot.png)
+
