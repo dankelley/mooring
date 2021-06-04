@@ -17,10 +17,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-\newcommand{\D}{{\cal D}}
-\newcommand{\B}{{\cal B}}
-\newcommand{\T}{{\cal T}}
-\newcommand{\Eq}{Equation}
 
 # Introduction
 
@@ -196,10 +192,10 @@ plot(us, depths, ylim=rev(range(depths)), type="l", pch=20, cex=0.5,
 abline(h=100*c(1, 1.1), lty=2:3)
 ```
 
-The dashed line shows zero knockdown, while the dotted line indicates a 10
-percent knockdown.  If the latter is taken as a limit, this suggests that more
-buoyant float would be required in this region if currents exceeded
-approximately $0.3$m/s.
+The dashed horizontal line shows zero knockdown, while the dotted line
+indicates a 10 percent knockdown.  If the latter is taken as a limit, this
+suggests that more buoyant float would be required in this region if currents
+exceeded approximately $0.3$m/s.
 
 # References
 
