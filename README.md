@@ -7,6 +7,8 @@
 
 [![R-CMD-check](https://github.com/dankelley/mooring/workflows/R-CMD-check/badge.svg)](https://github.com/dankelley/mooring/actions)
 
+[![Codecov test
+coverage](https://codecov.io/gh/dankelley/mooring/branch/main/graph/badge.svg)](https://codecov.io/gh/dankelley/mooring?branch=main)
 <!-- badges: end -->
 
 The goal of mooring is to facilitate computations of the extent of
@@ -32,7 +34,6 @@ a list of the types that are supported.
 
 ``` r
 library(mooring)
-#> Loading required package: shiny
 # Design a mooring with a 20-inch float attached to a bottom anchor with 100m of wire cable.
 m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
 par(mfrow=c(1,2))

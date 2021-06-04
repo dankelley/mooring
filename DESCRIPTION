@@ -16,7 +16,8 @@ Imports:
 Suggests:
     testthat (>= 3.0.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 License: GPL (>= 3)
 Encoding: UTF-8
 URL: https://dankelley.github.io/mooring/
