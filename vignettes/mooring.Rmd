@@ -2,7 +2,7 @@
 title: The mooring package
 author: "Dan Kelley (https://orcid.org/0000-0001-7808-5911)"
 date: "`r Sys.Date()`"
-bibliography: model.bib
+bibliography: mooring.bib
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -127,9 +127,8 @@ plot(mdk, which="shape", fancy=TRUE)
 
 The package supplies `app()` as a convenient way to learn about the package.
 By design, it does not offer a way to make complex moorings.  For example, it
-only provides an anchor-wire-float mooring, with no way to add a bottom
-release, instruments, floats, etc., nor is it possible to specify
-depth-dependent currents.  Such things might be added later, of course.
+only provides an anchor-wire-float mooring, with no way (yet) to add a bottom
+release, instruments, floats, etc.
 
 The following is a screenshot of the case studied so far, but with a weaker
 surface mooring (a 20-inch diameter Hydro-float Mooring
@@ -139,4 +138,39 @@ buoyancy is less than for that of the default float.  (As a guide, the menus of
 app display the buoyancies of wire and float elements.)
 
 ![Snapshot of the app() GUI application.](mooring_app_snapshot.png)
+
+
+# Advanced usage
+
+
+## Creating new elements
+
+If the first argument to an element-forming function such as `float()`,
+`instrument()`, `wire()`, `instrument()`, etc., is not in the list of built-in
+types, then a new object is created.  In this situation, all of the other
+arguments to the function must be supplied, and it should be born in mind that
+those arguments vary from type to type. For example,
+```{r}
+i <- instrument("myNewInstrument", buoyancy=-5, height=1, area=0.1, CD=1)
+```
+creates a new instrument object for something that has buoyancy -5kg (meaning
+it weighs 5kg in seawater), height 1m, area 0.1\eqn{m^2}, and drag coefficient
+1.
+
+## Altering existing elements
+
+Strumming of wires in currents can increase wire drag coefficient $C_D$ by
+perhaps a factor of 2 [@hamilton_mooring_1997;@hamilton_validation_1989], and
+simple way to account for that might be to use
+```{r}
+w <- wire(length=100) # default wire type
+w2 <- w
+w2$CD <- 2 * w2$CD
+```
+As a check, we may confirm that this doubles the drag for, say, a 1m/s current:
+```{r}
+c(drag(w, 1), drag(w2, 1))
+```
+
+# References
 

@@ -7,7 +7,9 @@
 area(m)
 }
 \arguments{
-\item{m}{a mooring, created by \code{\link[=mooring]{mooring()}}.}
+\item{m}{either a multi-element mooring, created by \code{\link[=mooring]{mooring()}}, or a mooring element,
+created with e.g. \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=release]{release()}}, \code{\link[=wire]{wire()}}, \code{\link[=instrument]{instrument()}},
+or \code{\link[=float]{float()}}.}
 }
 \description{
 Get element areas

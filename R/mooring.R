@@ -514,9 +514,11 @@ instrument <- function(model="sbe37 microcat clamp-on style", buoyancy=NULL, hei
 #' @author Dan Kelley
 CD <- function(m)
 {
-    if (!isMooring(m))
-        stop("only works for objects created by mooring()")
-    sapply(m, function(item) if ("anchor" == class(item)[2]) 0 else item$CD)
+    if (isMooring(m)) {
+        sapply(m, function(item) if ("anchor" == class(item)[2]) 0 else item$CD)
+    } else {
+        if (length(class(m)) == 2) m$CD else stop("area can only be computed for a mooring or an element")
+    }
 }
 
 
@@ -536,18 +538,10 @@ CD <- function(m)
 #' @author Dan Kelley
 drag <- function(m, u, rho=1027)
 {
-    if (!isMooring(m))
-        stop("only works for objects created by mooring()")
     if (length(rho) > 1L && length(rho) != length(m))
-        stop("if rho is a vector, it must be the same length as m, but the lengths are ",
-             length(rho), " and ", length(m), " respectively")
-    if (is.function(u)) {
-        depth <- -sapply(m, function(M) M$z)
-        u2 <- sapply(depth, u)^2
-    } else {
-        u2 <- u^2
-    }
-    0.5 * area(m) * rho * CD(m) * u2
+        stop("length of rho, ", length(rho), " must match length of m, ", length(m))
+    uSquared <- if (is.function(u)) sapply(depth(m),u)^2 else u^2
+    0.5 * area(m) * rho * CD(m) * uSquared
 }
 
 #' Create a mooring
@@ -1131,16 +1125,20 @@ tension <- function(m, stagnant=FALSE)
 
 #' Get element areas
 #'
-#' @param m a mooring, created by [mooring()].
+#' @param m either a multi-element mooring, created by [mooring()], or a mooring element,
+#' created with e.g. [anchor()], [chain()], [release()], [wire()], [instrument()],
+#' or [float()].
 #'
 #' @export
 #'
 #' @author Dan Kelley
 area <- function(m)
 {
-    if (!isMooring(m))
-        stop("only works for objects created by mooring()")
-    sapply(m, function(mi) mi$area)
+    if (isMooring(m)) {
+        sapply(m, function(mi) mi$area)
+    } else {
+        if (length(class(m)) == 2) m$area else stop("area can only be computed for a mooring or an element")
+    }
 }
 
 #' Buoyancy of elements in mooring, expressed in kg.
