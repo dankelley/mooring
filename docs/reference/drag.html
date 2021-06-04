@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Drag on mooring elements — drag • mooring</title>
+<title>Get mooring/element drag force — drag • mooring</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Drag on mooring elements — drag" />
-<meta property="og:description" content="This looks up element areas with area() and then computes
+<meta property="og:title" content="Get mooring/element drag force — drag" />
+<meta property="og:description" content="This looks up element areas with area() and drag
+coefficients with CD(), and then computes drag
+force (in Newtons) with
 \((1/2)*area*rho*CD*u^2\)" />
 
 
@@ -130,13 +132,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Drag on mooring elements</h1>
+    <h1>Get mooring/element drag force</h1>
     <small class="dont-index">Source: <a href='https://github.com/dankelley/mooring/blob/master/R/mooring.R'><code>R/mooring.R</code></a></small>
     <div class="hidden name"><code>drag.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This looks up element areas with <code><a href='area.html'>area()</a></code> and then computes
+    <p>This looks up element areas with <code><a href='area.html'>area()</a></code> and drag
+coefficients with <code><a href='CD.html'>CD()</a></code>, and then computes drag
+force (in Newtons) with
 \((1/2)*area*rho*CD*u^2\)</p>
     </div>
 
@@ -147,7 +151,9 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>m</th>
-      <td><p>a mooring object, created by <code><a href='mooring.html'>mooring()</a></code>.</p></td>
+      <td><p>either a mooring object, created by <code><a href='mooring.html'>mooring()</a></code>, or a
+mooring-element object, created with <code><a href='anchor.html'>anchor()</a></code>, <code><a href='chain.html'>chain()</a></code>, <code><a href='release.html'>release()</a></code>,
+<code><a href='wire.html'>wire()</a></code>, <code><a href='instrument.html'>instrument()</a></code>, or <code><a href='float.html'>float()</a></code>.</p></td>
     </tr>
     <tr>
       <th>u</th>
@@ -168,6 +174,9 @@ section of the documentation for <code><a href='buoyancy.html'>buoyancy()</a></c
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>drag</code> returns a numeric vector of horizontal drag force, expressed in N.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>

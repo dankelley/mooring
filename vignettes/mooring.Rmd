@@ -172,5 +172,34 @@ As a check, we may confirm that this doubles the drag for, say, a 1m/s current:
 c(drag(w, 1), drag(w2, 1))
 ```
 
+## Sensitivity analysis and mooring design
+
+As an example, the following shows how the top-float knockdown is affected by
+the current.
+
+```{r fig.width=7, fig.height=3, dev.args=list(pointsize=9)}
+library(mooring)
+a <- anchor(depth=1000)
+w <- wire(length=900)
+f <- float()
+m <- mooring(a, w, f)
+us <- seq(0, 1.0, length.out=25)
+md <- discretise(m)
+depths <- sapply(us, function(u)
+                 {
+                     mdk <- knockdown(md, u)
+                     depth(tail(mdk,1))
+                 })
+par(mar=c(3,3,1,1), mgp=c(2,0.7,0))
+plot(us, depths, ylim=rev(range(depths)), type="l", pch=20, cex=0.5,
+     xlab="Horiz. velo. [m/s]", ylab="Float depth [m]")
+abline(h=100*c(1, 1.1), lty=2:3)
+```
+
+The dashed line shows zero knockdown, while the dotted line indicates a 10
+percent knockdown.  If the latter is taken as a limit, this suggests that more
+buoyant float would be required in this region if currents exceeded
+approximately $0.3$m/s.
+
 # References
 

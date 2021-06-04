@@ -91,7 +91,7 @@
       <h1 data-toc-skip>The mooring package</h1>
                         <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-03</h4>
+            <h4 class="date">2021-06-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/mooring.Rmd"><code>vignettes/mooring.Rmd</code></a></small>
       <div class="hidden name"><code>mooring.Rmd</code></div>
@@ -199,10 +199,71 @@
 <div id="interactive-r-shiny-app" class="section level1">
 <h1 class="hasAnchor">
 <a href="#interactive-r-shiny-app" class="anchor"></a>Interactive R-shiny app</h1>
-<p>The package supplies <code><a href="../reference/app.html">app()</a></code> as a convenient way to learn about the package. By design, it does not offer a way to make complex moorings. For example, it only provides an anchor-wire-float mooring, with no way to add a bottom release, instruments, floats, etc., nor is it possible to specify depth-dependent currents. Such things might be added later, of course.</p>
+<p>The package supplies <code><a href="../reference/app.html">app()</a></code> as a convenient way to learn about the package. By design, it does not offer a way to make complex moorings. For example, it only provides an anchor-wire-float mooring, with no way (yet) to add a bottom release, instruments, floats, etc.</p>
 <p>The following is a screenshot of the case studied so far, but with a weaker surface mooring (a 20-inch diameter Hydro-float Mooring Buoy<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>). The knockdown is much higher than seen in the plots above, because the float buoyancy is less than for that of the default float. (As a guide, the menus of app display the buoyancies of wire and float elements.)</p>
 <div class="figure">
 <img src="mooring_app_snapshot.png" alt=""><p class="caption">Snapshot of the app() GUI application.</p>
+</div>
+</div>
+<div id="advanced-usage" class="section level1">
+<h1 class="hasAnchor">
+<a href="#advanced-usage" class="anchor"></a>Advanced usage</h1>
+<div id="creating-new-elements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#creating-new-elements" class="anchor"></a>Creating new elements</h2>
+<p>If the first argument to an element-forming function such as <code><a href="../reference/float.html">float()</a></code>, <code><a href="../reference/instrument.html">instrument()</a></code>, <code><a href="../reference/wire.html">wire()</a></code>, <code><a href="../reference/instrument.html">instrument()</a></code>, etc., is not in the list of built-in types, then a new object is created. In this situation, all of the other arguments to the function must be supplied, and it should be born in mind that those arguments vary from type to type. For example,</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/instrument.html">instrument</a></span><span class="op">(</span><span class="st">"myNewInstrument"</span>, buoyancy<span class="op">=</span><span class="op">-</span><span class="fl">5</span>, height<span class="op">=</span><span class="fl">1</span>, area<span class="op">=</span><span class="fl">0.1</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<p>creates a new instrument object for something that has buoyancy -5kg (meaning it weighs 5kg in seawater), height 1m, area 0.1, and drag coefficient 1.</p>
+</div>
+<div id="altering-existing-elements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#altering-existing-elements" class="anchor"></a>Altering existing elements</h2>
+<p>Strumming of wires in currents can increase wire drag coefficient <span class="math inline">\(C_D\)</span> by perhaps a factor of 2 <span class="citation">(James M. Hamilton, Fowler, and Belliveau 1997; J. M. Hamilton 1989)</span>, and simple way to account for that might be to use</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length<span class="op">=</span><span class="fl">100</span><span class="op">)</span> <span class="co"># default wire type</span>
+<span class="va">w2</span> <span class="op">&lt;-</span> <span class="va">w</span>
+<span class="va">w2</span><span class="op">$</span><span class="va">CD</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">w2</span><span class="op">$</span><span class="va">CD</span></code></pre></div>
+<p>As a check, we may confirm that this doubles the drag for, say, a 1m/s current:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">w</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">w2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1]  534.04 1068.08</code></pre>
+</div>
+<div id="sensitivity-analysis-and-mooring-design" class="section level2">
+<h2 class="hasAnchor">
+<a href="#sensitivity-analysis-and-mooring-design" class="anchor"></a>Sensitivity analysis and mooring design</h2>
+<p>As an example, the following shows how the top-float knockdown is affected by the current.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/">mooring</a></span><span class="op">)</span>
+<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
+<span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length<span class="op">=</span><span class="fl">900</span><span class="op">)</span>
+<span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">w</span>, <span class="va">f</span><span class="op">)</span>
+<span class="va">us</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.0</span>, length.out<span class="op">=</span><span class="fl">25</span><span class="op">)</span>
+<span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discretise.html">discretise</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
+<span class="va">depths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">us</span>, <span class="kw">function</span><span class="op">(</span><span class="va">u</span><span class="op">)</span>
+                 <span class="op">{</span>
+                     <span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, <span class="va">u</span><span class="op">)</span>
+                     <span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">mdk</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+                 <span class="op">}</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0.7</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">us</span>, <span class="va">depths</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">depths</span><span class="op">)</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span>, pch<span class="op">=</span><span class="fl">20</span>, cex<span class="op">=</span><span class="fl">0.5</span>,
+     xlab<span class="op">=</span><span class="st">"Horiz. velo. [m/s]"</span>, ylab<span class="op">=</span><span class="st">"Float depth [m]"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.1</span><span class="op">)</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<p><img src="mooring_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<p>The dashed line shows zero knockdown, while the dotted line indicates a 10 percent knockdown. If the latter is taken as a limit, this suggests that more buoyant float would be required in this region if currents exceeded approximately <span class="math inline">\(0.3\)</span>m/s.</p>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-hamilton_validation_1989" class="csl-entry">
+Hamilton, J. M. 1989. <span>“The Validation and Practical Applications of a Sub-Surface Mooring Model.”</span> 119. Bedford Institute of Oceanography. <a href="https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf">https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf</a>.
+</div>
+<div id="ref-hamilton_mooring_1997" class="csl-entry">
+Hamilton, James M., George A. Fowler, and Donald J. Belliveau. 1997. <span>“Mooring <span>Vibration</span> as a <span>Source</span> of <span>Current</span> <span>Meter</span> <span>Error</span> and <span>Its</span> <span>Correction</span>.”</span> <em>Journal of Atmospheric and Oceanic Technology</em> 14 (3): 644–55. <a href="https://doi.org/10.1175/1520-0426(1997)014&lt;0644:MVAASO&gt;2.0.CO;2">https://doi.org/10.1175/1520-0426(1997)014&lt;0644:MVAASO&gt;2.0.CO;2</a>.
+</div>
 </div>
 </div>
 <div class="footnotes">
