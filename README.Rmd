@@ -18,7 +18,6 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/dankelley/mooring/workflows/R-CMD-check/badge.svg)](https://github.com/dankelley/mooring/actions)
 
-[![Codecov test coverage](https://codecov.io/gh/dankelley/mooring/branch/main/graph/badge.svg)](https://codecov.io/gh/dankelley/mooring?branch=main)
 <!-- badges: end -->
 
 The goal of mooring is to facilitate computations of the extent of 'knockdown'

@@ -14,10 +14,9 @@ Depends:
 Imports:
     shiny
 Suggests:
-    testthat (>= 3.0.0),
     knitr,
     rmarkdown,
-    covr
+    testthat (>= 3.0.0)
 License: GPL (>= 3)
 Encoding: UTF-8
 URL: https://dankelley.github.io/mooring/
