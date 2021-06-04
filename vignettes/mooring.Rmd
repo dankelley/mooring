@@ -177,7 +177,7 @@ c(drag(w, 1), drag(w2, 1))
 As an example, the following shows how the top-float knockdown is affected by
 the current.
 
-```{r fig.width=7, fig.height=3, dev.args=list(pointsize=9)}
+```{r, fig.width=7, fig.height=3, dev.args=list(pointsize=9)}
 library(mooring)
 a <- anchor(depth=1000)
 w <- wire(length=900)
