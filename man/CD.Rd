@@ -2,17 +2,25 @@
 % Please edit documentation in R/mooring.R
 \name{CD}
 \alias{CD}
-\title{CD of mooring elements}
+\title{Get mooring/element drag coefficient}
 \usage{
 CD(m)
 }
 \arguments{
-\item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
+\item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
+mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=release]{release()}},
+\code{\link[=wire]{wire()}}, \code{\link[=instrument]{instrument()}}, or \code{\link[=float]{float()}}.}
+}
+\value{
+\code{CD} returns a numeric vector of drag coefficient(s).
 }
 \description{
-This looks up element \code{CD} values for the elements
-in a mooring.  For anchor items, which are assumed to
-have no drag, it fills in 0.
+Get mooring/element drag coefficient
+}
+\examples{
+library(mooring)
+CD(float())
+
 }
 \author{
 Dan Kelley

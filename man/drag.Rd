@@ -2,12 +2,14 @@
 % Please edit documentation in R/mooring.R
 \name{drag}
 \alias{drag}
-\title{Drag on mooring elements}
+\title{Get mooring/element drag force}
 \usage{
 drag(m, u, rho = 1027)
 }
 \arguments{
-\item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
+\item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
+mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=release]{release()}},
+\code{\link[=wire]{wire()}}, \code{\link[=instrument]{instrument()}}, or \code{\link[=float]{float()}}.}
 
 \item{u}{either a non-negative number indicating depth-independent velocity,
 or a function that returns that velocity as a function of depth (m)
@@ -22,8 +24,13 @@ in lake applications.  Note that the overall force balance
 is more sensitive to other things, as discussed in the \dQuote{Details}
 section of the documentation for \code{\link[=buoyancy]{buoyancy()}}.}
 }
+\value{
+\code{drag} returns a numeric vector of horizontal drag force, expressed in N.
+}
 \description{
-This looks up element areas with \code{\link[=area]{area()}} and then computes
+This looks up element areas with \code{\link[=area]{area()}} and drag
+coefficients with \code{\link[=CD]{CD()}}, and then computes drag
+force (in Newtons) with
 \eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}
 }
 \author{
