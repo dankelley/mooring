@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Buoyancy of elements in mooring, expressed in kg. — buoyancy • mooring</title>
+<title>Get mooring/element buoyancy, expressed in kg — buoyancy • mooring</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Buoyancy of elements in mooring, expressed in kg. — buoyancy" />
+<meta property="og:title" content="Get mooring/element buoyancy, expressed in kg — buoyancy" />
 <meta property="og:description" content="The nonphysical unit of kg reflects a common convention used
 by manufacturers of oceanographic mooring equipment. For calculations
 of buoyancy force, the return value from this function
@@ -133,7 +133,7 @@ g=9.8m/s^2." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Buoyancy of elements in mooring, expressed in kg.</h1>
+    <h1>Get mooring/element buoyancy, expressed in kg</h1>
     <small class="dont-index">Source: <a href='https://github.com/dankelley/mooring/blob/master/R/mooring.R'><code>R/mooring.R</code></a></small>
     <div class="hidden name"><code>buoyancy.Rd</code></div>
     </div>
@@ -153,7 +153,9 @@ g=9.8m/s^2.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>m</th>
-      <td><p>an object of the <code>"mooring"</code> class.</p></td>
+      <td><p>either a mooring object, created by <code><a href='mooring.html'>mooring()</a></code>, or a
+mooring-element object, created with <code><a href='anchor.html'>anchor()</a></code>, <code><a href='chain.html'>chain()</a></code>, <code><a href='release.html'>release()</a></code>,
+<code><a href='wire.html'>wire()</a></code>, <code><a href='instrument.html'>instrument()</a></code>, or <code><a href='float.html'>float()</a></code>.</p></td>
     </tr>
     <tr>
       <th>debug</th>
@@ -165,7 +167,7 @@ information may be printed by the function.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a numeric vector of buoyancy, expressed in kg.</p>
+    <p><code>buoyancy</code> returns a numeric vector of buoyancy, expressed in kg.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that the present version of this function
