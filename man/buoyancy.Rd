@@ -2,19 +2,21 @@
 % Please edit documentation in R/mooring.R
 \name{buoyancy}
 \alias{buoyancy}
-\title{Buoyancy of elements in mooring, expressed in kg.}
+\title{Get mooring/element buoyancy, expressed in kg}
 \usage{
 buoyancy(m, debug = 0L)
 }
 \arguments{
-\item{m}{an object of the \code{"mooring"} class.}
+\item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
+mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=release]{release()}},
+\code{\link[=wire]{wire()}}, \code{\link[=instrument]{instrument()}}, or \code{\link[=float]{float()}}.}
 
 \item{debug}{an integer value (or a numeric that can be converted to an
 integer) that controls debugging. If this is positive, then some debugging
 information may be printed by the function.}
 }
 \value{
-a numeric vector of buoyancy, expressed in kg.
+\code{buoyancy} returns a numeric vector of buoyancy, expressed in kg.
 }
 \description{
 The nonphysical unit of kg reflects a common convention used

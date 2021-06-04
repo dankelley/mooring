@@ -2,17 +2,25 @@
 % Please edit documentation in R/mooring.R
 \name{area}
 \alias{area}
-\title{Get element areas}
+\title{Get mooring/element area}
 \usage{
 area(m)
 }
 \arguments{
-\item{m}{either a multi-element mooring, created by \code{\link[=mooring]{mooring()}}, or a mooring element,
-created with e.g. \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=release]{release()}}, \code{\link[=wire]{wire()}}, \code{\link[=instrument]{instrument()}},
-or \code{\link[=float]{float()}}.}
+\item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
+mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=release]{release()}},
+\code{\link[=wire]{wire()}}, \code{\link[=instrument]{instrument()}}, or \code{\link[=float]{float()}}.}
+}
+\value{
+\code{area} returns a numeric value of the area viewed from a horizontal, in m^2.
 }
 \description{
-Get element areas
+Get mooring/element area
+}
+\examples{
+library(mooring)
+area(float())
+
 }
 \author{
 Dan Kelley

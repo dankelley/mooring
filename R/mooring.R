@@ -501,13 +501,15 @@ instrument <- function(model="sbe37 microcat clamp-on style", buoyancy=NULL, hei
     rval
 }                                      # +.mooring
 
-#' CD of mooring elements
+#' Get mooring/element drag coefficient
 #'
-#' This looks up element `CD` values for the elements
-#' in a mooring.  For anchor items, which are assumed to
-#' have no drag, it fills in 0.
+#' @template meTemplate
 #'
-#' @template mTemplate
+#' @return `CD` returns a numeric vector of drag coefficient(s).
+#'
+#' @examples
+#' library(mooring)
+#' CD(float())
 #'
 #' @export
 #'
@@ -522,16 +524,20 @@ CD <- function(m)
 }
 
 
-#' Drag on mooring elements
+#' Get mooring/element drag force
 #'
-#' This looks up element areas with [area()] and then computes
+#' This looks up element areas with [area()] and drag
+#' coefficients with [CD()], and then computes drag
+#' force (in Newtons) with
 #' \eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}
 #'
-#' @template mTemplate
+#' @template meTemplate
 #'
 #' @template uTemplate
 #'
 #' @template rhoTemplate
+#'
+#' @return `drag` returns a numeric vector of horizontal drag force, expressed in N.
 #'
 #' @export
 #'
@@ -911,7 +917,7 @@ knockdown <- function(m, u=1, debug=0L)
     # Depth below surface (FIXME: how to have more water above?)
     depth <- cumsum(sapply(mrev, function(item) item$height))
     mooringDebug(debug, depth, overview=TRUE)
-    B <- g * buoyancy(mrev)
+    B <- g * buoyancy(mrev) # note multiplication by g, to get Newtons from kg
     D <- drag(mrev, u)
     height <- unlist(lapply(mrev, function(item) item$height))
 
@@ -1123,11 +1129,15 @@ tension <- function(m, stagnant=FALSE)
     }
 }
 
-#' Get element areas
+#' Get mooring/element area
 #'
-#' @param m either a multi-element mooring, created by [mooring()], or a mooring element,
-#' created with e.g. [anchor()], [chain()], [release()], [wire()], [instrument()],
-#' or [float()].
+#' @template meTemplate
+#'
+#' @return `area` returns a numeric value of the area viewed from a horizontal, in m^2.
+#'
+#' @examples
+#' library(mooring)
+#' area(float())
 #'
 #' @export
 #'
@@ -1141,7 +1151,7 @@ area <- function(m)
     }
 }
 
-#' Buoyancy of elements in mooring, expressed in kg.
+#' Get mooring/element buoyancy, expressed in kg
 #'
 #' The nonphysical unit of kg reflects a common convention used
 #' by manufacturers of oceanographic mooring equipment. For calculations
@@ -1158,11 +1168,11 @@ area <- function(m)
 #' necessitating an increase in CD for wire from 1.4 to 2.6
 #' (see captions of his figures 12 and 13).
 #'
-#' @param m an object of the `"mooring"` class.
+#' @template meTemplate
 #'
 #' @template debugTemplate
 #'
-#' @return a numeric vector of buoyancy, expressed in kg.
+#' @return `buoyancy` returns a numeric vector of buoyancy, expressed in kg.
 #'
 #' @examples
 #' library(mooring)
@@ -1195,8 +1205,4 @@ buoyancy <- function(m, debug=0L)
     mooringDebug(debug, "} # buoyancy()\n")
     rval
 }
-
-###################
-# 4. app          #
-###################
 
