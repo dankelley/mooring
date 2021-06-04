@@ -8,19 +8,15 @@ output:
     toc: true
     number_sections: true
     fig_caption: yes
-    fig_width: 3.5
-    fig_height: 3.5
+    fig.width: 4
+    fig.height: 3
     dpi: 72
-    dev.args: list(pointsize=11)
+    dev.args: list(pointsize=12)
 vignette: >
   %\VignetteIndexEntry{The mooring package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-\newcommand{\D}{{\cal D}}
-\newcommand{\B}{{\cal B}}
-\newcommand{\T}{{\cal T}}
-\newcommand{\Eq}{Equation}
 
 # Introduction
 
@@ -29,7 +25,7 @@ by horizontal currents. The theory for that deformation is laid out in the
 vignetted entitled *Mooring Response to Unidirectional Flow*, while the present
 vignette deals with using the package.
 
-# Constructing mooring objects
+# Mooring Construction
 
 Moorings are constructed with `mooring()`, the arguments of which, called
 'elemental` objects, are created by `anchor()`, `chain()`, `float()`,
@@ -66,8 +62,11 @@ Actual moorings are likely to have multiple instruments, along with multiple
 buoyancy elements, but the mooring just created is sufficient to continue the
 discussion here.
 
+**Exercise 1: Produce a table of float name and buoyancy.**
 
-# Calculating mooring shape in a current
+**Exercise 2: Plot float drag vs buoyancy, and compare with expectations.**
+
+# Knockdown Computation
 
 The `knockdown()` function is used to compute the shape of a mooring that is
 deformed by a horizontal current.  It takes just two arguments: the mooring,
@@ -87,25 +86,23 @@ mdk <- knockdown(md, u=1)
 ```
 for a 1 m/s current.
 
-# Accessing mooring shape and properties
-
 The functions `x()` and `z()` find the $x$ and $z$ locations of mooring
 elements.  Note that $z=0$ at the surface and negative in the water column; use
 `depth()` to get depth below the surface.
 
 For example, the shape of the knocked-over mooring from the previous code
 block could be plotted with
-```{r fig.width=7, fig.height=3, dev.args=list(pointsize=9)}
+```{r, fig.cap="**Mooring shape (not to scale).**", fig.align="center"}
 plot(x(mdk), z(mdk), type="l")
 ```
 
 Similarly, the tension between elements is found with `tension()`, and the angle that elements make to the vertical is found with `angle()`.
 
-# Plotting mooring
+# Plotting
 
 The plot shown above is quite primitive, so the package offers a `plot()`
 function.  For example, this gives a view of tension and shape.
-```{r fig.width=7, fig.height=3, dev.args=list(pointsize=9)}
+```{r, fig.cap="**Tension and shape diagrams created with plot() from mooring package.**", fig.align="center"}
 par(mfrow=c(1, 2))
 plot(mdk, which="tension")
 plot(mdk, which="shape")
@@ -117,13 +114,13 @@ understand the result.  Also, note that depth is plotted here, as opposed to
 the $z$ shown above.
 
 A fancier version is obtained with
-```{r fig.width=7, fig.height=3, dev.args=list(pointsize=9)}
+```{r, fig.cap="**Tension and shape, with water coloured blue and bottom coloured brown.**", fig.align="center"}
 par(mfrow=c(1, 2))
 plot(mdk, which="tension", fancy=TRUE)
 plot(mdk, which="shape", fancy=TRUE)
 ```
 
-# Interactive R-shiny app
+# Interactive App
 
 The package supplies `app()` as a convenient way to learn about the package.
 By design, it does not offer a way to make complex moorings.  For example, it
@@ -137,13 +134,14 @@ The knockdown is much higher than seen in the plots above, because the float
 buoyancy is less than for that of the default float.  (As a guide, the menus of
 app display the buoyancies of wire and float elements.)
 
-![Snapshot of the app() GUI application.](mooring_app_snapshot.png)
+```{r,fig.cap="**Snapshot of the app() GUI application.**", out.width="100%", fig.align="center", echo=FALSE}
+knitr::include_graphics("mooring_app_snapshot.png")
+```
+
+# Advanced Usage
 
 
-# Advanced usage
-
-
-## Creating new elements
+## Creating New Elements
 
 If the first argument to an element-forming function such as `float()`,
 `instrument()`, `wire()`, `instrument()`, etc., is not in the list of built-in
@@ -157,7 +155,7 @@ creates a new instrument object for something that has buoyancy -5kg (meaning
 it weighs 5kg in seawater), height 1m, area 0.1\eqn{m^2}, and drag coefficient
 1.
 
-## Altering existing elements
+## Altering Existing Elements
 
 Strumming of wires in currents can increase wire drag coefficient $C_D$ by
 perhaps a factor of 2 [@hamilton_mooring_1997;@hamilton_validation_1989], and
@@ -172,12 +170,26 @@ As a check, we may confirm that this doubles the drag for, say, a 1m/s current:
 c(drag(w, 1), drag(w2, 1))
 ```
 
-## Sensitivity analysis and mooring design
+All object types store a value for `CD`, but the other entries depend on the
+type. The simplest way to find out what is store in a given type is to create
+a sample object and study it, e.g. with
+```{r}
+str(float())
+```
 
-As an example, the following shows how the top-float knockdown is affected by
-the current.
+## Mooring Design
 
-```{r fig.cap="Dependence of knockdown on current", fig.width=4, fig.height=4, dpi=72, dev.args=list(pointsize=11)}
+A prime question in the design of a mooring is the amount of buoyancy that will
+be required to maintain an essentially upright position, despite the tendency
+of currents to knock it over.  The `mooring` package can offer guidance in this
+task.
+
+As a simplified example, imagine that a mooring is to be placed in 1 km of
+water, with a 1/4-inch jacketed wire cable connecting a subsurface float to a
+bottom anchor. How much buoyancy will be required to hold this mooring
+acceptably upright?  To answer this, we may do as follows.
+
+```{r fig.cap="**Dependence of knockdown on current.**", fig.align="center"}
 library(mooring)
 a <- anchor(depth=1000)
 w <- wire(length=900)
@@ -193,13 +205,84 @@ depths <- sapply(us, function(u)
 par(mar=c(3,3,1,1), mgp=c(2,0.7,0))
 plot(us, depths, ylim=rev(range(depths)), type="l", pch=20, cex=0.5,
      xlab="Horiz. velo. [m/s]", ylab="Float depth [m]")
-abline(h=100*c(1, 1.1), lty=2:3)
+grid()
+abline(h=100*c(1, 1.1), col=c(4,2))
 ```
 
-The dashed line shows zero knockdown, while the dotted line indicates a 10
-percent knockdown.  If the latter is taken as a limit, this suggests that more
-buoyant float would be required in this region if currents exceeded
-approximately $0.3$m/s.
+The blue and red horizontal lines indicate zero knockdown (for zero current)
+and 10 percent knockdown, respectively. The diagram suggests that if a 10 depth
+increase is taken as a design limit, that this float will be sufficient up to
+speeds of approximately $0.3$m/s.
+
+**Exercise 3: Find a float that will hold this mooring taut in 2m/s current.**
+
+
+# Solutions to Exercises
+
+## Exercise 1
+
+A table of float name and buoyancy is produced with
+```{r}
+f <- float("?") # get list of floats
+b <- unlist(lapply(f, function(x) buoyancy(float(x))))
+df <- data.frame(float=f, buoyancy=b)
+```
+and the 4 least-buoyancy entries are
+```{r}
+o <- order(df$b)
+df[o[1:4], ]
+```
+(Note that not all entries in this table are subsurface floats!)
+
+## Exercise 2
+
+We do this in three steps (see comments in the code).
+
+1. Create a data frame of floats with non-zero buoyancy and non-zero drag.
+   (The latter occurs for some floats that have insufficient information for
+   the drag computation.)
+2. Display on a log-log plot, with buoyancy, which is reported in kg, being
+   converted to Newtons by multiplying by $g=9.8$m/s$^2$.
+3. Assuming that floats have similar constitution, and spherical shape, then
+   buoyancy should scale as the cube of radius and drag to the square of
+   radius.  On this log-log plot, therefore, the data ought to lie along a line
+   of slope 2/3.
+
+```{r, fig.cap="**Float drag-buoyancy relationship.**", fig.align="center"}
+# 1
+f <- float("?") # get list of floats
+b <- unlist(lapply(f, function(x) buoyancy(float(x))))
+d <- unlist(lapply(f, function(x) drag(float(x), 1)))
+ok <- b>0 & d>0
+df <- data.frame(float=f[ok], drag=d[ok], buoyancy=b[ok])
+# 2
+plot(df$buoyancy*9.8, df$drag, xlab="Drag [N]", ylab="Buoyancy [kg]", log="xy")
+# 3
+abline(0, 2/3)
+```
+
+From the plot, it appears that there is at least some merit to the assumptions
+outlined.
+
+This sort of analysis can be useful in building intuition.  Note that larger
+floats have higher drag than small ones, which would seem to increase
+knockdown, but they also have *much* larger buoyancy.  This is why large floats
+are needed for taut moorings in high-current areas, or, of course, to suspend
+long mooring lines.
+
+## Exercise 3
+
+To find a float that will hold this mooring taut in 2m/s current, one approach
+is to use `app()`, which has a pulldown menu for the float type.  Another
+approach is to start with the table produced in Exercise 1, and try different
+float models in the code given in the "Mooring Design" section.
+
+Exploration along these lines reveals that
+```{r}
+f <- float("CDMS 2m sphere")
+```
+will suffice, as its buoyancy, `r float("CDMS 2m sphere")$buoyancy` kg,
+sufficiently exceeds the `r float()$buoyancy` kg of the default float.
 
 # References
 
