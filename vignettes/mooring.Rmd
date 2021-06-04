@@ -250,25 +250,30 @@ We do this in three steps (see comments in the code).
 
 ```{r, fig.cap="**Float drag-buoyancy relationship.**", fig.align="center"}
 # 1
-f <- float("?") # get list of floats
-b <- unlist(lapply(f, function(x) buoyancy(float(x))))
+library(mooring)
+f <- float("?")
+b <- 9.8*unlist(lapply(f, function(x) buoyancy(float(x)))) # mult. by g to get Newtons
 d <- unlist(lapply(f, function(x) drag(float(x), 1)))
 ok <- b>0 & d>0
 df <- data.frame(float=f[ok], drag=d[ok], buoyancy=b[ok])
 # 2
-plot(df$buoyancy*9.8, df$drag, xlab="Drag [N]", ylab="Buoyancy [kg]", log="xy")
+plot(df$drag, df$buoyancy, xlab="Drag Force [N]", ylab="Buoyancy Force [N]", log="xy")
 # 3
-abline(0, 2/3)
+drag <- seq(min(df$drag), max(df$drag), length.out=100)
+buoyancy <- drag^(3/2)
+lines(drag, buoyancy)
 ```
 
-From the plot, it appears that there is at least some merit to the assumptions
-outlined.
+The data cloud slope is similar to that of the indicated scaling line, created
+by assuming that drag is proportional to scale squared, while buoyancy is
+proportional to scale cubed. (Other factors are involved, so only the slope is
+of significance here.)
 
-This sort of analysis can be useful in building intuition.  Note that larger
-floats have higher drag than small ones, which would seem to increase
-knockdown, but they also have *much* larger buoyancy.  This is why large floats
-are needed for taut moorings in high-current areas, or, of course, to suspend
-long mooring lines.
+Much can be learned from computations of this sort.  For example, it reveals
+why large floats are better at producing taut moorings: the buoyancy force is
+proportional to a higher power of scale than is the drag force.  It also
+explains why advanced floats are designed to have lower drag coefficients, but
+that is another matter!
 
 ## Exercise 3
 
