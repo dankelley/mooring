@@ -105,9 +105,9 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>The <code>mooring</code> package deals with oceanographic moorings and their deformation by horizontal currents. The theory for that deformation is laid out in the vignetted entitled <em>Mooring Response to Unidirectional Flow</em>, while the present vignette deals with using the package.</p>
 </div>
-<div id="constructing-mooring-objects" class="section level1">
+<div id="mooring-construction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#constructing-mooring-objects" class="anchor"></a>Constructing mooring objects</h1>
+<a href="#mooring-construction" class="anchor"></a>Mooring Construction</h1>
 <p>Moorings are constructed with <code><a href="../reference/mooring.html">mooring()</a></code>, the arguments of which, called ’elemental<code>objects, are created by</code>anchor()<code>,</code>chain()<code>,</code>float()<code>,</code>instrument()<code>,</code>release()<code>, or</code>wire()`. These are specified from bottom to top. For example, consider a mooring in water of depth 200m, with a 150-m long wire connecting a bottom anchor to a float. This could be created with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/">mooring</a></span><span class="op">)</span>
@@ -156,10 +156,12 @@
 <p>More details on the functions are provided with e.g. <code><a href="../reference/wire.html">?wire</a></code>. Details of the objects are provided in the vignette called <em>Default Values for Mooring Elements</em>. Each element has information that the package can use to find forces that control mooring shape. The horizontal drag force at a given water speed depends on the object’s frontal area and drag coefficient. The vertical buoyancy force depends on the buoyancy of the element, which is expressed (in kg) mass equivalents (assuming <span class="math inline">\(g=9.8\)</span>m/s<span class="math inline">\(^2\)</span> for the acceleration of gravity) for discrete elements such as floats and instruments, and in buoyancy per length (in kg/m) for wires.</p>
 <p>Note that new types of wire, float, etc. can be created easily, by supplying a name that is not matched in the list of built-in values. The help pages for the various functions explain what must be specified.</p>
 <p>Actual moorings are likely to have multiple instruments, along with multiple buoyancy elements, but the mooring just created is sufficient to continue the discussion here.</p>
+<p><strong>Exercise 1: Produce a table of float name and buoyancy.</strong></p>
+<p><strong>Exercise 2: Plot float drag vs buoyancy, and compare with expectations.</strong></p>
 </div>
-<div id="calculating-mooring-shape-in-a-current" class="section level1">
+<div id="knockdown-computation" class="section level1">
 <h1 class="hasAnchor">
-<a href="#calculating-mooring-shape-in-a-current" class="anchor"></a>Calculating mooring shape in a current</h1>
+<a href="#knockdown-computation" class="anchor"></a>Knockdown Computation</h1>
 <p>The <code><a href="../reference/knockdown.html">knockdown()</a></code> function is used to compute the shape of a mooring that is deformed by a horizontal current. It takes just two arguments: the mooring, and the velocity. The latter may be a fixed value (in m/s), or a function that gives velocity as a function of depth below the water surface.</p>
 <p>But, before applying <code><a href="../reference/knockdown.html">knockdown()</a></code>, it is important to first subdivide any <code>wire</code> elements into smaller lengths, so that <code><a href="../reference/knockdown.html">knockdown()</a></code> can compute the shape more precisely. This is done with the <code><a href="../reference/discretise.html">discretise()</a></code> function. The following shows how to do this with the mooring just created.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -168,49 +170,59 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>for a 1 m/s current.</p>
-</div>
-<div id="accessing-mooring-shape-and-properties" class="section level1">
-<h1 class="hasAnchor">
-<a href="#accessing-mooring-shape-and-properties" class="anchor"></a>Accessing mooring shape and properties</h1>
 <p>The functions <code><a href="../reference/x.html">x()</a></code> and <code><a href="../reference/z.html">z()</a></code> find the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> locations of mooring elements. Note that <span class="math inline">\(z=0\)</span> at the surface and negative in the water column; use <code><a href="../reference/depth.html">depth()</a></code> to get depth below the surface.</p>
 <p>For example, the shape of the knocked-over mooring from the previous code block could be plotted with</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/x.html">x</a></span><span class="op">(</span><span class="va">mdk</span><span class="op">)</span>, <span class="fu"><a href="../reference/z.html">z</a></span><span class="op">(</span><span class="va">mdk</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span><span class="op">)</span></code></pre></div>
-<p><img src="mooring_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<div class="figure" style="text-align: center">
+<img src="mooring_files/figure-html/unnamed-chunk-5-1.png" alt="**Mooring shape (not to scale).**" width="600"><p class="caption">
+<strong>Mooring shape (not to scale).</strong>
+</p>
+</div>
 <p>Similarly, the tension between elements is found with <code><a href="../reference/tension.html">tension()</a></code>, and the angle that elements make to the vertical is found with <code>angle()</code>.</p>
 </div>
-<div id="plotting-mooring" class="section level1">
+<div id="plotting" class="section level1">
 <h1 class="hasAnchor">
-<a href="#plotting-mooring" class="anchor"></a>Plotting mooring</h1>
+<a href="#plotting" class="anchor"></a>Plotting</h1>
 <p>The plot shown above is quite primitive, so the package offers a <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function. For example, this gives a view of tension and shape.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"tension"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"shape"</span><span class="op">)</span></code></pre></div>
-<p><img src="mooring_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<div class="figure" style="text-align: center">
+<img src="mooring_files/figure-html/unnamed-chunk-6-1.png" alt="**Tension and shape diagrams created with plot() from mooring package.**" width="600"><p class="caption">
+<strong>Tension and shape diagrams created with plot() from mooring package.</strong>
+</p>
+</div>
 <p>In both instances, the gray line is the shape that would occur with no current. Note that the shape plot uses a 1:1 aspect ratio, making it easier to understand the result. Also, note that depth is plotted here, as opposed to the <span class="math inline">\(z\)</span> shown above.</p>
 <p>A fancier version is obtained with</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"tension"</span>, fancy<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"shape"</span>, fancy<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="mooring_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+<div class="figure" style="text-align: center">
+<img src="mooring_files/figure-html/unnamed-chunk-7-1.png" alt="**Tension and shape, with water coloured blue and bottom coloured brown.**" width="600"><p class="caption">
+<strong>Tension and shape, with water coloured blue and bottom coloured brown.</strong>
+</p>
 </div>
-<div id="interactive-r-shiny-app" class="section level1">
+</div>
+<div id="interactive-app" class="section level1">
 <h1 class="hasAnchor">
-<a href="#interactive-r-shiny-app" class="anchor"></a>Interactive R-shiny app</h1>
+<a href="#interactive-app" class="anchor"></a>Interactive App</h1>
 <p>The package supplies <code><a href="../reference/app.html">app()</a></code> as a convenient way to learn about the package. By design, it does not offer a way to make complex moorings. For example, it only provides an anchor-wire-float mooring, with no way (yet) to add a bottom release, instruments, floats, etc.</p>
 <p>The following is a screenshot of the case studied so far, but with a weaker surface mooring (a 20-inch diameter Hydro-float Mooring Buoy<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>). The knockdown is much higher than seen in the plots above, because the float buoyancy is less than for that of the default float. (As a guide, the menus of app display the buoyancies of wire and float elements.)</p>
-<div class="figure">
-<img src="mooring_app_snapshot.png" alt=""><p class="caption">Snapshot of the app() GUI application.</p>
+<div class="figure" style="text-align: center">
+<img src="mooring_app_snapshot.png" alt="**Snapshot of the app() GUI application.**" width="100%"><p class="caption">
+<strong>Snapshot of the app() GUI application.</strong>
+</p>
 </div>
 </div>
 <div id="advanced-usage" class="section level1">
 <h1 class="hasAnchor">
-<a href="#advanced-usage" class="anchor"></a>Advanced usage</h1>
+<a href="#advanced-usage" class="anchor"></a>Advanced Usage</h1>
 <div id="creating-new-elements" class="section level2">
 <h2 class="hasAnchor">
-<a href="#creating-new-elements" class="anchor"></a>Creating new elements</h2>
+<a href="#creating-new-elements" class="anchor"></a>Creating New Elements</h2>
 <p>If the first argument to an element-forming function such as <code><a href="../reference/float.html">float()</a></code>, <code><a href="../reference/instrument.html">instrument()</a></code>, <code><a href="../reference/wire.html">wire()</a></code>, <code><a href="../reference/instrument.html">instrument()</a></code>, etc., is not in the list of built-in types, then a new object is created. In this situation, all of the other arguments to the function must be supplied, and it should be born in mind that those arguments vary from type to type. For example,</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/instrument.html">instrument</a></span><span class="op">(</span><span class="st">"myNewInstrument"</span>, buoyancy<span class="op">=</span><span class="op">-</span><span class="fl">5</span>, height<span class="op">=</span><span class="fl">1</span>, area<span class="op">=</span><span class="fl">0.1</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
@@ -218,7 +230,7 @@
 </div>
 <div id="altering-existing-elements" class="section level2">
 <h2 class="hasAnchor">
-<a href="#altering-existing-elements" class="anchor"></a>Altering existing elements</h2>
+<a href="#altering-existing-elements" class="anchor"></a>Altering Existing Elements</h2>
 <p>Strumming of wires in currents can increase wire drag coefficient <span class="math inline">\(C_D\)</span> by perhaps a factor of 2 <span class="citation">(Hamilton, Fowler, and Belliveau 1997; Hamilton 1989)</span>, and simple way to account for that might be to use</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length<span class="op">=</span><span class="fl">100</span><span class="op">)</span> <span class="co"># default wire type</span>
@@ -228,12 +240,25 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">w</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">w2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1]  534.04 1068.08</code></pre>
-</div>
-<div id="sensitivity-analysis-and-mooring-design" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sensitivity-analysis-and-mooring-design" class="anchor"></a>Sensitivity analysis and mooring design</h2>
-<p>As an example, the following shows how the top-float knockdown is affected by the current.</p>
+<p>All object types store a value for <code>CD</code>, but the other entries depend on the type. The simplest way to find out what is store in a given type is to create a sample object and study it, e.g. with</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## List of 7
+##  $ model   : chr "Kiel SFS40in"
+##  $ source  : chr "Dewey"
+##  $ buoyancy: num 320
+##  $ height  : num 1
+##  $ diameter: num 1
+##  $ CD      : num 0.65
+##  $ area    : num 1
+##  - attr(*, "class")= chr [1:2] "mooring" "float"</code></pre>
+</div>
+<div id="mooring-design" class="section level2">
+<h2 class="hasAnchor">
+<a href="#mooring-design" class="anchor"></a>Mooring Design</h2>
+<p>A prime question in the design of a mooring is the amount of buoyancy that will be required to maintain an essentially upright position, despite the tendency of currents to knock it over. The <code>mooring</code> package can offer guidance in this task.</p>
+<p>As a simplified example, imagine that a mooring is to be placed in 1 km of water, with a 1/4-inch jacketed wire cable connecting a subsurface float to a bottom anchor. How much buoyancy will be required to hold this mooring acceptably upright? To answer this, we may do as follows.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/">mooring</a></span><span class="op">)</span>
 <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
 <span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length<span class="op">=</span><span class="fl">900</span><span class="op">)</span>
@@ -249,13 +274,75 @@
 <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0.7</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">us</span>, <span class="va">depths</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">depths</span><span class="op">)</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span>, pch<span class="op">=</span><span class="fl">20</span>, cex<span class="op">=</span><span class="fl">0.5</span>,
      xlab<span class="op">=</span><span class="st">"Horiz. velo. [m/s]"</span>, ylab<span class="op">=</span><span class="st">"Float depth [m]"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.1</span><span class="op">)</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<div class="figure">
-<img src="mooring_files/figure-html/unnamed-chunk-11-1.png" alt="Dependence of knockdown on current" width="288"><p class="caption">
-Dependence of knockdown on current
+<span class="fu"><a href="https://rdrr.io/r/graphics/grid.html">grid</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.1</span><span class="op">)</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="mooring_files/figure-html/unnamed-chunk-13-1.png" alt="**Dependence of knockdown on current.**" width="600"><p class="caption">
+<strong>Dependence of knockdown on current.</strong>
 </p>
 </div>
-<p>The dashed horizontal line shows zero knockdown, while the dotted line indicates a 10 percent knockdown. If the latter is taken as a limit, this suggests that more buoyant float would be required in this region if currents exceeded approximately <span class="math inline">\(0.3\)</span>m/s.</p>
+<p>The blue and red horizontal lines indicate zero knockdown (for zero current) and 10 percent knockdown, respectively. The diagram suggests that if a 10 depth increase is taken as a design limit, that this float will be sufficient up to speeds of approximately <span class="math inline">\(0.3\)</span>m/s.</p>
+<p><strong>Exercise 3: Find a float that will hold this mooring taut in 2m/s current.</strong></p>
+</div>
+</div>
+<div id="solutions-to-exercises" class="section level1">
+<h1 class="hasAnchor">
+<a href="#solutions-to-exercises" class="anchor"></a>Solutions to Exercises</h1>
+<div id="exercise-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#exercise-1" class="anchor"></a>Exercise 1</h2>
+<p>A table of float name and buoyancy is produced with</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"?"</span><span class="op">)</span> <span class="co"># get list of floats</span>
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">f</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/buoyancy.html">buoyancy</a></span><span class="op">(</span><span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>float<span class="op">=</span><span class="va">f</span>, buoyancy<span class="op">=</span><span class="va">b</span><span class="op">)</span></code></pre></div>
+<p>and the 4 least-buoyancy entries are</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">b</span><span class="op">)</span>
+<span class="va">df</span><span class="op">[</span><span class="va">o</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="op">]</span></code></pre></div>
+<pre><code>##              float buoyancy
+## 45 Top of Tow Rope     0.01
+## 16   Billings 12in    10.00
+## 23 FloatTech CF-12    11.00
+## 1        16in Viny    19.00</code></pre>
+<p>(Note that not all entries in this table are subsurface floats!)</p>
+</div>
+<div id="exercise-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#exercise-2" class="anchor"></a>Exercise 2</h2>
+<p>We do this in three steps (see comments in the code).</p>
+<ol style="list-style-type: decimal">
+<li>Create a data frame of floats with non-zero buoyancy and non-zero drag. (The latter occurs for some floats that have insufficient information for the drag computation.)</li>
+<li>Display on a log-log plot, with buoyancy, which is reported in kg, being converted to Newtons by multiplying by <span class="math inline">\(g=9.8\)</span>m/s<span class="math inline">\(^2\)</span>.</li>
+<li>Assuming that floats have similar constitution, and spherical shape, then buoyancy should scale as the cube of radius and drag to the square of radius. On this log-log plot, therefore, the data ought to lie along a line of slope 2/3.</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># 1</span>
+<span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"?"</span><span class="op">)</span> <span class="co"># get list of floats</span>
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">f</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/buoyancy.html">buoyancy</a></span><span class="op">(</span><span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">f</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ok</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">&gt;</span><span class="fl">0</span> <span class="op">&amp;</span> <span class="va">d</span><span class="op">&gt;</span><span class="fl">0</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>float<span class="op">=</span><span class="va">f</span><span class="op">[</span><span class="va">ok</span><span class="op">]</span>, drag<span class="op">=</span><span class="va">d</span><span class="op">[</span><span class="va">ok</span><span class="op">]</span>, buoyancy<span class="op">=</span><span class="va">b</span><span class="op">[</span><span class="va">ok</span><span class="op">]</span><span class="op">)</span>
+<span class="co"># 2</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">buoyancy</span><span class="op">*</span><span class="fl">9.8</span>, <span class="va">df</span><span class="op">$</span><span class="va">drag</span>, xlab<span class="op">=</span><span class="st">"Drag [N]"</span>, ylab<span class="op">=</span><span class="st">"Buoyancy [kg]"</span>, log<span class="op">=</span><span class="st">"xy"</span><span class="op">)</span>
+<span class="co"># 3</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="mooring_files/figure-html/unnamed-chunk-16-1.png" alt="**Float drag-buoyancy relationship.**" width="600"><p class="caption">
+<strong>Float drag-buoyancy relationship.</strong>
+</p>
+</div>
+<p>From the plot, it appears that there is at least some merit to the assumptions outlined.</p>
+<p>This sort of analysis can be useful in building intuition. Note that larger floats have higher drag than small ones, which would seem to increase knockdown, but they also have <em>much</em> larger buoyancy. This is why large floats are needed for taut moorings in high-current areas, or, of course, to suspend long mooring lines.</p>
+</div>
+<div id="exercise-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#exercise-3" class="anchor"></a>Exercise 3</h2>
+<p>To find a float that will hold this mooring taut in 2m/s current, one approach is to use <code><a href="../reference/app.html">app()</a></code>, which has a pulldown menu for the float type. Another approach is to start with the table produced in Exercise 1, and try different float models in the code given in the “Mooring Design” section.</p>
+<p>Exploration along these lines reveals that</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"CDMS 2m sphere"</span><span class="op">)</span></code></pre></div>
+<p>will suffice, as its buoyancy, 2470 kg, sufficiently exceeds the 320 kg of the default float.</p>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">
