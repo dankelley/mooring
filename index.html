@@ -92,7 +92,7 @@
 <a href="#mooring" class="anchor"></a>mooring</h1></div>
 <!-- badges: start -->
 
-<!-- badges: end -->
+<p><a href="https://codecov.io/gh/dankelley/mooring?branch=main"><img src="https://codecov.io/gh/dankelley/mooring/branch/main/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
 <p>The goal of mooring is to facilitate computations of the extent of ‘knockdown’ of oceanographic moorings caused by ocean currents.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -108,7 +108,6 @@
 <p>This following shows how to assess the knockdown of a 20-inch float atop 100m of wire in a 0.5 m/s (roughly 1-knot) current. As an exercise, try increasing the current to 1 m/s to see how much further the float gets knocked down. Then try some other float types, using <code><a href="reference/float.html">float("?")</a></code> to get a list of the types that are supported.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/">mooring</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: shiny</span>
 <span class="co"># Design a mooring with a 20-inch float attached to a bottom anchor with 100m of wire cable.</span>
 <span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">120</span><span class="op">)</span>, <span class="fu"><a href="reference/wire.html">wire</a></span><span class="op">(</span>length<span class="op">=</span><span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="reference/float.html">float</a></span><span class="op">(</span><span class="st">"HMB 20"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
