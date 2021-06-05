@@ -781,15 +781,19 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
                 cat("i=", i, " (float at xi=", xi, ", zi=", zi, ")\n")
             points(xi, -zi, pch=20, cex=1.4)
             text(xi, -zi, "F", pos=4)
-            if (showDepths)
-                text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
+            if (showDepths) {
+                if (abs(zi) < 1) text(xi, -zi, sprintf("%.3fm", -zi), pos=2)
+                else text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
+            }
         } else if (type == "instrument") {
             if (debug)
                 cat("i=", i, " (instrument at xi=", xi, ", zi=", zi, ")\n")
             points(xi, -zi, pch=20, cex=1.4)
             text(xi, -zi, "I", pos=4)
-            if (showDepths)
-                text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
+            if (showDepths) {
+                if (abs(zi) < 1) text(xi, -zi, sprintf("%.3fm", -zi), pos=2)
+                else text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
+            }
          } else if (type == "wire") {
             #> message("draw wire??")
         }
