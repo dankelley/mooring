@@ -389,7 +389,9 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
         if (is.null(CD)) stop("must supply CD, if creating a new float model")
         source <- ""
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, area=height*diameter)
+    # Floats are assumed to be circular in the flow direction, following
+    # Dewey's convention, so the area is pi*radius^2.
+    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, area=pi*(diameter/2)^2)
     class(rval) <- c("mooring", "float")
     rval
 }                                      # float()

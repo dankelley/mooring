@@ -35,9 +35,9 @@ the drag computation).
 Note that \code{height} is ignored if \code{model} is recognized.}
 
 \item{diameter}{numeric value for the diameter (in m)
-of the element as viewed from above.
-This is multiplied by \code{height} to compute the
-area of the element, as part of the drag computation.
+of the element as viewed from a horizontal direction.
+This is used to compute area, for drag calculations, as
+pi*(diameter/2)^2.
 Note that \code{diameter} is ignored if \code{model} is recognized.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
