@@ -23,13 +23,13 @@ app <- function()
     dewey2021 <- "Dewey, Richard. \"Mooring Design and Dynamics.\" Accessed May 15, 2021.  http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php"
     indent <- paste0(rep("&nbsp;", 8), collapse="")
     help <- paste0("Use sliders and pulldown menus to adjust conditions. Click the <b>Code</b> button to see code to reproduce the simulation. To learn more about the properties of a given float or wire, open an R console and type e.g. <br>", indent, "<tt>float(\"Kiel SFS40in\")</tt><br>or<br>", indent, "<tt>wire(\"1/4in wire/jack\")</tt><br>A list of float types is obtained with <br>", indent, "<tt>float(\"?\")</tt><br>and <br>", indent, "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Deweey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>", dewey1999, "</li><li>", dewey2021, "</li></ul>")
-    ui <- shiny::fluidPage(shiny::tags$style(shiny::HTML("body {font-family: 'Arial'; font-size: 12px; margin-left:1ex}")),
+    ui <- shiny::fluidPage(shiny::tags$style(shiny::HTML("body {font-family: 'Arial'; font-size: 10px; margin-left:1ex}")),
                            shiny::fluidRow(shiny::column(5, shiny::sliderInput("waterDepth",
                                                                                shiny::h6("Water Depth [m]"),
-                                                                               min=10,  max=1000, value=200, step=1)),
+                                                                               min=10.0,  max=1000.0, value=200.0, step=1)),
                                            shiny::column(5, shiny::sliderInput("u",
                                                                                shiny::h6("Current [m/s]"),
-                                                                               min=0, max=5,  value=0.5, step=0.05)),
+                                                                               min=0.0, max=5.0, value=0.5, step=0.05)),
 
                                            shiny::column(2, shiny::selectInput("currentModel", "Current Model",
                                                                                choices=c("Constant",
@@ -90,7 +90,7 @@ app <- function()
                            })
 
         output$wireLength <- shiny::renderUI({
-            shiny::sliderInput("wireLength", "Wire Length [m]", min=1, max=input$waterDepth, value=input$waterDepth, step=1)
+            shiny::sliderInput("wireLength", "Wire Length [m]", min=1.0, max=input$waterDepth, value=input$waterDepth, step=1.0)
         })
 
         output$wireType <- shiny::renderUI({
@@ -115,7 +115,7 @@ app <- function()
                 u <- input$u
                 wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
                 floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
-                message("currentModel='", input$currentModel, "'")
+                #> message("currentModel='", input$currentModel, "'")
                 #> message("waterDepth=", waterDepth)
                 #> message("  wireLength=", wireLength)
                 #> message("  u=", u)
