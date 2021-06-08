@@ -52,6 +52,7 @@ anchor("?")
 \seealso{
 Other functions that create mooring objects: 
 \code{\link{chain}()},
+\code{\link{connector}()},
 \code{\link{float}()},
 \code{\link{instrument}()},
 \code{\link{release}()},

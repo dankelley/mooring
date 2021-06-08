@@ -43,14 +43,27 @@ knitr::kable(mooringElements$anchors[o,], row.names=FALSE)
 
 ## Chain characteristics
 
-The `buoyancy` values are in kg, while `height` and `width` are in m, and `CD`
-is unitless.  The `code` values are listed for data from Dewey only, and they
-are not used in this package.
+The `buoyancyPerMeter` values are in kg/m, while `height` and `width` are in m,
+and `CD` is unitless.  The `code` values are listed for data from Dewey only,
+and they are not used in this package.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
 o <- order(mooringElements$chains$name)
 knitr::kable(mooringElements$chains[o,], row.names=FALSE)
+```
+
+
+## Connector characteristics
+
+The `buoyancy` values are in kg, while `height` and `width` are in m, and `CD`
+is unitless.  Not all data sources list `height` and `width` (or comparable values) and so zeros are used in such instances.  Since the only use of these values in the package are to compute area, for a drag calculation, and since the drag on floats and wires is likely to exceed that on small elements, this zeroing-out may not pose a large problem. The `code` values are listed for data from Dewey only, and they
+are not used in this package.
+
+```{r echo=FALSE}
+data(mooringElements, package="mooring")
+o <- order(mooringElements$connectors$name)
+knitr::kable(mooringElements$connectors[o,], row.names=FALSE)
 ```
 
 

@@ -1,11 +1,18 @@
 ---
 title: Ingesting object data from a BIO excel file
 author: Dan Kelley
-date: 2021-05-28
+date: 2021-05-28 and 2021-06-08
 output:
     toc: true
     number_sections: true
 ---
+
+# Document Revisions
+
+1. 2021-06-08 (thanks to @formulafunracing and @clayton33 for advice on this)
+   1. Move discrete chain items like shackles to a new entity, "connector".
+      Those objects will have `height` and `width`.
+   2. Make `chain` objects have `length`, not `height`.
 
 # Introduction
 
@@ -26,9 +33,11 @@ in others.  And I change groups of multiple spaces into single spaces.
 
 # Details
 
-## `chains_bio.csv`
+## `chains_bio.csv` and `connectors_bio.csv`
 
-These are green-background in the excel file, rows 7 through 12.
+These are green-background in the excel file, rows 7 through 12. I put `5/8"
+galvanized chain` (row 11) into `chains_bio.csv` and the rest into
+`connectors_bio.csv`.
 
 ### `buoyancy`
 
@@ -63,6 +72,12 @@ datasets, and orders by name.
 
 ```{r}
 knitr::kable(read.csv("chains_bio.csv"))
+```
+
+and here are the connectors:
+
+```{r}
+knitr::kable(read.csv("connectors_bio.csv"))
 ```
 
 
