@@ -145,10 +145,10 @@ either by looking up a known object from the database, or defining a new type.</
 
     <pre class="usage"><span class='fu'>chain</span><span class='op'>(</span>
   model <span class='op'>=</span> <span class='st'>"1in buoy chain"</span>,
-  buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
-  height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  buoyancyPerMeter <span class='op'>=</span> <span class='cn'>NULL</span>,
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
-  CD <span class='op'>=</span> <span class='cn'>NULL</span>
+  CD <span class='op'>=</span> <span class='cn'>NULL</span>,
+  length <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -167,19 +167,10 @@ values specified in the other arguments (all of which must
 be supplied).</p></td>
     </tr>
     <tr>
-      <th>buoyancy</th>
-      <td><p>numeric value indicating buoyancy.  For
-wire elements, this is buoyancy per length, expressed in kg/m.
-For other elements, it is buoyancy, expressed in kg.
-Note that <code>buoyancy</code> is ignored if <code>model</code> is recognized.</p></td>
-    </tr>
-    <tr>
-      <th>height</th>
-      <td><p>numeric value for the height (in m) of the element.
-This value is used in the computation of (a) the mooring geometry
-and (b) the area of the element (which is in turn used in
-the drag computation).
-Note that <code>height</code> is ignored if <code>model</code> is recognized.</p></td>
+      <th>buoyancyPerMeter</th>
+      <td><p>numeric value indicating buoyancy per meter
+of length, expressed as kg/m.
+Note that <code>buoyancyPerMeter</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -194,6 +185,10 @@ Note that <code>width</code> is ignored if <code>model</code> is recognized.</p>
       <td><p>numeric value (unitless) for the drag coefficient.
 Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
+    <tr>
+      <th>length</th>
+      <td><p>(mandatory) numeric value indicating the length (in m) of the wire.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -203,6 +198,7 @@ Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></t
 
     <div class='dont-index'><p>Other functions that create mooring objects: 
 <code><a href='anchor.html'>anchor</a>()</code>,
+<code><a href='connector.html'>connector</a>()</code>,
 <code><a href='float.html'>float</a>()</code>,
 <code><a href='instrument.html'>instrument</a>()</code>,
 <code><a href='release.html'>release</a>()</code>,
@@ -215,21 +211,10 @@ Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></t
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
 <span class='co'># List known chain types</span>
 <span class='fu'>chain</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "1/2in buoy chain"         "1/2in chain LL"          
-#&gt;  [3] "1/2in chain SL"           "1/2in galv link"         
-#&gt;  [5] "1/2in shac+3/8in shac"    "1/2in shackle"           
-#&gt;  [7] "1/2in SS link"            "1/2in swivel"            
-#&gt;  [9] "1/4in chain SL"           "1/4in nicopress sleeve"  
-#&gt; [11] "1in buoy chain"           "1in chain SL"            
-#&gt; [13] "1in shackle"              "3/4in buoy chain"        
-#&gt; [15] "3/4in shackle"            "3/4in swivel"            
-#&gt; [17] "3/8in buoy chain"         "3/8in chain SL"          
-#&gt; [19] "3/8in shackle"            "3T SeineSwivel"          
-#&gt; [21] "5/16in heavy ss thimbles" "5/8in buoy chain"        
-#&gt; [23] "5/8in galvanized chain"   "5/8in shackle"           
-#&gt; [25] "7/16in shackle"           "ballast weight"          
-#&gt; [27] "shac-3link-shac"          "shac-Pring-shac"         
-#&gt; [29] "shac-ring-shac"           "swivel"                  </div><div class='input'>
+</div><div class='output co'>#&gt;  [1] "1/2in buoy chain"       "1/2in chain LL"         "1/2in chain SL"        
+#&gt;  [4] "1/4in chain SL"         "1in buoy chain"         "1in chain SL"          
+#&gt;  [7] "3/4in buoy chain"       "3/8in buoy chain"       "3/8in chain SL"        
+#&gt; [10] "5/8in buoy chain"       "5/8in galvanized chain"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

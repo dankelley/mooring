@@ -128,7 +128,112 @@
 <div id="chain-characteristics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#chain-characteristics" class="anchor"></a>Chain characteristics</h2>
-<p>The <code>buoyancy</code> values are in kg, while <code>height</code> and <code>width</code> are in m, and <code>CD</code> is unitless. The <code>code</code> values are listed for data from Dewey only, and they are not used in this package.</p>
+<p>The <code>buoyancyPerMeter</code> values are in kg/m, while <code>height</code> and <code>width</code> are in m, and <code>CD</code> is unitless. The <code>code</code> values are listed for data from Dewey only, and they are not used in this package.</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">name</th>
+<th align="right">buoyancyPerMeter</th>
+<th align="right">width</th>
+<th align="right">CD</th>
+<th align="right">code</th>
+<th align="left">source</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1/2in buoy chain</td>
+<td align="right">-3.070</td>
+<td align="right">0.0250</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">1/2in chain LL</td>
+<td align="right">-3.100</td>
+<td align="right">0.0300</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">1/2in chain SL</td>
+<td align="right">-4.120</td>
+<td align="right">0.0300</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">1/4in chain SL</td>
+<td align="right">-1.690</td>
+<td align="right">0.0150</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">1in buoy chain</td>
+<td align="right">-12.250</td>
+<td align="right">0.0500</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">1in chain SL</td>
+<td align="right">-13.000</td>
+<td align="right">0.0400</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">3/4in buoy chain</td>
+<td align="right">-6.870</td>
+<td align="right">0.0400</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">3/8in buoy chain</td>
+<td align="right">-1.677</td>
+<td align="right">0.0200</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">3/8in chain SL</td>
+<td align="right">-2.330</td>
+<td align="right">0.0220</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="even">
+<td align="left">5/8in buoy chain</td>
+<td align="right">-4.730</td>
+<td align="right">0.0350</td>
+<td align="right">1.3</td>
+<td align="right">1</td>
+<td align="left">Dewey</td>
+</tr>
+<tr class="odd">
+<td align="left">5/8in galvanized chain</td>
+<td align="right">-4.323</td>
+<td align="right">0.0572</td>
+<td align="right">1.3</td>
+<td align="right">NA</td>
+<td align="left">BIO</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="connector-characteristics" class="section level2">
+<h2 class="hasAnchor">
+<a href="#connector-characteristics" class="anchor"></a>Connector characteristics</h2>
+<p>The <code>buoyancy</code> values are in kg, while <code>height</code> and <code>width</code> are in m, and <code>CD</code> is unitless. Not all data sources list <code>height</code> and <code>width</code> (or comparable values) and so zeros are used in such instances. Since the only use of these values in the package are to compute area, for a drag calculation, and since the drag on floats and wires is likely to exceed that on small elements, this zeroing-out may not pose a large problem. The <code>code</code> values are listed for data from Dewey only, and they are not used in this package.</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">name</th>
@@ -141,33 +246,6 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">1/2in buoy chain</td>
-<td align="right">-3.070</td>
-<td align="right">1.000</td>
-<td align="right">0.0250</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
-<tr class="even">
-<td align="left">1/2in chain LL</td>
-<td align="right">-3.100</td>
-<td align="right">1.000</td>
-<td align="right">0.0300</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
-<tr class="odd">
-<td align="left">1/2in chain SL</td>
-<td align="right">-4.120</td>
-<td align="right">1.000</td>
-<td align="right">0.0300</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
-<tr class="even">
 <td align="left">1/2in galv link</td>
 <td align="right">-0.200</td>
 <td align="right">0.100</td>
@@ -176,7 +254,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">1/2in shac+3/8in shac</td>
 <td align="right">-0.425</td>
 <td align="right">0.120</td>
@@ -185,7 +263,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">1/2in shackle</td>
 <td align="right">-0.300</td>
 <td align="right">0.080</td>
@@ -194,7 +272,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">1/2in SS link</td>
 <td align="right">-0.200</td>
 <td align="right">0.100</td>
@@ -203,20 +281,11 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">1/2in swivel</td>
 <td align="right">-0.650</td>
 <td align="right">0.140</td>
 <td align="right">0.0500</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
-<tr class="odd">
-<td align="left">1/4in chain SL</td>
-<td align="right">-1.690</td>
-<td align="right">1.000</td>
-<td align="right">0.0150</td>
 <td align="right">1.3</td>
 <td align="right">1</td>
 <td align="left">Dewey</td>
@@ -231,24 +300,6 @@
 <td align="left">BIO</td>
 </tr>
 <tr class="odd">
-<td align="left">1in buoy chain</td>
-<td align="right">-12.250</td>
-<td align="right">1.000</td>
-<td align="right">0.0500</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
-<tr class="even">
-<td align="left">1in chain SL</td>
-<td align="right">-13.000</td>
-<td align="right">1.000</td>
-<td align="right">0.0400</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
-<tr class="odd">
 <td align="left">1in shackle</td>
 <td align="right">-2.200</td>
 <td align="right">0.080</td>
@@ -258,15 +309,6 @@
 <td align="left">Dewey</td>
 </tr>
 <tr class="even">
-<td align="left">3/4in buoy chain</td>
-<td align="right">-6.870</td>
-<td align="right">1.000</td>
-<td align="right">0.0400</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
-<tr class="odd">
 <td align="left">3/4in shackle</td>
 <td align="right">-0.880</td>
 <td align="right">0.060</td>
@@ -275,7 +317,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">3/4in swivel</td>
 <td align="right">-1.500</td>
 <td align="right">0.140</td>
@@ -284,25 +326,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="odd">
-<td align="left">3/8in buoy chain</td>
-<td align="right">-1.677</td>
-<td align="right">1.000</td>
-<td align="right">0.0200</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
 <tr class="even">
-<td align="left">3/8in chain SL</td>
-<td align="right">-2.330</td>
-<td align="right">1.000</td>
-<td align="right">0.0220</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
-<tr class="odd">
 <td align="left">3/8in shackle</td>
 <td align="right">-0.125</td>
 <td align="right">0.040</td>
@@ -311,7 +335,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">3T SeineSwivel</td>
 <td align="right">-0.650</td>
 <td align="right">0.105</td>
@@ -320,8 +344,8 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="odd">
-<td align="left">5/16in heavy ss thimbles</td>
+<tr class="even">
+<td align="left">5/16in heavy SS thimbles</td>
 <td align="right">-0.041</td>
 <td align="right">0.000</td>
 <td align="right">0.0000</td>
@@ -329,25 +353,7 @@
 <td align="right">NA</td>
 <td align="left">BIO</td>
 </tr>
-<tr class="even">
-<td align="left">5/8in buoy chain</td>
-<td align="right">-4.730</td>
-<td align="right">1.000</td>
-<td align="right">0.0350</td>
-<td align="right">1.3</td>
-<td align="right">1</td>
-<td align="left">Dewey</td>
-</tr>
 <tr class="odd">
-<td align="left">5/8in galvanized chain</td>
-<td align="right">-4.323</td>
-<td align="right">1.000</td>
-<td align="right">0.0572</td>
-<td align="right">1.3</td>
-<td align="right">NA</td>
-<td align="left">BIO</td>
-</tr>
-<tr class="even">
 <td align="left">5/8in shackle</td>
 <td align="right">-0.650</td>
 <td align="right">0.065</td>
@@ -356,7 +362,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">7/16in shackle</td>
 <td align="right">-0.150</td>
 <td align="right">0.000</td>
@@ -365,7 +371,7 @@
 <td align="right">NA</td>
 <td align="left">BIO</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ballast weight</td>
 <td align="right">-45.408</td>
 <td align="right">1.000</td>
@@ -374,7 +380,7 @@
 <td align="right">NA</td>
 <td align="left">BIO</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">shac-3link-shac</td>
 <td align="right">-1.000</td>
 <td align="right">0.400</td>
@@ -383,7 +389,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">shac-Pring-shac</td>
 <td align="right">-0.500</td>
 <td align="right">0.200</td>
@@ -392,7 +398,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">shac-ring-shac</td>
 <td align="right">-0.750</td>
 <td align="right">0.300</td>
@@ -401,7 +407,7 @@
 <td align="right">1</td>
 <td align="left">Dewey</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">swivel</td>
 <td align="right">-0.953</td>
 <td align="right">0.000</td>

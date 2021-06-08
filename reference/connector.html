@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a mooring-release object — release • mooring</title>
+<title>Create a connector object — connector • mooring</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Create a mooring-release object — release" />
-<meta property="og:description" content="Create a mooring-release object,
+<meta property="og:title" content="Create a connector object — connector" />
+<meta property="og:description" content="Create an object that describes mooring connector such as shackles,
 either by looking up a known object from the database, or defining a new type." />
 
 
@@ -133,18 +133,18 @@ either by looking up a known object from the database, or defining a new type." 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a mooring-release object</h1>
+    <h1>Create a connector object</h1>
     <small class="dont-index">Source: <a href='https://github.com/dankelley/mooring/blob/master/R/mooring.R'><code>R/mooring.R</code></a></small>
-    <div class="hidden name"><code>release.Rd</code></div>
+    <div class="hidden name"><code>connector.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a mooring-release object,
+    <p>Create an object that describes mooring connector such as shackles,
 either by looking up a known object from the database, or defining a new type.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>release</span><span class='op'>(</span>
-  model <span class='op'>=</span> <span class='st'>"eg&amp;g 723a"</span>,
+    <pre class="usage"><span class='fu'>connector</span><span class='op'>(</span>
+  model <span class='op'>=</span> <span class='st'>"swivel"</span>,
   buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
   height <span class='op'>=</span> <span class='cn'>NULL</span>,
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -156,13 +156,13 @@ either by looking up a known object from the database, or defining a new type.</
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>character value indicating the type of release.
+      <td><p>character value indicating the type of connector.
 There are three possibilities for <code>model</code>.
 (1) If this is <code>"?"</code>, then the function returns a vector of permitted
 character values. (2) If it is recognized, i.e. if that type is
 stored in <code><a href='https://rdrr.io/r/utils/data.html'>data(mooringElements)</a></code>, then the that stored value
 is used, and all other arguments to this function are ignored.
-(3) Otherwise, a new release object is created, using
+(3) Otherwise, a new connector object is created, using
 values specified in the other arguments (all of which must
 be supplied).</p></td>
     </tr>
@@ -198,15 +198,24 @@ Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></t
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>release</code> returns an object of the <code>"mooring"</code> class and <code>"release"</code> subclass.</p>
+    <p><code>connector</code> returns an object of the <code>"mooring"</code> class and <code>"connector"</code> subclass.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Many of the built-in items have <code>height</code> and <code>width</code> defined
+to be zero, because the sources did not list these things.  Likely, this is not
+terribly important, because these values are only used in computing drag, and
+connectors tend to be small, and are not likely to have significant drag compared
+with tens or hundreds of meters of wire, or with large floats.</p>
+<p>Also, it is worth noting that there are built-in connector objects that might not
+be thought of as connectors, e.g. <code>"ballast weight"</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions that create mooring objects: 
 <code><a href='anchor.html'>anchor</a>()</code>,
 <code><a href='chain.html'>chain</a>()</code>,
-<code><a href='connector.html'>connector</a>()</code>,
 <code><a href='float.html'>float</a>()</code>,
 <code><a href='instrument.html'>instrument</a>()</code>,
+<code><a href='release.html'>release</a>()</code>,
 <code><a href='wire.html'>wire</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -214,11 +223,18 @@ Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></t
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
-<span class='co'># List known wire types</span>
-<span class='fu'>release</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "benthos 865a release"           "benthos 965a release"          
-#&gt; [3] "benthos 966a and 866a release"  "EG&amp;G 723a"                     
-#&gt; [5] "EG&amp;G 723a with tension bar"     "vr2w release with float collar"</div><div class='input'>
+<span class='co'># List known chain types</span>
+<span class='fu'>connector</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "1/2in galv link"          "1/2in shac+3/8in shac"   
+#&gt;  [3] "1/2in shackle"            "1/2in SS link"           
+#&gt;  [5] "1/2in swivel"             "1/4in nicopress sleeve"  
+#&gt;  [7] "1in shackle"              "3/4in shackle"           
+#&gt;  [9] "3/4in swivel"             "3/8in shackle"           
+#&gt; [11] "3T SeineSwivel"           "5/16in heavy SS thimbles"
+#&gt; [13] "5/8in shackle"            "7/16in shackle"          
+#&gt; [15] "ballast weight"           "shac-3link-shac"         
+#&gt; [17] "shac-Pring-shac"          "shac-ring-shac"          
+#&gt; [19] "swivel"                  </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
