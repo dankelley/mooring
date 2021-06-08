@@ -1,0 +1,166 @@
+---
+title: Test Case with Table Tennis Ball
+author: "Dan Kelley (https://orcid.org/0000-0001-7808-5911)"
+date: "`r Sys.Date()`"
+bibliography: mooring.bib
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+    fig_caption: yes
+    fig_width: 7
+    fig_height: 4
+    dpi: 72
+    dev.args: list(pointsize=11)
+vignette: >
+  %\VignetteIndexEntry{Test Case with Table Tennis Ball}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+**Abstract.** This vignette outlines a test of the model against theory for a
+very simple mooring, and ends with an idea for an instrument to measure flow
+based on mooring dynamics.
+
+# Introduction
+
+As a test of the `mooring` code, and a possible motivation for a simple
+experiment, consider a table-tennis ball attached with a thin fishing line to a
+solid immovable object. These balls are very buoyant in water, consisting of a
+light and thin material with air inside. By contrast, fishing line is nearly
+neutrally buoyant in water.  The area of the ball will appreciably exceed that
+of the line, unless the line is very long, and therefore the drag on the ball
+will be much larger than the drag on the line.
+
+# Theory
+
+For simplicity, we may assume that the line has zero drag, and zero buoyancy.
+
+Let $L$ be the length of the line and $R$ the radius of the ball. Let the water
+density be $\rho$.  Assuming that the density of the ball (and air inside) is
+much less than water density, we may approximate the ball buoyancy force as
+\begin{equation}
+B = \frac{4}{3}\pi \rho g R^3
+\end{equation}
+where $g$ is the acceleration due to gravity.  The drag on the ball may be
+approximated as
+\begin{equation}
+D = \frac{1}{2} C_D \rho \pi R^2 u^2
+\end{equation}
+where $C_D$ is a drag coefficient and $u$ is the water speed in the $x$ direction.
+
+We assume a steady state. If $T$ represents tension in the fishing line, and
+$\phi$ the angle the line makes to the vertical, then force balance in the
+horizontal and vertical directions requires that
+\begin{equation}
+T\sin\phi = D
+\end{equation}
+and
+\begin{equation}
+T\cos\phi = B
+\end{equation}
+respectively.  Dividing these yields
+\begin{equation}
+\phi = \tan^{-1}\frac{D}{B}
+\end{equation}
+
+From the above, it follows that tension in the line is
+\begin{equation}
+T = \frac{B}{\cos\phi}
+\end{equation}
+and that the ball is at position
+\begin{equation}
+x' = L\sin\phi
+\end{equation}
+and that it is at height
+\begin{equation}
+z' = L - L\cos\phi
+\end{equation}
+above the bottom.
+
+It is easy to imagine an experimental setup in which $x'$ might be measured
+(replace the anchor with a rod held vertical in the water column, with the line
+attached at the bottom, and sight downwards to get the distance of the float
+from the rod).
+
+# Test
+
+The predictions can be tested against the `knockdown()` function as follows.
+This imagines a river of depth 0.5m (about knee-deep) and a 1m/s current (about
+walking speed).  Note that the prediction of the `mooring` code matches
+that (circled in blue) of the formulae given above.
+
+```{r}
+library(testthat)
+L <- 0.5                               # tank depth, m
+diameter <- 0.04 # ping-pong balls have 40mm diameter
+R <- diameter / 2
+area <- pi*R^2
+volume <- 4/3*pi*R^3
+rho <- 1027
+deltaRho <- rho                        # water vs air (round numbers)
+g <- 9.8
+Bkg <- deltaRho * volume # kg
+B <- g * Bkg
+CD <- 1
+u <- 0.5                               # speed, m/s
+D <- 0.5 * CD * area * rho * u^2
+phi <- atan2(D, B)
+x <- L * sin(phi)
+l <- L * cos(phi)
+T <- B / cos(phi)
+
+library(mooring)
+f <- float("pingpong", Bkg, height=0, diameter=2*R, CD=1)
+expect_equal(Bkg, buoyancy(f))
+expect_equal(D, drag(f, u=u))
+
+w <- wire("gossamer", length=L, buoyancyPerMeter=0, CD=0, diameter=0)
+a <- anchor("fake", buoyancy=-1000, height=0, depth=L)
+m <- mooring(a, w, f)
+
+n <- 500 # number of sub-segments to use
+md <- discretise(m, L/n)
+mdk <- knockdown(md, u=u)
+plot(mdk, fancy=TRUE)
+# Check against theory
+points(x, L-l, col=2, cex=2)
+```
+
+# Results
+
+```{r,echo=FALSE}
+xcm <- 100 * tail(x(mdk),1)
+zcm <- -100 * tail(z(mdk),1)
+```
+
+The theory and the calculations using `knockdown()` agree well.  There are
+three main observables that might be part of an experiment to test this in a
+natural environment.
+
+1. The horizontal shift of the float, $x'$.  Here, a $`r u`$ m/s current is
+   predicted to yield $x'=`r sprintf("%.1f",xcm)`$ cm.
+2. The vertical float displacement over the zero-velocity case, $z'$. Here, the
+   prediction is $`r sprintf("%.1f",zcm)`$ cm.
+3. The tension in the line, $T$.  The prediction is $`r round(T,3)`$ Newtons,
+   equivalent to `r round(1000*T/g,1)` g.
+
+# Measuring currents
+
+Any of $x'$, $z'$ and $T$ could be measured in a classroom or laboratory
+setting, although it might be harder to measure the tension force in the field,
+so a field apparatus should focus on measuring $x'$ and $x'$.  This would not
+be difficult, for this range of current, using a metre-stick, to which is
+attached a table-tennis ball with 1 m of thin mono-filament fishing line.  A
+value of $z'$ could be obtained by lowering the rod slowly, until the float
+just sinks below the surface, and observing water level on the stick's distance
+markings.  A value of $x'$ could be obtained with a second meter stick held
+horizontally so that the ball position could be observed from overhead.
+
+In a laboratory setting, or with a bit of engineering for a field setting, the
+tension could be measured.  An advantage of that method would be that it could
+be digitized and, using a microcontroller to do the calculations shown here, a
+readout could show the current speed.
+
+
+
