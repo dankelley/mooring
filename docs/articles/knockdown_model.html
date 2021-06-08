@@ -66,7 +66,7 @@
       <a href="../articles/object_orientation.html">Object-orientation Scheme</a>
     </li>
     <li>
-      <a href="../articles/pingpong.html">Test Case with Table Tennis Ball</a>
+      <a href="../articles/table_tennis.html">Test Case with Table Tennis Ball</a>
     </li>
   </ul>
 </li>
@@ -94,7 +94,7 @@
       <h1 data-toc-skip>Mooring Response to Unidirectional Flow</h1>
                         <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-05</h4>
+            <h4 class="date">2021-06-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/knockdown_model.Rmd"><code>vignettes/knockdown_model.Rmd</code></a></small>
       <div class="hidden name"><code>knockdown_model.Rmd</code></div>
@@ -106,7 +106,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Anchored oceanographic mooring lines are deformed by currents, in much the same way as trees are bent by wind. For very simple moorings, e.g. consisting of a single float connected by a uniform cable to an anchor at the bottom, the deformation can be calculated if the current is uniform. The physics is analogous to the sagging of telephone lines between poles, and falls into the general category of a catenary. However, things are more complicated for depth-varying currents, and for mooring lines that consist of many elements, of varying buoyancy and drag, connected by wires, chains, etc., of varying buoyancy and drag.</p>
+<p>Anchored oceanographic mooring lines are deformed by currents, in much the same way as trees are bent by wind. For very simple moorings, e.g. consisting of a single float connected by a uniform cable to an anchor at the bottom, the deformation can be calculated if the current is uniform. The physics is analogous to the sagging of telephone lines between poles, and falls into the general category of a catenary. However, things are more complicated for depth-varying currents, and for mooring lines that consist of many elements, of varying buoyancy and drag, connected by wires, chains, etc., that are also of varying buoyancy and drag.</p>
 <p>An approach to analysing realistic oceanographic moorings is to use lumped-mass theory, in which elements such as floats and instrument packages are parameterized by their buoyancy and drag characteristics, and in which cables envisioned as connected line elements. This approach was taken by <span class="citation">Dewey (1999)</span> in a GUI-based Matlab system. The present treatment is of similar foundation, although with some added simplifications (such as unidirectional current) that are relevant to the basic problem of computing “knock-down,” i.e. the vertical displacement of instruments that is caused by slanting of the mooring line.</p>
 </div>
 <div id="model" class="section level1">
@@ -120,6 +120,9 @@
 <li>A measure of buoyancy force divided by <span class="math inline">\(g\)</span>, the acceleration due to gravity. For a solid object, this is a simple number, expressed in kg, and denoted <span class="math inline">\(m_i\)</span> below. For a cable, it is expressed per unit length of cable, i.e. in kg/m, and denoted <span class="math inline">\(\mu_i\)</span> below. Manufacturers tend to provide <span class="math inline">\(m\)</span> or <span class="math inline">\(\mu\)</span> values in technical documentation about mooring components. Note that they refer to in-water buoyancy force, but the distinction between freshwater and seawater is seldom made clear.</li>
 <li>Drag coefficient, <span class="math inline">\(C_i\)</span>, defined as the ratio of drag force, <span class="math inline">\({\cal D}_i\)</span>, to <span class="math inline">\(\frac{1}{2}A_i\rho_i u_i|u_i|\)</span>.</li>
 </ul>
+<div class="figure">
+<img src="../man/figures/force_diagram.png" alt=""><p class="caption">Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a 0.5m river. Arrows show forces in the <span class="math inline">\(i\)</span>-th element, and the corresponding angle is indicated alongside the gray line that represents the stagnant case.</p>
+</div>
 <p>A tension force exists between each interior mooring element. The tension above the <span class="math inline">\(i\)</span>-th interior element (thus pulling upward on it) is denoted <span class="math inline">\({\cal T}_i\)</span>, and <span class="math inline">\({\cal T}_{i+1}\)</span> represents the tension pulling down from below. These tensions will be directed vertically if there is no current, but they will have horizontal components with a current, because it will distort the mooring from its upright orientation. The angle made by the <span class="math inline">\(i\)</span>-th element to the vertical is represented with <span class="math inline">\(\phi_i\)</span>. Determining these two quantities, <span class="math inline">\({\cal T}\)</span> and <span class="math inline">\(\phi\)</span>, is the key to inferring the response of a mooring to currents.</p>
 <p>Quasi-steady dynamics are assumed, so that forces must balance in both the horizontal and vertical directions. The tension force has components in both the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> directions, but the buoyancy force (defined as positive for objects that would rise if unattached to a mooring) acts only in the vertical, upwards if <span class="math inline">\(m\)</span> or <span class="math inline">\(\mu\)</span> is positive.</p>
 <p>The buoyancy force for a solid object such as an anchor or a float is found with (Equation 1) <span class="math display">\[\begin{equation}

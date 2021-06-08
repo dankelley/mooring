@@ -267,13 +267,13 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
 #' @templateVar model chain
 #' @template modelTemplate
 #'
-#' @template buoyancyTemplate
-#'
-#' @template heightTemplate
+#' @template buoyancyPerMeterTemplate
 #'
 #' @template widthTemplate
 #'
 #' @template CDTemplate
+#'
+#' @param length (mandatory) numeric value indicating the length (in m) of the wire.
 #'
 #' @return `chain` returns an object of the `"mooring"` class and `"chain"` subclass.
 #'
@@ -289,15 +289,86 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
 #' chain("?")
 #'
 #' @author Dan Kelley
-chain <- function(model="1in buoy chain", buoyancy=NULL, height=NULL, width=NULL, CD=NULL)
+chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, width=NULL, CD=NULL, length=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
     if (model == "?")
         return(sort(mooringElements$chains$name))
+    if (is.null(length))
+        stop("must supply length")
     w <- which(mooringElements$chains$name == model)
     if (1 == length(w)) {
         me <- mooringElements$chains[w,]
+        if (!is.null(buoyancyPerMeter))
+            warning("ignoring supplied buoyancyPerMeter, because \"", model, "\" is already in the database\n")
+        if (!is.null(width))
+            warning("ignoring supplied width, because \"", model, "\" is already in the database\n")
+        if (!is.null(CD))
+            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
+        buoyancyPerMeter<- me$buoyancyPerMeter
+        width <- me$width
+        CD <- me$CD
+        source <- me$source
+    } else {
+        if (is.null(buoyancyPerMeter)) stop("must supply buoyancyPerMeter, if creating a new chain model")
+        if (is.null(width)) stop("must supply width, if creating a new chain model")
+        if (is.null(CD)) stop("must supply CD, if creating a new chain model")
+        source <- ""
+    }
+    rval <- list(model=model, source=source, buoyancyPerMeter=buoyancyPerMeter, height=length, width=width, CD=CD, area=length*width)
+    class(rval) <- c("mooring", "chain")
+    rval
+}                                      # chain()
+
+#' Create a connector object
+#'
+#' Create an object that describes mooring connector such as shackles,
+#' either by looking up a known object from the database, or defining a new type.
+#'
+#' Many of the built-in items have `height` and `width` defined
+#' to be zero, because the sources did not list these things.  Likely, this is not
+#' terribly important, because these values are only used in computing drag, and
+#' connectors tend to be small, and are not likely to have significant drag compared
+#' with tens or hundreds of meters of wire, or with large floats.
+#'
+#' Also, it is worth noting that there are built-in connector objects that might not
+#' be thought of as connectors, e.g. `"ballast weight"`.
+#'
+#' @templateVar model connector
+#' @template modelTemplate
+#'
+#' @template buoyancyTemplate
+#'
+#' @template heightTemplate
+#'
+#' @template widthTemplate
+#'
+#' @template CDTemplate
+#'
+#' @return `connector` returns an object of the `"mooring"` class and `"connector"` subclass.
+#'
+#' @family functions that create mooring objects
+#'
+#' @export
+#'
+#' @importFrom utils data
+#'
+#' @examples
+#' library(mooring)
+#' # List known chain types
+#' connector("?")
+#'
+#' @author Dan Kelley
+connector <- function(model="swivel", buoyancy=NULL, height=NULL, width=NULL, CD=NULL)
+{
+    data("mooringElements", package="mooring", envir=environment())
+    mooringElements <- get("mooringElements")
+    if (model == "?")
+        return(sort(mooringElements$connectors$name))
+    w <- which(mooringElements$connectors$name == model)
+    if (1 == length(w)) {
+        me <- mooringElements$connectors[w,]
         if (!is.null(buoyancy))
             warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
         if (!is.null(height))
@@ -312,17 +383,16 @@ chain <- function(model="1in buoy chain", buoyancy=NULL, height=NULL, width=NULL
         CD <- me$CD
         source <- me$source
     } else {
-        if (is.null(height)) stop("must supply buoyancy, if creating a new chain model")
-        if (is.null(height)) stop("must supply height, if creating a new chain model")
-        if (is.null(width)) stop("must supply width, if creating a new chain model")
-        if (is.null(CD)) stop("must supply CD, if creating a new chain model")
+        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new connectors model")
+        if (is.null(height)) stop("must supply height, if creating a new connectors model")
+        if (is.null(width)) stop("must supply width, if creating a new connectors model")
+        if (is.null(CD)) stop("must supply CD, if creating a new connectors model")
         source <- ""
     }
     rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD, area=height*width)
-    class(rval) <- c("mooring", "chain")
+    class(rval) <- c("mooring", "connector")
     rval
-}                                      # chain()
-
+}                                      # connector()
 
 #' Create a float object
 #'
@@ -633,7 +703,10 @@ print.mooring <- function(x, ...)
             cat(sprintf("%s'%s' anchor, %gkg, height %gm, in %gm water depth",
                         prefix, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
         } else if (inherits(xi, 'chain')) {
-            cat(sprintf("%s'%s' chain, %gkg/m, height %gm, width %gm",
+            cat(sprintf("%s%gm of '%s' chain, %gkg, width %gm",
+                        prefix, xi$height, xi$model, xi$buoyancyPerMeter*xi$height, xi$width), sep='')
+        } else if (inherits(xi, 'connector')) {
+            cat(sprintf("%s'%s' connector, %gkg, height %gm, width %gm",
                         prefix, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
         } else if (inherits(xi, 'float')) {
             cat(sprintf("%s'%s' float, %gkg, height %gm, diameter %gm",

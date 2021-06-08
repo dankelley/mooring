@@ -71,14 +71,32 @@ names(wires) <- n
 wires <- cbind(wires, source="Dewey")
 write.csv(wires, "wires_dewey.csv", row.names=FALSE)
 
-# Chains
-cat("# Chains\n")
-chains <- read.fwf(textConnection(d$chains),widths=c(18,7,6,6,6,5,4), col.names=names)
+# Chains and connectors
+cat("# Chains and connectors\n")
+# I call things as 'chain' if they are used in variable lengths (and then I
+# store buoyancyPerMeter, kg/m) and 'connector' otherwise (and then I store
+# buoyancy, kg).
+cc <- read.fwf(textConnection(d$chains),widths=c(18,7,6,6,6,5,4), col.names=names)
+cc$name <- fixnames(cc$name)
+isChain <- cc$height == 100
+chains <- cc[isChain, ]
+N <- names(chains)
+N[N=="buoyancy"] <- "buoyancyPerMeter"
+names(chains) <- N
+chains$height <- NULL
+chains$width <- chains$width / 100 # convert to m
+chains$diameter <- NULL # is 0 anyway
 chains$name <- fixnames(chains$name)
-chains$height <- chains$height / 100
-chains$width <- chains$width / 100
-chains$diameter <- NULL # this is always 0, and we don't use it in this package
 chains <- cbind(chains, source="Dewey")
 write.csv(chains, "chains_dewey.csv", row.names=FALSE)
+
+connectors <- cc[!isChain, ]
+connectors
+connectors$diameter <- NULL # this is always 0, and we don't use it in this package
+connectors$height <- connectors$height / 100
+connectors$width <- connectors$width / 100
+connectors <- cbind(connectors, source="Dewey")
+connectors
+write.csv(connectors, "connectors_dewey.csv", row.names=FALSE)
 
 

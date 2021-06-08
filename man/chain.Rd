@@ -6,10 +6,10 @@
 \usage{
 chain(
   model = "1in buoy chain",
-  buoyancy = NULL,
-  height = NULL,
+  buoyancyPerMeter = NULL,
   width = NULL,
-  CD = NULL
+  CD = NULL,
+  length = NULL
 )
 }
 \arguments{
@@ -23,16 +23,9 @@ is used, and all other arguments to this function are ignored.
 values specified in the other arguments (all of which must
 be supplied).}
 
-\item{buoyancy}{numeric value indicating buoyancy.  For
-wire elements, this is buoyancy per length, expressed in kg/m.
-For other elements, it is buoyancy, expressed in kg.
-Note that \code{buoyancy} is ignored if \code{model} is recognized.}
-
-\item{height}{numeric value for the height (in m) of the element.
-This value is used in the computation of (a) the mooring geometry
-and (b) the area of the element (which is in turn used in
-the drag computation).
-Note that \code{height} is ignored if \code{model} is recognized.}
+\item{buoyancyPerMeter}{numeric value indicating buoyancy per meter
+of length, expressed as kg/m.
+Note that \code{buoyancyPerMeter} is ignored if \code{model} is recognized.}
 
 \item{width}{numeric value for the width (in m)
 of the element as viewed from above.
@@ -42,6 +35,8 @@ Note that \code{width} is ignored if \code{model} is recognized.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
+
+\item{length}{(mandatory) numeric value indicating the length (in m) of the wire.}
 }
 \value{
 \code{chain} returns an object of the \code{"mooring"} class and \code{"chain"} subclass.
@@ -59,6 +54,7 @@ chain("?")
 \seealso{
 Other functions that create mooring objects: 
 \code{\link{anchor}()},
+\code{\link{connector}()},
 \code{\link{float}()},
 \code{\link{instrument}()},
 \code{\link{release}()},

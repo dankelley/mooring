@@ -23,11 +23,25 @@ for (file in list.files(pattern="^chains.*csv$")) {
         print(d)
     if (any(d$name %in% chains$name))
         stop("name conflict")
-    if (class(d$buoyancy) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancy))
-    if (class(d$height) != "numeric") stop("height is not numeric; it is ", class(d$height))
+    if (class(d$buoyancyPerMeter) != "numeric") stop("buoyancyPerMeter is not numeric; it is ", class(d$buoyancyPerMeter))
     if (class(d$width) != "numeric") stop("width is not numeric; it is ", class(d$width))
     if (class(d$CD) != "numeric") stop("CD is not numeric; it is ", class(d$CD))
     chains <- rbind(chains, d)
+}
+
+connectors <- NULL
+for (file in list.files(pattern="^connectors.*csv$")) {
+    message(file)
+    d <- read.csv(file)
+    if (debug > 0)
+        print(d)
+    if (any(d$name %in% connectors$name))
+        stop("name conflict")
+    if (class(d$buoyancy) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancy))
+    if (class(d$height) != "numeric") stop("height is not numeric; it is ", class(d$length))
+    if (class(d$width) != "numeric") stop("width is not numeric; it is ", class(d$width))
+    if (class(d$CD) != "numeric") stop("CD is not numeric; it is ", class(d$CD))
+    connectors <- rbind(connectors, d)
 }
 
 floats <- NULL
@@ -89,6 +103,12 @@ for (file in list.files(pattern="^wires.*csv$")) {
     wires <- rbind(wires, d)
 }
 
-mooringElements <- list(anchors=anchors, chains=chains, floats=floats, instruments=instruments, releases=releases, wires=wires)
+mooringElements <- list(anchors=anchors,
+                        chains=chains,
+                        connectors=connectors,
+                        floats=floats,
+                        instruments=instruments,
+                        releases=releases,
+                        wires=wires)
 save(mooringElements, file="mooringElements.rda")
 
