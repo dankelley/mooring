@@ -1292,3 +1292,47 @@ buoyancy <- function(m, debug=0L)
     rval
 }
 
+
+#' Find a mooring element with a fuzzy search
+#'
+#' `findElement` does a fuzzy search for an element model, using
+#' [agrep()].  The output (if any) is in the form of suggested calls
+#' to element-creating functions
+#' [anchor()], [chain()], [connector()], [float()], [instrument()], and [wire()].
+#'
+#' @param e character value to be used for the fuzzy match, passed on to [agrep()].
+#'
+#' @param max.distance numeric value passed on to [agrep()].
+#'
+#' @return `findElement` returns (silently) a list of the suggested function calls.
+#'
+#' @examples
+#' library(mooring)
+#' findElement("nylon")
+#'
+#' @export
+#'
+#' @author Dan Kelley
+findElement <- function(e, max.distance=0.1)
+{
+    data("mooringElements", package="mooring", envir=environment())
+    mooringElements <- get("mooringElements")
+    rval <- NULL
+    for (element in c("anchors", "chains", "connectors", "floats", "instruments", "wires")) {
+        names <- mooringElements[[element]]$name
+        match <- agrep(e, names, max.distance=max.distance)
+        for (i in seq_along(match)) {
+            rval <- c(rval, paste0(element, "('", names[match], "')"))
+        }
+    }
+    if (is.null(rval)) {
+        cat("Sorry, found no good matches for \"", e, "\".\n")
+    } else {
+        cat("Some possible matches:\n")
+        rval <- sort(unique(rval))
+        for (i in seq_along(rval))
+            cat("    ", rval[i], "\n")
+    }
+    invisible(rval)
+}
+
