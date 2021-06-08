@@ -666,6 +666,9 @@ print.mooring <- function(x, ...)
 #' @param showDepths logical value indicating whether to indicate the depths of
 #' floats, to the left of the symbols.
 #'
+#' @param showLabels logical value indicating whether to indicate anchors,
+#' instruments and floats with `A`, `I` and `F`, respectively.
+#'
 #' @param fancy logical value indicating whether to indicate the
 #' water and sediments with filled rectangles.  The alternative
 #' is a simpler plot.
@@ -699,7 +702,8 @@ print.mooring <- function(x, ...)
 #' @export
 #'
 #' @author Dan Kelley
-plot.mooring <- function(x, which="shape", showDepths=TRUE,
+plot.mooring <- function(x, which="shape",
+                         showDepths=TRUE, showLabels=TRUE,
                          fancy=FALSE, title="",
                          mar=c(1.5, 3.5, 3.5, 1), mgp=c(2, 0.7, 0),
                          ...)
@@ -775,12 +779,14 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
             if (debug)
                 cat("i=", i, " (anchor at xi=", xi, ", zi=", zi, ")\n")
             points(xi, -zi, pch=20)
-            text(xi, -zi, "A", pos=2)
+            if (showLabels)
+                text(xi, -zi, "A", pos=2)
         } else if (type == "float") {
             if (debug)
                 cat("i=", i, " (float at xi=", xi, ", zi=", zi, ")\n")
             points(xi, -zi, pch=20, cex=1.4)
-            text(xi, -zi, "F", pos=4)
+            if (showLabels)
+                text(xi, -zi, "F", pos=4)
             if (showDepths) {
                 if (abs(zi) < 1) text(xi, -zi, sprintf("%.3fm", -zi), pos=2)
                 else text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
@@ -789,7 +795,8 @@ plot.mooring <- function(x, which="shape", showDepths=TRUE,
             if (debug)
                 cat("i=", i, " (instrument at xi=", xi, ", zi=", zi, ")\n")
             points(xi, -zi, pch=20, cex=1.4)
-            text(xi, -zi, "I", pos=4)
+            if (showLabels)
+                text(xi, -zi, "I", pos=4)
             if (showDepths) {
                 if (abs(zi) < 1) text(xi, -zi, sprintf("%.3fm", -zi), pos=2)
                 else text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
