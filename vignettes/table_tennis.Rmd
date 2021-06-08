@@ -109,10 +109,6 @@ phi <- atan2(D, B)
 x <- L * sin(phi)
 l <- L * cos(phi)
 T <- B / cos(phi)
-sprintf("R=%.3f m, L=%.3f m, u=%g m/s\n", R, L, u)
-sprintf("  D=%.3f N (%.3f kg), B=%.3f N (%.3f kg)\n", D, D/g, B, B/g)
-sprintf("  T=%.3f N (%.3f kg), phi=%.1f deg\n", T, T/g, phi*180/pi)
-sprintf("  x=%.3f m, l=%.3f m, L-l=%.3f m\n", x, l, L-l)
 
 library(mooring)
 f <- float("pingpong", Bkg, height=0, diameter=2*R, CD=1)
@@ -143,15 +139,15 @@ three main observables that might be part of an experiment to test this in a
 natural environment.
 
 1. The horizontal shift of the float, $x'$.  Here, a $`r u`$ m/s current is
-   shown to yield a displacement of $x'=`r sprintf("%.1f",xcm)`$ cm.
-2. The vertical float displacement over the zero-velocity case, $z'$. Here,
-   this is $`r sprintf("%.1f",zcm)`$ cm.
-3. The tension in the line, $T$.  Here, this is $`r round(T,3)`$ Newtons,
+   predicted to yield $x'=`r sprintf("%.1f",xcm)`$ cm.
+2. The vertical float displacement over the zero-velocity case, $z'$. Here, the
+   prediction is $`r sprintf("%.1f",zcm)`$ cm.
+3. The tension in the line, $T$.  The prediction is $`r round(T,3)`$ Newtons,
    equivalent to `r round(1000*T/g,1)` g.
 
-# A possible current meter based on these ideas
+# Measuring currents
 
-All three of these things could be measured in a classroom or laboratory
+Any of $x'$, $z'$ and $T$ could be measured in a classroom or laboratory
 setting, although it might be harder to measure the tension force in the field,
 so a field apparatus should focus on measuring $x'$ and $x'$.  This would not
 be difficult, for this range of current, using a metre-stick, to which is
