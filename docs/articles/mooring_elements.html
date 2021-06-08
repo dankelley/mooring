@@ -233,7 +233,7 @@
 <div id="connector-characteristics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#connector-characteristics" class="anchor"></a>Connector characteristics</h2>
-<p>The <code>buoyancy</code> values are in kg, while <code>height</code> and <code>width</code> are in m, and <code>CD</code> is unitless. The <code>code</code> values are listed for data from Dewey only, and they are not used in this package.</p>
+<p>The <code>buoyancy</code> values are in kg, while <code>height</code> and <code>width</code> are in m, and <code>CD</code> is unitless. Not all data sources list <code>height</code> and <code>width</code> (or comparable values) and so zeros are used in such instances. Since the only use of these values in the package are to compute area, for a drag calculation, and since the drag on floats and wires is likely to exceed that on small elements, this zeroing-out may not pose a large problem. The <code>code</code> values are listed for data from Dewey only, and they are not used in this package.</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">name</th>
