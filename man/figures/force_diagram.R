@@ -10,7 +10,7 @@ g <- 9.8
 Bkg <- deltaRho * volume # kg
 B <- g * Bkg
 CD <- 1
-u <- 0.9                               # speed, m/s
+u <- 1                                 # speed, m/s
 D <- 0.5 * CD * area * rho * u^2
 phi <- atan2(D, B)
 x <- L * sin(phi)
@@ -34,22 +34,31 @@ if (!interactive())
     png("force_diagram.png", width=5, height=3, unit="in", res=120, pointsize=10)
 plot(mdk, fancy=TRUE, showDepths=FALSE, showLabels=FALSE)
 
+# Add component names to diagram
 scale <- 0.2
 length <- 0.1
 col <- 2
-lwd <- 3
-cex <- 1.3*par("cex")
+lwd <- 2
+cex <- 1.4*par("cex")
+tweak <- 0.01*cex
+
+# Buoyancy
 arrows(x, L-l, x, L-l-scale*f$buoyancy*9.8, length=length, col=col, lwd=lwd)
-text(x, L-l-scale*f$buoyancy*9.8, "B", font=2, col=col, cex=cex, pos=3)
+text(x, L-l-scale*f$buoyancy*9.8, expression(B[i]), font=2, col=col, cex=cex, pos=3)
 
 # Drag
 arrows(x, L-l, x+scale*D, L-l, length=length, col=col, lwd=lwd)
-text(x+scale*D, L-l, "D", font=2, col=col, cex=cex, pos=4)
+text(x+scale*D, L-l+tweak, expression(D[i]), font=2, col=col, cex=cex, pos=4)
 
+# Tension
 Tx <- -T * sin(phi)
 Tz <- T * cos(phi)
 arrows(x, L-l, x+scale*Tx, L-l+scale*Tz, length=length, col=col, lwd=lwd)
-text(x+scale*Tx, L-l+scale*Tz, "T", font=2, col=col, pos=1, cex=cex)
+text(2*tweak+x+scale*Tx, tweak/3+L-l+scale*Tz, expression(T[i+1]), font=2, col=col, pos=1, cex=cex)
+
+# Angle
+text(2*tweak+head(x(mdk), 1), -4*tweak+head(depth(mdk),1), expression(phi[i]), col=col, font=2, cex=1.2*cex)
+
 if (!interactive())
     dev.off()
 

@@ -8,6 +8,7 @@
   x,
   which = "shape",
   showDepths = TRUE,
+  showLabels = TRUE,
   fancy = FALSE,
   title = "",
   mar = c(1.5, 3.5, 3.5, 1),
@@ -23,6 +24,9 @@ choices: \code{"shape"} and \code{"tension"}.}
 
 \item{showDepths}{logical value indicating whether to indicate the depths of
 floats, to the left of the symbols.}
+
+\item{showLabels}{logical value indicating whether to indicate anchors,
+instruments and floats with \code{A}, \code{I} and \code{F}, respectively.}
 
 \item{fancy}{logical value indicating whether to indicate the
 water and sediments with filled rectangles.  The alternative

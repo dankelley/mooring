@@ -31,8 +31,8 @@ deformation can be calculated if the current is uniform.  The physics is
 analogous to the sagging of telephone lines between poles, and falls into the
 general category of a catenary.  However, things are more complicated for
 depth-varying currents, and for mooring lines that consist of many elements, of
-varying buoyancy and drag, connected by wires, chains, etc., of varying
-buoyancy and drag.
+varying buoyancy and drag, connected by wires, chains, etc., that are also of
+varying buoyancy and drag.
 
 An approach to analysing realistic oceanographic moorings is to use lumped-mass
 theory, in which elements such as floats and instrument packages are
@@ -68,6 +68,8 @@ Each element is described by the following properties.
   and seawater is seldom made clear.
 * Drag coefficient, $C_i$, defined as the ratio of drag force, $\D_i$, to
   $\frac{1}{2}A_i\rho_i u_i|u_i|$.
+
+![Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a 0.5m river. Arrows show forces in the $i$-th element, and the corresponding angle is indicated alongside the gray line that represents the stagnant case.](../man/figures/force_diagram.png)
 
 A tension force exists between each interior mooring element.  The tension
 above the $i$-th interior element (thus pulling upward on it) is denoted
