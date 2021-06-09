@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Discretise the wire portions of a mooring — discretise • mooring</title>
+<title>Summarize a mooring — summary.mooring • mooring</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Discretise the wire portions of a mooring — discretise" />
-<meta property="og:description" content="Break up wire portions of a mooring into smaller chunks,
-so that the deformation by a current can be traced more
-accurately by knockdown()." />
+<meta property="og:title" content="Summarize a mooring — summary.mooring" />
+<meta property="og:description" content="Summarize a mooring" />
 
 
 
@@ -134,49 +132,50 @@ accurately by knockdown()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Discretise the wire portions of a mooring</h1>
+    <h1>Summarize a mooring</h1>
     <small class="dont-index">Source: <a href='https://github.com/dankelley/mooring/blob/master/R/mooring.R'><code>R/mooring.R</code></a></small>
-    <div class="hidden name"><code>discretise.Rd</code></div>
+    <div class="hidden name"><code>summary.mooring.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Break up <code>wire</code> portions of a mooring into smaller chunks,
-so that the deformation by a current can be traced more
-accurately by <code><a href='knockdown.html'>knockdown()</a></code>.</p>
+    <p>Summarize a mooring</p>
     </div>
 
-    <pre class="usage"><span class='fu'>discretise</span><span class='op'>(</span><span class='va'>m</span>, by <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for mooring</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>m</th>
+      <th>object</th>
       <td><p>a mooring object, created by <code><a href='mooring.html'>mooring()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>by</th>
-      <td><p>numeric value giving the rough size of the chunks.
-The actual size is computed as the length of wire, divided
-by the rounded ratio of that length to <code>by</code>. For example,
-using <code>by=10</code> with a 95-m length of wire will result
-in chunks of length 9.5m, not 10m.  In shallow water moorings,
-the default value of 1m makes sense, but larger values
-might be employed for moorings in the deep ocean. If <code>by</code>
-exceeds the height of a wire portion, then that portion is not
-subdivided.</p></td>
+      <th>...</th>
+      <td><p>ignored.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>an object of the <code>"mooring"</code> class, identical
-to <code>m</code> except that wire portions are chopped up into shorter
-pieces.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
+<span class='co'># Simple case</span>
+<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mooring.html'>mooring</a></span><span class='op'>(</span><span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>80</span><span class='op'>)</span>, <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'trainwheel' anchor, -1000kg, height 0m, in 100m water depth, x=0 m, z=-100 m
+#&gt; 80m of '1/4in wire/jack' wire, -10.4kg, diameter 0.008m, x=0 m, z=-20 m
+#&gt; 'HMB 20' float, 34.5kg, height 0.508m, diameter 0.508m, x=0 m, z=-19.492 m</div><div class='input'><span class='co'># Illustrate how it collects wire subintervals</span>
+<span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='discretise.html'>discretise</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
+<span class='va'>mdk</span> <span class='op'>&lt;-</span> <span class='fu'><a href='knockdown.html'>knockdown</a></span><span class='op'>(</span><span class='va'>md</span>, <span class='fl'>0.5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>mdk</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'trainwheel' anchor, -1000kg, height 0m, in 100m water depth, x=0 m, z=-100 m
+#&gt; 80m of '1/4in wire/jack' wire, -10.4kg, diameter 0.008m, x=0 m, z=-100 m
+#&gt; 'HMB 20' float, 34.5kg, height 0.508m, diameter 0.508m, x=19.3229 m, z=-23.5067 m</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
