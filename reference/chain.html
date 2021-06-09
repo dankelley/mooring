@@ -159,10 +159,13 @@ either by looking up a known object from the database, or defining a new type.</
       <td><p>character value indicating the type of chain.
 There are three possibilities for <code>model</code>.
 (1) If this is <code>"?"</code>, then the function returns a vector of permitted
-character values. (2) If it is recognized, i.e. if that type is
+character values. (2) If this is <code>"?X"</code>, where X is a set of
+characters, then <code><a href='findElement.html'>findElement()</a></code> is called to do a fuzzy search,
+with the <code>search</code> argument set to <code>"chain"</code>.
+(3) If it is recognized, i.e. if that type is
 stored in <code><a href='https://rdrr.io/r/utils/data.html'>data(mooringElements)</a></code>, then the that stored value
 is used, and all other arguments to this function are ignored.
-(3) Otherwise, a new chain object is created, using
+(4) Otherwise, a new chain object is created, using
 values specified in the other arguments (all of which must
 be supplied).</p></td>
     </tr>

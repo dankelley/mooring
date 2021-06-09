@@ -151,8 +151,9 @@ The list is in alphabetical order, not the order of the closeness of the match.<
 
     <pre class="usage"><span class='fu'>findElement</span><span class='op'>(</span>
   <span class='va'>e</span>,
-  max.distance <span class='op'>=</span> <span class='fl'>0.1</span>,
-  search <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"anchor"</span>, <span class='st'>"chain"</span>, <span class='st'>"connector"</span>, <span class='st'>"float"</span>, <span class='st'>"instrument"</span>, <span class='st'>"wire"</span><span class='op'>)</span>
+  search <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"anchor"</span>, <span class='st'>"chain"</span>, <span class='st'>"connector"</span>, <span class='st'>"float"</span>, <span class='st'>"instrument"</span>, <span class='st'>"wire"</span><span class='op'>)</span>,
+  ignore.case <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  max.distance <span class='op'>=</span> <span class='fl'>0.1</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -163,18 +164,27 @@ The list is in alphabetical order, not the order of the closeness of the match.<
       <td><p>character value to be used for the fuzzy match, passed on to <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>max.distance</th>
-      <td><p>numeric value passed on to <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code>.</p></td>
-    </tr>
-    <tr>
       <th>search</th>
       <td><p>character vector holding the categories to be searched for.</p></td>
+    </tr>
+    <tr>
+      <th>ignore.case</th>
+      <td><p>logical value, passed to <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code>. The default is to ignore case.</p></td>
+    </tr>
+    <tr>
+      <th>max.distance</th>
+      <td><p>numeric value, passed to <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code>. The default usually catches
+relevant cases; see the documentation for <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code> for the (somewhat subtle) meaning
+of this argumebnt.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>findElement</code> returns (silently) a list of the suggested function calls.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>findElement</code> is used by e.g. <code><a href='float.html'>float("?BUB")</a></code>.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
