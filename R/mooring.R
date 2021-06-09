@@ -115,6 +115,8 @@ anchor <- function(model="trainwheel", buoyancy=NULL, height=NULL, depth=0)
     mooringElements <- get("mooringElements")
     if (model == "?")
         return(sort(mooringElements$anchors$name))
+    else if (substring(model, 1, 1) == "?")
+        return(findElement(substring(model, 2), search="anchor"))
     w <- which(mooringElements$anchors$name == model)
     if (1 == length(w)) {
         me <- mooringElements$anchors[w,]
@@ -169,6 +171,8 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
     mooringElements <- get("mooringElements")
     if (model == "?")
         return(sort(mooringElements$releases$name))
+    else if (substring(model, 1, 1) == "?")
+        return(findElement(substring(model, 2), search="release"))
     w <- which(mooringElements$releases$name == model)
     if (1 == length(w)) {
         me <- mooringElements$releases[w,]
@@ -233,6 +237,8 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
     mooringElements <- get("mooringElements")
     if (model == "?")
         return(sort(mooringElements$wires$name))
+    else if (substring(model, 1, 1) == "?")
+        return(findElement(substring(model, 2), search="wire"))
     if (is.null(length))
         stop("must supply length")
     w <- which(mooringElements$wires$name == model)
@@ -295,6 +301,8 @@ chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, width=NULL, CD=
     mooringElements <- get("mooringElements")
     if (model == "?")
         return(sort(mooringElements$chains$name))
+    else if (substring(model, 1, 1) == "?")
+        return(findElement(substring(model, 2), search="chain"))
     if (is.null(length))
         stop("must supply length")
     w <- which(mooringElements$chains$name == model)
@@ -366,6 +374,8 @@ connector <- function(model="swivel", buoyancy=NULL, height=NULL, width=NULL, CD
     mooringElements <- get("mooringElements")
     if (model == "?")
         return(sort(mooringElements$connectors$name))
+    else if (substring(model, 1, 1) == "?")
+        return(findElement(substring(model, 2), search="connector"))
     w <- which(mooringElements$connectors$name == model)
     if (1 == length(w)) {
         me <- mooringElements$connectors[w,]
@@ -436,6 +446,8 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
     mooringElements <- get("mooringElements")
     if (model == "?")
         return(sort(mooringElements$floats$name))
+    else if (substring(model, 1, 1) == "?")
+        return(findElement(substring(model, 2), search="float"))
     w <- which(mooringElements$floats$name == model)
     if (1 == length(w)) {
         me <- mooringElements$floats[w,]
@@ -500,6 +512,8 @@ instrument <- function(model="sbe37 microcat clamp-on style", buoyancy=NULL, hei
     mooringElements <- get("mooringElements")
     if (model == "?")
         return(sort(mooringElements$instruments$name))
+    else if (substring(model, 1, 1) == "?")
+        return(findElement(substring(model, 2), search="instrument"))
     w <- which(mooringElements$instruments$name == model)
     if (1 == length(w)) {
         me <- mooringElements$instruments[w,]
@@ -1301,9 +1315,15 @@ buoyancy <- function(m, debug=0L)
 #' [anchor()], [chain()], [connector()], [float()], [instrument()], and [wire()].
 #' The list is in alphabetical order, not the order of the closeness of the match.
 #'
+#' `findElement` is used by e.g. `float("?BUB")`.
+#'
 #' @param e character value to be used for the fuzzy match, passed on to [agrep()].
 #'
-#' @param max.distance numeric value passed on to [agrep()].
+#' @param ignore.case logical value, passed to [agrep()]. The default is to ignore case.
+#'
+#' @param max.distance numeric value, passed to [agrep()]. The default usually catches
+#' relevant cases; see the documentation for [agrep()] for the (somewhat subtle) meaning
+#' of this argumebnt.
 #'
 #' @param search character vector holding the categories to be searched for.
 #'
@@ -1316,7 +1336,7 @@ buoyancy <- function(m, debug=0L)
 #' @export
 #'
 #' @author Dan Kelley
-findElement <- function(e, max.distance=0.1, search=c("anchor", "chain", "connector", "float", "instrument", "wire"))
+findElement <- function(e, search=c("anchor", "chain", "connector", "float", "instrument", "wire"), ignore.case=TRUE, max.distance=0.1)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -1340,6 +1360,7 @@ findElement <- function(e, max.distance=0.1, search=c("anchor", "chain", "connec
     }
     invisible(rval)
 }
+
 
 #' Summarize a mooring
 #'

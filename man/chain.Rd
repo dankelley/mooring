@@ -16,10 +16,13 @@ chain(
 \item{model}{character value indicating the type of chain.
 There are three possibilities for \code{model}.
 (1) If this is \code{"?"}, then the function returns a vector of permitted
-character values. (2) If it is recognized, i.e. if that type is
+character values. (2) If this is \code{"?X"}, where X is a set of
+characters, then \code{\link[=findElement]{findElement()}} is called to do a fuzzy search,
+with the \code{search} argument set to \code{"chain"}.
+(3) If it is recognized, i.e. if that type is
 stored in \code{data(mooringElements)}, then the that stored value
 is used, and all other arguments to this function are ignored.
-(3) Otherwise, a new chain object is created, using
+(4) Otherwise, a new chain object is created, using
 values specified in the other arguments (all of which must
 be supplied).}
 
