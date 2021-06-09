@@ -1,7 +1,7 @@
 ---
 title: Ingesting object data from a BIO excel file
 author: Dan Kelley
-date: 2021-05-28 and 2021-06-08
+date: 2021-05-28, 2021-06-08, and 2021-06-09
 output:
     toc: true
     number_sections: true
@@ -100,22 +100,33 @@ There are two length columns in the file, but the values are either identical
 or relatable by rounding, so I could choose either.  But is that in the x or
 the y direction?
 
-Two columns contain things related to area, one with name `A (m*2/m)` and other
-with name `AW (m*2)`.  I think the former is the projected area per meter of z
-(as it is for wires).  So, if we assume that the length is in the z direction,
-or that the object is roughly spherical, we can infer what the package needs,
-namely `height` and `diameter`, from the ratio of the second area to the first
-length.  Whether that's sensible, I just don't know.
+Two columns contain things related to area, colG labelled `A (m*2/m)` and colI
+labelled `AW (m*2)`.  From
+https://github.com/dankelley/mooring/issues/24#issuecomment-857715929, we know
+that the frontal area is given by the product of colC and colG. 
+
+We take as a test case: the `"BUB 2x178" GLASS"` value, in row 42.  The
+above-stated URL indicates that a BUB is a package with two 17in glass spheres,
+with height (length) 1.187m (which matches colC) and frontal area 0.5531 m^2.
+As a check, the product of colC (1.187) and colG (0.466) is `r 0.466*1.187`m^2,
+which matches the value stated on the above-stated URL.
+
+So, the procedure is (a) compute are as colC times colG, (b) compute diameter
+as as `2*sqrt(area/pi)`.
+
 ```{r}
-A<-c(0.164,0.5,0.073,0.5,0.164,1.5,1.5,1.86,2.84,2.474,1.67,2.7,2.7)
-L<-c(0.74,0.563,1,0.563,1.187,1,1,1.286,1.286,1.286,1.286,2.42,2.42)
-round(A/L,3)
+# Notice that row 37 is ignored, because no weight is listed for it
+colC <- c(0.74,0.563,1,0.563,1.187,1,1,1.286,1.286,1.286,1.286,2.42,2.42)
+colG <- c(0.22,0.22,0.22,0.22,0.466,0.44,0.65,1.822,1.822,1.807,1.822,0.51,0.51)
+area <- colG*colC
+round(area, 3)
+diameter <- 2 * sqrt(colC * colG / pi)
+round(diameter, 3)
 ```
 
 ```{r}
 f <- read.csv("floats_bio.csv")
-o <- order(f$name)
-knitr::kable(f[o,])
+knitr::kable(f)
 ```
 
 ## `instruments_bio.csv`

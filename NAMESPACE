@@ -2,6 +2,7 @@
 
 S3method(plot,mooring)
 S3method(print,mooring)
+S3method(summary,mooring)
 export(CD)
 export(anchor)
 export(app)

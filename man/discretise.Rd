@@ -7,7 +7,7 @@
 discretise(m, by = 1)
 }
 \arguments{
-\item{m}{an object of the \code{"mooring"} class.}
+\item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
 
 \item{by}{numeric value giving the rough size of the chunks.
 The actual size is computed as the length of wire, divided
