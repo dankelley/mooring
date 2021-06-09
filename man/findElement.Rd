@@ -4,12 +4,18 @@
 \alias{findElement}
 \title{Find a mooring element with a fuzzy search}
 \usage{
-findElement(e, max.distance = 0.1)
+findElement(
+  e,
+  max.distance = 0.1,
+  search = c("anchor", "chain", "connector", "float", "instrument", "wire")
+)
 }
 \arguments{
 \item{e}{character value to be used for the fuzzy match, passed on to \code{\link[=agrep]{agrep()}}.}
 
 \item{max.distance}{numeric value passed on to \code{\link[=agrep]{agrep()}}.}
+
+\item{search}{character vector holding the categories to be searched for.}
 }
 \value{
 \code{findElement} returns (silently) a list of the suggested function calls.
@@ -19,6 +25,7 @@ findElement(e, max.distance = 0.1)
 \code{\link[=agrep]{agrep()}}.  The output (if any) is in the form of suggested calls
 to element-creating functions
 \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=connector]{connector()}}, \code{\link[=float]{float()}}, \code{\link[=instrument]{instrument()}}, and \code{\link[=wire]{wire()}}.
+The list is in alphabetical order, not the order of the closeness of the match.
 }
 \examples{
 library(mooring)
