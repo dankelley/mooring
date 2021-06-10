@@ -1,14 +1,14 @@
-"name","buoyancy","height","diameter","CD","code","source"
-streamlined BUB 2x 17in glass,         45.41, 0.74,  0.455,0.6,NA,"BIO"
-a2 package ADCP and 2 Viny balls,      29.08, 0.563, 0.397,0.6,NA,"BIO"
-3 pack Viny 12b-3 floats,              57.14, 1,     0.529,1.1,NA,"BIO"
-streamlined BUB 3 Viny balls,          52.65, 0.563, 0.397,0.6,NA,"BIO"
-BUB 2x17in glass,                      43.78, 1.187, 0.839,1.1,NA,"BIO"
-IPS / 2x b3 subs assembly,             78.88, 1,     0.748,0.6,NA,"BIO"
-ADCP / 2x c3 subs assembly,            42.24, 1,     0.910,0.6,NA,"BIO"
-stablemoor 533lb 3500 msw with ADCP,  192.45, 1.286, 1.727,0.6,NA,"BIO"
-stablemoor 1000lb 3500 msw with ADCP, 404.39, 1.286, 1.727,0.6,NA,"BIO"
-stablemoor 1015lb 1500 msw with ADCP, 411.22, 1.286, 1.720,0.6,NA,"BIO"
-stablemoor 580lb 1500 msw with ADCP,  213.78, 1.286, 1.727,0.6,NA,"BIO"
-"syn. float with ADCP bracket",       839.18, 2.42,  1.254,0.6,NA,"BIO"
-"syn. float, bracket and 109lb ADCP", 789.80, 2.42,  1.254,0.6,NA,"BIO"
+name,buoyancy,height,diameter,CD,code,source,originalName
+streamlined BUB 2x 17in glass,45.41,0.74,0.455,0.6,NA,BIO,"STREAMLINED BUB  2 x 17""  GLASS"
+a2 package ADCP and 2 Viny balls,29.08,0.563,0.397,0.6,NA,BIO,A2 PACKAGE ADCP AND 2 VINY BALLS
+3 pack Viny 12b-3 floats,57.14,1,0.529,1.1,NA,BIO,3 pack VINY 12B-3 floats
+streamlined BUB 3 Viny balls,52.65,0.563,0.397,0.6,NA,BIO,STREAMLINED BUB  3 VINY BALLS
+BUB 2x17in glass,43.78,1.187,0.839,1.1,NA,BIO,"BUB  2x17""  GLASS"
+IPS / 2x b3 subs assembly,78.88,1,0.748,0.6,NA,BIO,IPS / 2x B3 SUBS ASSEMBLY
+ADCP / 2x c3 subs assembly,42.24,1,0.91,0.6,NA,BIO,ADCP / 2x C3 SUBS ASSEMBLY
+stablemoor 533lb 3500 msw with ADCP,192.45,1.286,1.727,0.6,NA,BIO,Stablemoor 533 lb 3500 msw with ADCP
+stablemoor 1000lb 3500 msw with ADCP,404.39,1.286,1.727,0.6,NA,BIO,Stablemoor 1000 lb 3500 msw with ADCP
+stablemoor 1015lb 1500 msw with ADCP,411.22,1.286,1.72,0.6,NA,BIO,Stablemoor 1015 lb 1500 msw with ADCP
+stablemoor 580lb 1500 msw with ADCP,213.78,1.286,1.727,0.6,NA,BIO,Stablemoor 580 lb 1500 msw with ADCP
+syn. float with ADCP bracket,839.18,2.42,1.254,0.6,NA,BIO,SYNTACTIC FLOAT WITH ADCP BRACKET
+"syn. float, bracket and 109lb ADCP",789.8,2.42,1.254,0.6,NA,BIO,"SYN. FLOAT, BRACKET AND 109 LB.ADCP"

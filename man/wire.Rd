@@ -45,9 +45,21 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \code{wire} returns an object of the \code{"mooring"} class and \code{"wire"} subclass.
 }
 \description{
-Creates a wire (or rope, etc.) object,
+Creates a wire (or rope, chain, etc.) object,
 either by looking up a known object from the database, or defining a new type.
 }
+\section{Data sources}{
+
+
+To learn more about the data used for the built-in
+wire
+objects, use e.g.
+\preformatted{
+data(mooringElements)
+mooringElements$wires
+}
+}
+
 \examples{
 library(mooring)
 # List known wire types

@@ -43,7 +43,8 @@
 <meta property="og:description" content="findElement does a fuzzy search for an element model, using
 agrep().  The output (if any) is in the form of suggested calls
 to element-creating functions
-anchor(), chain(), connector(), float(), instrument(), and wire()." />
+anchor(), chain(), connector(), float(), instrument(), and wire().
+The list is in alphabetical order, not the order of the closeness of the match." />
 
 
 
@@ -144,10 +145,16 @@ anchor(), chain(), connector(), float(), instrument(), and wire()." />
     <p><code>findElement</code> does a fuzzy search for an element model, using
 <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code>.  The output (if any) is in the form of suggested calls
 to element-creating functions
-<code><a href='anchor.html'>anchor()</a></code>, <code><a href='chain.html'>chain()</a></code>, <code><a href='connector.html'>connector()</a></code>, <code><a href='float.html'>float()</a></code>, <code><a href='instrument.html'>instrument()</a></code>, and <code><a href='wire.html'>wire()</a></code>.</p>
+<code><a href='anchor.html'>anchor()</a></code>, <code><a href='chain.html'>chain()</a></code>, <code><a href='connector.html'>connector()</a></code>, <code><a href='float.html'>float()</a></code>, <code><a href='instrument.html'>instrument()</a></code>, and <code><a href='wire.html'>wire()</a></code>.
+The list is in alphabetical order, not the order of the closeness of the match.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>findElement</span><span class='op'>(</span><span class='va'>e</span>, max.distance <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>findElement</span><span class='op'>(</span>
+  <span class='va'>e</span>,
+  search <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"anchor"</span>, <span class='st'>"chain"</span>, <span class='st'>"connector"</span>, <span class='st'>"float"</span>, <span class='st'>"instrument"</span>, <span class='st'>"wire"</span><span class='op'>)</span>,
+  ignore.case <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  max.distance <span class='op'>=</span> <span class='fl'>0.1</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,14 +164,27 @@ to element-creating functions
       <td><p>character value to be used for the fuzzy match, passed on to <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code>.</p></td>
     </tr>
     <tr>
+      <th>search</th>
+      <td><p>character vector holding the categories to be searched for.</p></td>
+    </tr>
+    <tr>
+      <th>ignore.case</th>
+      <td><p>logical value, passed to <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code>. The default is to ignore case.</p></td>
+    </tr>
+    <tr>
       <th>max.distance</th>
-      <td><p>numeric value passed on to <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code>.</p></td>
+      <td><p>numeric value, passed to <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code>. The default usually catches
+relevant cases; see the documentation for <code><a href='https://rdrr.io/r/base/agrep.html'>agrep()</a></code> for the (somewhat subtle) meaning
+of this argumebnt.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>findElement</code> returns (silently) a list of the suggested function calls.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>findElement</code> is used by e.g. <code><a href='float.html'>float("?BUB")</a></code>.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
@@ -173,9 +193,9 @@ to element-creating functions
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
 <span class='fu'>findElement</span><span class='op'>(</span><span class='st'>"nylon"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Some possible matches:
-#&gt;      wires('1in Nylon') 
-#&gt;      wires('3/4in Nylon') 
-#&gt;      wires('5/8in Nylon') </div><div class='input'>
+#&gt;      wire('1in Nylon') 
+#&gt;      wire('3/4in Nylon') 
+#&gt;      wire('5/8in Nylon') </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -3,33 +3,42 @@ title: Ingesting object data from a BIO excel file
 author: Dan Kelley
 date: 2021-05-28, 2021-06-08, and 2021-06-09
 output:
-    toc: true
-    number_sections: true
+    pdf_document:
+        toc: true
+        number_sections: true
+        extra_dependencies:
+            fullpage
 ---
 
 # Document Revisions
 
 1. 2021-06-08 (thanks to @formulafunracing and @clayton33 for advice on this)
    1. Move discrete chain items like shackles to a new entity, "connector".
-      Those objects will have `height` and `width`.
    2. Make `chain` objects have `length`, not `height`.
+   3. Rename some items for consistency and readability.
+   4. Add `originalName` column.
 
 # Introduction
 
-This directory contains an R file here in which I tried to decode things
-automatically.  This proved to be difficult, because the meanings of things
-were (I think) indicated by colour underlays, and I don't know how to catch
-that nuance in a program.  Also, there were *lots* of weird things in the file,
-like text in numeric fields, negative lengths, etc., and so the R file became a
-mess of special cases.  So, and partly because this work would not pay off for
-other datasets, I decided to drop the idea of decoding the excel file with R,
-instead doing the work "by hand" by copying cells into csv files. (In addition
-to copying cells, I had to do computations, e.g. converting Newtons to kg.)
+This directory contains a file named `bio.R` in which I tried to decode things
+automatically.  This proved to be difficult, because the meanings of things are
+(I gather) indicated by colour underlays, and I don't know how to catch that
+nuance in a program.  Another problem was that there are *lots* of weird things
+in the excel file, like text in numeric fields, negative lengths, etc., and so
+the R code for renaming became a mess of special cases. After a while, I just
+gave up on decoding the excel file with R code, instead creating csv files
+semi-manually, by copy-pasting into this file to do some calculations, then
+copy-pasting back to csv.  I outline some of the steps here but, as is always
+the case for non-automatic work, this record is best regarded as a rough
+sketch.
 
-For the names of items, I switched from all upper-case to all lower-case, which
-is easier to type, and fits with the Dewey names.  I also removed the `"`
-symbols, which are hard to type in code, and appear in some instances and not
-in others.  And I change groups of multiple spaces into single spaces.
+The names were altered in an attempt to improve consistency within these
+datasets and also with the Dewey datasets.  In this second category, for
+example, I removed double spaces, and replaced `"` characters with the string
+`in`, for inches. The original names are stored in the column named
+`originalNames` and are verbatim from the excel file, *except* that multiple
+consecutive spaces are converted to single spaces, leading and trailing spaces
+are removed, and trailing asterisks (for footnotes) are removed.
 
 # Details
 
@@ -71,13 +80,13 @@ These are in the order of the spreadsheet; note that `chains("?")` merges all
 datasets, and orders by name.
 
 ```{r}
-knitr::kable(read.csv("chains_bio.csv"))
+knitr::kable(read.csv("chains_bio.csv"), caption="Contents of chains_bio.csv")
 ```
 
 and here are the connectors:
 
 ```{r}
-knitr::kable(read.csv("connectors_bio.csv"))
+knitr::kable(read.csv("connectors_bio.csv"), caption="Contents of connectors_bio.csv")
 ```
 
 
@@ -126,7 +135,7 @@ round(diameter, 3)
 
 ```{r}
 f <- read.csv("floats_bio.csv")
-knitr::kable(f)
+knitr::kable(f, caption="Contents of floats_bio.csv")
 ```
 
 ## `instruments_bio.csv`
@@ -166,13 +175,13 @@ find them.
 ### Results
 
 ```{r}
-knitr::kable(read.csv("instruments_bio.csv"))
+knitr::kable(read.csv("instruments_bio.csv"), caption="Contents of instruments_bio.csv")
 ```
 
 
 ## `releases_bio.csv`
 
-Note the ommision of an entry for type `BENTHOS 875 RELEASE`, because it has no
+Note the omission of an entry for type `BENTHOS 875 RELEASE`, because it has no
 value listed in col G (area `A (m*2/m)`) or col I (area `AW (m*2)`).
 
 ### `height`
@@ -205,7 +214,7 @@ be similar.
 ### Result for releases
 
 ```{r}
-knitr::kable(read.csv("releases_bio.csv"))
+knitr::kable(read.csv("releases_bio.csv"), caption="Contents of releases_bio.csv")
 ```
 
 ## wires_bio.csv
@@ -240,7 +249,7 @@ There are no entries in the file and I did not know what `DRAG -N` and `DRAG
 ### Result for `wires`
 
 ```{r}
-knitr::kable(read.csv("wires_bio.csv"))
+knitr::kable(read.csv("wires_bio.csv"), caption="Contents of wires_bio.csv")
 ```
 
 

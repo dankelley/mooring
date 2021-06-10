@@ -46,6 +46,18 @@ This must be the first element of a mooring constructed with
 Note that \code{depth} is not a characteristic of the anchor, but rather of
 the domain into which it is placed.
 }
+\section{Data sources}{
+
+
+To learn more about the data used for the built-in
+anchor
+objects, use e.g.
+\preformatted{
+data(mooringElements)
+mooringElements$anchors
+}
+}
+
 \examples{
 library(mooring)
 # List known anchor types

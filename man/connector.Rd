@@ -63,6 +63,18 @@ with tens or hundreds of meters of wire, or with large floats.
 Also, it is worth noting that there are built-in connector objects that might not
 be thought of as connectors, e.g. \code{"ballast weight"}.
 }
+\section{Data sources}{
+
+
+To learn more about the data used for the built-in
+connector
+objects, use e.g.
+\preformatted{
+data(mooringElements)
+mooringElements$connectors
+}
+}
+
 \examples{
 library(mooring)
 # List known chain types

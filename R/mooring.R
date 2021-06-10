@@ -88,7 +88,7 @@ isMooring <- function(m=NULL) {
 #' Note that `depth` is not a characteristic of the anchor, but rather of
 #' the domain into which it is placed.
 #'
-#' @templateVar model anchor
+#' @templateVar subclass anchor
 #' @template modelTemplate
 #'
 #' @template buoyancyTemplate
@@ -96,6 +96,8 @@ isMooring <- function(m=NULL) {
 #' @template heightTemplate
 #'
 #' @param depth numeric value giving water depth in m.
+#'
+#' @template sourceTemplate
 #'
 #' @return `anchor` returns an object of the `"mooring"` class and `"anchor"` subclass.
 #'
@@ -142,7 +144,7 @@ anchor <- function(model="trainwheel", buoyancy=NULL, height=NULL, depth=0)
 #' Create a mooring-release object,
 #' either by looking up a known object from the database, or defining a new type.
 #'
-#' @templateVar model release
+#' @templateVar subclass release
 #' @template modelTemplate
 #'
 #' @template buoyancyTemplate
@@ -152,6 +154,8 @@ anchor <- function(model="trainwheel", buoyancy=NULL, height=NULL, depth=0)
 #' @template widthTemplate
 #'
 #' @template CDTemplate
+#'
+#' @template sourceTemplate
 #'
 #' @return `release` returns an object of the `"mooring"` class and `"release"` subclass.
 #'
@@ -203,10 +207,10 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
 
 #' Create a wire object
 #'
-#' Creates a wire (or rope, etc.) object,
+#' Creates a wire (or rope, chain, etc.) object,
 #' either by looking up a known object from the database, or defining a new type.
 #'
-#' @templateVar model wire
+#' @templateVar subclass wire
 #' @template modelTemplate
 #'
 #' @template buoyancyPerMeterTemplate
@@ -216,6 +220,8 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
 #' @template CDTemplate
 #'
 #' @param length (mandatory) numeric value indicating the length (in m) of the wire.
+#'
+#' @template sourceTemplate
 #'
 #' @return `wire` returns an object of the `"mooring"` class and `"wire"` subclass.
 #'
@@ -270,7 +276,7 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
 #' Create an object that describes mooring chain elements such as shackles,
 #' either by looking up a known object from the database, or defining a new type.
 #'
-#' @templateVar model chain
+#' @templateVar subclass chain
 #' @template modelTemplate
 #'
 #' @template buoyancyPerMeterTemplate
@@ -280,6 +286,8 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
 #' @template CDTemplate
 #'
 #' @param length (mandatory) numeric value indicating the length (in m) of the wire.
+#'
+#' @template sourceTemplate
 #'
 #' @return `chain` returns an object of the `"mooring"` class and `"chain"` subclass.
 #'
@@ -343,7 +351,7 @@ chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, width=NULL, CD=
 #' Also, it is worth noting that there are built-in connector objects that might not
 #' be thought of as connectors, e.g. `"ballast weight"`.
 #'
-#' @templateVar model connector
+#' @templateVar subclass connector
 #' @template modelTemplate
 #'
 #' @template buoyancyTemplate
@@ -353,6 +361,8 @@ chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, width=NULL, CD=
 #' @template widthTemplate
 #'
 #' @template CDTemplate
+#'
+#' @template sourceTemplate
 #'
 #' @return `connector` returns an object of the `"mooring"` class and `"connector"` subclass.
 #'
@@ -405,16 +415,17 @@ connector <- function(model="swivel", buoyancy=NULL, height=NULL, width=NULL, CD
 }                                      # connector()
 
 #' Create a float object
+#' @templateVar subclass float
 #'
-#' Create a float object,
-#' either by looking up a known object from the database, or defining a new type.
+#' Create a float object, either by looking up a known object from the database,
+#' or defining a new type.
+#'
 #'
 #' Note that `HMB` in a name is a short-hand for `Hydrofloat Mooring Buoy`.  Data for these
 #' floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the `CD` value
 #' being set at 0.65 (in the absence of any data from the manufacture) because that
 #' value is used in Dewey's dataset for many floats.
 #'
-#' @templateVar model float
 #' @template modelTemplate
 #'
 #' @template buoyancyTemplate
@@ -424,6 +435,8 @@ connector <- function(model="swivel", buoyancy=NULL, height=NULL, width=NULL, CD
 #' @template diameterTemplate
 #'
 #' @template CDTemplate
+#'
+#' @template sourceTemplate
 #'
 #' @return `float` returns an object of the `"mooring"` class and `"float"` subclass.
 #'
@@ -483,7 +496,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #' Create an instrument object,
 #' either by looking up a known object from the database, or defining a new type.
 #'
-#' @templateVar model instrument
+#' @templateVar subclass instrument
 #' @template modelTemplate
 #'
 #' @template buoyancyTemplate
@@ -493,6 +506,8 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #' @template areaTemplate
 #'
 #' @template CDTemplate
+#'
+#' @template sourceTemplate
 #'
 #' @return `instrument` returns an object of the `"mooring"` class and `"instrument"` subclass.
 #'
@@ -1343,7 +1358,7 @@ findElement <- function(e, search=c("anchor", "chain", "connector", "float", "in
     rval <- NULL
     for (element in search) {
         names <- mooringElements[[paste0(element,"s")]]$name
-        match <- try(agrep(e, names, max.distance=max.distance), silent=TRUE)
+        match <- try(agrep(e, names, ignore.case=ignore.case, max.distance=max.distance), silent=TRUE)
         if (!inherits(match, "try-error")) {
             for (i in seq_along(match)) {
                 rval <- c(rval, paste0(element, "('", names[match], "')"))

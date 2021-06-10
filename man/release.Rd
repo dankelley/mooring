@@ -53,6 +53,18 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 Create a mooring-release object,
 either by looking up a known object from the database, or defining a new type.
 }
+\section{Data sources}{
+
+
+To learn more about the data used for the built-in
+release
+objects, use e.g.
+\preformatted{
+data(mooringElements)
+mooringElements$releases
+}
+}
+
 \examples{
 library(mooring)
 # List known wire types

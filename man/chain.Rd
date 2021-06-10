@@ -48,6 +48,18 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 Create an object that describes mooring chain elements such as shackles,
 either by looking up a known object from the database, or defining a new type.
 }
+\section{Data sources}{
+
+
+To learn more about the data used for the built-in
+chain
+objects, use e.g.
+\preformatted{
+data(mooringElements)
+mooringElements$chains
+}
+}
+
 \examples{
 library(mooring)
 # List known chain types

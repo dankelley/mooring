@@ -13,16 +13,14 @@ float(
 )
 }
 \arguments{
-\item{model}{character value indicating the type of float.
+\item{model}{character value indicating the type of float
 There are three possibilities for \code{model}.
 (1) If this is \code{"?"}, then the function returns a vector of permitted
 character values. (2) If this is \code{"?X"}, where X is a set of
 characters, then \code{\link[=findElement]{findElement()}} is called to do a fuzzy search,
-with the \code{search} argument set to \code{"float"}.
-(3) If it is recognized, i.e. if that type is
-stored in \code{data(mooringElements)}, then the that stored value
+with the \code{search} argument set to \verb{"float (3) If it is recognized, i.e. if that type is stored in }data(mooringElements)`, then the that stored value
 is used, and all other arguments to this function are ignored.
-(4) Otherwise, a new float object is created, using
+(4) Otherwise, a new float
 values specified in the other arguments (all of which must
 be supplied).}
 
@@ -50,15 +48,20 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \code{float} returns an object of the \code{"mooring"} class and \code{"float"} subclass.
 }
 \description{
-Create a float object,
-either by looking up a known object from the database, or defining a new type.
+Create a float object
 }
-\details{
-Note that \code{HMB} in a name is a short-hand for \verb{Hydrofloat Mooring Buoy}.  Data for these
-floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the \code{CD} value
-being set at 0.65 (in the absence of any data from the manufacture) because that
-value is used in Dewey's dataset for many floats.
+\section{Data sources}{
+
+
+To learn more about the data used for the built-in
+float
+objects, use e.g.
+\preformatted{
+data(mooringElements)
+mooringElements$float
 }
+}
+
 \examples{
 library(mooring)
 # List known float types

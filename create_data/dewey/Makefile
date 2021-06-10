@@ -1,5 +1,5 @@
 all:
-	echo "author: do 'make csv' and then 'make install'; others: leave"
+	echo "author: do 'make csv install'; others: please do not use 'make'"
 csv: force
 	Rscript create_dewey_csv.R
 install: force

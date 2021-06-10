@@ -47,11 +47,13 @@ fixnames <- function(names)
 #> cat(count, sep="")
 cat("# Floats\n")
 floats <- read.fwf(textConnection(d$floats),widths=c(18,7,6,6,6,5,4), col.names=names)
+originalName <- floats$name
 floats$name <- fixnames(floats$name)
 floats$height <- floats$height / 100
 floats$width <- NULL # this is always 0, and we don't use it in this package
 floats$diameter <- floats$diameter / 100
 floats <- cbind(floats, source="Dewey")
+floats <- cbind(floats, originalName=trimws(originalName))
 write.csv(floats, "floats_dewey.csv", row.names=FALSE)
 
 cat("# Wires\n")
@@ -60,6 +62,7 @@ cat("# Wires\n")
 # to make tidy data and there's no need for such tricks, so we call
 # his 'width' as 'diameter'.
 wires <- read.fwf(textConnection(d$wires),widths=c(18,7,6,6,6,5,4), col.names=names)
+originalName <- wires$name
 wires$name <- fixnames(wires$name)
 # Remove 'height', because it's meaningless for a wire.  (It's always 100 in the file.)
 wires$height <- NULL
@@ -69,6 +72,7 @@ n <- names(wires)
 n[n == "buoyancy"] <- "buoyancyPerMeter"
 names(wires) <- n
 wires <- cbind(wires, source="Dewey")
+wires <- cbind(wires, originalName=trimws(originalName))
 write.csv(wires, "wires_dewey.csv", row.names=FALSE)
 
 # Chains and connectors
@@ -77,6 +81,7 @@ cat("# Chains and connectors\n")
 # store buoyancyPerMeter, kg/m) and 'connector' otherwise (and then I store
 # buoyancy, kg).
 cc <- read.fwf(textConnection(d$chains),widths=c(18,7,6,6,6,5,4), col.names=names)
+originalName <- cc$name
 cc$name <- fixnames(cc$name)
 isChain <- cc$height == 100
 chains <- cc[isChain, ]
@@ -88,6 +93,7 @@ chains$width <- chains$width / 100 # convert to m
 chains$diameter <- NULL # is 0 anyway
 chains$name <- fixnames(chains$name)
 chains <- cbind(chains, source="Dewey")
+chains <- cbind(chains, originalName=trimws(originalName[isChain]))
 write.csv(chains, "chains_dewey.csv", row.names=FALSE)
 
 connectors <- cc[!isChain, ]
@@ -96,7 +102,7 @@ connectors$diameter <- NULL # this is always 0, and we don't use it in this pack
 connectors$height <- connectors$height / 100
 connectors$width <- connectors$width / 100
 connectors <- cbind(connectors, source="Dewey")
-connectors
+connectors <- cbind(connectors, originalName=trimws(originalName[!isChain]))
 write.csv(connectors, "connectors_dewey.csv", row.names=FALSE)
 
 
