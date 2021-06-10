@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="Create a float object — float" />
-<meta property="og:description" content="Create a float object,
-either by looking up a known object from the database, or defining a new type." />
+<meta property="og:description" content="Create a float object" />
 
 
 
@@ -139,8 +138,7 @@ either by looking up a known object from the database, or defining a new type." 
     </div>
 
     <div class="ref-description">
-    <p>Create a float object,
-either by looking up a known object from the database, or defining a new type.</p>
+    <p>Create a float object</p>
     </div>
 
     <pre class="usage"><span class='fu'>float</span><span class='op'>(</span>
@@ -156,16 +154,14 @@ either by looking up a known object from the database, or defining a new type.</
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>character value indicating the type of float.
+      <td><p>character value indicating the type of float
 There are three possibilities for <code>model</code>.
 (1) If this is <code>"?"</code>, then the function returns a vector of permitted
 character values. (2) If this is <code>"?X"</code>, where X is a set of
 characters, then <code><a href='findElement.html'>findElement()</a></code> is called to do a fuzzy search,
-with the <code>search</code> argument set to <code>"float"</code>.
-(3) If it is recognized, i.e. if that type is
-stored in <code><a href='https://rdrr.io/r/utils/data.html'>data(mooringElements)</a></code>, then the that stored value
+with the <code>search</code> argument set to <code>"float (3) If it is recognized, i.e. if that type is stored in </code>data(mooringElements)`, then the that stored value
 is used, and all other arguments to this function are ignored.
-(4) Otherwise, a new float object is created, using
+(4) Otherwise, a new float
 values specified in the other arguments (all of which must
 be supplied).</p></td>
     </tr>
@@ -202,12 +198,18 @@ Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></t
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>float</code> returns an object of the <code>"mooring"</code> class and <code>"float"</code> subclass.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="data-sources"><a class="anchor" href="#data-sources"></a>Data sources</h2>
 
-    <p>Note that <code>HMB</code> in a name is a short-hand for <code>Hydrofloat Mooring Buoy</code>.  Data for these
-floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the <code>CD</code> value
-being set at 0.65 (in the absence of any data from the manufacture) because that
-value is used in Dewey's dataset for many floats.</p>
+    
+
+
+<p>To learn more about the data used for the built-in
+float
+objects, use e.g.</p><pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mooringElements</span><span class='op'>)</span>
+<span class='va'>mooringElements</span><span class='op'>$</span><span class='va'>float</span>
+</pre>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     

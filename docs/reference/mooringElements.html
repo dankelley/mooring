@@ -163,8 +163,8 @@ http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mooringElements</span><span class='op'>)</span>
 <span class='va'>mooringElements</span>
 </div><div class='output co'>#&gt; $anchors
-#&gt;         name buoyancy height source
-#&gt; 1 trainwheel    -1000      0 kelley
+#&gt;         name buoyancy height source originalName
+#&gt; 1 trainwheel    -1000      0 kelley           NA
 #&gt; 
 #&gt; $chains
 #&gt;                      name buoyancyPerMeter  width  CD code source
@@ -179,6 +179,18 @@ http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
 #&gt; 9        5/8in buoy chain           -4.730 0.0350 1.3    1  Dewey
 #&gt; 10       3/4in buoy chain           -6.870 0.0400 1.3    1  Dewey
 #&gt; 11         1in buoy chain          -12.250 0.0500 1.3    1  Dewey
+#&gt;              originalName
+#&gt; 1  5/8"  GALVANIZED CHAIN
+#&gt; 2            1/4 chain SL
+#&gt; 3            3/8 chain SL
+#&gt; 4            1/2 chain SL
+#&gt; 5              1 chain SL
+#&gt; 6            1/2 chain LL
+#&gt; 7         3/8" buoy chain
+#&gt; 8         1/2" buoy chain
+#&gt; 9         5/8" buoy chain
+#&gt; 10        3/4" buoy chain
+#&gt; 11          1" buoy chain
 #&gt; 
 #&gt; $connectors
 #&gt;                        name buoyancy height  width  CD code source
@@ -201,6 +213,26 @@ http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
 #&gt; 17           3T SeineSwivel   -0.650  0.105 0.0400 1.3    1  Dewey
 #&gt; 18            3/4in shackle   -0.880  0.060 0.0250 1.3    1  Dewey
 #&gt; 19          shac-Pring-shac   -0.500  0.200 0.0200 1.3    1  Dewey
+#&gt;               originalName
+#&gt; 1                   SWIVEL
+#&gt; 2            7/16" SHACKLE
+#&gt; 3    1/4" NICOPRESS SLEEVE
+#&gt; 4  5/16" HEAVY SS THIMBLES
+#&gt; 5           BALLAST WEIGHT
+#&gt; 6           shac-ring-shac
+#&gt; 7          shac-3link-shac
+#&gt; 8              1/2 SS link
+#&gt; 9            1/2 galv link
+#&gt; 10             1/2 shackle
+#&gt; 11             3/8 shackle
+#&gt; 12             5/8 shackle
+#&gt; 13              1" shackle
+#&gt; 14              1/2 swivel
+#&gt; 15              3/4 swivel
+#&gt; 16        1/2 shac+3/8shac
+#&gt; 17          3T SeineSwivel
+#&gt; 18            3/4" shackle
+#&gt; 19         shac-Pring-shac
 #&gt; 
 #&gt; $floats
 #&gt;                                    name buoyancy height diameter   CD code
@@ -253,92 +285,92 @@ http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
 #&gt; 47                               HMB 51   633.00 1.2954   1.2954 0.65   NA
 #&gt; 48                               HMB 56   831.00 1.4224   1.4224 0.65   NA
 #&gt; 49                               HMB 62  1122.00 1.5748   1.5748 0.65   NA
-#&gt;     source
-#&gt; 1      BIO
-#&gt; 2      BIO
-#&gt; 3      BIO
-#&gt; 4      BIO
-#&gt; 5      BIO
-#&gt; 6      BIO
-#&gt; 7      BIO
-#&gt; 8      BIO
-#&gt; 9      BIO
-#&gt; 10     BIO
-#&gt; 11     BIO
-#&gt; 12     BIO
-#&gt; 13     BIO
-#&gt; 14   Dewey
-#&gt; 15   Dewey
-#&gt; 16   Dewey
-#&gt; 17   Dewey
-#&gt; 18   Dewey
-#&gt; 19   Dewey
-#&gt; 20   Dewey
-#&gt; 21   Dewey
-#&gt; 22   Dewey
-#&gt; 23   Dewey
-#&gt; 24   Dewey
-#&gt; 25   Dewey
-#&gt; 26   Dewey
-#&gt; 27   Dewey
-#&gt; 28   Dewey
-#&gt; 29   Dewey
-#&gt; 30   Dewey
-#&gt; 31   Dewey
-#&gt; 32   Dewey
-#&gt; 33   Dewey
-#&gt; 34   Dewey
-#&gt; 35   Dewey
-#&gt; 36   Dewey
-#&gt; 37   Dewey
-#&gt; 38   Dewey
-#&gt; 39   Dewey
-#&gt; 40  Kelley
-#&gt; 41  Kelley
-#&gt; 42  Kelley
-#&gt; 43  Kelley
-#&gt; 44  Kelley
-#&gt; 45  Kelley
-#&gt; 46  Kelley
-#&gt; 47  Kelley
-#&gt; 48  Kelley
-#&gt; 49  Kelley
+#&gt;    source                          originalName
+#&gt; 1     BIO       STREAMLINED BUB  2 x 17"  GLASS
+#&gt; 2     BIO      A2 PACKAGE ADCP AND 2 VINY BALLS
+#&gt; 3     BIO              3 pack VINY 12B-3 floats
+#&gt; 4     BIO         STREAMLINED BUB  3 VINY BALLS
+#&gt; 5     BIO                     BUB  2x17"  GLASS
+#&gt; 6     BIO             IPS / 2x B3 SUBS ASSEMBLY
+#&gt; 7     BIO            ADCP / 2x C3 SUBS ASSEMBLY
+#&gt; 8     BIO  Stablemoor 533 lb 3500 msw with ADCP
+#&gt; 9     BIO Stablemoor 1000 lb 3500 msw with ADCP
+#&gt; 10    BIO Stablemoor 1015 lb 1500 msw with ADCP
+#&gt; 11    BIO  Stablemoor 580 lb 1500 msw with ADCP
+#&gt; 12    BIO     SYNTACTIC FLOAT WITH ADCP BRACKET
+#&gt; 13    BIO   SYN. FLOAT, BRACKET AND 109 LB.ADCP
+#&gt; 14  Dewey                              61in ORE
+#&gt; 15  Dewey                              48in ORE
+#&gt; 16  Dewey                              41in ORE
+#&gt; 17  Dewey                              37in ORE
+#&gt; 18  Dewey                              28in ORE
+#&gt; 19  Dewey                            30in float
+#&gt; 20  Dewey                          Kiel SFS40in
+#&gt; 21  Dewey                       Torp. flt, 3-28
+#&gt; 22  Dewey                           17 in glass
+#&gt; 23  Dewey                         Billings-12in
+#&gt; 24  Dewey                          BENTHOS 17in
+#&gt; 25  Dewey                             16in Viny
+#&gt; 26  Dewey                           Double 17in
+#&gt; 27  Dewey                       Double 16inViny
+#&gt; 28  Dewey                       Trpl 16 in Viny
+#&gt; 29  Dewey                       Trpl 12in glass
+#&gt; 30  Dewey                      CDMS 1.2m sphere
+#&gt; 31  Dewey                        CDMS 2m sphere
+#&gt; 32  Dewey                        54cm Alum CAP3
+#&gt; 33  Dewey                      54x30inClamShell
+#&gt; 34  Dewey                       Top of Tow Rope
+#&gt; 35  Dewey                             BPS Float
+#&gt; 36  Dewey                        ADCP FloatTech
+#&gt; 37  Dewey                       FloatTech CF-12
+#&gt; 38  Dewey                      Tripple FT CF-12
+#&gt; 39  Dewey                      Geodyn 8' Toroid
+#&gt; 40 Kelley                                  &lt;NA&gt;
+#&gt; 41 Kelley                                  &lt;NA&gt;
+#&gt; 42 Kelley                                  &lt;NA&gt;
+#&gt; 43 Kelley                                  &lt;NA&gt;
+#&gt; 44 Kelley                                  &lt;NA&gt;
+#&gt; 45 Kelley                                  &lt;NA&gt;
+#&gt; 46 Kelley                                  &lt;NA&gt;
+#&gt; 47 Kelley                                  &lt;NA&gt;
+#&gt; 48 Kelley                                  &lt;NA&gt;
+#&gt; 49 Kelley                                  &lt;NA&gt;
 #&gt; 
 #&gt; $instruments
-#&gt;                                                 name buoyancy height  area   CD
-#&gt; 1                    seacat 16-03 (bar,plastic case)    -7.49 0.8400 0.122 0.65
-#&gt; 2              seacat 16-04 (bar,titanium no press.)   -10.89 0.8763 0.062 0.65
-#&gt; 3            seacat 16-04 (bar,titanium with press.)   -13.39 1.0668 0.077 0.65
-#&gt; 4                  seabird CTD (ios oxygen with bar)   -18.16 1.2700 0.094 0.65
-#&gt; 5                                  DVS current meter    -4.54 0.7000 0.243 0.65
-#&gt; 6                                        wotan (bar)   -20.42 1.6800 0.176 0.65
-#&gt; 7                                       RDI with bar   -45.39 2.1800 0.270 0.65
-#&gt; 8                                     RCM-8 with fin   -21.33 0.7400 0.060 0.65
-#&gt; 9                                    RCM-11 in frame   -20.31 0.8000 0.078 0.65
-#&gt; 10                          seaguard (2000 &amp; 6000 m)   -19.59 0.8600 0.083 0.65
-#&gt; 11                                 vemco on a ss bar    -2.22 1.2000 0.052 0.65
-#&gt; 12                        SBE37 microcat on a ss bar    -4.65 1.2000 0.060 0.65
-#&gt; 13                             sediment trap (#1349)   -61.27 1.8290 1.061 0.65
-#&gt; 14                     SBE37 microcat clamp-on style    -1.53 0.5590 0.117 0.65
-#&gt; 15  WH ADCP sentinel (orange) 500m with inline frame   -14.69 0.7600 0.091 0.65
-#&gt; 16 WH ADCP sentinel (yellow) 6000m with inline frame   -22.04 0.7900 0.111 0.65
-#&gt;    code source
-#&gt; 1    NA    BIO
-#&gt; 2    NA    BIO
-#&gt; 3    NA    BIO
-#&gt; 4    NA    BIO
-#&gt; 5    NA    BIO
-#&gt; 6    NA    BIO
-#&gt; 7    NA    BIO
-#&gt; 8    NA    BIO
-#&gt; 9    NA    BIO
-#&gt; 10   NA    BIO
-#&gt; 11   NA    BIO
-#&gt; 12   NA    BIO
-#&gt; 13   NA    BIO
-#&gt; 14   NA    BIO
-#&gt; 15   NA    BIO
-#&gt; 16   NA    BIO
+#&gt;                                              name buoyancy height  area   CD
+#&gt; 1                 seacat 16-03 (bar,plastic case)    -7.49 0.8400 0.122 0.65
+#&gt; 2           seacat 16-04 (bar,titanium no press.)   -10.89 0.8763 0.062 0.65
+#&gt; 3         seacat 16-04 (bar,titanium with press.)   -13.39 1.0668 0.077 0.65
+#&gt; 4               seabird CTD (ios oxygen with bar)   -18.16 1.2700 0.094 0.65
+#&gt; 5                               DVS current meter    -4.54 0.7000 0.243 0.65
+#&gt; 6                                     wotan (bar)   -20.42 1.6800 0.176 0.65
+#&gt; 7                                    RDI with bar   -45.39 2.1800 0.270 0.65
+#&gt; 8                                  RCM-8 with fin   -21.33 0.7400 0.060 0.65
+#&gt; 9                                 RCM-11 in frame   -20.31 0.8000 0.078 0.65
+#&gt; 10                       seaguard (2000 &amp; 6000 m)   -19.59 0.8600 0.083 0.65
+#&gt; 11                              vemco on a ss bar    -2.22 1.2000 0.052 0.65
+#&gt; 12                     SBE37 microcat on a ss bar    -4.65 1.2000 0.060 0.65
+#&gt; 13                                  sediment trap   -61.27 1.8290 1.061 0.65
+#&gt; 14                  SBE37 microcat clamp-on style    -1.53 0.5590 0.117 0.65
+#&gt; 15  ADCP sentinel (orange) 500m with inline frame   -14.69 0.7600 0.091 0.65
+#&gt; 16 ADCP sentinel (yellow) 6000m with inline frame   -22.04 0.7900 0.111 0.65
+#&gt;    code source                                          originalName
+#&gt; 1    NA    BIO                      SEACAT 16-03 (BAR, PLASTIC CASE)
+#&gt; 2    NA    BIO                 SEACAT 16-04 (BAR,TITANIUM NO PRESS.)
+#&gt; 3    NA    BIO               SEACAT 16-04 (BAR,TITANIUM WITH PRESS.)
+#&gt; 4    NA    BIO                     SEABIRD CTD (IOS OXYGEN WITH BAR)
+#&gt; 5    NA    BIO                                     DVS CURRENT METER
+#&gt; 6    NA    BIO                                           WOTAN (BAR)
+#&gt; 7    NA    BIO                                          RDI WITH BAR
+#&gt; 8    NA    BIO                                        RCM-8 WITH FIN
+#&gt; 9    NA    BIO                                       RCM-11 IN FRAME
+#&gt; 10   NA    BIO                              SEAGUARD (2000 &amp; 6000 M)
+#&gt; 11   NA    BIO                                     VEMCO ON A SS BAR
+#&gt; 12   NA    BIO                            SBE37 MICROCAT ON A SS BAR
+#&gt; 13   NA    BIO                                 SEDIMENT TRAP (#1349)
+#&gt; 14   NA    BIO                         SBE37 MICROCAT CLAMP-ON STYLE
+#&gt; 15   NA    BIO  WHADCP Sentinel (orange) 500 meter with inline frame
+#&gt; 16   NA    BIO WHADCP Sentinel (yellow) 6000 meter with inline frame
 #&gt; 
 #&gt; $releases
 #&gt;                             name buoyancy height  width   CD code source
@@ -348,6 +380,13 @@ http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
 #&gt; 4  benthos 966a and 866a release   -13.16  0.680 0.1647 0.65   NA    BIO
 #&gt; 5           benthos 865a release   -27.86  1.000 0.1990 0.65   NA    BIO
 #&gt; 6 vr2w release with float collar   -12.11  0.400 0.5925 0.65   NA    BIO
+#&gt;                     originalName
+#&gt; 1                      EG&amp;G 723A
+#&gt; 2     EG&amp;G 723A WITH TENSION BAR
+#&gt; 3           BENTHOS 965A RELEASE
+#&gt; 4  BENTHOS 966A and 866A RELEASE
+#&gt; 5           BENTHOS 865A RELEASE
+#&gt; 6 VR2W RELEASE with float collar
 #&gt; 
 #&gt; $wires
 #&gt;                                      name buoyancyPerMeter  diameter  CD code
@@ -389,45 +428,45 @@ http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
 #&gt; 36                         BPS Power/Coms          -0.3840 0.0280000 1.3    6
 #&gt; 37                        1/4-1/2 WarpSpd          -0.0090 0.0090000 1.3    6
 #&gt; 38                            1/2 Dyneema           0.0200 0.0120000 1.3    8
-#&gt;    source
-#&gt; 1     BIO
-#&gt; 2     BIO
-#&gt; 3   Dewey
-#&gt; 4   Dewey
-#&gt; 5   Dewey
-#&gt; 6   Dewey
-#&gt; 7   Dewey
-#&gt; 8   Dewey
-#&gt; 9   Dewey
-#&gt; 10  Dewey
-#&gt; 11  Dewey
-#&gt; 12  Dewey
-#&gt; 13  Dewey
-#&gt; 14  Dewey
-#&gt; 15  Dewey
-#&gt; 16  Dewey
-#&gt; 17  Dewey
-#&gt; 18  Dewey
-#&gt; 19  Dewey
-#&gt; 20  Dewey
-#&gt; 21  Dewey
-#&gt; 22  Dewey
-#&gt; 23  Dewey
-#&gt; 24  Dewey
-#&gt; 25  Dewey
-#&gt; 26  Dewey
-#&gt; 27  Dewey
-#&gt; 28  Dewey
-#&gt; 29  Dewey
-#&gt; 30  Dewey
-#&gt; 31  Dewey
-#&gt; 32  Dewey
-#&gt; 33  Dewey
-#&gt; 34  Dewey
-#&gt; 35  Dewey
-#&gt; 36  Dewey
-#&gt; 37  Dewey
-#&gt; 38  Dewey
+#&gt;    source                        originalName
+#&gt; 1     BIO 3/16" GALVANIZED WIRE COATED TO 1/4
+#&gt; 2     BIO 1/4" GALVANIZED WIRE COATED TO 5/16
+#&gt; 3   Dewey                          1/4 Kevlar
+#&gt; 4   Dewey                         5/16 Kevlar
+#&gt; 5   Dewey                          3/8 Kevlar
+#&gt; 6   Dewey                         7/16 Kevlar
+#&gt; 7   Dewey                          1/2 Kevlar
+#&gt; 8   Dewey                         9/16 Kevlar
+#&gt; 9   Dewey                          5/8 Kevlar
+#&gt; 10  Dewey                      3/16 wire rope
+#&gt; 11  Dewey                       1/4 wire rope
+#&gt; 12  Dewey                      5/16 wire rope
+#&gt; 13  Dewey                       3/8 wire rope
+#&gt; 14  Dewey                       1/4 wire/jack
+#&gt; 15  Dewey                      5/16 wire/jack
+#&gt; 16  Dewey                       3/8 wire/jack
+#&gt; 17  Dewey                       1/2 wire/jack
+#&gt; 18  Dewey                            7/16 VLS
+#&gt; 19  Dewey                             1/2 VLS
+#&gt; 20  Dewey                         11mm Perlon
+#&gt; 21  Dewey                         7/16 Dacron
+#&gt; 22  Dewey                          1/2 Dacron
+#&gt; 23  Dewey                         9/16 Dacron
+#&gt; 24  Dewey                          3/4 Dacron
+#&gt; 25  Dewey                           5/8 Nylon
+#&gt; 26  Dewey                           3/4 Nylon
+#&gt; 27  Dewey                             1 Nylon
+#&gt; 28  Dewey                        3/4 Polyprop
+#&gt; 29  Dewey                    1/2 Neutral Wire
+#&gt; 30  Dewey                    1in Neutral Wire
+#&gt; 31  Dewey                    1/4 AmSteel-Blue
+#&gt; 32  Dewey                    3/8 AmSteel-Blue
+#&gt; 33  Dewey                    1/2 AmSteel-Blue
+#&gt; 34  Dewey                           BPS Cable
+#&gt; 35  Dewey                    5/8 AmSteel-Blue
+#&gt; 36  Dewey                      BPS Power/Coms
+#&gt; 37  Dewey                     1/4-1/2 WarpSpd
+#&gt; 38  Dewey                         1/2 Dyneema
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
