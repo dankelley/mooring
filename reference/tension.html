@@ -150,12 +150,14 @@ length of the returned result matches the length of <code>m</code>.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>m</th>
-      <td><p>an object of the <code>"mooring"</code> class.</p></td>
+      <td><p>a mooring object, created by <code><a href='mooring.html'>mooring()</a></code>.</p></td>
     </tr>
     <tr>
       <th>stagnant</th>
-      <td><p>a logical indicating whether to compute tension
-as though no currents were present.</p></td>
+      <td><p>logical value indicating whether to return
+values for the mooring configuration in the stagnant case
+(with zero velocity) or the present case (possibly with
+nonzero velocity).</p></td>
     </tr>
     </table>
 
@@ -171,7 +173,7 @@ as though no currents were present.</p></td>
 <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mooring.html'>mooring</a></span><span class='op'>(</span><span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>120</span><span class='op'>)</span>, <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='discretise.html'>discretise</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='va'>mdk</span> <span class='op'>&lt;-</span> <span class='fu'><a href='knockdown.html'>knockdown</a></span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span>
-<span class='va'>depth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='depth.html'>depth</a></span><span class='op'>(</span><span class='va'>mdk</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; before replace last point:</div><div class='input'><span class='va'>depth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='depth.html'>depth</a></span><span class='op'>(</span><span class='va'>mdk</span><span class='op'>)</span>
 <span class='co'># Next is handled better by plot.mooring(mdk,which="tension")</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>tension</span><span class='op'>(</span><span class='va'>mdk</span><span class='op'>)</span>, <span class='va'>depth</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>depth</span><span class='op'>)</span><span class='op'>)</span>, type<span class='op'>=</span><span class='st'>"l"</span><span class='op'>)</span>
 </div><div class='img'><img src='tension-1.png' alt='' width='600' height='600' /></div><div class='input'>

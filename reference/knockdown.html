@@ -167,6 +167,10 @@ information may be printed by the function.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a new <code>mooring</code> object representing the deformed mooring, with
+<code>x</code> and <code>z</code> values updated (and original values saved as <code>x0</code> and <code>z0</code>).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
@@ -180,15 +184,15 @@ information may be printed by the function.</p></td>
 
 <span class='co'># Example 1: no current</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='message'>FIXME: xstagnant def in plot.mooring is wrong</span></div><div class='input'>
 <span class='co'># Example 2: uniform 0.5 m/s (approx. 1 knot) current</span>
 <span class='va'>k1</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span>, title<span class='op'>=</span><span class='st'>"uniform 0.5 m/s"</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; before replace last point:</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span>, title<span class='op'>=</span><span class='st'>"uniform 0.5 m/s"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>FIXME: xstagnant def in plot.mooring is wrong</span></div><div class='input'>
 <span class='co'># Example 3: 0.5 m/s current but only in top 40m of water column</span>
 <span class='va'>k2</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>depth</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>depth</span> <span class='op'>&lt;</span> <span class='fl'>40</span>, <span class='fl'>0.5</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: FIXME: u=function() case is not fully coded yet (no iteration is done)</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span>, title<span class='op'>=</span><span class='st'>"0.5 m/s only in top 40m"</span><span class='op'>)</span>
-</div><div class='img'><img src='knockdown-1.png' alt='' width='600' height='600' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: FIXME: u=function() case is not fully coded yet (no iteration is done)</span></div><div class='output co'>#&gt; before replace last point:</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span>, title<span class='op'>=</span><span class='st'>"0.5 m/s only in top 40m"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>FIXME: xstagnant def in plot.mooring is wrong</span></div><div class='img'><img src='knockdown-1.png' alt='' width='600' height='600' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
