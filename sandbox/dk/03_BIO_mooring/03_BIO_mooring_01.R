@@ -1,8 +1,10 @@
 ## Mooring 1840 (p10 of doc)
 library(mooring)
+# source("~/git/mooring/R/mooring.R")
+
 # Abbreviations for convenience
 W <- function(length) wire("3/16in galvanized wire coated to 1/4in", length=length)
-BUB3 <- float("streamlined bub 3 Viny balls")
+BUB3 <- float("streamlined BUB 3 Viny balls")
 RCM11 <- instrument("RCM-11 in frame") # "AANDERAA RCM11"
 microcat <- instrument("SBE37 microcat clamp-on style") # "SBE MICROCAT"
 
@@ -35,11 +37,28 @@ m <- mooring(anchor(depth=1400),
              W(146),
              microcat,
              connector("swivel"),
-             connector("ballast", 100/2.2, height=1, width=0.05, CD=1), # guess
-             float("syn. float,bracket and 109lb ADCP"), # total guess; lots of choices
+             connector("ballast", -100/2.2, height=1, width=0.05, CD=1), # guess
+             float("syn. float, bracket and 109lb ADCP"), # total guess; lots of choices
              W(149),
              microcat,
-             float("streamlined bub 3 Viny balls")) # total guess
+             # For now, I would use the numbers in 'NEW GLASS STREAMINED FLOAT (C2)', with 100 lbf [445 N]. This is the Open Seas C2 SUBS float. The 'STREAMLINED BUB 2 x 17" GLASS' might be from a handful of prototypes we had made, tested and used.
+             float('new glass streamlined float c2'))
 md <- discretise(m)
-mdk <- knockdown(md, u=function(depth) exp(-depth/1000))
-plot(mdk)
+u <- function(depth) 0.5*exp(-depth/1000)
+depth <- seq(m[[1]]$depth, 0, length.out=100)
+if (!interactive())
+    png("mooring_01.png", width=7, height=5, unit="in", res=200, pointsize=9)
+layout(matrix(1:2,nrow=1),widths=c(0.7,0.3))
+mdk <- knockdown(md, u=u)
+#plot(mdk, showDetails=TRUE)
+plot(mdk, "knockdown", showDetails=TRUE, xlim=c(0, 15))
+ylim <- par('usr')[3:4]
+plot(u(depth), depth, ylim=ylim, type="l", yaxs="i", axes=FALSE, xlab="", ylab="Depth [m]")
+grid()
+mtext("Velocity [m/s]", side=3, line=2)
+box()
+axis(2)
+axis(3)
+if (!interactive())
+    dev.off()
+

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{discretise}
 \alias{discretise}
-\title{Discretise the wire portions of a mooring}
+\title{Discretise the chain and wire portions of a mooring}
 \usage{
 discretise(m, by = 1)
 }
@@ -25,7 +25,7 @@ to \code{m} except that wire portions are chopped up into shorter
 pieces.
 }
 \description{
-Break up \code{wire} portions of a mooring into smaller chunks,
+Break up \code{chain} and \code{wire} portions of a mooring into smaller chunks,
 so that the deformation by a current can be traced more
 accurately by \code{\link[=knockdown]{knockdown()}}.
 }

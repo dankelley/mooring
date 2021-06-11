@@ -18,6 +18,10 @@ below the ocean surface.}
 integer) that controls debugging. If this is positive, then some debugging
 information may be printed by the function.}
 }
+\value{
+a new \code{mooring} object representing the deformed mooring, with
+\code{x} and \code{z} values updated (and original values saved as \code{x0} and \code{z0}).
+}
 \description{
 The current may be a depth-independent or depth-dependent,
 as specified by the \code{v} argument.

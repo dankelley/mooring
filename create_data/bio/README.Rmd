@@ -48,6 +48,9 @@ These are green-background in the excel file, rows 7 through 12. I put `5/8"
 galvanized chain` (row 11) into `chains_bio.csv` and the rest into
 `connectors_bio.csv`.
 
+The `swivel` has no listed dimensions, so I made up a height of 0.15m and a
+width of 0.03m, to avoid zero height and area.
+
 ### `buoyancy`
 
 This is inferred as `NEWTONS` (col E) divided by 9.8 m/s^2 to get kg.
@@ -96,12 +99,13 @@ knitr::kable(read.csv("connectors_bio.csv"), caption="Contents of connectors_bio
 These are yellow-background in the excel file.
 
 The first item, named `"new glass streamlined float"`, has no listed weight in
-pounds or newtons, so I ignored that entry.
+pounds or newtons, but a personal communication suggests using buoyancy 100
+pounds, i.e. 445N i.e. 45.41kg.
 
 For buoyancy, I took `NEWTONS` (col E) and divided by 9.8m/s^2 to get kg, rounding
 to 2 digits after the decimal place.
 ```{r}
-N <- c(445,285,560,516,429,773,414,1886,3963,4030,2095,8224,7740)
+N <- c(445, 445,285,560,516,429,773,414,1886,3963,4030,2095,8224,7740)
 round(N/9.8, 2)
 ```
 
@@ -112,7 +116,7 @@ the y direction?
 Two columns contain things related to area, colG labelled `A (m*2/m)` and colI
 labelled `AW (m*2)`.  From
 https://github.com/dankelley/mooring/issues/24#issuecomment-857715929, we know
-that the frontal area is given by the product of colC and colG. 
+that the frontal area is given by the product of colC and colG.
 
 We take as a test case: the `"BUB 2x178" GLASS"` value, in row 42.  The
 above-stated URL indicates that a BUB is a package with two 17in glass spheres,
@@ -125,8 +129,8 @@ as as `2*sqrt(area/pi)`.
 
 ```{r}
 # Notice that row 37 is ignored, because no weight is listed for it
-colC <- c(0.74,0.563,1,0.563,1.187,1,1,1.286,1.286,1.286,1.286,2.42,2.42)
-colG <- c(0.22,0.22,0.22,0.22,0.466,0.44,0.65,1.822,1.822,1.807,1.822,0.51,0.51)
+colC <- c(0.87, 0.74,0.563,1,0.563,1.187,1,1,1.286,1.286,1.286,1.286,2.42,2.42)
+colG <- c(0.21, 0.22,0.22,0.22,0.22,0.466,0.44,0.65,1.822,1.822,1.807,1.822,0.51,0.51)
 area <- colG*colC
 round(area, 3)
 diameter <- 2 * sqrt(colC * colG / pi)

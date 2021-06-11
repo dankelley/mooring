@@ -4,10 +4,15 @@
 \alias{z}
 \title{Return vertical coordinate, in m, of elements in mooring.}
 \usage{
-z(m)
+z(m, stagnant = FALSE)
 }
 \arguments{
-\item{m}{an object of the \code{"mooring"} class.}
+\item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
+
+\item{stagnant}{logical value indicating whether to return
+values for the mooring configuration in the stagnant case
+(with zero velocity) or the present case (possibly with
+nonzero velocity).}
 }
 \value{
 a numeric vector of vertical coordinate in metres.
