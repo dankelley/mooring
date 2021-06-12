@@ -864,7 +864,7 @@ plot.mooring <- function(x, which="shape",
     plot(x, depth, xlim=xlim, ylim=usrShape[3:4], yaxs="i", asp=if (which=="shape") 1, type="l", xlab="", ylab="", axes=FALSE)
     xlab <- switch(which,
                    "shape"="Horizontal Coordinate [m]",
-                   "knockdown"="Knockdown [m]",
+                   "knockdown"="Depth Increase [m]",
                    "tension"="Tension [kg]")
     ylab <- "Depth [m]"
     box()
