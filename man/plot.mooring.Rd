@@ -22,7 +22,7 @@
 \item{x}{an object of the \code{"mooring"} class.}
 
 \item{which}{character value indicating the desired plot, with
-choices: \code{"shape"} (the default), \code{"knockdown"}, and \code{"tension"}.}
+choices: \code{"shape"} (the default), \code{"knockdown"}, \code{"tension"} and \code{"velocity"}.}
 
 \item{showDepths}{logical value indicating whether to indicate the depths of
 floats, to the left of the symbols.}

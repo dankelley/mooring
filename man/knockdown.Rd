@@ -24,25 +24,32 @@ a new \code{mooring} object representing the deformed mooring, with
 }
 \description{
 The current may be a depth-independent or depth-dependent,
-as specified by the \code{v} argument.
+as specified by the \code{u} argument.  The returned result has
+an attribute named \code{u} that holds the value of that
+argument, and this is how a later call to \code{\link[=plot.mooring]{plot.mooring()}}
+is able to display a velocity profile; see
+\dQuote{Examples} 2 and 3.
 }
 \examples{
 # Illustrate importance of drag on the wire.
 library(mooring)
 m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 md <- discretise(m)
-par(mfrow=c(1, 3))
 
 # Example 1: no current
 plot(md)
 
 # Example 2: uniform 0.5 m/s (approx. 1 knot) current
+par(mfrow=c(1, 2))
 k1 <- knockdown(md, u=0.5)
-plot(k1, title="uniform 0.5 m/s")
+plot(k1, which="velocity")
+plot(k1)
 
-# Example 3: 0.5 m/s current but only in top 40m of water column
-k2 <- knockdown(md, u=function(depth) ifelse(depth < 40, 0.5, 0))
-plot(k2, title="0.5 m/s only in top 40m")
+# Example 3: 0.5 m/s current at surface, decaying below
+k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
+par(mfrow=c(1, 2))
+plot(k2, which="velocity")
+plot(k2)
 
 }
 \author{

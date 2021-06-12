@@ -696,6 +696,7 @@ mooring <- function(...)
         rval[[i]]$T <- T[i]
     }
     class(rval) <- "mooring"
+    attr(rval, "waterDepth") <- depth
     rval
 }
 
@@ -763,7 +764,7 @@ print.mooring <- function(x, ...)
 #' @param x an object of the `"mooring"` class.
 #'
 #' @param which character value indicating the desired plot, with
-#' choices: `"shape"` (the default), `"knockdown"`, and `"tension"`.
+#' choices: `"shape"` (the default), `"knockdown"`, `"tension"` and `"velocity"`.
 #'
 #' @param showDepths logical value indicating whether to indicate the depths of
 #' floats, to the left of the symbols.
@@ -839,21 +840,39 @@ plot.mooring <- function(x, which="shape",
     xshape <- x(m)
     xtension <- tension(m)
     z <- z(m)
-    x <- switch(which,
-                "shape"=x(m),
-                "knockdown"=depth(m) - depth(m, stagnant=TRUE),
-                "tension"=tension(m))
-    if (is.null(x))
-        stop("which must be \"shape\", \"knockdown\", or \"tension\"")
-    message("FIXME: xstagnant def in plot.mooring is wrong")
-    xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant=TRUE)
-    mooringDebug(debug, x, overview=TRUE, round=2)
-    mooringDebug(debug, z, overview=TRUE, round=2)
     depth <- -z
     waterDepth <- if ("anchor" == class(m[[1]])[2]) m[[1]]$depth
         else abs(min(depth))
     mooringDebug(debug, waterDepth, overview=TRUE)
     par(mar=mar, mgp=mgp)
+    # Handle velocity, which does not involve mooring elements and is a special case
+    if (which == "velocity") {
+        uattr <- attr(m, "u")
+        d <- seq(attr(m, "waterDepth"), 0, length.out=200)
+        velocityProfile <- if (is.function(uattr)) uattr(d) else rep(uattr, length(d))
+        plot(velocityProfile, d, ylim=rev(range(d)), ylab="", xlab="", type="l", axes=FALSE)
+        grid()
+        abline(h=0, col="#0066ff", lwd=2)
+        abline(h=waterDepth, col="#996633", lwd=2)
+        lines(velocityProfile, d, lwd=1.4*par("lwd"))
+        box()
+        axis(2)
+        mtext("Depth [m]", side=2, line=par("mgp")[1], cex=par("cex"))
+        axis(3)
+        mtext("Velocity [m/s]", side=3, line=par("mgp")[1], cex=par("cex"))
+        mtext(title, side=1, cex=par("cex"))
+        return(invisible(NULL))
+    }
+    x <- switch(which,
+                "shape"=x(m),
+                "knockdown"=depth(m) - depth(m, stagnant=TRUE),
+                "tension"=tension(m))
+    if (is.null(x))
+        stop("which must be \"shape\", \"knockdown\", \"tension\" or \"velocity\"")
+    message("FIXME: xstagnant def in plot.mooring is wrong")
+    xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant=TRUE)
+    mooringDebug(debug, x, overview=TRUE, round=2)
+    mooringDebug(debug, z, overview=TRUE, round=2)
     ylim <- c(waterDepth, 0)
     # Determine depth scale by doing a sort of dry run of a shape plot
     if (is.null(xlim)) xlim <- extendrange(c(x, 0))
@@ -865,7 +884,8 @@ plot.mooring <- function(x, which="shape",
     xlab <- switch(which,
                    "shape"="Horizontal Coordinate [m]",
                    "knockdown"="Depth Increase [m]",
-                   "tension"="Tension [kg]")
+                   "tension"="Tension [kg]",
+                   "velocity"="Velocity [m/s]")
     ylab <- "Depth [m]"
     box()
     axis(2)
@@ -930,7 +950,7 @@ plot.mooring <- function(x, which="shape",
                 if (abs(zi) < 1) text(xi, -zi, sprintf("%.3fm", -zi), pos=2)
                 else text(xi, -zi, sprintf("%.1fm", -zi), pos=2)
             }
-         } else if (type == "wire") {
+        } else if (type == "wire") {
             #> message("draw wire??")
         }
     }
@@ -1030,13 +1050,18 @@ discretise <- function(m, by=1)
         rval[[i]]$T <- T[i]
     }
     class(rval) <- "mooring"
+    attr(rval, "waterDepth") <- attr(m, "waterDepth")
     rval
 }
 
 #' Compute how a mooring is knocked down by a current
 #'
 #' The current may be a depth-independent or depth-dependent,
-#' as specified by the `v` argument.
+#' as specified by the `u` argument.  The returned result has
+#' an attribute named `u` that holds the value of that
+#' argument, and this is how a later call to [plot.mooring()]
+#' is able to display a velocity profile; see
+#' \dQuote{Examples} 2 and 3.
 #'
 #' @param m an object of the `"mooring"` class, usually created with
 #' [discretise()].
@@ -1051,20 +1076,23 @@ discretise <- function(m, by=1)
 #' @examples
 #' # Illustrate importance of drag on the wire.
 #' library(mooring)
-#' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
+#' m <- mooring(anchor(depth=200), wire(length=180), float("HMB 20"))
 #' md <- discretise(m)
-#' par(mfrow=c(1, 3))
 #'
 #' # Example 1: no current
 #' plot(md)
 #'
 #' # Example 2: uniform 0.5 m/s (approx. 1 knot) current
+#' par(mfrow=c(1, 2))
 #' k1 <- knockdown(md, u=0.5)
-#' plot(k1, title="uniform 0.5 m/s")
+#' plot(k1, which="velocity")
+#' plot(k1)
 #'
-#' # Example 3: 0.5 m/s current but only in top 40m of water column
-#' k2 <- knockdown(md, u=function(depth) ifelse(depth < 40, 0.5, 0))
-#' plot(k2, title="0.5 m/s only in top 40m")
+#' # Example 3: 0.5 m/s current at surface, decaying below
+#' k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
+#' par(mfrow=c(1, 2))
+#' plot(k2, which="velocity")
+#' plot(k2)
 #'
 #' @importFrom graphics grid
 #' @importFrom utils tail
@@ -1074,6 +1102,9 @@ knockdown <- function(m, u=1, debug=0L)
 {
     if (!isMooring(m))
         stop("only works for objects created by mooring()")
+    if (!is.null(attr(m, "u")))
+        stop("cannot apply knockdown() to the result of a previous call")
+
     debug <- as.integer(max(0, debug))
     if (is.function(u)) {
         #z <- sapply(m, function(x) x$z)
@@ -1181,6 +1212,7 @@ knockdown <- function(m, u=1, debug=0L)
     #> cat(oce::vectorShow(sapply(rval,\(x)x$x), showNA=TRUE))
     #> cat(oce::vectorShow(sapply(rval,\(x)x$z), showNA=TRUE))
     class(rval) <- "mooring"
+    attr(rval, "u") <- u
     rval
 }                                      # knockdown()
 
@@ -1545,3 +1577,5 @@ summary.mooring <- function(object, ...)
         }
     }
 }
+
+
