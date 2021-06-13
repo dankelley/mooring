@@ -1,0 +1,17 @@
+name: 'Close stale issues and PRs'
+on:
+  schedule:
+    - cron: '30 1 * * *'
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v3
+        with:
+          stale-issue-message: 'This issue has been auto-marked as stale'
+          stale-pr-message: 'This PR has been auto-marked as stale'
+          days-before-stale: 14
+          days-before-close: 7
+
+
