@@ -98,6 +98,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/example.html">A Practical Example</a>
+    </li>
+    <li>
       <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
     </li>
     <li>
@@ -145,6 +148,7 @@
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>x</span>,
   which <span class='op'>=</span> <span class='st'>"shape"</span>,
+  showInterfaces <span class='op'>=</span> <span class='cn'>TRUE</span>,
   showDepths <span class='op'>=</span> <span class='cn'>TRUE</span>,
   showLabels <span class='op'>=</span> <span class='cn'>TRUE</span>,
   showDetails <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -167,6 +171,11 @@
       <th>which</th>
       <td><p>character value indicating the desired plot, with
 choices: <code>"shape"</code> (the default), <code>"knockdown"</code>, <code>"tension"</code> and <code>"velocity"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>showInterfaces</th>
+      <td><p>logical value indicating whether to indicate the water
+surface with a blue line and the ocean bottom with a brown line.</p></td>
     </tr>
     <tr>
       <th>showDepths</th>
@@ -229,8 +238,8 @@ be used to specify the limits of the horizontal axis.</p></td>
 <span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='discretise.html'>discretise</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>FIXME: xstagnant def in plot.mooring is wrong</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>md</span>, which<span class='op'>=</span><span class='st'>"tension"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>FIXME: xstagnant def in plot.mooring is wrong</span></div><div class='img'><img src='plot.mooring-1.png' alt='' width='600' height='600' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>md</span>, which<span class='op'>=</span><span class='st'>"tension"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.mooring-1.png' alt='' width='600' height='600' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
