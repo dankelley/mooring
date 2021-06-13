@@ -720,11 +720,11 @@ print.mooring <- function(x, ...)
     if (elementary) {
         prefix <- ""
     } else {
-        if (inherits(x[[1]], "anchor")) {
-            cat("Mooring in", x[[1]]$depth, "m of water, with", n, "elements, listed top-down:\n")
-        } else {
-            cat("Mooring with", n, "elements, listed top-down:\n")
-        }
+        # reorder from bottom up, to read like a mooring diagram
+        a <- attributes(x)
+        x <- rev(x)
+        attributes(x) <- a
+        cat("Mooring with", n, "elements, listed from the top down:\n")
         prefix <- "  "
     }
     # The 'lastWas*' variables keep track of repeats, e.g. as created by discretise().
@@ -736,12 +736,16 @@ print.mooring <- function(x, ...)
     lastWasWire <- FALSE
     i <- 1L
     while (i <= n) {
+        irev <- n - i + 1
         xi <- if (elementary) x else x[[i]]
+        #> cat("i=", i, " class=", paste(class(xi), collapse=","), "\n", sep="")
         if (inherits(xi, "anchor")) {
-            cat(sprintf("%s%3d: '%s' anchor, %gkg, height %gm, in %gm water depth",
-                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
+            cat(sprintf("%s%d: '%s' anchor, %gkg, height %gm, in %gm water depth",
+                        prefix, irev, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
+            lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'chain')) {
+            #> cat("DAN DAN i=", i, " irev=", irev, " lastWasChain=", lastWasChain, "\n")
             if (lastWasChain) {
                 # build up count of repeats (FIXME: look at groups)
                 nchain <- 1L
@@ -750,34 +754,40 @@ print.mooring <- function(x, ...)
                         nchain <- nchain + 1L
                         i <- i + 1L
                     } else {
-                        cat(sprintf("%s     (repeated for indices %d to %d)\n", prefix, 1+i-nchain, i-1))
+                        cat(sprintf("%s%d-%d: '%s' chain, %gm, %gkg, width %gm\n",
+                                    prefix, 2+irev-nchain, 1+irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$width, xi$width), sep="")
                         lastWasChain <- FALSE
-                        i <- i - 1L
+                        i <- i - 1L    # will increment later
                         break
                     }
                 }
             } else {
-                cat(sprintf("%s%3d: '%s' wire, %gm, %gkg, width %gm\n",
-                            prefix, i, xi$model, xi$height, xi$buoyancyPerMeter*xi$width, xi$width), sep="")
+                cat(sprintf("%s%d: '%s' chain, %gm, %gkg, width %gm\n",
+                            prefix, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$width, xi$width), sep="")
                 lastWasChain <- TRUE
             }
         } else if (inherits(xi, 'connector')) {
-            cat(sprintf("%s%3d: '%s' connector, %gkg, height %gm, width %gm",
-                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+            cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, width %gm",
+                        prefix, irev, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
+            lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'float')) {
-            cat(sprintf("%s%3d: '%s' float, %gkg, height %gm, diameter %gm",
-                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$diameter), sep='')
+            cat(sprintf("%s%d: '%s' float, %gkg, height %gm, diameter %gm",
+                         prefix, irev, xi$model, xi$buoyancy, xi$height, xi$diameter), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
+            lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'instrument')) {
-            cat(sprintf("%s%3d: '%s' instrument, %gkg, area %gm^2",
-                         prefix, i, xi$model, xi$buoyancy, xi$area), sep='')
+            cat(sprintf("%s%d: '%s' instrument, %gkg, area %gm^2",
+                         prefix, irev, xi$model, xi$buoyancy, xi$area), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
+            lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'release')) {
-            cat(sprintf("%s%3d: '%s' release, %gkg, height %gm, width %gm",
-                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+            cat(sprintf("%s%d: '%s' release, %gkg, height %gm, width %gm",
+                        prefix, irev, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
+            lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'wire')) {
+            #> cat("***** wire; lastWasWire=", lastWasWire, "\n")
             if (lastWasWire) {
                 # build up count of repeats (FIXME: look at groups)
                 nwire <- 1L
@@ -786,15 +796,16 @@ print.mooring <- function(x, ...)
                         nwire <- nwire + 1L
                         i <- i + 1L
                     } else {
-                        cat(sprintf("%s     (repeated for indices %d to %d)\n", prefix, 1+i-nwire, i-1))
+                cat(sprintf("%s%d-%d: '%s' wire, %gm, %gkg, diameter %gm\n",
+                            prefix, 2+irev-nwire, 1+irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep="")
                         lastWasWire <- FALSE
-                        i <- i - 1L
+                        i <- i - 1L    # will increment later
                         break
                     }
                 }
             } else {
-                cat(sprintf("%s%3d: '%s' wire, %gm, %gkg, diameter %gm\n",
-                            prefix, i, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep="")
+                cat(sprintf("%s%d: '%s' wire, %gm, %gkg, diameter %gm\n",
+                            prefix, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep="")
                 lastWasWire <- TRUE
             }
         } else {
