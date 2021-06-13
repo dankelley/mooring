@@ -101,6 +101,9 @@ do should note that Dewey's lengths in cm have been converted to m." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/example.html">A Practical Example</a>
+    </li>
+    <li>
       <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
     </li>
     <li>
@@ -194,7 +197,7 @@ http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
 #&gt; 
 #&gt; $connectors
 #&gt;                        name buoyancy height  width  CD code source
-#&gt; 1                    swivel   -0.953  0.000 0.0000 1.3   NA    BIO
+#&gt; 1                    swivel   -0.953  0.150 0.0300 1.3   NA    BIO
 #&gt; 2            7/16in shackle   -0.150  0.000 0.0000 1.3   NA    BIO
 #&gt; 3    1/4in nicopress sleeve   -0.034  0.000 0.0000 1.3   NA    BIO
 #&gt; 4  5/16in heavy SS thimbles   -0.041  0.000 0.0000 1.3   NA    BIO
@@ -235,106 +238,159 @@ http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
 #&gt; 19         shac-Pring-shac
 #&gt; 
 #&gt; $floats
-#&gt;                                    name buoyancy height diameter   CD code
-#&gt; 1         streamlined BUB 2x 17in glass    45.41 0.7400   0.4550 0.60   NA
-#&gt; 2      a2 package ADCP and 2 Viny balls    29.08 0.5630   0.3970 0.60   NA
-#&gt; 3              3 pack Viny 12b-3 floats    57.14 1.0000   0.5290 1.10   NA
-#&gt; 4          streamlined BUB 3 Viny balls    52.65 0.5630   0.3970 0.60   NA
-#&gt; 5                      BUB 2x17in glass    43.78 1.1870   0.8390 1.10   NA
-#&gt; 6             IPS / 2x b3 subs assembly    78.88 1.0000   0.7480 0.60   NA
-#&gt; 7            ADCP / 2x c3 subs assembly    42.24 1.0000   0.9100 0.60   NA
-#&gt; 8   stablemoor 533lb 3500 msw with ADCP   192.45 1.2860   1.7270 0.60   NA
-#&gt; 9  stablemoor 1000lb 3500 msw with ADCP   404.39 1.2860   1.7270 0.60   NA
-#&gt; 10 stablemoor 1015lb 1500 msw with ADCP   411.22 1.2860   1.7200 0.60   NA
-#&gt; 11  stablemoor 580lb 1500 msw with ADCP   213.78 1.2860   1.7270 0.60   NA
-#&gt; 12         syn. float with ADCP bracket   839.18 2.4200   1.2540 0.60   NA
-#&gt; 13   syn. float, bracket and 109lb ADCP   789.80 2.4200   1.2540 0.60   NA
-#&gt; 14                             61in ORE   999.00 1.6500   1.6500 0.65    1
-#&gt; 15                             48in ORE   620.00 1.2340   1.2340 0.65    1
-#&gt; 16                             41in ORE   433.00 1.0400   1.0400 0.65    1
-#&gt; 17                             37in ORE   300.00 0.9400   0.9400 0.65    1
-#&gt; 18                             28in ORE   133.00 0.7100   0.7100 0.65    1
-#&gt; 19                           30in float   160.00 0.7600   0.7600 0.65    1
-#&gt; 20                         Kiel SFS40in   320.00 1.0000   1.0000 0.65    1
-#&gt; 21                      Torp. flt, 3-28   364.00 0.8300   0.8300 0.75    1
-#&gt; 22                           17in glass    23.00 0.5700   0.5700 0.95    1
-#&gt; 23                        Billings 12in    10.00 0.3430   0.3430 0.95    1
-#&gt; 24                         BENTHOS 17in    23.00 0.5100   0.5100 0.95    1
-#&gt; 25                            16in Viny    19.00 0.4000   0.4000 0.60    1
-#&gt; 26                          Double 17in    48.00 0.5000   0.6500 0.95    1
-#&gt; 27                     Double 16in Viny    38.00 0.5000   0.6000 0.60    1
-#&gt; 28                       Trpl 16in Viny    56.00 1.5000   0.7500 0.60    1
-#&gt; 29                      Trpl 12in glass    30.00 0.9500   0.6200 1.00    1
-#&gt; 30                     CDMS 1.2m sphere   682.00 1.2000   1.2000 0.50    1
-#&gt; 31                       CDMS 2m sphere  2470.00 2.0000   2.0000 0.50    1
-#&gt; 32                       54cm Alum CAP3    61.00 0.5500   0.5400 0.65    1
-#&gt; 33                     54x30inClamShell   405.00 1.4000   0.7500 0.15    1
-#&gt; 34                      Top of Tow Rope     0.01 0.0000   0.0000 0.00    1
-#&gt; 35                            BPS Float  8000.00 1.5000   0.0000 1.60    1
-#&gt; 36                       ADCP FloatTech   460.00 1.4200   1.4200 0.65    1
-#&gt; 37                      FloatTech CF-12    11.00 0.3000   0.0000 1.00    1
-#&gt; 38                     Tripple FT CF-12    33.00 0.9000   0.0000 1.00    1
-#&gt; 39                    Geodyn 8ft Toroid  1950.00 0.7620   0.0000 0.65    3
-#&gt; 40                               HMB 20    34.50 0.5080   0.5080 0.65   NA
-#&gt; 41                               HMB 25    68.50 0.6350   0.6350 0.65   NA
-#&gt; 42                               HMB 31   141.00 0.7874   0.7874 0.65   NA
-#&gt; 43                               HMB 36   225.00 0.9144   0.9144 0.65   NA
-#&gt; 44                               HMB 40   300.00 1.0160   1.0160 0.65   NA
-#&gt; 45                               HMB 44   413.00 1.1176   1.1176 0.65   NA
-#&gt; 46                               HMB 49   565.00 1.2446   1.2446 0.65   NA
-#&gt; 47                               HMB 51   633.00 1.2954   1.2954 0.65   NA
-#&gt; 48                               HMB 56   831.00 1.4224   1.4224 0.65   NA
-#&gt; 49                               HMB 62  1122.00 1.5748   1.5748 0.65   NA
-#&gt;    source                          originalName
-#&gt; 1     BIO       STREAMLINED BUB  2 x 17"  GLASS
-#&gt; 2     BIO      A2 PACKAGE ADCP AND 2 VINY BALLS
-#&gt; 3     BIO              3 pack VINY 12B-3 floats
-#&gt; 4     BIO         STREAMLINED BUB  3 VINY BALLS
-#&gt; 5     BIO                     BUB  2x17"  GLASS
-#&gt; 6     BIO             IPS / 2x B3 SUBS ASSEMBLY
-#&gt; 7     BIO            ADCP / 2x C3 SUBS ASSEMBLY
-#&gt; 8     BIO  Stablemoor 533 lb 3500 msw with ADCP
-#&gt; 9     BIO Stablemoor 1000 lb 3500 msw with ADCP
-#&gt; 10    BIO Stablemoor 1015 lb 1500 msw with ADCP
-#&gt; 11    BIO  Stablemoor 580 lb 1500 msw with ADCP
-#&gt; 12    BIO     SYNTACTIC FLOAT WITH ADCP BRACKET
-#&gt; 13    BIO   SYN. FLOAT, BRACKET AND 109 LB.ADCP
-#&gt; 14  Dewey                              61in ORE
-#&gt; 15  Dewey                              48in ORE
-#&gt; 16  Dewey                              41in ORE
-#&gt; 17  Dewey                              37in ORE
-#&gt; 18  Dewey                              28in ORE
-#&gt; 19  Dewey                            30in float
-#&gt; 20  Dewey                          Kiel SFS40in
-#&gt; 21  Dewey                       Torp. flt, 3-28
-#&gt; 22  Dewey                           17 in glass
-#&gt; 23  Dewey                         Billings-12in
-#&gt; 24  Dewey                          BENTHOS 17in
-#&gt; 25  Dewey                             16in Viny
-#&gt; 26  Dewey                           Double 17in
-#&gt; 27  Dewey                       Double 16inViny
-#&gt; 28  Dewey                       Trpl 16 in Viny
-#&gt; 29  Dewey                       Trpl 12in glass
-#&gt; 30  Dewey                      CDMS 1.2m sphere
-#&gt; 31  Dewey                        CDMS 2m sphere
-#&gt; 32  Dewey                        54cm Alum CAP3
-#&gt; 33  Dewey                      54x30inClamShell
-#&gt; 34  Dewey                       Top of Tow Rope
-#&gt; 35  Dewey                             BPS Float
-#&gt; 36  Dewey                        ADCP FloatTech
-#&gt; 37  Dewey                       FloatTech CF-12
-#&gt; 38  Dewey                      Tripple FT CF-12
-#&gt; 39  Dewey                      Geodyn 8' Toroid
-#&gt; 40 Kelley                                  &lt;NA&gt;
-#&gt; 41 Kelley                                  &lt;NA&gt;
-#&gt; 42 Kelley                                  &lt;NA&gt;
-#&gt; 43 Kelley                                  &lt;NA&gt;
-#&gt; 44 Kelley                                  &lt;NA&gt;
-#&gt; 45 Kelley                                  &lt;NA&gt;
-#&gt; 46 Kelley                                  &lt;NA&gt;
-#&gt; 47 Kelley                                  &lt;NA&gt;
-#&gt; 48 Kelley                                  &lt;NA&gt;
-#&gt; 49 Kelley                                  &lt;NA&gt;
+#&gt;                                    name buoyancy height diameter   CD
+#&gt; 1        new glass streamlined float c2    45.41 0.8700   0.4820 0.60
+#&gt; 2         streamlined BUB 2x 17in glass    45.41 0.7400   0.4550 0.60
+#&gt; 3      a2 package ADCP and 2 Viny balls    29.08 0.5630   0.3970 0.60
+#&gt; 4              3 pack Viny 12b-3 floats    57.14 1.0000   0.5290 1.10
+#&gt; 5          streamlined BUB 3 Viny balls    52.65 0.5630   0.3970 0.60
+#&gt; 6                      BUB 2x17in glass    43.78 1.1870   0.8390 1.10
+#&gt; 7             IPS / 2x b3 subs assembly    78.88 1.0000   0.7480 0.60
+#&gt; 8            ADCP / 2x c3 subs assembly    42.24 1.0000   0.9100 0.60
+#&gt; 9   stablemoor 533lb 3500 msw with ADCP   192.45 1.2860   1.7270 0.60
+#&gt; 10 stablemoor 1000lb 3500 msw with ADCP   404.39 1.2860   1.7270 0.60
+#&gt; 11 stablemoor 1015lb 1500 msw with ADCP   411.22 1.2860   1.7200 0.60
+#&gt; 12  stablemoor 580lb 1500 msw with ADCP   213.78 1.2860   1.7270 0.60
+#&gt; 13         syn. float with ADCP bracket   839.18 2.4200   1.2540 0.60
+#&gt; 14   syn. float, bracket and 109lb ADCP   789.80 2.4200   1.2540 0.60
+#&gt; 15                             61in ORE   999.00 1.6500   1.6500 0.65
+#&gt; 16                             48in ORE   620.00 1.2340   1.2340 0.65
+#&gt; 17                             41in ORE   433.00 1.0400   1.0400 0.65
+#&gt; 18                             37in ORE   300.00 0.9400   0.9400 0.65
+#&gt; 19                             28in ORE   133.00 0.7100   0.7100 0.65
+#&gt; 20                           30in float   160.00 0.7600   0.7600 0.65
+#&gt; 21                         Kiel SFS40in   320.00 1.0000   1.0000 0.65
+#&gt; 22                      Torp. flt, 3-28   364.00 0.8300   0.8300 0.75
+#&gt; 23                           17in glass    23.00 0.5700   0.5700 0.95
+#&gt; 24                        Billings 12in    10.00 0.3430   0.3430 0.95
+#&gt; 25                         BENTHOS 17in    23.00 0.5100   0.5100 0.95
+#&gt; 26                            16in Viny    19.00 0.4000   0.4000 0.60
+#&gt; 27                          Double 17in    48.00 0.5000   0.6500 0.95
+#&gt; 28                     Double 16in Viny    38.00 0.5000   0.6000 0.60
+#&gt; 29                       Trpl 16in Viny    56.00 1.5000   0.7500 0.60
+#&gt; 30                      Trpl 12in glass    30.00 0.9500   0.6200 1.00
+#&gt; 31                     CDMS 1.2m sphere   682.00 1.2000   1.2000 0.50
+#&gt; 32                       CDMS 2m sphere  2470.00 2.0000   2.0000 0.50
+#&gt; 33                       54cm Alum CAP3    61.00 0.5500   0.5400 0.65
+#&gt; 34                     54x30inClamShell   405.00 1.4000   0.7500 0.15
+#&gt; 35                      Top of Tow Rope     0.01 0.0000   0.0000 0.00
+#&gt; 36                            BPS Float  8000.00 1.5000   0.0000 1.60
+#&gt; 37                       ADCP FloatTech   460.00 1.4200   1.4200 0.65
+#&gt; 38                      FloatTech CF-12    11.00 0.3000   0.0000 1.00
+#&gt; 39                     Tripple FT CF-12    33.00 0.9000   0.0000 1.00
+#&gt; 40                    Geodyn 8ft Toroid  1950.00 0.7620   0.0000 0.65
+#&gt; 41                               HMB 20    34.50 0.5080   0.5080 0.65
+#&gt; 42                               HMB 25    68.50 0.6350   0.6350 0.65
+#&gt; 43                               HMB 31   141.00 0.7874   0.7874 0.65
+#&gt; 44                               HMB 36   225.00 0.9144   0.9144 0.65
+#&gt; 45                               HMB 40   300.00 1.0160   1.0160 0.65
+#&gt; 46                               HMB 44   413.00 1.1176   1.1176 0.65
+#&gt; 47                               HMB 49   565.00 1.2446   1.2446 0.65
+#&gt; 48                               HMB 51   633.00 1.2954   1.2954 0.65
+#&gt; 49                               HMB 56   831.00 1.4224   1.4224 0.65
+#&gt; 50                               HMB 62  1122.00 1.5748   1.5748 0.65
+#&gt;                                code source
+#&gt; 1  NEW GLASS STREAMLINED FLOAT (C2)       
+#&gt; 2                              &lt;NA&gt;    BIO
+#&gt; 3                              &lt;NA&gt;    BIO
+#&gt; 4                              &lt;NA&gt;    BIO
+#&gt; 5                              &lt;NA&gt;    BIO
+#&gt; 6                              &lt;NA&gt;    BIO
+#&gt; 7                              &lt;NA&gt;    BIO
+#&gt; 8                              &lt;NA&gt;    BIO
+#&gt; 9                              &lt;NA&gt;    BIO
+#&gt; 10                             &lt;NA&gt;    BIO
+#&gt; 11                             &lt;NA&gt;    BIO
+#&gt; 12                             &lt;NA&gt;    BIO
+#&gt; 13                             &lt;NA&gt;    BIO
+#&gt; 14                             &lt;NA&gt;    BIO
+#&gt; 15                                1  Dewey
+#&gt; 16                                1  Dewey
+#&gt; 17                                1  Dewey
+#&gt; 18                                1  Dewey
+#&gt; 19                                1  Dewey
+#&gt; 20                                1  Dewey
+#&gt; 21                                1  Dewey
+#&gt; 22                                1  Dewey
+#&gt; 23                                1  Dewey
+#&gt; 24                                1  Dewey
+#&gt; 25                                1  Dewey
+#&gt; 26                                1  Dewey
+#&gt; 27                                1  Dewey
+#&gt; 28                                1  Dewey
+#&gt; 29                                1  Dewey
+#&gt; 30                                1  Dewey
+#&gt; 31                                1  Dewey
+#&gt; 32                                1  Dewey
+#&gt; 33                                1  Dewey
+#&gt; 34                                1  Dewey
+#&gt; 35                                1  Dewey
+#&gt; 36                                1  Dewey
+#&gt; 37                                1  Dewey
+#&gt; 38                                1  Dewey
+#&gt; 39                                1  Dewey
+#&gt; 40                                3  Dewey
+#&gt; 41                             &lt;NA&gt; Kelley
+#&gt; 42                             &lt;NA&gt; Kelley
+#&gt; 43                             &lt;NA&gt; Kelley
+#&gt; 44                             &lt;NA&gt; Kelley
+#&gt; 45                             &lt;NA&gt; Kelley
+#&gt; 46                             &lt;NA&gt; Kelley
+#&gt; 47                             &lt;NA&gt; Kelley
+#&gt; 48                             &lt;NA&gt; Kelley
+#&gt; 49                             &lt;NA&gt; Kelley
+#&gt; 50                             &lt;NA&gt; Kelley
+#&gt;                             originalName
+#&gt; 1                                       
+#&gt; 2        STREAMLINED BUB  2 x 17"  GLASS
+#&gt; 3       A2 PACKAGE ADCP AND 2 VINY BALLS
+#&gt; 4               3 pack VINY 12B-3 floats
+#&gt; 5          STREAMLINED BUB  3 VINY BALLS
+#&gt; 6                      BUB  2x17"  GLASS
+#&gt; 7              IPS / 2x B3 SUBS ASSEMBLY
+#&gt; 8             ADCP / 2x C3 SUBS ASSEMBLY
+#&gt; 9   Stablemoor 533 lb 3500 msw with ADCP
+#&gt; 10 Stablemoor 1000 lb 3500 msw with ADCP
+#&gt; 11 Stablemoor 1015 lb 1500 msw with ADCP
+#&gt; 12  Stablemoor 580 lb 1500 msw with ADCP
+#&gt; 13     SYNTACTIC FLOAT WITH ADCP BRACKET
+#&gt; 14   SYN. FLOAT, BRACKET AND 109 LB.ADCP
+#&gt; 15                              61in ORE
+#&gt; 16                              48in ORE
+#&gt; 17                              41in ORE
+#&gt; 18                              37in ORE
+#&gt; 19                              28in ORE
+#&gt; 20                            30in float
+#&gt; 21                          Kiel SFS40in
+#&gt; 22                       Torp. flt, 3-28
+#&gt; 23                           17 in glass
+#&gt; 24                         Billings-12in
+#&gt; 25                          BENTHOS 17in
+#&gt; 26                             16in Viny
+#&gt; 27                           Double 17in
+#&gt; 28                       Double 16inViny
+#&gt; 29                       Trpl 16 in Viny
+#&gt; 30                       Trpl 12in glass
+#&gt; 31                      CDMS 1.2m sphere
+#&gt; 32                        CDMS 2m sphere
+#&gt; 33                        54cm Alum CAP3
+#&gt; 34                      54x30inClamShell
+#&gt; 35                       Top of Tow Rope
+#&gt; 36                             BPS Float
+#&gt; 37                        ADCP FloatTech
+#&gt; 38                       FloatTech CF-12
+#&gt; 39                      Tripple FT CF-12
+#&gt; 40                      Geodyn 8' Toroid
+#&gt; 41                                  &lt;NA&gt;
+#&gt; 42                                  &lt;NA&gt;
+#&gt; 43                                  &lt;NA&gt;
+#&gt; 44                                  &lt;NA&gt;
+#&gt; 45                                  &lt;NA&gt;
+#&gt; 46                                  &lt;NA&gt;
+#&gt; 47                                  &lt;NA&gt;
+#&gt; 48                                  &lt;NA&gt;
+#&gt; 49                                  &lt;NA&gt;
+#&gt; 50                                  &lt;NA&gt;
 #&gt; 
 #&gt; $instruments
 #&gt;                                              name buoyancy height  area   CD

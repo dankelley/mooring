@@ -41,7 +41,11 @@
 
 <meta property="og:title" content="Compute how a mooring is knocked down by a current — knockdown" />
 <meta property="og:description" content="The current may be a depth-independent or depth-dependent,
-as specified by the v argument." />
+as specified by the u argument.  The returned result has
+an attribute named u that holds the value of that
+argument, and this is how a later call to plot.mooring()
+is able to display a velocity profile; see
+&amp;#8220;Examples&amp;#8221; 2 and 3." />
 
 
 
@@ -99,6 +103,9 @@ as specified by the v argument." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/example.html">A Practical Example</a>
+    </li>
+    <li>
       <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
     </li>
     <li>
@@ -140,7 +147,11 @@ as specified by the v argument." />
 
     <div class="ref-description">
     <p>The current may be a depth-independent or depth-dependent,
-as specified by the <code>v</code> argument.</p>
+as specified by the <code>u</code> argument.  The returned result has
+an attribute named <code>u</code> that holds the value of that
+argument, and this is how a later call to <code><a href='plot.mooring.html'>plot.mooring()</a></code>
+is able to display a velocity profile; see
+&#8220;Examples&#8221; 2 and 3.</p>
     </div>
 
     <pre class="usage"><span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>m</span>, u <span class='op'>=</span> <span class='fl'>1</span>, debug <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span></pre>
@@ -167,6 +178,10 @@ information may be printed by the function.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a new <code>mooring</code> object representing the deformed mooring, with
+<code>x</code> and <code>z</code> values updated (and original values saved as <code>x0</code> and <code>z0</code>).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
@@ -174,21 +189,24 @@ information may be printed by the function.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Illustrate importance of drag on the wire.</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
-<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mooring.html'>mooring</a></span><span class='op'>(</span><span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>80</span><span class='op'>)</span>, <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mooring.html'>mooring</a></span><span class='op'>(</span><span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>200</span><span class='op'>)</span>, <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>180</span><span class='op'>)</span>, <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='discretise.html'>discretise</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># Example 1: no current</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span>
-
-<span class='co'># Example 2: uniform 0.5 m/s (approx. 1 knot) current</span>
-<span class='va'>k1</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span>, title<span class='op'>=</span><span class='st'>"uniform 0.5 m/s"</span><span class='op'>)</span>
-
-<span class='co'># Example 3: 0.5 m/s current but only in top 40m of water column</span>
-<span class='va'>k2</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>depth</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>depth</span> <span class='op'>&lt;</span> <span class='fl'>40</span>, <span class='fl'>0.5</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: FIXME: u=function() case is not fully coded yet (no iteration is done)</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span>, title<span class='op'>=</span><span class='st'>"0.5 m/s only in top 40m"</span><span class='op'>)</span>
 </div><div class='img'><img src='knockdown-1.png' alt='' width='600' height='600' /></div><div class='input'>
+<span class='co'># Example 2: uniform 0.5 m/s (approx. 1 knot) current</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>k1</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span>, which<span class='op'>=</span><span class='st'>"velocity"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span><span class='op'>)</span>
+</div><div class='img'><img src='knockdown-2.png' alt='' width='600' height='600' /></div><div class='input'>
+<span class='co'># Example 3: 0.5 m/s current at surface, decaying exponetially below</span>
+<span class='va'>k2</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>depth</span><span class='op'>)</span> <span class='fl'>0.5</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>depth</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span>, which<span class='op'>=</span><span class='st'>"velocity"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span><span class='op'>)</span>
+</div><div class='img'><img src='knockdown-3.png' alt='' width='600' height='600' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

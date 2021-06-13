@@ -21,4 +21,5 @@ m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 }
 \author{
 Dan Kelley
+part of the item.
 }

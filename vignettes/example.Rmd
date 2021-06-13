@@ -1,6 +1,40 @@
-## Mooring 1840 (p10 of doc)
+---
+title: A Practical Example
+author: "Dan Kelley (https://orcid.org/0000-0001-7808-5911)"
+date: "`r Sys.Date()`"
+bibliography: mooring.bib
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+    fig_caption: yes
+    fig_width: 7
+    fig_height: 5
+    dpi: 72
+vignette: >
+  %\VignetteIndexEntry{A Practical Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+This shows a simulation of mooring 1840 on the Sackville Spur, based on a
+diagram that appeared in a report provided by the Bedford Institute of
+Oceanography (Department of Fisheries and Oceans, Canada) containing a Notice
+to Mariners document.
+
+# Source document
+
+```{r,fig.cap="**Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**", out.width="70%", fig.align="center", echo=FALSE}
+knitr::include_graphics("mooring_1840.png")
+```
+
+# Mooring construction
+
+```{r}
+# Mooring 1840 (p10 of doc)
 library(mooring)
-#> source("~/git/mooring/R/mooring.R")
 
 # Abbreviations for convenience
 W <- function(length) wire("3/16in galvanized wire coated to 1/4in", length=length)
@@ -41,21 +75,30 @@ m <- mooring(anchor(depth=1400),
              float("syn. float, bracket and 109lb ADCP"), # total guess; lots of choices
              W(149),
              microcat,
-             # For now, I would use the numbers in 'NEW GLASS STREAMINED FLOAT (C2)', with 100 lbf [445 N]. This is the Open Seas C2 SUBS float. The 'STREAMLINED BUB 2 x 17" GLASS' might be from a handful of prototypes we had made, tested and used.
              float('new glass streamlined float c2'))
 md <- discretise(m)
-print(md)
+```
 
+
+
+# Knockdown simulation
+
+For illustration, this simulation uses an entirely made-up velocity structure.
+```{r fig.cap="**Simulation of knockdown with a rough guess at current.**", fig.align="center", dev.args=list(pointsize=10)}
 u <- function(depth) 0.5*exp(-depth/1000)
 depth <- seq(m[[1]]$depth, 0, length.out=100)
-if (!interactive())
-    png("mooring_01.png", width=7, height=5, unit="in", res=200, pointsize=9)
 layout(matrix(1:2,nrow=1),widths=c(0.7,0.3))
 mdk <- knockdown(md, u=u)
-#plot(mdk, showDetails=TRUE)
 plot(mdk, "knockdown", showDetails=TRUE, xlim=c(0, 15))
 ylim <- par('usr')[3:4]
 plot(mdk, "velocity")
-if (!interactive())
-    dev.off()
+```
+
+# Details of mooring
+
+The details of the mooring are revealed with
+
+```{r}
+print(m)
+```
 

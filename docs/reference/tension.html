@@ -99,6 +99,9 @@ length of the returned result matches the length of m." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/example.html">A Practical Example</a>
+    </li>
+    <li>
       <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
     </li>
     <li>
@@ -150,12 +153,14 @@ length of the returned result matches the length of <code>m</code>.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>m</th>
-      <td><p>an object of the <code>"mooring"</code> class.</p></td>
+      <td><p>a mooring object, created by <code><a href='mooring.html'>mooring()</a></code>.</p></td>
     </tr>
     <tr>
       <th>stagnant</th>
-      <td><p>a logical indicating whether to compute tension
-as though no currents were present.</p></td>
+      <td><p>logical value indicating whether to return
+values for the mooring configuration in the stagnant case
+(with zero velocity) or the present case (possibly with
+nonzero velocity).</p></td>
     </tr>
     </table>
 

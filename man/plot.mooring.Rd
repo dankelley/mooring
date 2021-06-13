@@ -7,6 +7,7 @@
 \method{plot}{mooring}(
   x,
   which = "shape",
+  showInterfaces = TRUE,
   showDepths = TRUE,
   showLabels = TRUE,
   showDetails = FALSE,
@@ -23,6 +24,9 @@
 
 \item{which}{character value indicating the desired plot, with
 choices: \code{"shape"} (the default), \code{"knockdown"}, \code{"tension"} and \code{"velocity"}.}
+
+\item{showInterfaces}{logical value indicating whether to indicate the water
+surface with a blue line and the ocean bottom with a brown line.}
 
 \item{showDepths}{logical value indicating whether to indicate the depths of
 floats, to the left of the symbols.}

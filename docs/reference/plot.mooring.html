@@ -98,6 +98,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/example.html">A Practical Example</a>
+    </li>
+    <li>
       <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
     </li>
     <li>
@@ -145,12 +148,15 @@
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>x</span>,
   which <span class='op'>=</span> <span class='st'>"shape"</span>,
+  showInterfaces <span class='op'>=</span> <span class='cn'>TRUE</span>,
   showDepths <span class='op'>=</span> <span class='cn'>TRUE</span>,
   showLabels <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  showDetails <span class='op'>=</span> <span class='cn'>FALSE</span>,
   fancy <span class='op'>=</span> <span class='cn'>FALSE</span>,
   title <span class='op'>=</span> <span class='st'>""</span>,
   mar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.5</span>, <span class='fl'>3.5</span>, <span class='fl'>3.5</span>, <span class='fl'>1</span><span class='op'>)</span>,
   mgp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>0.7</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  xlim <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -164,7 +170,12 @@
     <tr>
       <th>which</th>
       <td><p>character value indicating the desired plot, with
-choices: <code>"shape"</code> and <code>"tension"</code>.</p></td>
+choices: <code>"shape"</code> (the default), <code>"knockdown"</code>, <code>"tension"</code> and <code>"velocity"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>showInterfaces</th>
+      <td><p>logical value indicating whether to indicate the water
+surface with a blue line and the ocean bottom with a brown line.</p></td>
     </tr>
     <tr>
       <th>showDepths</th>
@@ -175,6 +186,11 @@ floats, to the left of the symbols.</p></td>
       <th>showLabels</th>
       <td><p>logical value indicating whether to indicate anchors,
 instruments and floats with <code>A</code>, <code>I</code> and <code>F</code>, respectively.</p></td>
+    </tr>
+    <tr>
+      <th>showDetails</th>
+      <td><p>logical value indicating whether to show details for anchors,
+instruments and floats with text.</p></td>
     </tr>
     <tr>
       <th>fancy</th>
@@ -198,6 +214,11 @@ and tightens the margins on bottom and right.</p></td>
       <td><p>numeric vector of length 3, used to set axis
 geometry.  The default value moves numbers and labels closer
 to the axes than the usual R default.</p></td>
+    </tr>
+    <tr>
+      <th>xlim</th>
+      <td><p>optional numeric vector of length 2 that can
+be used to specify the limits of the horizontal axis.</p></td>
     </tr>
     <tr>
       <th>...</th>

@@ -727,34 +727,80 @@ print.mooring <- function(x, ...)
         }
         prefix <- "  "
     }
-    for (i in rev(seq_len(n))) {
+    # The 'lastWas*' variables keep track of repeats, e.g. as created by discretise().
+    # This scheme will not work if a mooring is contructed with wire or chain elements
+    # that are not joined by a connector, but that should not happen if the mooring
+    # reflects reality.  If this poses a problem, we could also look at the 'group'
+    #' part of the item.
+    lastWasChain <- FALSE
+    lastWasWire <- FALSE
+    i <- 1L
+    while (i <= n) {
         xi <- if (elementary) x else x[[i]]
         if (inherits(xi, "anchor")) {
-            cat(sprintf("%s'%s' anchor, %gkg, height %gm, in %gm water depth",
-                        prefix, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
+            cat(sprintf("%s%3d: '%s' anchor, %gkg, height %gm, in %gm water depth",
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
+            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
         } else if (inherits(xi, 'chain')) {
-            cat(sprintf("%s'%s' chain, %gm, %gkg, width %gm",
-                        prefix, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$width), sep='')
+            if (lastWasChain) {
+                # build up count of repeats (FIXME: look at groups)
+                nchain <- 1L
+                while (i <= n) {
+                    if (inherits(x[[i]], "chain")) {
+                        nchain <- nchain + 1L
+                        i <- i + 1L
+                    } else {
+                        cat(sprintf("%s     (repeated for indices %d to %d)\n", prefix, 1+i-nchain, i-1))
+                        lastWasChain <- FALSE
+                        i <- i - 1L
+                        break
+                    }
+                }
+            } else {
+                cat(sprintf("%s%3d: '%s' wire, %gm, %gkg, width %gm\n",
+                            prefix, i, xi$model, xi$height, xi$buoyancyPerMeter*xi$width, xi$width), sep="")
+                lastWasChain <- TRUE
+            }
         } else if (inherits(xi, 'connector')) {
-            cat(sprintf("%s'%s' connector, %gkg, height %gm, width %gm",
-                        prefix, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+            cat(sprintf("%s%3d: '%s' connector, %gkg, height %gm, width %gm",
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
         } else if (inherits(xi, 'float')) {
-            cat(sprintf("%s'%s' float, %gkg, height %gm, diameter %gm",
-                         prefix, xi$model, xi$buoyancy, xi$height, xi$diameter), sep='')
+            cat(sprintf("%s%3d: '%s' float, %gkg, height %gm, diameter %gm",
+                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$diameter), sep='')
+            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
         } else if (inherits(xi, 'instrument')) {
-            cat(sprintf("%s'%s' instrument, %gkg, area %gm^2",
-                         prefix, xi$model, xi$buoyancy, xi$area), sep='')
+            cat(sprintf("%s%3d: '%s' instrument, %gkg, area %gm^2",
+                         prefix, i, xi$model, xi$buoyancy, xi$area), sep='')
+            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
         } else if (inherits(xi, 'release')) {
-            cat(sprintf("%s'%s' release, %gkg, height %gm, width %gm",
-                        prefix, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+            cat(sprintf("%s%3d: '%s' release, %gkg, height %gm, width %gm",
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
         } else if (inherits(xi, 'wire')) {
-            cat(sprintf("%s'%s' wire, %gm, %gkg, diameter %gm",
-                        prefix, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep="")
+            if (lastWasWire) {
+                # build up count of repeats (FIXME: look at groups)
+                nwire <- 1L
+                while (i <= n) {
+                    if (inherits(x[[i]], "wire")) {
+                        nwire <- nwire + 1L
+                        i <- i + 1L
+                    } else {
+                        cat(sprintf("%s     (repeated for indices %d to %d)\n", prefix, 1+i-nwire, i-1))
+                        lastWasWire <- FALSE
+                        i <- i - 1L
+                        break
+                    }
+                }
+            } else {
+                cat(sprintf("%s%3d: '%s' wire, %gm, %gkg, diameter %gm\n",
+                            prefix, i, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep="")
+                lastWasWire <- TRUE
+            }
         } else {
             stop("unknown class c(\"", paste(class(xi), collapse="\", \""), "\")")
         }
-        if (all(c("x", "z") %in% names(xi))) cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
-        else cat("\n")
+        i <- i + 1L
     }
     invisible(x)
 }
@@ -765,6 +811,9 @@ print.mooring <- function(x, ...)
 #'
 #' @param which character value indicating the desired plot, with
 #' choices: `"shape"` (the default), `"knockdown"`, `"tension"` and `"velocity"`.
+#'
+#' @param showInterfaces logical value indicating whether to indicate the water
+#' surface with a blue line and the ocean bottom with a brown line.
 #'
 #' @param showDepths logical value indicating whether to indicate the depths of
 #' floats, to the left of the symbols.
@@ -812,7 +861,7 @@ print.mooring <- function(x, ...)
 #'
 #' @author Dan Kelley
 plot.mooring <- function(x, which="shape",
-                         showDepths=TRUE, showLabels=TRUE, showDetails=FALSE,
+                         showInterfaces=TRUE, showDepths=TRUE, showLabels=TRUE, showDetails=FALSE,
                          fancy=FALSE, title="",
                          mar=c(1.5, 3.5, 3.5, 1), mgp=c(2, 0.7, 0),
                          xlim=NULL,
@@ -845,17 +894,23 @@ plot.mooring <- function(x, which="shape",
         else abs(min(depth))
     mooringDebug(debug, waterDepth, overview=TRUE)
     par(mar=mar, mgp=mgp)
+    # Determine depth scale by doing a sort of dry run of a shape plot
+    if (is.null(xlim)) xlim <- extendrange(c(x(m), 0))
+    plot.window(0, 0, xlim=xlim, ylim=c(waterDepth, 0), asp=1, log="")
+    usrShape <- par("usr")
     # Handle velocity, which does not involve mooring elements and is a special case
     if (which == "velocity") {
         uattr <- attr(m, "u")
         d <- seq(attr(m, "waterDepth"), 0, length.out=200)
         velocityProfile <- if (is.function(uattr)) uattr(d) else rep(uattr, length(d))
-        plot(velocityProfile, d, ylim=rev(range(d)), ylab="", xlab="", type="l", axes=FALSE)
-        grid()
-        abline(h=0, col="#0066ff", lwd=2)
-        abline(h=waterDepth, col="#996633", lwd=2)
-        lines(velocityProfile, d, lwd=1.4*par("lwd"))
+        plot(velocityProfile, d, ylim=usrShape[3:4], yaxs="i", ylab="", xlab="", type="l", axes=FALSE)
         box()
+        grid()
+        if (showInterfaces) {
+            abline(h=0, col=colWater, lwd=2)
+            abline(h=waterDepth, col=colBottom, lwd=2)
+        }
+        lines(velocityProfile, d, lwd=1.4*par("lwd"))
         axis(2)
         mtext("Depth [m]", side=2, line=par("mgp")[1], cex=par("cex"))
         axis(3)
@@ -869,7 +924,6 @@ plot.mooring <- function(x, which="shape",
                 "tension"=tension(m))
     if (is.null(x))
         stop("which must be \"shape\", \"knockdown\", \"tension\" or \"velocity\"")
-    message("FIXME: xstagnant def in plot.mooring is wrong")
     xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant=TRUE)
     mooringDebug(debug, x, overview=TRUE, round=2)
     mooringDebug(debug, z, overview=TRUE, round=2)
@@ -900,8 +954,10 @@ plot.mooring <- function(x, which="shape",
         abline(h=0, col=colWater)
     } else {
         grid()
-        abline(h=0, col="#0066ff", lwd=2)
-        abline(h=waterDepth, col="#996633", lwd=2)
+        if (showInterfaces) {
+            abline(h=0, col=colWater, lwd=2)
+            abline(h=waterDepth, col=colBottom, lwd=2)
+        }
     }
     # Redraw to cover grid
     lines(x, depth, lwd=1.4*par("lwd"))
@@ -1050,9 +1106,10 @@ discretise <- function(m, by=1)
         rval[[i]]$T <- T[i]
     }
     class(rval) <- "mooring"
+    attr(rval, "discretised") <- TRUE
     attr(rval, "waterDepth") <- attr(m, "waterDepth")
     rval
-}
+}                                      # discretise
 
 #' Compute how a mooring is knocked down by a current
 #'
@@ -1088,7 +1145,7 @@ discretise <- function(m, by=1)
 #' plot(k1, which="velocity")
 #' plot(k1)
 #'
-#' # Example 3: 0.5 m/s current at surface, decaying below
+#' # Example 3: 0.5 m/s current at surface, decaying exponetially below
 #' k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
 #' par(mfrow=c(1, 2))
 #' plot(k2, which="velocity")
@@ -1104,9 +1161,11 @@ knockdown <- function(m, u=1, debug=0L)
         stop("only works for objects created by mooring()")
     if (!is.null(attr(m, "u")))
         stop("cannot apply knockdown() to the result of a previous call")
+    if (is.null(attr(m, "discretised")))
+        warning("accuracy is better if discretise() is used first\n")
 
     debug <- as.integer(max(0, debug))
-    if (is.function(u)) {
+    if (is.function(u) && debug > 0L) {
         #z <- sapply(m, function(x) x$z)
         #mooringDebug(debug, z, overview=TRUE)
         warning("FIXME: u=function() case is not fully coded yet (no iteration is done)\n")
@@ -1199,7 +1258,7 @@ knockdown <- function(m, u=1, debug=0L)
         rval[[i]]$phi <- phi[i]
         rval[[i]]$T <- T[i]
     }
-    cat("before replace last point:\n")
+    #> cat("before replace last point:\n")
     #> cat(oce::vectorShow(sapply(rval,\(x)x$x), showNA=TRUE))
     #> cat(oce::vectorShow(sapply(rval,\(x)x$z), showNA=TRUE))
     # last two are NA.  Let's just linearly extrapolate to find x and z, since

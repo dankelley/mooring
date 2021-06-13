@@ -98,6 +98,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/example.html">A Practical Example</a>
+    </li>
+    <li>
       <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
     </li>
     <li>
@@ -141,14 +144,21 @@
     <p>Return horizontal coordinate, in m, of elements in mooring.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>x</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>x</span><span class='op'>(</span><span class='va'>m</span>, stagnant <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>m</th>
-      <td><p>an object of the <code>"mooring"</code> class.</p></td>
+      <td><p>a mooring object, created by <code><a href='mooring.html'>mooring()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>stagnant</th>
+      <td><p>logical value indicating whether to return
+values for the mooring configuration in the stagnant case
+(with zero velocity) or the present case (possibly with
+nonzero velocity).</p></td>
     </tr>
     </table>
 
