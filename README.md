@@ -34,11 +34,11 @@ a list of the types that are supported.
 library(mooring)
 # Design a mooring with a 20-inch float attached to a bottom anchor with 100m of wire cable.
 m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
-par(mfrow=c(1,2))
-plot(m, fancy=TRUE)
 # Discretise wire portion (to 1m spacing), then apply a 0.5 m/s current.
 md <- discretise(m)
 mdk <- knockdown(md, u=0.5)
+par(mfrow=c(1, 2))
+plot(md, fancy=TRUE)
 plot(mdk, fancy=TRUE)
 ```
 
