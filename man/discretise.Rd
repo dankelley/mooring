@@ -2,6 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{discretise}
 \alias{discretise}
+\alias{discretize}
 \title{Discretise the chain and wire portions of a mooring}
 \usage{
 discretise(m, by = 1)

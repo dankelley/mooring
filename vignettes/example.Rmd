@@ -8,13 +8,10 @@ output:
     toc: true
     number_sections: true
     fig_caption: yes
-    fig_width: 7
-    fig_height: 5
-    dpi: 72
 vignette: >
   %\VignetteIndexEntry{A Practical Example}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 # Introduction
@@ -24,13 +21,13 @@ diagram that appeared in a report provided by the Bedford Institute of
 Oceanography (Department of Fisheries and Oceans, Canada) containing a Notice
 to Mariners document.
 
-# Source document
+# Source Document
 
 ```{r,fig.cap="**Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**", out.width="70%", fig.align="center", echo=FALSE}
 knitr::include_graphics("mooring_1840.png")
 ```
 
-# Mooring construction
+# Mooring Construction
 
 ```{r}
 # Mooring 1840 (p10 of doc)
@@ -71,8 +68,8 @@ m <- mooring(anchor(depth=1400),
              W(146),
              microcat,
              connector("swivel"),
-             connector("ballast", -100/2.2, height=1, width=0.05, CD=1), # guess
-             float("syn. float, bracket and 109lb ADCP"), # total guess; lots of choices
+             connector("ballast", -100/2.2, height=1, width=0.05, CD=1),
+             float("syn. float, bracket and 109lb ADCP"),
              W(149),
              microcat,
              float('new glass streamlined float c2'))
@@ -81,24 +78,138 @@ md <- discretise(m)
 
 
 
-# Knockdown simulation
+# Knockdown Simulation
 
 For illustration, this simulation uses an entirely made-up velocity structure.
-```{r fig.cap="**Simulation of knockdown with a rough guess at current.**", fig.align="center", dev.args=list(pointsize=10)}
+```{r, fig.cap="**Simulation of knockdown with a depth-decaying current.**", fig.height=4, fig.width=7, fig.align="center", out.width="100%", dev.args=list(pointsize=10)}
 u <- function(depth) 0.5*exp(-depth/1000)
 depth <- seq(m[[1]]$depth, 0, length.out=100)
-layout(matrix(1:2,nrow=1),widths=c(0.7,0.3))
+layout(matrix(1:2,nrow=1), widths=c(0.75,0.25))
 mdk <- knockdown(md, u=u)
-plot(mdk, "knockdown", showDetails=TRUE, xlim=c(0, 15))
-ylim <- par('usr')[3:4]
+plot(mdk, "knockdown", xlim=c(0,45), showDetails=TRUE)
+plot(mdk, "velocity")
+```
+Note that the limit set on the first plot sets aside enough space for the
+labels (and establishes a common scale used in a later exercise).
+
+# Examining Moorings
+
+## Overview
+
+An overview of a mooring is provided by printing it, either with
+```{r eval=FALSE}
+print(m)
+```
+or, in an interactive session, with
+```{r eval=FALSE}
+m
+```
+For the mooring constructed above, the results are as follows.
+```{r echo=FALSE}
+m
+```
+The number at the start is the component number (see next section).
+
+Note that the results for `md` will be similar, except there will be many more
+elements (for the segmented chain and wire components).  If `mdk` is examined
+in this way, the $x$ and $z$ values will be different. 
+
+## Components
+
+To learn more about, say, the second element (the chain from anchor to acoustic
+release), use
+
+```{r}
+m[[2]]
+```
+and to see the full details, use
+```{r}
+dput(m[[2]])
+```
+or, with less detail but in a more digestible format,
+```{r}
+str(m[[2]])
+```
+
+You may go further with e.g.
+```{r}
+m[[2]]$width
+```
+
+**Exercise 1.** Double the chain density, to see the effect on knock-down.
+
+**Exercise 2.** Double the drag coefficient on the wire, to see how much this
+increases knockdown.
+
+
+## Answers to Exercises
+
+### 1. Doubling chain density
+
+A simple way to do this is to create `m` as before, but then to use
+```{r}
+m[[2]]$buoyancyPerMeter <- 2 * m[[2]]$buoyancyPerMeter
+```
+before using `digitise()`, `knockdown()` and then `plot.mooring()`.  Before
+doing that though, you should ask yourself whether you expect to see a large
+effect.
+
+### 2. Doubling wire drag
+
+One way to do this is to replace the `W` definition with
+```{r}
+W <- function(length) {
+    w0 <- wire("3/16in galvanized wire coated to 1/4in", length=1)
+    wire("draggy wire", buoyancyPerMeter=w0$buoyancyPerMeter,
+         diameter=w0$diameter, CD=2*w0$CD, length=length)
+}
+```
+and then create `m`, `md` and `mdk` as before. The results are as follows. Note
+that knockdown is more than doubled.  This makes determination of drag
+coefficient an especially important factor in mooring design; see e.g.
+@hamilton_validation_1989 and @hamilton_mooring_1997.
+
+```{r, echo=FALSE, fig.cap="**Simulation with doubled wire drag.**", fig.height=4, fig.width=7, fig.align="center", out.width="100%", dev.args=list(pointsize=10)}
+m <- mooring(anchor(depth=1400),
+             chain("5/8in galvanized chain", length=10),
+             release("benthos 965a release"),  # dual benthos 965-a
+             BUB3,
+             W(34),
+             microcat,
+             RCM11,
+             W(50),
+             BUB3,
+             W(144),
+             microcat,
+             RCM11,
+             W(147),
+             BUB3,
+             W(46),
+             microcat,
+             RCM11,
+             W(198),
+             microcat,
+             RCM11,
+             W(198),
+             microcat,
+             RCM11,
+             W(197),
+             microcat,
+             RCM11,
+             W(146),
+             microcat,
+             connector("swivel"),
+             connector("ballast", -100/2.2, height=1, width=0.05, CD=1),
+             float("syn. float, bracket and 109lb ADCP"),
+             W(149),
+             microcat,
+             float('new glass streamlined float c2'))
+md <- discretise(m)
+layout(matrix(1:2,nrow=1), widths=c(0.75,0.25))
+mdk <- knockdown(md, u=u)
+plot(mdk, "knockdown", xlim=c(0,45), showDetails=TRUE)
 plot(mdk, "velocity")
 ```
 
-# Details of mooring
-
-The details of the mooring are revealed with
-
-```{r}
-print(m)
-```
+# References
 

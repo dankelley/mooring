@@ -97,7 +97,7 @@
       <h1 data-toc-skip>A Practical Example</h1>
                         <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-13</h4>
+            <h4 class="date">2021-06-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/example.Rmd"><code>vignettes/example.Rmd</code></a></small>
       <div class="hidden name"><code>example.Rmd</code></div>
@@ -113,7 +113,7 @@
 </div>
 <div id="source-document" class="section level1">
 <h1 class="hasAnchor">
-<a href="#source-document" class="anchor"></a>Source document</h1>
+<a href="#source-document" class="anchor"></a>Source Document</h1>
 <div class="figure" style="text-align: center">
 <img src="mooring_1840.png" alt="**Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**" width="70%"><p class="caption">
 <strong>Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur</strong>
@@ -122,7 +122,7 @@
 </div>
 <div id="mooring-construction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#mooring-construction" class="anchor"></a>Mooring construction</h1>
+<a href="#mooring-construction" class="anchor"></a>Mooring Construction</h1>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Mooring 1840 (p10 of doc)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/">mooring</a></span><span class="op">)</span>
@@ -162,8 +162,8 @@
              <span class="fu">W</span><span class="op">(</span><span class="fl">146</span><span class="op">)</span>,
              <span class="va">microcat</span>,
              <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"swivel"</span><span class="op">)</span>,
-             <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"ballast"</span>, <span class="op">-</span><span class="fl">100</span><span class="op">/</span><span class="fl">2.2</span>, height<span class="op">=</span><span class="fl">1</span>, width<span class="op">=</span><span class="fl">0.05</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, <span class="co"># guess</span>
-             <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"syn. float, bracket and 109lb ADCP"</span><span class="op">)</span>, <span class="co"># total guess; lots of choices</span>
+             <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"ballast"</span>, <span class="op">-</span><span class="fl">100</span><span class="op">/</span><span class="fl">2.2</span>, height<span class="op">=</span><span class="fl">1</span>, width<span class="op">=</span><span class="fl">0.05</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,
+             <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"syn. float, bracket and 109lb ADCP"</span><span class="op">)</span>,
              <span class="fu">W</span><span class="op">(</span><span class="fl">149</span><span class="op">)</span>,
              <span class="va">microcat</span>,
              <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">'new glass streamlined float c2'</span><span class="op">)</span><span class="op">)</span>
@@ -171,28 +171,35 @@
 </div>
 <div id="knockdown-simulation" class="section level1">
 <h1 class="hasAnchor">
-<a href="#knockdown-simulation" class="anchor"></a>Knockdown simulation</h1>
+<a href="#knockdown-simulation" class="anchor"></a>Knockdown Simulation</h1>
 <p>For illustration, this simulation uses an entirely made-up velocity structure.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="fl">0.5</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span>
 <span class="va">depth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">depth</span>, <span class="fl">0</span>, length.out<span class="op">=</span><span class="fl">100</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,nrow<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,widths<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.7</span>,<span class="fl">0.3</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,nrow<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, widths<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.25</span><span class="op">)</span><span class="op">)</span>
 <span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"knockdown"</span>, showDetails<span class="op">=</span><span class="cn">TRUE</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ylim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="st">'usr'</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"knockdown"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">45</span><span class="op">)</span>, showDetails<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"velocity"</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="example_files/figure-html/unnamed-chunk-3-1.png" alt="**Simulation of knockdown with a rough guess at current.**" width="600"><p class="caption">
-<strong>Simulation of knockdown with a rough guess at current.</strong>
+<img src="example_files/figure-html/unnamed-chunk-3-1.png" alt="**Simulation of knockdown with a depth-decaying current.**" width="100%"><p class="caption">
+<strong>Simulation of knockdown with a depth-decaying current.</strong>
 </p>
 </div>
+<p>Note that the limit set on the first plot sets aside enough space for the labels (and establishes a common scale used in a later exercise).</p>
 </div>
-<div id="details-of-mooring" class="section level1">
+<div id="examining-moorings" class="section level1">
 <h1 class="hasAnchor">
-<a href="#details-of-mooring" class="anchor"></a>Details of mooring</h1>
-<p>The details of the mooring are revealed with</p>
+<a href="#examining-moorings" class="anchor"></a>Examining Moorings</h1>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>An overview of a mooring is provided by printing it, either with</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></code></pre></div>
+<p>or, in an interactive session, with</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m</span></code></pre></div>
+<p>For the mooring constructed above, the results are as follows.</p>
 <pre><code>## Mooring with 34 elements, listed from the top down:
 ##   34: 'new glass streamlined float c2' float, 45.41kg, height 0.87m, diameter 0.482m, x=0 m, z=-64.369 m
 ##   33: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2, x=0 m, z=-65.239 m
@@ -226,8 +233,88 @@
 ##   5: '3/16in galvanized wire coated to 1/4in' wire, 34m, -2.635kg, diameter 0.00635m
 ##   4: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, diameter 0.397m, x=0 m, z=-1388.21 m
 ##   3: 'benthos 965a release' release, -36.73kg, height 1.23m, width 0.1033m, x=0 m, z=-1388.77 m
-##   2: '5/8in galvanized chain' chain, 10m, -0.247276kg, width 0.0572m
+##   2: '5/8in galvanized chain' chain, 10m, -43.23kg, width 0.0572m
 ##   1: 'trainwheel' anchor, -1000kg, height 0m, in 1400m water depth, x=0 m, z=-1400 m</code></pre>
+<p>The number at the start is the component number (see next section).</p>
+<p>Note that the results for <code>md</code> will be similar, except there will be many more elements (for the segmented chain and wire components). If <code>mdk</code> is examined in this way, the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> values will be different.</p>
+</div>
+<div id="components" class="section level2">
+<h2 class="hasAnchor">
+<a href="#components" class="anchor"></a>Components</h2>
+<p>To learn more about, say, the second element (the chain from anchor to acoustic release), use</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## 1: '5/8in galvanized chain' chain, 10m, -43.23kg, width 0.0572m</code></pre>
+<p>and to see the full details, use</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dput.html">dput</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<pre><code>## structure(list(model = "5/8in galvanized chain", source = "BIO", 
+##     buoyancyPerMeter = -4.323, height = 10, width = 0.0572, CD = 1.3, 
+##     area = 0.572, x = 0, z = -1390, T = 670.151954545454), class = c("mooring", 
+## "chain"))</code></pre>
+<p>or, with less detail but in a more digestible format,</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<pre><code>## List of 10
+##  $ model           : chr "5/8in galvanized chain"
+##  $ source          : chr "BIO"
+##  $ buoyancyPerMeter: num -4.32
+##  $ height          : num 10
+##  $ width           : num 0.0572
+##  $ CD              : num 1.3
+##  $ area            : num 0.572
+##  $ x               : num 0
+##  $ z               : num -1390
+##  $ T               : num 670
+##  - attr(*, "class")= chr [1:2] "mooring" "chain"</code></pre>
+<p>You may go further with e.g.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">width</span></code></pre></div>
+<pre><code>## [1] 0.0572</code></pre>
+<p><strong>Exercise 1.</strong> Double the chain density, to see the effect on knock-down.</p>
+<p><strong>Exercise 2.</strong> Double the drag coefficient on the wire, to see how much this increases knockdown.</p>
+</div>
+<div id="answers-to-exercises" class="section level2">
+<h2 class="hasAnchor">
+<a href="#answers-to-exercises" class="anchor"></a>Answers to Exercises</h2>
+<div id="doubling-chain-density" class="section level3">
+<h3 class="hasAnchor">
+<a href="#doubling-chain-density" class="anchor"></a>1. Doubling chain density</h3>
+<p>A simple way to do this is to create <code>m</code> as before, but then to use</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">buoyancyPerMeter</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">buoyancyPerMeter</span></code></pre></div>
+<p>before using <code>digitise()</code>, <code><a href="../reference/knockdown.html">knockdown()</a></code> and then <code><a href="../reference/plot.mooring.html">plot.mooring()</a></code>. Before doing that though, you should ask yourself whether you expect to see a large effect.</p>
+</div>
+<div id="doubling-wire-drag" class="section level3">
+<h3 class="hasAnchor">
+<a href="#doubling-wire-drag" class="anchor"></a>2. Doubling wire drag</h3>
+<p>One way to do this is to replace the <code>W</code> definition with</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">W</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">length</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">w0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"3/16in galvanized wire coated to 1/4in"</span>, length<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
+    <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"draggy wire"</span>, buoyancyPerMeter<span class="op">=</span><span class="va">w0</span><span class="op">$</span><span class="va">buoyancyPerMeter</span>,
+         diameter<span class="op">=</span><span class="va">w0</span><span class="op">$</span><span class="va">diameter</span>, CD<span class="op">=</span><span class="fl">2</span><span class="op">*</span><span class="va">w0</span><span class="op">$</span><span class="va">CD</span>, length<span class="op">=</span><span class="va">length</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p>and then create <code>m</code>, <code>md</code> and <code>mdk</code> as before. The results are as follows. Note that knockdown is more than doubled. This makes determination of drag coefficient an especially important factor in mooring design; see e.g. <span class="citation">J. M. Hamilton (1989)</span> and <span class="citation">James M. Hamilton, Fowler, and Belliveau (1997)</span>.</p>
+<div class="figure" style="text-align: center">
+<img src="example_files/figure-html/unnamed-chunk-13-1.png" alt="**Simulation with doubled wire drag.**" width="100%"><p class="caption">
+<strong>Simulation with doubled wire drag.</strong>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-hamilton_validation_1989" class="csl-entry">
+Hamilton, J. M. 1989. <span>“The Validation and Practical Applications of a Sub-Surface Mooring Model.”</span> 119. Bedford Institute of Oceanography. <a href="https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf">https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf</a>.
+</div>
+<div id="ref-hamilton_mooring_1997" class="csl-entry">
+Hamilton, James M., George A. Fowler, and Donald J. Belliveau. 1997. <span>“Mooring <span>Vibration</span> as a <span>Source</span> of <span>Current</span> <span>Meter</span> <span>Error</span> and <span>Its</span> <span>Correction</span>.”</span> <em>Journal of Atmospheric and Oceanic Technology</em> 14 (3): 644–55. <a href="https://doi.org/10.1175/1520-0426(1997)014&lt;0644:MVAASO&gt;2.0.CO;2">https://doi.org/10.1175/1520-0426(1997)014&lt;0644:MVAASO&gt;2.0.CO;2</a>.
+</div>
+</div>
 </div>
   </div>
 

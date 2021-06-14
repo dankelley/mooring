@@ -724,7 +724,15 @@ print.mooring <- function(x, ...)
         a <- attributes(x)
         x <- rev(x)
         attributes(x) <- a
-        cat("Mooring with", n, "elements, listed from the top down:\n")
+        if (is.null(a$discretised)) {
+            cat("Mooring with", n, "elements, listed from the top down:\n")
+        } else {
+            if (is.null(a$u)) {
+                cat("Discretised mooring with", n, "elements, listed from the top down:\n")
+            } else {
+                cat("Discretised, knocked-over mooring with", n, "elements, listed from the top down:\n")
+            }
+        }
         prefix <- "  "
     }
     # The 'lastWas*' variables keep track of repeats, e.g. as created by discretise().
@@ -745,27 +753,22 @@ print.mooring <- function(x, ...)
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'chain')) {
-            #> cat("DAN DAN i=", i, " irev=", irev, " lastWasChain=", lastWasChain, "\n")
-            if (lastWasChain) {
-                # build up count of repeats (FIXME: look at groups)
-                nchain <- 1L
-                while (i <= n) {
-                    if (inherits(x[[i]], "chain")) {
-                        nchain <- nchain + 1L
-                        i <- i + 1L
-                    } else {
-                        cat(sprintf("%s%d-%d: '%s' chain, %gm, %gkg, width %gm\n",
-                                    prefix, 2+irev-nchain, 1+irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$width, xi$width), sep="")
-                        lastWasChain <- FALSE
-                        i <- i - 1L    # will increment later
-                        break
-                    }
-                }
-            } else {
-                cat(sprintf("%s%d: '%s' chain, %gm, %gkg, width %gm\n",
-                            prefix, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$width, xi$width), sep="")
-                lastWasChain <- TRUE
+            # See if there are more chain elements following this.
+            count <- 1L
+            while (count <= n) {
+                if (!inherits(x[[i+count]], "chain"))
+                    break
+                count <- count + 1L
             }
+            #> message("chain count: ", count)
+            if (count == 1L) {
+                cat(sprintf("%s%d: '%s' chain, %gm, %gkg, width %gm\n",
+                            prefix, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$width), sep="")
+            } else {
+                cat(sprintf("%s%d-%d: '%s' chain, %gm, %gkg, width %gm\n",
+                            prefix, 1+irev-count, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$width), sep="")
+            }
+            i <- i + count - 1 # account for skipped-over elements
         } else if (inherits(xi, 'connector')) {
             cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, width %gm",
                         prefix, irev, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
@@ -787,27 +790,22 @@ print.mooring <- function(x, ...)
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'wire')) {
-            #> cat("***** wire; lastWasWire=", lastWasWire, "\n")
-            if (lastWasWire) {
-                # build up count of repeats (FIXME: look at groups)
-                nwire <- 1L
-                while (i <= n) {
-                    if (inherits(x[[i]], "wire")) {
-                        nwire <- nwire + 1L
-                        i <- i + 1L
-                    } else {
-                cat(sprintf("%s%d-%d: '%s' wire, %gm, %gkg, diameter %gm\n",
-                            prefix, 2+irev-nwire, 1+irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep="")
-                        lastWasWire <- FALSE
-                        i <- i - 1L    # will increment later
-                        break
-                    }
-                }
-            } else {
+            # See if there are more wire elements following this.
+            count <- 1L
+            while (count <= n) {
+                if (!inherits(x[[i+count]], "wire"))
+                    break
+                count <- count + 1L
+            }
+            #> message("wire count: ", wire)
+            if (count == 1L) {
                 cat(sprintf("%s%d: '%s' wire, %gm, %gkg, diameter %gm\n",
                             prefix, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep="")
-                lastWasWire <- TRUE
+            } else {
+                cat(sprintf("%s%d-%d: '%s' wire, %gm, %gkg, width %gm\n",
+                            prefix, 1+irev-count, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep=)
             }
+            i <- i + count - 1 # account for skipped-over elements
         } else {
             stop("unknown class c(\"", paste(class(xi), collapse="\", \""), "\")")
         }
@@ -906,8 +904,10 @@ plot.mooring <- function(x, which="shape",
     mooringDebug(debug, waterDepth, overview=TRUE)
     par(mar=mar, mgp=mgp)
     # Determine depth scale by doing a sort of dry run of a shape plot
+    xlimOrig <- xlim
     if (is.null(xlim)) xlim <- extendrange(c(x(m), 0))
     plot.window(0, 0, xlim=xlim, ylim=c(waterDepth, 0), asp=1, log="")
+    xlim <- xlimOrig
     usrShape <- par("usr")
     # Handle velocity, which does not involve mooring elements and is a special case
     if (which == "velocity") {
@@ -940,11 +940,12 @@ plot.mooring <- function(x, which="shape",
     mooringDebug(debug, z, overview=TRUE, round=2)
     ylim <- c(waterDepth, 0)
     # Determine depth scale by doing a sort of dry run of a shape plot
+    #. message("xlim given? ", !is.null(xlim))
     if (is.null(xlim)) xlim <- extendrange(c(x, 0))
     plot.window(0, 0, xlim=xlim, ylim=ylim, asp=if (which=="shape") 1, log="")
     usrShape <- par("usr")
-    #> message(oce::vectorShow(xlim))
-    #> message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
+    #. message(oce::vectorShow(xlim))
+    #. message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
     plot(x, depth, xlim=xlim, ylim=usrShape[3:4], yaxs="i", asp=if (which=="shape") 1, type="l", xlab="", ylab="", axes=FALSE)
     xlab <- switch(which,
                    "shape"="Horizontal Coordinate [m]",
@@ -1081,6 +1082,7 @@ plot.mooring <- function(x, which="shape",
 #' pieces.
 #'
 #' @export
+#' @aliases discretize
 #'
 #' @author Dan Kelley
 discretise <- function(m, by=1)
