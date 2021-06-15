@@ -16,6 +16,7 @@
   mar = c(1.5, 3.5, 3.5, 1),
   mgp = c(2, 0.7, 0),
   xlim = NULL,
+  type = "l",
   ...
 )
 }
@@ -54,6 +55,9 @@ to the axes than the usual R default.}
 
 \item{xlim}{optional numeric vector of length 2 that can
 be used to specify the limits of the horizontal axis.}
+
+\item{type}{character value indicating type of plot. The default, \code{"l"},
+means to draw lines, while e.g. \code{"p"} means to draw points.}
 
 \item{...}{optional arguments.}
 }

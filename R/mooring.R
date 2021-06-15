@@ -851,6 +851,9 @@ print.mooring <- function(x, ...)
 #' @param xlim optional numeric vector of length 2 that can
 #' be used to specify the limits of the horizontal axis.
 #'
+#' @param type character value indicating type of plot. The default, `"l"`,
+#' means to draw lines, while e.g. `"p"` means to draw points.
+#'
 #' @param ... optional arguments.
 #'
 #' @examples
@@ -874,6 +877,7 @@ plot.mooring <- function(x, which="shape",
                          fancy=FALSE, title="",
                          mar=c(1.5, 3.5, 3.5, 1), mgp=c(2, 0.7, 0),
                          xlim=NULL,
+                         type="l",
                          ...)
 {
     m <- x # we only use 'x' above to obey the R rules on generics.
@@ -914,14 +918,15 @@ plot.mooring <- function(x, which="shape",
         uattr <- attr(m, "u")
         d <- seq(attr(m, "waterDepth"), 0, length.out=200)
         velocityProfile <- if (is.function(uattr)) uattr(d) else rep(uattr, length(d))
-        plot(velocityProfile, d, ylim=usrShape[3:4], yaxs="i", ylab="", xlab="", type="l", axes=FALSE)
+        plot(velocityProfile, d, ylim=usrShape[3:4], yaxs="i", ylab="", xlab="", type=type, axes=FALSE)
         box()
         grid()
         if (showInterfaces) {
             abline(h=0, col=colWater, lwd=2)
             abline(h=waterDepth, col=colBottom, lwd=2)
         }
-        lines(velocityProfile, d, lwd=1.4*par("lwd"))
+        if (type == "l") lines(velocityProfile, d, lwd=1.4*par("lwd"))
+        else points(velocityProfile, d)
         axis(2)
         mtext("Depth [m]", side=2, line=par("mgp")[1], cex=par("cex"))
         axis(3)
@@ -946,7 +951,8 @@ plot.mooring <- function(x, which="shape",
     usrShape <- par("usr")
     #. message(oce::vectorShow(xlim))
     #. message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
-    plot(x, depth, xlim=xlim, ylim=usrShape[3:4], yaxs="i", asp=if (which=="shape") 1, type="l", xlab="", ylab="", axes=FALSE)
+    plot(x, depth, xlim=xlim, ylim=usrShape[3:4], yaxs="i", asp=if (which=="shape") 1,
+         type=type, xlab="", ylab="", axes=FALSE)
     xlab <- switch(which,
                    "shape"="Horizontal Coordinate [m]",
                    "knockdown"="Depth Increase [m]",
@@ -972,7 +978,8 @@ plot.mooring <- function(x, which="shape",
         }
     }
     # Redraw to cover grid
-    lines(x, depth, lwd=1.4*par("lwd"))
+    if (type == "l") lines(x, depth, lwd=1.4*par("lwd"))
+    else points(x, depth, lwd=1.4*par("lwd"))
     # Draw conditions for u=0 case
     if (fancy)
         rect(usr[1], usr[3], usr[2], waterDepth, col=colBottom, border=NA)
@@ -1176,6 +1183,7 @@ knockdown <- function(m, u=1, debug=0L)
         stop("cannot apply knockdown() to the result of a previous call")
     if (is.null(attr(m, "discretised")))
         warning("accuracy is better if discretise() is used first\n")
+    att <- attributes(m)
 
     debug <- as.integer(max(0, debug))
     if (is.function(u) && debug > 0L) {
@@ -1183,7 +1191,7 @@ knockdown <- function(m, u=1, debug=0L)
         #mooringDebug(debug, z, overview=TRUE)
         warning("FIXME: u=function() case is not fully coded yet (no iteration is done)\n")
     }
-    # rename x,z into xStagnant,zStagnant
+    # rename x,z into x0,z0 for the stagnant (u=0) case
     for (i in seq_along(m)) {
         m[[i]]$x0 <- m[[i]]$x
         m[[i]]$z0 <- m[[i]]$z
@@ -1192,10 +1200,10 @@ knockdown <- function(m, u=1, debug=0L)
     morig <- m
     waterDepth <- anchorHeight <- 0
     # Remove the anchor, after saving waterDepth and anchorHeight
-    if (class(m[[1]])[2] == "anchor") {
+    if (inherits(m[[1]], "anchor")) {
         waterDepth <- m[[1]]$depth
         anchorHeight <- m[[1]]$height
-        m <- tail(m, -1)
+        m <- tail(m, -1) # discard the anchor
         class(m) <- "mooring"
     } else {
         stop("the mooring must start with an object creatred with anchor()")
@@ -1203,6 +1211,7 @@ knockdown <- function(m, u=1, debug=0L)
     # reverse elements, to make it simpler to work from top down
     mrev <- rev(m)
     class(mrev) <- "mooring"
+    attributes(mrev) <- att
     # Depth below surface (FIXME: how to have more water above?)
     depth <- cumsum(sapply(mrev, function(item) item$height))
     mooringDebug(debug, depth, overview=TRUE)
