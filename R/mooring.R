@@ -638,17 +638,21 @@ CD <- function(m)
 #'
 #' @template rhoTemplate
 #'
-#' @return `drag` returns a numeric vector of horizontal drag force, expressed in N.
+#' @param g numeric value of the acceleration due to gravity, with default
+#' being 9.8 m/s^2.
+#'
+#' @return `drag` returns a numeric vector of horizontal drag "force" (really, force
+#' divided by gravitational acceleration), expressed in kg.
 #'
 #' @export
 #'
 #' @author Dan Kelley
-drag <- function(m, u, rho=1027)
+drag <- function(m, u, rho=1027, g=9.8)
 {
     if (length(rho) > 1L && length(rho) != length(m))
         stop("length of rho, ", length(rho), " must match length of m, ", length(m))
     uSquared <- if (is.function(u)) sapply(depth(m),u)^2 else u^2
-    0.5 * area(m) * rho * CD(m) * uSquared
+    0.5 * area(m) * rho * CD(m) * uSquared / g
 }
 
 #' Create a mooring
@@ -1168,7 +1172,7 @@ discretise <- function(m, by=1)
 #' @examples
 #' # Illustrate importance of drag on the wire.
 #' library(mooring)
-#' m <- mooring(anchor(depth=200), wire(length=180), float("HMB 20"))
+#' m <- mooring(anchor(depth=100), wire(length=80), float())
 #' md <- discretise(m)
 #'
 #' # Example 1: no current
@@ -1180,7 +1184,7 @@ discretise <- function(m, by=1)
 #' plot(k1, which="velocity")
 #' plot(k1)
 #'
-#' # Example 3: 0.5 m/s current at surface, decaying exponetially below
+#' # Example 3: 0.5 m/s current at surface, decaying exponentially below
 #' k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
 #' par(mfrow=c(1, 2))
 #' plot(k2, which="velocity")
@@ -1192,124 +1196,57 @@ discretise <- function(m, by=1)
 #' @author Dan Kelley
 knockdown <- function(m, u=1, debug=0L)
 {
+    debug <- max(0L, as.integer(debug))
+    n <- length(m)
+    # check for well-formed parameters
+    if (n < 3L)
+        stop("mooring must have 2 or more elements")
     if (!isMooring(m))
         stop("only works for objects created by mooring()")
+    if (!inherits(m[[length(m)]], "anchor"))
+        stop("the bottom element of a mooring must be created with anchor()")
     if (!is.null(attr(m, "u")))
         stop("cannot apply knockdown() to the result of a previous call")
     if (is.null(attr(m, "discretised")))
         warning("accuracy is better if discretise() is used first\n")
-    att <- attributes(m)
-
-    debug <- as.integer(max(0, debug))
     if (is.function(u) && debug > 0L) {
-        #z <- sapply(m, function(x) x$z)
-        #mooringDebug(debug, z, overview=TRUE)
         warning("FIXME: u=function() case is not fully coded yet (no iteration is done)\n")
     }
     # rename x,z into x0,z0 for the stagnant (u=0) case
-    for (i in seq_along(m)) {
+    for (i in seq_len(n)) {
         m[[i]]$x0 <- m[[i]]$x
         m[[i]]$z0 <- m[[i]]$z
     }
-    # Trim the anchor, which is not used in this calculation
-    morig <- m
-    waterDepth <- anchorHeight <- 0
-    # Remove the anchor, after saving waterDepth and anchorHeight
-    if (inherits(m[[1]], "anchor")) {
-        waterDepth <- m[[1]]$depth
-        anchorHeight <- m[[1]]$height
-        m <- tail(m, -1) # discard the anchor
-        class(m) <- "mooring"
-    } else {
-        stop("the mooring must start with an object creatred with anchor()")
-    }
-    # reverse elements, to make it simpler to work from top down
-    mrev <- rev(m)
-    class(mrev) <- "mooring"
-    attributes(mrev) <- att
-    # Depth below surface (FIXME: how to have more water above?)
-    depth <- cumsum(sapply(mrev, function(item) item$height))
-    mooringDebug(debug, depth, overview=TRUE)
-    B <- g * buoyancy(mrev) # note multiplication by g, to get Newtons from kg
-    D <- drag(mrev, u)
-    height <- unlist(lapply(mrev, function(item) item$height))
-
-    # computation
-    n <- length(mrev)
-    # We won't define phi[1] and T[1], and will trim them
-    # after the calculation.  The only purpose in setting up
-    # n elements is to make the formulae match those in the
-    # vignette.
-    phi <- rep(NA, n)
-    T <- rep(NA, n)
-    phi[2] <- atan2(D[1], B[1]) # radians
-    T[2] <- sqrt(D[1]^2 + B[1]^2)
-    if (n > 2) {
-        for (i in 3:n) {
-            phi[i] <- atan2(D[i-1]+T[i-1]*sin(phi[i-1]), B[i-1]+T[i-1]*cos(phi[i-1]))
-            T[i] <- sqrt((D[i-1]+T[i-1]*sin(phi[i-1]))^2+(B[i-1]+T[i-1]*cos(phi[i-1]))^2)
+    # start actual calculation, which relies on buoyancy B and drag, D.
+    waterDepth <- m[[length(m)]]$depth
+    B <- buoyancy(m)
+    D <- drag(m, u)
+    T <- vector("numeric", n-1)
+    phi <- vector("numeric", n-1)
+    # Next two are Equation 5 in the 'Mooring Model' vignette.
+    T[1] <- sqrt(D[1]^2 + B[1]^2)
+    phi[1] <- atan2(D[1], B[1])
+    # Next block, run only if more than 2 elements, computes rest of T and phi
+    # values, using Equation 8 in the 'Mooring Model' vignette.
+    if (n > 2L) {
+        for (i in seq(2L, n-1L)) {
+            T[i] <- sqrt((D[i]+T[i-1]*sin(phi[i-1]))^2 + (B[i]+T[i-1]*cos(phi[i-1]))^2)
+            phi[i] <- atan2(D[i]+T[i-1]*sin(phi[i-1]), B[i]+T[i-1]*cos(phi[i-1]))
         }
     }
-    # Trim the angle, which makes wire/cable lay out on the bottom, if
-    # there is insufficient buoyancy to support it.
+    # Clip the angle (do not allow it to run "inside" the sediment)
     phi <- ifelse(phi > pi/2, pi/2, phi)
-    # The first phi and T are NA, so trim them
-    phi <- tail(phi, -1L)
-    T <- tail(T, -1L)
-    #> cat(oce::vectorShow(phi, showNA=TRUE))
-    #> cat(oce::vectorShow(T, showNA=TRUE))
-    mooringDebug(debug, "Original values:\n")
-    mooringDebug(debug, phi*180/pi, overview=TRUE, round=1)
-    mooringDebug(debug, T/g, overview=TRUE, round=1)
-    # Find x and z by integrating from bottom up.
-    phiRev <- rev(phi)
-    heightRev <- rev(height)[-1]
-    x <- rev(cumsum(heightRev*sin(phiRev)))
-    z <- rev(cumsum(heightRev*cos(phiRev))) - waterDepth
-    #> cat(oce::vectorShow(x, showNA=TRUE))
-    #> cat(oce::vectorShow(z, showNA=TRUE))
-    mooringDebug(debug, x, overview=TRUE, round=2)
-    mooringDebug(debug, z, overview=TRUE, round=2)
-    rval <- morig
-    # Add top of anchor, and bottom of anchor.  Then reverse, to match original 'm'.
-    rx <- rev(x)
-    rz <- rev(z)
-    xNew <- c(0, rx)
-    zNew <- c(-waterDepth, rz)
-    #> cat(oce::vectorShow(xNew, showNA=TRUE))
-    #> cat(oce::vectorShow(zNew, showNA=TRUE))
-    #> plot(xNew,zNew,type="l")
-    #> points(xNew[1],zNew[1])
-    #> mtext(sprintf("bot x=%f z=%f",xNew[1],zNew[1]))
-    #> browser()
-    x <- xNew # rev(c(x, sum(head(x,2))/2.0, 0))
-    z <- zNew # rev(c(z, -waterDepth + morig[[1]]$height, -waterDepth))
-    phi <- c(phi[1], phi, tail(phi, 1))
-    T <- rev(c(T[1], T, tail(T, 1)))
-    mooringDebug(debug, "Values after adding two elements:\n")
-    mooringDebug(debug, x, overview=TRUE, round=2)
-    mooringDebug(debug, z, overview=TRUE, round=2)
-    for (i in seq_along(morig)) {
-        rval[[i]]$x <- x[i]
-        rval[[i]]$z <- z[i]
-        rval[[i]]$phi <- phi[i]
-        rval[[i]]$T <- T[i]
+    # Compute position.  Note that the anchor is appended, on the assumption of immovability.
+    height <- sapply(m, function(item) item$height)
+    x <- c(rev(cumsum(rev(height[-n]*sin(phi)))), 0)
+    z <- c(rev(cumsum(rev(height[-n]*cos(phi)))), 0) - waterDepth
+    for (i in seq_len(n)) {
+        m[[i]]$x <- x[i]
+        m[[i]]$z <- z[i]
     }
-    #> cat("before replace last point:\n")
-    #> cat(oce::vectorShow(sapply(rval,\(x)x$x), showNA=TRUE))
-    #> cat(oce::vectorShow(sapply(rval,\(x)x$z), showNA=TRUE))
-    # last two are NA.  Let's just linearly extrapolate to find x and z, since
-    # this is almost certainly a float, and the element below is therefore just 1 metre
-    # of wire or chain, which won't be bending a whole lot in 1 metre.
-    n <- length(rval)
-    rval[[n]]$x <- 2*rval[[n-1]]$x - rval[[n-2]]$x
-    rval[[n]]$z <- 2*rval[[n-1]]$z - rval[[n-2]]$z
-    #> cat("finally:\n")
-    #> cat(oce::vectorShow(sapply(rval,\(x)x$x), showNA=TRUE))
-    #> cat(oce::vectorShow(sapply(rval,\(x)x$z), showNA=TRUE))
-    class(rval) <- "mooring"
-    attr(rval, "u") <- u
-    rval
+    class(m) <- "mooring"
+    attr(m, "u") <- u
+    m
 }                                      # knockdown()
 
 #' Optionally print a debugging message
