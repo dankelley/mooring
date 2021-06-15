@@ -18,7 +18,8 @@ nonzero velocity).}
 a numeric vector of vertical coordinate in metres.
 }
 \description{
-This is the negative of \code{\link[=depth]{depth()}}.
+This is the z coordinate of the \emph{top} of the element. See also
+\code{\link[=depth]{depth()}}, which is the negative of the result from \code{z()}.
 }
 \examples{
 library(mooring)

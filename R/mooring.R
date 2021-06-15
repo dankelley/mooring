@@ -670,31 +670,41 @@ drag <- function(m, u, rho=1027)
 mooring <- function(...)
 {
     dots <- list(...)
-    if (length(dots) < 3)
-        stop("please supply two or more elements, starting with an anchor()")
+    n <- length(dots)
+    if (n < 3L)
+        stop("need 2 or more arguments")
+    if (!inherits(dots[[1]], "anchor"))
+       stop("first argument must be created with anchor()")
     w <- which(sapply(dots, function(x) !inherits(x, "mooring")))
     if (length(w))
-        stop("these are the indices of elements that are not of class 'mooringElement': ", paste(w, collapse=" "))
-    rval <- dots
-    height <- cumsum(sapply(rval, function(x) x$height))
-    depth <- if ("anchor" == class(rval[[1]])[2]) rval[[1]]$depth
-        else sum(sapply(rval, function(x) x$height))
-    T <- rev(cumsum(rev(buoyancy(rval[-1]))))
-    T <- c(T[1], T)
-    x <- 0
+        stop("these are the indices of elements that are not of class 'mooring': ", paste(w, collapse=" "))
+    w <- which(2 != sapply(dots, function(x) length(class(x))))
+    if (length(w))
+        stop("these are the indices of elements that are not elementary: ", paste(w, collapse=" "))
+    # All checks seem OK, so reverse parameters and create the return value.
+    rval <- rev(dots)
+    depth <- rval[[n]]$depth # NOTE: only anchor() objects have this, but we know we have one
+    height <- rev(cumsum(sapply(rev(rval), function(x) x$height)))
+    message("height: ", paste(height, collapse=" "))
+    message("height-depth: ", paste(height-depth, collapse=" "))
+    T <- cumsum(buoyancy(rval[-n]))
+    message("n=", n, ", depth=", depth, ", length(T)=", length(T))
+    x0 <- 0
+    alongBottom <- 0L
     for (i in seq_along(rval)) {
         z <- height[i] - depth
-        # If the line is too heavy for the flotation, run some of it along
-        # the bottom.
+        # If the mooring outweighs the flotation, run some of it along the bottom.
         if (z < (-depth)) {
-            message("DANNY i=", i, ", z=", z, ", depth=", depth)
+            alongBottom <- alongBottom + 1L
             z <- -depth
-            x <- x + depth
+            x0 <- x0 + height[i]
         }
-        rval[[i]]$x <- x
-        rval[[i]]$z <- z
-        rval[[i]]$T <- T[i]
+        rval[[i]]$x <- x0
+        rval[[i]]$z <- z               # z is at the *top* of the element
+        rval[[i]]$T <- if (i == n) NA else T[i]
     }
+    if (alongBottom)
+        warning("insufficient mooring buoyancy; placed ", alongBottom, " elements on the bottom")
     class(rval) <- "mooring"
     attr(rval, "waterDepth") <- depth
     rval
@@ -720,14 +730,10 @@ print.mooring <- function(x, ...)
     if (elementary) {
         prefix <- ""
     } else {
-        # reorder from bottom up, to read like a mooring diagram
-        a <- attributes(x)
-        x <- rev(x)
-        attributes(x) <- a
-        if (is.null(a$discretised)) {
+        if (is.null(attr(x, "discretised"))) {
             cat("Mooring with", n, "elements, listed from the top down:\n")
         } else {
-            if (is.null(a$u)) {
+            if (is.null(attr(x, "u"))) {
                 cat("Discretised mooring with", n, "elements, listed from the top down:\n")
             } else {
                 cat("Discretised, knocked-over mooring with", n, "elements, listed from the top down:\n")
@@ -744,15 +750,14 @@ print.mooring <- function(x, ...)
     lastWasWire <- FALSE
     i <- 1L
     while (i <= n) {
-        irev <- n - i + 1
         xi <- if (elementary) x else x[[i]]
         #> cat("i=", i, " class=", paste(class(xi), collapse=","), "\n", sep="")
         if (inherits(xi, "anchor")) {
             cat(sprintf("%s%d: '%s' anchor, %gkg, height %gm, in %gm water depth",
-                        prefix, irev, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
-        } else if (inherits(xi, 'chain')) {
+        } else if (inherits(xi, "chain")) {
             # See if there are more chain elements following this.
             count <- 1L
             while (count <= n) {
@@ -762,34 +767,38 @@ print.mooring <- function(x, ...)
             }
             #> message("chain count: ", count)
             if (count == 1L) {
-                cat(sprintf("%s%d: '%s' chain, %gm, %gkg, width %gm\n",
-                            prefix, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$width), sep="")
+                cat(sprintf("%s%d: '%s' chain, %gkg, length %gm, width %gm\n",
+                            prefix, i, xi$model,
+                            xi$buoyancyPerMeter*xi$height,
+                            xi$height, xi$width), sep="")
             } else {
-                cat(sprintf("%s%d-%d: '%s' chain, %gm, %gkg, width %gm\n",
-                            prefix, 1+irev-count, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$width), sep="")
+                cat(sprintf("%s%d-%d: '%s' chain, %gm, length %gm, width %gm\n",
+                            prefix, i, i+count-1L, xi$model,
+                            xi$buoyancyPerMeter*xi$height,
+                            xi$height, xi$width), sep="")
             }
             i <- i + count - 1 # account for skipped-over elements
         } else if (inherits(xi, 'connector')) {
             cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, width %gm",
-                        prefix, irev, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'float')) {
             cat(sprintf("%s%d: '%s' float, %gkg, height %gm, diameter %gm",
-                         prefix, irev, xi$model, xi$buoyancy, xi$height, xi$diameter), sep='')
+                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$diameter), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'instrument')) {
             cat(sprintf("%s%d: '%s' instrument, %gkg, area %gm^2",
-                         prefix, irev, xi$model, xi$buoyancy, xi$area), sep='')
+                         prefix, i, xi$model, xi$buoyancy, xi$area), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'release')) {
             cat(sprintf("%s%d: '%s' release, %gkg, height %gm, width %gm",
-                        prefix, irev, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
-        } else if (inherits(xi, 'wire')) {
+        } else if (inherits(xi, "wire")) {
             # See if there are more wire elements following this.
             count <- 1L
             while (count <= n) {
@@ -799,11 +808,16 @@ print.mooring <- function(x, ...)
             }
             #> message("wire count: ", wire)
             if (count == 1L) {
-                cat(sprintf("%s%d: '%s' wire, %gm, %gkg, diameter %gm\n",
-                            prefix, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep="")
+                cat(sprintf("%s%d: '%s' wire, %gkg, length %gm, diameter %gm\n",
+                            prefix, i, xi$model,
+                            xi$buoyancyPerMeter*xi$height,
+                            xi$height,
+                            xi$diameter), sep="")
             } else {
-                cat(sprintf("%s%d-%d: '%s' wire, %gm, %gkg, width %gm\n",
-                            prefix, 1+irev-count, irev, xi$model, xi$height, xi$buoyancyPerMeter*xi$height, xi$diameter), sep=)
+                cat(sprintf("%s%d-%d: '%s' wire, %gkg, length %gm, width %gm\n",
+                            prefix, i, i+count-1L, xi$model,
+                            xi$buoyancyPerMeter*xi$height,
+                            xi$height, xi$diameter), sep=)
             }
             i <- i + count - 1 # account for skipped-over elements
         } else {
@@ -1098,6 +1112,7 @@ discretise <- function(m, by=1)
         stop("only works for objects created by mooring()")
     if (by <= 0)
         stop("by must be a positive number")
+    n <- length(m)
     rval <- list()
     group <- 1
     for (item in m) {
@@ -1119,7 +1134,7 @@ discretise <- function(m, by=1)
         }
     }
     # Fix up the z and T values
-    z <- -rval[[1]]$depth + cumsum(sapply(rval, function(x) x$height))
+    z <- -rval[[length(rval)]]$depth + cumsum(sapply(rval, function(x) x$height))
     T <- tension(rval, stagnant=TRUE)
     for (i in seq_along(rval)) {
         rval[[i]]$z <- z[i]
@@ -1363,7 +1378,8 @@ mooringDebug <- function(debug, v, ..., overview=FALSE, round=FALSE)
 
 #' Return depth, in m, of elements in mooring.
 #'
-#' This is the negative of [z()].
+#' This is the depth of the *top* of the element. See also
+#' [z()], which is the negative of the result from `depth()`.
 #'
 #' @template mTemplate
 #'
@@ -1414,7 +1430,8 @@ x <- function(m, stagnant=FALSE)
 
 #' Return vertical coordinate, in m, of elements in mooring.
 #'
-#' This is the negative of [depth()].
+#' This is the z coordinate of the *top* of the element. See also
+#' [depth()], which is the negative of the result from `z()`.
 #'
 #' @template mTemplate
 #'
