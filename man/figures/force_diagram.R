@@ -54,7 +54,7 @@ text(x+scale*D, L-l+tweak, expression(D[i]), font=2, col=col, cex=cex, pos=4)
 Tx <- -T * sin(phi)
 Tz <- T * cos(phi)
 arrows(x, L-l, x+scale*Tx, L-l+scale*Tz, length=length, col=col, lwd=lwd)
-text(2*tweak+x+scale*Tx, tweak/3+L-l+scale*Tz, expression(T[i+1]), font=2, col=col, pos=1, cex=cex)
+text(2*tweak+x+scale*Tx, tweak/3+L-l+scale*Tz, expression(T[i]), font=2, col=col, pos=1, cex=cex)
 
 # Angle
 text(2*tweak+head(x(mdk), 1), -4*tweak+head(depth(mdk),1), expression(phi[i]), col=col, font=2, cex=1.2*cex)
