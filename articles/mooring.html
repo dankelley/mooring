@@ -97,7 +97,7 @@
       <h1 data-toc-skip>The mooring package</h1>
                         <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-15</h4>
+            <h4 class="date">2021-06-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/mooring.Rmd"><code>vignettes/mooring.Rmd</code></a></small>
       <div class="hidden name"><code>mooring.Rmd</code></div>
@@ -245,7 +245,7 @@
 <p>As a check, we may confirm that this doubles the drag for, say, a 1m/s current:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">w</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">w2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1]  534.04 1068.08</code></pre>
+<pre><code>## [1]  54.49388 108.98776</code></pre>
 <p>All object types store a value for <code>CD</code>, but the other entries depend on the type. The simplest way to find out what is store in a given type is to create a sample object and study it, e.g. with</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
