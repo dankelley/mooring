@@ -58,19 +58,17 @@ g <- 9.8
 
 #' Detect whether an object is a mooring
 #'
-#' An object is a mooring if it inherits from the `"mooring"` class,
-#' and if it has no sub-classes.  For example, the output of [mooring()]
-#' is a mooring, but the output of [anchor()] is not because the latter
-#' has a sub-class (equal to `"anchor"`).  This function is mainly
-#' designed for use within the package that that, e.g. [knockdown()]
-#' will produce an error if its first argument is not a mooring.
+#' An object is a mooring if it is a list that has more than one element, and
+#' if each element inherits from the `"mooring"` class.  For example, the
+#' output of [mooring()] is a mooring, but the output of [anchor()] is not.
+#' This function is mainly designed for use within the package that that, e.g.
+#' [knockdown()] will produce an error if its first argument is not a mooring.
 #'
 #' @param m an object to be tested
 #'
 #' @export
 isMooring <- function(m=NULL) {
-    is.list(m) && length(m) > 1 && inherits(m[[1]], "mooring")
-    #!is.null(m) && length(class(m)) == 1 && class(m) == "mooring"
+    is.list(m) && length(m) > 1 && all(sapply(m, function(mi) inherits(mi, "mooring")))
 }
 
 
@@ -689,10 +687,7 @@ mooring <- function(...)
     rval <- rev(dots)
     depth <- rval[[n]]$depth # NOTE: only anchor() objects have this, but we know we have one
     height <- rev(cumsum(sapply(rev(rval), function(x) x$height)))
-    message("height: ", paste(height, collapse=" "))
-    message("height-depth: ", paste(height-depth, collapse=" "))
     T <- cumsum(buoyancy(rval[-n]))
-    message("n=", n, ", depth=", depth, ", length(T)=", length(T))
     x0 <- 0
     alongBottom <- 0L
     for (i in seq_along(rval)) {
@@ -917,12 +912,12 @@ plot.mooring <- function(x, which="shape",
     debug <- 0L
     if ("debug" %in% names(dots))
         debug <- as.integer(max(0L, dots$debug))
+    nm <- length(m)
     xshape <- x(m)
     xtension <- tension(m)
-    z <- z(m)
-    depth <- -z
-    waterDepth <- if ("anchor" == class(m[[1]])[2]) m[[1]]$depth
-        else abs(min(depth))
+    depth <- depth(m)
+    waterDepth <- if (inherits(m[[nm]], "anchor")) m[[nm]]$depth
+        else max(abs(depth))
     mooringDebug(debug, waterDepth, overview=TRUE)
     par(mar=mar, mgp=mgp)
     # Determine depth scale by doing a sort of dry run of a shape plot
@@ -960,7 +955,7 @@ plot.mooring <- function(x, which="shape",
         stop("which must be \"shape\", \"knockdown\", \"tension\" or \"velocity\"")
     xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant=TRUE)
     mooringDebug(debug, x, overview=TRUE, round=2)
-    mooringDebug(debug, z, overview=TRUE, round=2)
+    mooringDebug(debug, depth, overview=TRUE, round=2)
     ylim <- c(waterDepth, 0)
     # Determine depth scale by doing a sort of dry run of a shape plot
     #. message("xlim given? ", !is.null(xlim))
@@ -1072,7 +1067,7 @@ plot.mooring <- function(x, which="shape",
         X0 <- max(xs, na.rm=TRUE)
         #> message(oce::vectorShow(X0))
         X <- rep(X0+xspace, N)
-        Y <- seq(usr[3]+yspace, usr[4]-yspace, length.out=N)
+        Y <- seq(usr[4]-yspace, usr[3]+yspace, length.out=N)
         widths <- strwidth(labels, cex=cex)
         text(X, Y, labels, pos=4, cex=detailsControl$cex, col=detailsControl$col)
         #points(X, Y, col=2)
@@ -1137,11 +1132,15 @@ discretise <- function(m, by=1)
             rval[[1+length(rval)]] <- item
         }
     }
-    # Fix up the z and T values
-    z <- -rval[[length(rval)]]$depth + cumsum(sapply(rval, function(x) x$height))
-    T <- tension(rval, stagnant=TRUE)
-    for (i in seq_along(rval)) {
-        rval[[i]]$z <- z[i]
+    nrval <- length(rval)
+    waterDepth <- rval[[nrval]]$depth
+    # Compute z and T values. (Leave x values alone.)
+    #OLD z <- rev(-rval[[length(rval)]]$depth + cumsum(sapply(rval, function(x) x$height)))
+    T <- tension(rval, stagnant=TRUE) # FIXME: ok?
+    zz <- -waterDepth
+    for (i in rev(seq_along(rval))) {
+        zz <- zz + rval[[i]]$height
+        rval[[i]]$z <- zz              # z is defined at TOP of item
         rval[[i]]$T <- T[i]
     }
     class(rval) <- "mooring"
@@ -1172,7 +1171,7 @@ discretise <- function(m, by=1)
 #' @examples
 #' # Illustrate importance of drag on the wire.
 #' library(mooring)
-#' m <- mooring(anchor(depth=100), wire(length=80), float())
+#' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 #' md <- discretise(m)
 #'
 #' # Example 1: no current
@@ -1188,6 +1187,12 @@ discretise <- function(m, by=1)
 #' k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
 #' par(mfrow=c(1, 2))
 #' plot(k2, which="velocity")
+#' plot(k2)
+#'
+#' # Example 4: as Example 3, but show knockdown
+#' k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
+#' par(mfrow=c(1, 2))
+#' plot(k2, which="knockdown")
 #' plot(k2)
 #'
 #' @importFrom graphics grid
@@ -1236,13 +1241,14 @@ knockdown <- function(m, u=1, debug=0L)
     }
     # Clip the angle (do not allow it to run "inside" the sediment)
     phi <- ifelse(phi > pi/2, pi/2, phi)
-    # Compute position.  Note that the anchor is appended, on the assumption of immovability.
-    height <- sapply(m, function(item) item$height)
-    x <- c(rev(cumsum(rev(height[-n]*sin(phi)))), 0)
-    z <- c(rev(cumsum(rev(height[-n]*cos(phi)))), 0) - waterDepth
-    for (i in seq_len(n)) {
-        m[[i]]$x <- x[i]
-        m[[i]]$z <- z[i]
+    # Compute position from bottom up, starting at x=0 and z=-waterDepth
+    m[[n]]$phi <- phi[n-1] # does this matter? Is it ever used?
+    m[[n]]$x <- 0
+    m[[n]]$z <- -waterDepth
+    for (i in seq(n-1L, 1L, -1L)) {
+        m[[i]]$phi <- phi[i]
+        m[[i]]$x <- m[[i+1]]$x + m[[i]]$height * sin(m[[i]]$phi)
+        m[[i]]$z <- m[[i+1]]$z + m[[i]]$height * cos(m[[i]]$phi)
     }
     class(m) <- "mooring"
     attr(m, "u") <- u

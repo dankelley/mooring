@@ -100,20 +100,19 @@ volume <- 4/3*pi*R^3
 rho <- 1027
 deltaRho <- rho                        # water vs air (round numbers)
 g <- 9.8
-Bkg <- deltaRho * volume # kg
-B <- g * Bkg
+B <- g * deltaRho * volume             # Newtons
 CD <- 1
 u <- 0.5                               # speed, m/s
-D <- 0.5 * CD * area * rho * u^2
+D <- 0.5 * CD * area * rho * u^2       # Newtons
 phi <- atan2(D, B)
 x <- L * sin(phi)
 l <- L * cos(phi)
 T <- B / cos(phi)
 
 library(mooring)
-f <- float("pingpong", Bkg, height=0, diameter=2*R, CD=1)
-expect_equal(Bkg, buoyancy(f))
-expect_equal(D, drag(f, u=u))
+f <- float("pingpong", B/g, height=0, diameter=2*R, CD=1)
+expect_equal(B/g, buoyancy(f))         # convert to kg to compare
+expect_equal(D/g, drag(f, u=u))        # convert to kg to compare
 
 w <- wire("gossamer", length=L, buoyancyPerMeter=0, CD=0, diameter=0)
 a <- anchor("fake", buoyancy=-1000, height=0, depth=L)

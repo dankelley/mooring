@@ -76,21 +76,62 @@ m <- mooring(anchor(depth=1400),
 md <- discretise(m)
 ```
 
-
-
 # Knockdown Simulation
 
 For illustration, this simulation uses an entirely made-up velocity structure.
 ```{r, fig.cap="**Simulation of knockdown with a depth-decaying current.**", fig.height=4, fig.width=7, fig.align="center", out.width="100%", dev.args=list(pointsize=10)}
 u <- function(depth) 0.5*exp(-depth/1000)
-depth <- seq(m[[1]]$depth, 0, length.out=100)
+depth <- seq(tail(depth(m), 1), 0, length.out=100)
 layout(matrix(1:2,nrow=1), widths=c(0.75,0.25))
 mdk <- knockdown(md, u=u)
-plot(mdk, "knockdown", xlim=c(0,45), showDetails=TRUE)
+plot(mdk, "knockdown", xlim=c(0,30), showDetails=TRUE)
 plot(mdk, "velocity")
 ```
 Note that the limit set on the first plot sets aside enough space for the
 labels (and establishes a common scale used in a later exercise).
+
+## Knockdown-Speed Diagram
+
+We may get an idea of the overall response of the mooring to water velocity by
+running simulations with a range of velocities.  Noting that the top of the
+mooring, from the surface to 200m, is knocked over much more than the rest,
+let's focus on the depth of the second microcat from the top, i.e. the one
+below the ADCP.  Typing `md` in a console gives an overview, from which one may
+see that the second microcat from the top, i.e. the one below the ADCP, is
+element 155, i.e.
+```{r}
+md[[155]]
+```
+Similarly, the ADCP is
+```{r}
+md[[152]]
+```
+
+We may use this to construct a diagnostic curve giving an overview of the
+mooring knockdown, as follows. Note that the $x$ axis of the resultant plot is
+showing velocity at the depth of the ADCP.
+```{r fig.cap="**Speed-knockdown summary diagram**", fig.width=7, fig.height=4, out.width="100%", fig.align="center", dev.args=list(pointsize=10)}
+par(mar=c(3,3,1,1), mgp=c(2,0.7,0), mfrow=c(1,1))
+iADCP <- 152
+imicrocat <- 155
+N <- 20
+u0 <- seq(0, 1, length.out=N)
+dz <- rep(NA, N)
+U <- rep(NA, N)
+for (i in seq_len(N)) {
+    u <- function(depth) u0[i] * exp(-depth/1000)
+    k <- knockdown(md, u)
+    U[i] <- u(-k[[iADCP]]$z)
+    dz[i] <- k[[imicrocat]]$z - md[[imicrocat]]$z
+}
+plot(U, dz, lwd=2, type="l", xlab="Velocity [m/s]", ylab="Knockdown [m]")
+grid()
+mtext(sprintf("Knockdown of microcat #2, near %.0f m depth", -md[[imicrocat]]$z))
+```
+
+
+
+
 
 # Examining Moorings
 
@@ -112,7 +153,7 @@ The number at the start is the component number (see next section).
 
 Note that the results for `md` will be similar, except there will be many more
 elements (for the segmented chain and wire components).  If `mdk` is examined
-in this way, the $x$ and $z$ values will be different. 
+in this way, the $x$ and $z$ values will be different.
 
 ## Components
 
@@ -207,7 +248,7 @@ m <- mooring(anchor(depth=1400),
 md <- discretise(m)
 layout(matrix(1:2,nrow=1), widths=c(0.75,0.25))
 mdk <- knockdown(md, u=u)
-plot(mdk, "knockdown", xlim=c(0,45), showDetails=TRUE)
+plot(mdk, "knockdown", xlim=c(0,30), showDetails=TRUE)
 plot(mdk, "velocity")
 ```
 

@@ -33,7 +33,7 @@ is able to display a velocity profile; see
 \examples{
 # Illustrate importance of drag on the wire.
 library(mooring)
-m <- mooring(anchor(depth=200), wire(length=180), float("HMB 20"))
+m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
 md <- discretise(m)
 
 # Example 1: no current
@@ -45,10 +45,16 @@ k1 <- knockdown(md, u=0.5)
 plot(k1, which="velocity")
 plot(k1)
 
-# Example 3: 0.5 m/s current at surface, decaying exponetially below
+# Example 3: 0.5 m/s current at surface, decaying exponentially below
 k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
 par(mfrow=c(1, 2))
 plot(k2, which="velocity")
+plot(k2)
+
+# Example 4: as Example 3, but show knockdown
+k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
+par(mfrow=c(1, 2))
+plot(k2, which="knockdown")
 plot(k2)
 
 }

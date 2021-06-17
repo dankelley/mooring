@@ -104,10 +104,10 @@ force (in Newtons) with
       <a href="../articles/example.html">A Practical Example</a>
     </li>
     <li>
-      <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
+      <a href="../articles/mooring_elements.html">Default Values for Mooring Elements</a>
     </li>
     <li>
-      <a href="../articles/mooring_elements.html">Default Values for Mooring Elements</a>
+      <a href="../articles/mooring_model.html">Mooring Model</a>
     </li>
     <li>
       <a href="../articles/object_orientation.html">Object-orientation Scheme</a>
@@ -150,7 +150,7 @@ force (in Newtons) with
 \((1/2)*area*rho*CD*u^2\)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>drag</span><span class='op'>(</span><span class='va'>m</span>, <span class='va'>u</span>, rho <span class='op'>=</span> <span class='fl'>1027</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>drag</span><span class='op'>(</span><span class='va'>m</span>, <span class='va'>u</span>, rho <span class='op'>=</span> <span class='fl'>1027</span>, g <span class='op'>=</span> <span class='fl'>9.8</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,11 +178,17 @@ in lake applications.  Note that the overall force balance
 is more sensitive to other things, as discussed in the &#8220;Details&#8221;
 section of the documentation for <code><a href='buoyancy.html'>buoyancy()</a></code>.</p></td>
     </tr>
+    <tr>
+      <th>g</th>
+      <td><p>numeric value of the acceleration due to gravity, with default
+being 9.8 m/s^2.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>drag</code> returns a numeric vector of horizontal drag force, expressed in N.</p>
+    <p><code>drag</code> returns a numeric vector of horizontal drag "force" (really, force
+divided by gravitational acceleration), expressed in kg.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>

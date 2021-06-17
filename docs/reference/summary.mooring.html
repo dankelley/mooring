@@ -101,10 +101,10 @@
       <a href="../articles/example.html">A Practical Example</a>
     </li>
     <li>
-      <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
+      <a href="../articles/mooring_elements.html">Default Values for Mooring Elements</a>
     </li>
     <li>
-      <a href="../articles/mooring_elements.html">Default Values for Mooring Elements</a>
+      <a href="../articles/mooring_model.html">Mooring Model</a>
     </li>
     <li>
       <a href="../articles/object_orientation.html">Object-orientation Scheme</a>
@@ -169,15 +169,15 @@
 <span class='co'># Simple case</span>
 <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mooring.html'>mooring</a></span><span class='op'>(</span><span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>80</span><span class='op'>)</span>, <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 1: 'trainwheel' anchor, -1000kg, height 0m, in 100m water depth, x=0 m, z=-100 m
-#&gt; 1: '1/4in wire/jack' wire, 80m, -10.4kg, diameter 0.008m
-#&gt; 1: 'HMB 20' float, 34.5kg, height 0.508m, diameter 0.508m, x=0 m, z=-19.492 m</div><div class='input'><span class='co'># Illustrate how it collects wire subintervals</span>
+</div><div class='output co'>#&gt; 1: 'HMB 20' float, 34.5kg, height 0.508m, diameter 0.508m, x=0 m, z=-19.492 m
+#&gt; 1: '1/4in wire/jack' wire, -10.4kg, length 80m, diameter 0.008m
+#&gt; 1: 'trainwheel' anchor, -1000kg, height 0m, in 100m water depth, x=0 m, z=-100 m</div><div class='input'><span class='co'># Illustrate how it collects wire subintervals</span>
 <span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='discretise.html'>discretise</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>
 <span class='va'>mdk</span> <span class='op'>&lt;-</span> <span class='fu'><a href='knockdown.html'>knockdown</a></span><span class='op'>(</span><span class='va'>md</span>, <span class='fl'>0.5</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>mdk</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 1: 'trainwheel' anchor, -1000kg, height 0m, in 100m water depth, x=0 m, z=-100 m
-#&gt; 1: '1/4in wire/jack' wire, 80m, -10.4kg, diameter 0.008m
-#&gt; 1: 'HMB 20' float, 34.5kg, height 0.508m, diameter 0.508m, x=19.3483 m, z=-22.9994 m</div><div class='input'>
+</div><div class='output co'>#&gt; 1: 'HMB 20' float, 34.5kg, height 0.508m, diameter 0.508m, x=19.7869 m, z=-22.6209 m
+#&gt; 1: '1/4in wire/jack' wire, -10.4kg, length 80m, diameter 0.008m
+#&gt; 1: 'trainwheel' anchor, -1000kg, height 0m, in 100m water depth, x=0 m, z=-100 m</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

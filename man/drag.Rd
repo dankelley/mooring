@@ -4,7 +4,7 @@
 \alias{drag}
 \title{Get mooring/element drag force}
 \usage{
-drag(m, u, rho = 1027)
+drag(m, u, rho = 1027, g = 9.8)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
@@ -23,9 +23,13 @@ percent, although it might make sense to use a smaller value
 in lake applications.  Note that the overall force balance
 is more sensitive to other things, as discussed in the \dQuote{Details}
 section of the documentation for \code{\link[=buoyancy]{buoyancy()}}.}
+
+\item{g}{numeric value of the acceleration due to gravity, with default
+being 9.8 m/s^2.}
 }
 \value{
-\code{drag} returns a numeric vector of horizontal drag force, expressed in N.
+\code{drag} returns a numeric vector of horizontal drag "force" (really, force
+divided by gravitational acceleration), expressed in kg.
 }
 \description{
 This looks up element areas with \code{\link[=area]{area()}} and drag

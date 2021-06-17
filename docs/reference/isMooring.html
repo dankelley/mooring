@@ -40,12 +40,11 @@
 
 
 <meta property="og:title" content="Detect whether an object is a mooring — isMooring" />
-<meta property="og:description" content="An object is a mooring if it inherits from the &quot;mooring&quot; class,
-and if it has no sub-classes.  For example, the output of mooring()
-is a mooring, but the output of anchor() is not because the latter
-has a sub-class (equal to &quot;anchor&quot;).  This function is mainly
-designed for use within the package that that, e.g. knockdown()
-will produce an error if its first argument is not a mooring." />
+<meta property="og:description" content="An object is a mooring if it is a list that has more than one element, and
+if each element inherits from the &quot;mooring&quot; class.  For example, the
+output of mooring() is a mooring, but the output of anchor() is not.
+This function is mainly designed for use within the package that that, e.g.
+knockdown() will produce an error if its first argument is not a mooring." />
 
 
 
@@ -106,10 +105,10 @@ will produce an error if its first argument is not a mooring." />
       <a href="../articles/example.html">A Practical Example</a>
     </li>
     <li>
-      <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
+      <a href="../articles/mooring_elements.html">Default Values for Mooring Elements</a>
     </li>
     <li>
-      <a href="../articles/mooring_elements.html">Default Values for Mooring Elements</a>
+      <a href="../articles/mooring_model.html">Mooring Model</a>
     </li>
     <li>
       <a href="../articles/object_orientation.html">Object-orientation Scheme</a>
@@ -146,12 +145,11 @@ will produce an error if its first argument is not a mooring." />
     </div>
 
     <div class="ref-description">
-    <p>An object is a mooring if it inherits from the <code>"mooring"</code> class,
-and if it has no sub-classes.  For example, the output of <code><a href='mooring.html'>mooring()</a></code>
-is a mooring, but the output of <code><a href='anchor.html'>anchor()</a></code> is not because the latter
-has a sub-class (equal to <code>"anchor"</code>).  This function is mainly
-designed for use within the package that that, e.g. <code><a href='knockdown.html'>knockdown()</a></code>
-will produce an error if its first argument is not a mooring.</p>
+    <p>An object is a mooring if it is a list that has more than one element, and
+if each element inherits from the <code>"mooring"</code> class.  For example, the
+output of <code><a href='mooring.html'>mooring()</a></code> is a mooring, but the output of <code><a href='anchor.html'>anchor()</a></code> is not.
+This function is mainly designed for use within the package that that, e.g.
+<code><a href='knockdown.html'>knockdown()</a></code> will produce an error if its first argument is not a mooring.</p>
     </div>
 
     <pre class="usage"><span class='fu'>isMooring</span><span class='op'>(</span>m <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
