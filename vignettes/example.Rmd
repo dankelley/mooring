@@ -211,6 +211,7 @@ coefficient an especially important factor in mooring design; see e.g.
 @hamilton_validation_1989 and @hamilton_mooring_1997.
 
 ```{r, echo=FALSE, fig.cap="**Simulation with doubled wire drag.**", fig.height=4, fig.width=7, fig.align="center", out.width="100%", dev.args=list(pointsize=10)}
+u <- function(depth) 0.5*exp(-depth/1000)
 m <- mooring(anchor(depth=1400),
              chain("5/8in galvanized chain", length=10),
              release("benthos 965a release"),  # dual benthos 965-a
@@ -248,7 +249,7 @@ m <- mooring(anchor(depth=1400),
 md <- discretise(m)
 layout(matrix(1:2,nrow=1), widths=c(0.75,0.25))
 mdk <- knockdown(md, u=u)
-plot(mdk, "knockdown", xlim=c(0,30), showDetails=TRUE)
+plot(mdk, "knockdown", xlim=c(0, 30), showDetails=TRUE)
 plot(mdk, "velocity")
 ```
 
