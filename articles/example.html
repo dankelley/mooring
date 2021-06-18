@@ -202,8 +202,8 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0.7</span>,<span class="fl">0</span><span class="op">)</span>, mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">iADCP</span> <span class="op">&lt;-</span> <span class="fl">152</span>
 <span class="va">imicrocat</span> <span class="op">&lt;-</span> <span class="fl">155</span>
-<span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">20</span>
-<span class="va">u0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, length.out<span class="op">=</span><span class="va">N</span><span class="op">)</span>
+<span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">50</span>
+<span class="va">u0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, length.out<span class="op">=</span><span class="va">N</span><span class="op">)</span>
 <span class="va">dz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">N</span><span class="op">)</span>
 <span class="va">U</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">N</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -331,7 +331,7 @@
 <span class="op">}</span></code></pre></div>
 <p>and then create <code>m</code>, <code>md</code> and <code>mdk</code> as before. The results are as follows. Note that knockdown is more than doubled. This makes determination of drag coefficient an especially important factor in mooring design; see e.g. <span class="citation">Hamilton (1989)</span> and <span class="citation">Hamilton, Fowler, and Belliveau (1997)</span>.</p>
 <div class="figure" style="text-align: center">
-<img src="example_files/figure-html/unnamed-chunk-16-1.png" alt="**Simulation with doubled wire drag.**" width="100%"><p class="caption">
+<img src="example_files/figure-html/unnamed-chunk-17-1.png" alt="**Simulation with doubled wire drag.**" width="100%"><p class="caption">
 <strong>Simulation with doubled wire drag.</strong>
 </p>
 </div>
