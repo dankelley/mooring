@@ -8,9 +8,6 @@ output:
     toc: true
     number_sections: true
     fig_caption: yes
-    fig_width: 6
-    fig_height: 3.5
-    dpi: 72
 vignette: >
   %\VignetteIndexEntry{A Practical Example}
   %\VignetteEngine{knitr::rmarkdown}

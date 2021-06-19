@@ -1,14 +1,17 @@
 destination: docs
 
+toc:
+  depth: 2
+
 figures:
   dev: ragg::agg_png
   dpi: 96
   dev.args:
-      pointsize: 12
+      pointsize: 11
   fig.ext: png
-  fig.width: 6.25
-  fig.height: 6.25
-  fig.asp: 1
+  fig.width: 7.2916667
+  fig.height: ~
   fig.retina: 2
+  fig.asp: 1.618
   bg: NA
 
