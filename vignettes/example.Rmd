@@ -4,10 +4,14 @@ author: "Dan Kelley (https://orcid.org/0000-0001-7808-5911)"
 date: "`r Sys.Date()`"
 bibliography: mooring.bib
 output:
-  bookdown::html_document2:
-  toc: true
-  number_sections: true
-  fig_caption: yes
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+    fig_caption: yes
+    fig_width: 7
+    fig_height: 4
+    dpi: 72
+    dev.args: list(pointsize=11)
 vignette: >
   %\VignetteIndexEntry{A Practical Example}
   %\VignetteEngine{knitr::rmarkdown}
@@ -211,7 +215,7 @@ W <- function(length) {
 }
 ```
 and then create `m`, `md` and `mdk` as before. The results are as follows. Note
-that knockdown is more than doubled.  This makes determination of drag
+that knockdown is approximately doubled.  This makes determination of drag
 coefficient an especially important factor in mooring design; see e.g.
 @hamilton_validation_1989 and @hamilton_mooring_1997.
 
