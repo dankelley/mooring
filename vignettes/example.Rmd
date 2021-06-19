@@ -4,10 +4,10 @@ author: "Dan Kelley (https://orcid.org/0000-0001-7808-5911)"
 date: "`r Sys.Date()`"
 bibliography: mooring.bib
 output:
-  rmarkdown::html_vignette:
-    toc: true
-    number_sections: true
-    fig_caption: yes
+  bookdown::html_document2:
+  toc: true
+  number_sections: true
+  fig_caption: yes
 vignette: >
   %\VignetteIndexEntry{A Practical Example}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,15 +16,15 @@ vignette: >
 
 # Introduction
 
-This shows a simulation of mooring 1840 on the Sackville Spur, based on a
-diagram that appeared in a report provided by the Bedford Institute of
-Oceanography (Department of Fisheries and Oceans, Canada) containing a Notice
-to Mariners document.
+This vignette explains how to use the `mooring` package to create a simulation
+of mooring 1840 on the Sackville Spur, based on a diagram that appeared in a
+report provided by the Bedford Institute of Oceanography (Department of
+Fisheries and Oceans, Canada) containing a Notice to Mariners document.
 
 # Source Document
 
 ```{r,fig.cap="**Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**", out.width="70%", fig.align="center", echo=FALSE}
-knitr::include_graphics("mooring_1840.png")
+knitr::include_graphics("mooring_1840_enhanced.png")
 ```
 
 # Mooring Construction
@@ -79,18 +79,18 @@ md <- discretise(m)
 # Knockdown Simulation
 
 For illustration, this simulation uses an entirely made-up velocity structure.
-```{r, fig.cap="**Simulation of knockdown with a depth-decaying current.**", fig.height=4, fig.width=7, fig.align="center", out.width="100%", dev.args=list(pointsize=10)}
+```{r, fig.cap="**Simulation of knockdown with a depth-decaying current.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
 u <- function(depth) 0.5*exp(-depth/1000)
 depth <- seq(tail(depth(m), 1), 0, length.out=100)
 layout(matrix(1:2,nrow=1), widths=c(0.75,0.25))
 mdk <- knockdown(md, u=u)
-plot(mdk, "knockdown", xlim=c(0,30), showDetails=TRUE)
+plot(mdk, "knockdown", xlim=c(0, 40), showDetails=TRUE)
 plot(mdk, "velocity")
 ```
 Note that the limit set on the first plot sets aside enough space for the
 labels (and establishes a common scale used in a later exercise).
 
-## Knockdown-Speed Diagram
+# Knockdown-Speed Diagram
 
 We may get an idea of the overall response of the mooring to water velocity by
 running simulations with a range of velocities.  Noting that the top of the
@@ -110,7 +110,7 @@ md[[152]]
 We may use this to construct a diagnostic curve giving an overview of the
 mooring knockdown, as follows. Note that the $x$ axis of the resultant plot is
 showing velocity at the depth of the ADCP.
-```{r fig.cap="**Speed-knockdown summary diagram**", fig.width=7, fig.height=4, out.width="100%", fig.align="center", dev.args=list(pointsize=10)}
+```{r fig.cap="**Speed-knockdown summary diagram**", out.width="100%", fig.align="center", dev.args=list(pointsize=9)}
 par(mar=c(3,3,1,1), mgp=c(2,0.7,0), mfrow=c(1,1))
 iADCP <- 152
 imicrocat <- 155
@@ -215,7 +215,7 @@ that knockdown is more than doubled.  This makes determination of drag
 coefficient an especially important factor in mooring design; see e.g.
 @hamilton_validation_1989 and @hamilton_mooring_1997.
 
-```{r, echo=FALSE, fig.cap="**Simulation with doubled wire drag.**", fig.height=4, fig.width=7, fig.align="center", out.width="100%", dev.args=list(pointsize=10)}
+```{r, echo=FALSE, fig.cap="**Simulation with doubled wire drag.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
 u <- function(depth) 0.5*exp(-depth/1000)
 mDraggy <- mooring(anchor(depth=1400),
                    chain("5/8in galvanized chain", length=10),
@@ -254,7 +254,7 @@ mDraggy <- mooring(anchor(depth=1400),
 mdDraggy <- discretise(mDraggy)
 layout(matrix(1:2,nrow=1), widths=c(0.75,0.25))
 mdkDraggy <- knockdown(mdDraggy, u=u)
-plot(mdkDraggy, "knockdown", xlim=c(0, 30), showDetails=TRUE)
+plot(mdkDraggy, "knockdown", xlim=c(0, 40), showDetails=TRUE)
 plot(mdkDraggy, "velocity")
 ```
 

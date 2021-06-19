@@ -109,13 +109,13 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>This shows a simulation of mooring 1840 on the Sackville Spur, based on a diagram that appeared in a report provided by the Bedford Institute of Oceanography (Department of Fisheries and Oceans, Canada) containing a Notice to Mariners document.</p>
+<p>This vignette explains how to use the <code>mooring</code> package to create a simulation of mooring 1840 on the Sackville Spur, based on a diagram that appeared in a report provided by the Bedford Institute of Oceanography (Department of Fisheries and Oceans, Canada) containing a Notice to Mariners document.</p>
 </div>
 <div id="source-document" class="section level1">
 <h1 class="hasAnchor">
 <a href="#source-document" class="anchor"></a>Source Document</h1>
 <div class="figure" style="text-align: center">
-<img src="mooring_1840.png" alt="**Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**" width="70%"><p class="caption">
+<img src="mooring_1840_enhanced.png" alt="**Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**" width="70%"><p class="caption">
 <strong>Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur</strong>
 </p>
 </div>
@@ -178,7 +178,7 @@
 <span class="va">depth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">0</span>, length.out<span class="op">=</span><span class="fl">100</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,nrow<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, widths<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.25</span><span class="op">)</span><span class="op">)</span>
 <span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"knockdown"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">30</span><span class="op">)</span>, showDetails<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"knockdown"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span><span class="op">)</span>, showDetails<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"velocity"</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="example_files/figure-html/unnamed-chunk-3-1.png" alt="**Simulation of knockdown with a depth-decaying current.**" width="100%"><p class="caption">
@@ -186,9 +186,10 @@
 </p>
 </div>
 <p>Note that the limit set on the first plot sets aside enough space for the labels (and establishes a common scale used in a later exercise).</p>
-<div id="knockdown-speed-diagram" class="section level2">
-<h2 class="hasAnchor">
-<a href="#knockdown-speed-diagram" class="anchor"></a>Knockdown-Speed Diagram</h2>
+</div>
+<div id="knockdown-speed-diagram" class="section level1">
+<h1 class="hasAnchor">
+<a href="#knockdown-speed-diagram" class="anchor"></a>Knockdown-Speed Diagram</h1>
 <p>We may get an idea of the overall response of the mooring to water velocity by running simulations with a range of velocities. Noting that the top of the mooring, from the surface to 200m, is knocked over much more than the rest, let’s focus on the depth of the second microcat from the top, i.e. the one below the ADCP. Typing <code>md</code> in a console gives an overview, from which one may see that the second microcat from the top, i.e. the one below the ADCP, is element 155, i.e.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">md</span><span class="op">[[</span><span class="fl">155</span><span class="op">]</span><span class="op">]</span></code></pre></div>
@@ -219,7 +220,6 @@
 <img src="example_files/figure-html/unnamed-chunk-6-1.png" alt="**Speed-knockdown summary diagram**" width="100%"><p class="caption">
 <strong>Speed-knockdown summary diagram</strong>
 </p>
-</div>
 </div>
 </div>
 <div id="examining-moorings" class="section level1">
