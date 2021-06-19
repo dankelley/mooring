@@ -194,25 +194,25 @@ information may be printed by the function.</p></td>
 
 <span class='co'># Example 1: no current</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span>
-</div><div class='img'><img src='knockdown-1.png' alt='' width='700' height='1133' /></div><div class='input'>
+</div><div class='img'><img src='knockdown-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Example 2: uniform 0.5 m/s (approx. 1 knot) current</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>k1</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span>, which<span class='op'>=</span><span class='st'>"velocity"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span><span class='op'>)</span>
-</div><div class='img'><img src='knockdown-2.png' alt='' width='700' height='1133' /></div><div class='input'>
+</div><div class='img'><img src='knockdown-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Example 3: 0.5 m/s current at surface, decaying exponentially below</span>
 <span class='va'>k2</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>depth</span><span class='op'>)</span> <span class='fl'>0.5</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>depth</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span>, which<span class='op'>=</span><span class='st'>"velocity"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span><span class='op'>)</span>
-</div><div class='img'><img src='knockdown-3.png' alt='' width='700' height='1133' /></div><div class='input'>
+</div><div class='img'><img src='knockdown-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Example 4: as Example 3, but show knockdown</span>
 <span class='va'>k2</span> <span class='op'>&lt;-</span> <span class='fu'>knockdown</span><span class='op'>(</span><span class='va'>md</span>, u<span class='op'>=</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>depth</span><span class='op'>)</span> <span class='fl'>0.5</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>depth</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span>, which<span class='op'>=</span><span class='st'>"knockdown"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k2</span><span class='op'>)</span>
-</div><div class='img'><img src='knockdown-4.png' alt='' width='700' height='1133' /></div><div class='input'>
+</div><div class='img'><img src='knockdown-4.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
