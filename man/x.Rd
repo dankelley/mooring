@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{x}
 \alias{x}
-\title{Return horizontal coordinate, in m, of elements in mooring.}
+\title{Horizontal coordinate of mooring elements}
 \usage{
 x(m, stagnant = FALSE)
 }
@@ -18,7 +18,7 @@ nonzero velocity).}
 a numeric vector of horizontal coordinate in metres.
 }
 \description{
-Return horizontal coordinate, in m, of elements in mooring.
+Horizontal coordinate of mooring elements
 }
 \examples{
 library(mooring)

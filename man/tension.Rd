@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{tension}
 \alias{tension}
-\title{Return tension, in kg, between elements in mooring.}
+\title{Tension between mooring elements}
 \usage{
 tension(m, stagnant = FALSE)
 }

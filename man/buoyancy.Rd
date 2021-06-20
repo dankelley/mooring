@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{buoyancy}
 \alias{buoyancy}
-\title{Get mooring/element buoyancy, expressed in kg}
+\title{Buoyancy of mooring elements}
 \usage{
 buoyancy(m, debug = 0L)
 }

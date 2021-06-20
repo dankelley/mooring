@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{area}
 \alias{area}
-\title{Get mooring/element area}
+\title{Area of mooring elements}
 \usage{
 area(m)
 }
@@ -15,7 +15,7 @@ mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\lin
 \code{area} returns a numeric value of the area viewed from a horizontal, in m^2.
 }
 \description{
-Get mooring/element area
+Area of mooring elements
 }
 \examples{
 library(mooring)

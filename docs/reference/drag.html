@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get mooring/element drag force — drag • mooring</title>
+<title>Drag on mooring elements — drag • mooring</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,13 @@
 
 
 
-<meta property="og:title" content="Get mooring/element drag force — drag" />
+<meta property="og:title" content="Drag on mooring elements — drag" />
 <meta property="og:description" content="This looks up element areas with area() and drag
-coefficients with CD(), and then computes drag
+coefficients with CD(), then computes drag
 force (in Newtons) with
-\((1/2)*area*rho*CD*u^2\)" />
+\((1/2)*area*rho*CD*u^2\)
+and divides by g to get a mass equivalance, which
+is returned." />
 
 
 
@@ -138,16 +140,18 @@ force (in Newtons) with
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get mooring/element drag force</h1>
+    <h1>Drag on mooring elements</h1>
     <small class="dont-index">Source: <a href='https://github.com/dankelley/mooring/blob/master/R/mooring.R'><code>R/mooring.R</code></a></small>
     <div class="hidden name"><code>drag.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This looks up element areas with <code><a href='area.html'>area()</a></code> and drag
-coefficients with <code><a href='CD.html'>CD()</a></code>, and then computes drag
+coefficients with <code><a href='CD.html'>CD()</a></code>, then computes drag
 force (in Newtons) with
-\((1/2)*area*rho*CD*u^2\)</p>
+\((1/2)*area*rho*CD*u^2\)
+and divides by <code>g</code> to get a mass equivalance, which
+is returned.</p>
     </div>
 
     <pre class="usage"><span class='fu'>drag</span><span class='op'>(</span><span class='va'>m</span>, <span class='va'>u</span>, rho <span class='op'>=</span> <span class='fl'>1027</span>, g <span class='op'>=</span> <span class='fl'>9.8</span><span class='op'>)</span></pre>
@@ -189,6 +193,12 @@ being 9.8 m/s^2.</p></td>
 
     <p><code>drag</code> returns a numeric vector of horizontal drag "force" (really, force
 divided by gravitational acceleration), expressed in kg.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Although fluid density <code>rho</code> and <code>g</code> are parameters to this
+function, the default values are likely to be used in all
+practical oceanographic calculations, because drag coefficient
+is not known to three digits.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>

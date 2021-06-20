@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{drag}
 \alias{drag}
-\title{Get mooring/element drag force}
+\title{Drag on mooring elements}
 \usage{
 drag(m, u, rho = 1027, g = 9.8)
 }
@@ -33,9 +33,17 @@ divided by gravitational acceleration), expressed in kg.
 }
 \description{
 This looks up element areas with \code{\link[=area]{area()}} and drag
-coefficients with \code{\link[=CD]{CD()}}, and then computes drag
+coefficients with \code{\link[=CD]{CD()}}, then computes drag
 force (in Newtons) with
 \eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}
+and divides by \code{g} to get a mass equivalance, which
+is returned.
+}
+\details{
+Although fluid density \code{rho} and \code{g} are parameters to this
+function, the default values are likely to be used in all
+practical oceanographic calculations, because drag coefficient
+is not known to three digits.
 }
 \author{
 Dan Kelley

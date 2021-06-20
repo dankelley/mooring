@@ -489,7 +489,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
     rval
 }                                      # float()
 
-#' Create a instrument object
+#' Create an instrument object
 #'
 #' Create an instrument object,
 #' either by looking up a known object from the database, or defining a new type.
@@ -555,50 +555,6 @@ instrument <- function(model="sbe37 microcat clamp-on style", buoyancy=NULL, hei
     rval
 }                                      # instrument()
 
-#' Combine two mooring objects (DEFUNCT)
-#'
-#' This has been replaced by [mooring()].
-#'
-#' @param m1,m2 DEFUNCT.
-#'
-#' @return DEFUNCT
-#'
-## @export
-#' @author Dan Kelley
-`+.mooring` <- function(m1, m2)
-{
-    stop("+ no longer works. Use mooring() instead")
-    n1 <- length(m1)
-    if (length(n1) < 1L)
-        stop("n1 must have 1 or more elements")
-    n2 <- length(m2)
-    if (length(n2) < 1L)
-        stop("n2 must have 1 or more elements")
-    rval <- vector("list", n1+n2)
-    mooringHeight <- 0 # for computing z
-    for (i in seq_len(n1)) {
-        rval[[i]] <- m1[[i]]
-        rval[[i]]$x <- 0
-        mooringHeight <- mooringHeight + m1[[i]]$height
-    }
-    for (i in seq_len(n2)) {
-        rval[[n1 + i]] <- m2[[i]]
-        rval[[n1 + i]]$x <- 0
-        mooringHeight <- mooringHeight + m2[[i]]$height
-    }
-    height <- cumsum(sapply(rval, function(x) x$height))
-    #> cat("height: ", paste(height, collapse=" "), "\n")
-    depth <- if (inherits(m1[[1]], "anchor")) m1[[1]]$depth
-        else sum(sapply(rval, function(x) x$height))
-    T <- rev(cumsum(rev(buoyancy(rval[-1]))))
-    T <- c(T[1], T)
-    for (i in seq_len(n1+n2)) {
-        rval[[i]]$z <- height[i] - depth
-        rval[[i]]$T <- T[i]
-    }
-    class(rval) <- "mooring"
-    rval
-}                                      # +.mooring
 
 #' Get mooring/element drag coefficient
 #'
@@ -623,12 +579,19 @@ CD <- function(m)
 }
 
 
-#' Get mooring/element drag force
+#' Drag on mooring elements
 #'
 #' This looks up element areas with [area()] and drag
-#' coefficients with [CD()], and then computes drag
+#' coefficients with [CD()], then computes drag
 #' force (in Newtons) with
 #' \eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}
+#' and divides by `g` to get a mass equivalance, which
+#' is returned.
+#'
+#' Although fluid density `rho` and `g` are parameters to this
+#' function, the default values are likely to be used in all
+#' practical oceanographic calculations, because drag coefficient
+#' is not known to three digits.
 #'
 #' @template meTemplate
 #'
@@ -687,7 +650,11 @@ mooring <- function(...)
     rval <- rev(dots)
     depth <- rval[[n]]$depth # NOTE: only anchor() objects have this, but we know we have one
     height <- rev(cumsum(sapply(rev(rval), function(x) x$height)))
-    T <- cumsum(buoyancy(rval[-n]))
+    # bookmark B1a: same as B1b and analogous t0 B1c {{{
+    b <- buoyancy(rval)[-n]
+    T <- cumsum(b)
+    T <- c(T, T[n-1])                  # repeat tension across anchor (for plot labelling; not used for calculations)
+    # }}}
     x0 <- 0
     alongBottom <- 0L
     for (i in seq_along(rval)) {
@@ -700,16 +667,16 @@ mooring <- function(...)
         }
         rval[[i]]$x <- x0
         rval[[i]]$z <- z               # z is at the *top* of the element
-        rval[[i]]$T <- if (i == n) NA else T[i]
+        rval[[i]]$T <- T[i]
     }
     if (alongBottom)
         warning("insufficient mooring buoyancy; placed ", alongBottom, " elements on the bottom")
     class(rval) <- "mooring"
     attr(rval, "waterDepth") <- depth
     rval
-}
+}                                      # mooring()
 
-#' Print a mooring object
+#' Print a mooring
 #'
 #' @param x an object of the `"mooring"` class.
 #'
@@ -827,7 +794,7 @@ print.mooring <- function(x, ...)
     invisible(x)
 }
 
-#' Plot a mooring object
+#' Plot a mooring
 #'
 #' @param x an object of the `"mooring"` class.
 #'
@@ -1079,7 +1046,7 @@ plot.mooring <- function(x, which="shape",
     mtext(title, side=1, cex=par("cex"))
 }
 
-#' Discretise the chain and wire portions of a mooring
+#' Discretise chain and wire portions of a mooring
 #'
 #' Break up `chain` and `wire` portions of a mooring into smaller chunks,
 #' so that the deformation by a current can be traced more
@@ -1149,7 +1116,7 @@ discretise <- function(m, by=1)
     rval
 }                                      # discretise
 
-#' Compute how a mooring is knocked down by a current
+#' Compute mooring knockdown by a horizontal current
 #'
 #' The current may be a depth-independent or depth-dependent,
 #' as specified by the `u` argument.  The returned result has
@@ -1189,11 +1156,11 @@ discretise <- function(m, by=1)
 #' plot(k2, which="velocity")
 #' plot(k2)
 #'
-#' # Example 4: as Example 3, but show knockdown
+#' # Example 4: as Example 3, but show knockdown and tension
 #' k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
 #' par(mfrow=c(1, 2))
 #' plot(k2, which="knockdown")
-#' plot(k2)
+#' plot(k2, which="tension")
 #'
 #' @importFrom graphics grid
 #' @importFrom utils tail
@@ -1226,27 +1193,34 @@ knockdown <- function(m, u=1, debug=0L)
     waterDepth <- m[[length(m)]]$depth
     B <- buoyancy(m)
     D <- drag(m, u)
-    T <- vector("numeric", n-1)
-    phi <- vector("numeric", n-1)
+    T <- vector("numeric", n)
+    phi <- vector("numeric", n)
     # Next two are Equation 5 in the 'Mooring Model' vignette.
     T[1] <- sqrt(D[1]^2 + B[1]^2)
     phi[1] <- atan2(D[1], B[1])
     # Next block, run only if more than 2 elements, computes rest of T and phi
     # values, using Equation 8 in the 'Mooring Model' vignette.
+    # For tension at bookmark B1c, see bookmarks B1a and B1b.
     if (n > 2L) {
         for (i in seq(2L, n-1L)) {
-            T[i] <- sqrt((D[i]+T[i-1]*sin(phi[i-1]))^2 + (B[i]+T[i-1]*cos(phi[i-1]))^2)
+            T[i] <- sqrt((D[i]+T[i-1]*sin(phi[i-1]))^2 + (B[i]+T[i-1]*cos(phi[i-1]))^2) # bookmark B1c
             phi[i] <- atan2(D[i]+T[i-1]*sin(phi[i-1]), B[i]+T[i-1]*cos(phi[i-1]))
         }
     }
+    # carry tension and angle through mooring (just for plotting; not used in calculations)
+    T[n] <- T[n-1L]
+    phi[n] <- phi[n-1L]
     # Clip the angle (do not allow it to run "inside" the sediment)
     phi <- ifelse(phi > pi/2, pi/2, phi)
     # Compute position from bottom up, starting at x=0 and z=-waterDepth
+    # FIXME: save tension in object
     m[[n]]$phi <- phi[n-1] # does this matter? Is it ever used?
     m[[n]]$x <- 0
     m[[n]]$z <- -waterDepth
+    m[[n]]$T <- T[n]
     for (i in seq(n-1L, 1L, -1L)) {
         m[[i]]$phi <- phi[i]
+        m[[i]]$T <- T[i]
         m[[i]]$x <- m[[i+1]]$x + m[[i]]$height * sin(m[[i]]$phi)
         m[[i]]$z <- m[[i+1]]$z + m[[i]]$height * cos(m[[i]]$phi)
     }
@@ -1255,7 +1229,7 @@ knockdown <- function(m, u=1, debug=0L)
     m
 }                                      # knockdown()
 
-#' Optionally print a debugging message
+#' Print a debugging message
 #'
 #' A function used for debugging within the package.
 #'
@@ -1319,7 +1293,7 @@ mooringDebug <- function(debug, v, ..., overview=FALSE, round=FALSE)
 #>     180 / pi * sapply(m, function(mi) mi$phi)
 #> }
 
-#' Return depth, in m, of elements in mooring.
+#' Depth of mooring elements
 #'
 #' This is the depth of the *top* of the element. See also
 #' [z()], which is the negative of the result from `depth()`.
@@ -1343,7 +1317,7 @@ depth <- function(m, stagnant=FALSE)
     -z(m, stagnant=stagnant)
 }
 
-#' Return horizontal coordinate, in m, of elements in mooring.
+#' Horizontal coordinate of mooring elements
 #'
 #' @template mTemplate
 #'
@@ -1371,7 +1345,7 @@ x <- function(m, stagnant=FALSE)
     }
 }
 
-#' Return vertical coordinate, in m, of elements in mooring.
+#' Vertical coordinate of mooring elements
 #'
 #' This is the z coordinate of the *top* of the element. See also
 #' [depth()], which is the negative of the result from `z()`.
@@ -1402,7 +1376,7 @@ z <- function(m, stagnant=FALSE)
     }
 }
 
-#' Return tension, in kg, between elements in mooring.
+#' Tension between mooring elements
 #'
 #' The first element (for the anchor) is repeated, so that the
 #' length of the returned result matches the length of `m`.
@@ -1427,16 +1401,21 @@ z <- function(m, stagnant=FALSE)
 #' @author Dan Kelley
 tension <- function(m, stagnant=FALSE)
 {
+    if (!isMooring(m))
+        stop("only works for objects created by mooring()")
     if (stagnant || all(x(m) == 0)) {
-        b <- buoyancy(m)[-1]
-        T <- rev(cumsum(rev(b)))
-        c(T[1], T) # repeat anchor
+        n <- length(m)
+        # bookmark B1b: same as B1a and analogous to B1c {{{
+        b <- buoyancy(m)[-n]
+        T <- cumsum(b)
+        c(T, T[n-1])                     # repeat tension across anchor (for plot labelling; not used for calculations)
+        # }}}
     } else {
-        sapply(m, function(mi) mi$T/g)
+        sapply(m, function(mi) mi$T)
     }
-}
+}                                      # tension()
 
-#' Get mooring/element area
+#' Area of mooring elements
 #'
 #' @template meTemplate
 #'
@@ -1458,7 +1437,7 @@ area <- function(m)
     }
 }
 
-#' Get mooring/element buoyancy, expressed in kg
+#' Buoyancy of mooring elements
 #'
 #' The nonphysical unit of kg reflects a common convention used
 #' by manufacturers of oceanographic mooring equipment. For calculations
@@ -1514,7 +1493,7 @@ buoyancy <- function(m, debug=0L)
 }
 
 
-#' Find a mooring element with a fuzzy search
+#' Fuzzy search for mooring elements
 #'
 #' `findElement` does a fuzzy search for an element model, using
 #' [agrep()].  The output (if any) is in the form of suggested calls

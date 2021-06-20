@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{findElement}
 \alias{findElement}
-\title{Find a mooring element with a fuzzy search}
+\title{Fuzzy search for mooring elements}
 \usage{
 findElement(
   e,

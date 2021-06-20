@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{plot.mooring}
 \alias{plot.mooring}
-\title{Plot a mooring object}
+\title{Plot a mooring}
 \usage{
 \method{plot}{mooring}(
   x,
@@ -62,7 +62,7 @@ means to draw lines, while e.g. \code{"p"} means to draw points.}
 \item{...}{optional arguments.}
 }
 \description{
-Plot a mooring object
+Plot a mooring
 }
 \examples{
 # Create, summarize, and plot a simple mooring comprising

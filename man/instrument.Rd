@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{instrument}
 \alias{instrument}
-\title{Create a instrument object}
+\title{Create an instrument object}
 \usage{
 instrument(
   model = "sbe37 microcat clamp-on style",

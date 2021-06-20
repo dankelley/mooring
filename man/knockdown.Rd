@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{knockdown}
 \alias{knockdown}
-\title{Compute how a mooring is knocked down by a current}
+\title{Compute mooring knockdown by a horizontal current}
 \usage{
 knockdown(m, u = 1, debug = 0L)
 }
@@ -51,11 +51,11 @@ par(mfrow=c(1, 2))
 plot(k2, which="velocity")
 plot(k2)
 
-# Example 4: as Example 3, but show knockdown
+# Example 4: as Example 3, but show knockdown and tension
 k2 <- knockdown(md, u=function(depth) 0.5*exp(-depth/100))
 par(mfrow=c(1, 2))
 plot(k2, which="knockdown")
-plot(k2)
+plot(k2, which="tension")
 
 }
 \author{

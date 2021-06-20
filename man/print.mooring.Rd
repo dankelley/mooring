@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{print.mooring}
 \alias{print.mooring}
-\title{Print a mooring object}
+\title{Print a mooring}
 \usage{
 \method{print}{mooring}(x, ...)
 }
@@ -12,7 +12,7 @@
 \item{...}{optional arguments (ignored).}
 }
 \description{
-Print a mooring object
+Print a mooring
 }
 \examples{
 library(mooring)

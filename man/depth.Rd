@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{depth}
 \alias{depth}
-\title{Return depth, in m, of elements in mooring.}
+\title{Depth of mooring elements}
 \usage{
 depth(m, stagnant = FALSE)
 }

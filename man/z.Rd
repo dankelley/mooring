@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{z}
 \alias{z}
-\title{Return vertical coordinate, in m, of elements in mooring.}
+\title{Vertical coordinate of mooring elements}
 \usage{
 z(m, stagnant = FALSE)
 }
