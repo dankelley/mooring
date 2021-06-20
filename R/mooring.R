@@ -853,7 +853,7 @@ print.mooring <- function(x, ...)
 #'
 #' @author Dan Kelley
 plot.mooring <- function(x, which="shape",
-                         showInterfaces=TRUE, showDepths=TRUE, showLabels=TRUE, showDetails=FALSE,
+                         showInterfaces=TRUE, showDepths=FALSE, showLabels=TRUE, showDetails=FALSE,
                          fancy=FALSE, title="",
                          mar=c(1.5, 3.5, 3.5, 1), mgp=c(2, 0.7, 0),
                          xlim=NULL,

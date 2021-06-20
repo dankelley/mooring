@@ -8,7 +8,7 @@
   x,
   which = "shape",
   showInterfaces = TRUE,
-  showDepths = TRUE,
+  showDepths = FALSE,
   showLabels = TRUE,
   showDetails = FALSE,
   fancy = FALSE,
