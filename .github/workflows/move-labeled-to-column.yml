@@ -3,16 +3,6 @@ on:
     types: [labeled]
 
 jobs:
-  Move_Labeled_Issue_On_Project_Board:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
-      with:
-        action-token: "${{ secrets.GITHUB_TOKEN }}"
-        project-url: "https://github.com/dankelley/mooring/projects/1"
-        column-name: "Due soon"
-        label-name: "Due in next week"
-
   Move_Labeled_Issue_On_Project_Board_Overdue:
     runs-on: ubuntu-latest
     steps:
@@ -20,5 +10,5 @@ jobs:
       with:
         action-token: "${{ secrets.GITHUB_TOKEN }}"
         project-url: "https://github.com/dankelley/mooring/projects/1"
-        column-name: "Due soon"
-        label-name: "Overdue"
+        column-name: "In progress"
+        label-name: "In progress"
