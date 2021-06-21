@@ -29,7 +29,7 @@ app <- function()
                                                                                min=10.0,  max=1000.0, value=200.0, step=1)),
                                            shiny::column(5, shiny::sliderInput("u",
                                                                                shiny::h6("Current [m/s]"),
-                                                                               min=0.0, max=5.0, value=0.5, step=0.05)),
+                                                                               min=0.0, max=5.0, value=1.0, step=0.05)),
 
                                            shiny::column(2, shiny::selectInput("currentModel", "Current Model",
                                                                                choices=c("Constant",
