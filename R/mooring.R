@@ -1480,8 +1480,8 @@ buoyancy <- function(m, debug=0L)
         mooringDebug(debug, "  object is a mooring with", length(m), "elements, so will analyse them individually\n")
         sapply(m, function(mi) buoyancy(mi, debug=debug))
     } else {
-        if (class(m)[2] == "wire") {
-            mooringDebug(debug, "  object is a wire, so returning buoyancyPerMeter*height\n")
+        if (inherits(m, "wire") || inherits(m, "chain"))  {
+            mooringDebug(debug, "  object is a wire or a chain, so returning buoyancyPerMeter*height\n")
             m$buoyancyPerMeter * m$height
         } else {
             mooringDebug(debug, "  object is a not a wire, so returning buoyancy\n")
