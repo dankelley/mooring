@@ -19,7 +19,7 @@
 "CDMS 2m sphere",2470,2,2,0.5,1,"Dewey","CDMS 2m sphere"
 "54cm Alum CAP3",61,0.55,0.54,0.65,1,"Dewey","54cm Alum CAP3"
 "54x30inClamShell",405,1.4,0.75,0.15,1,"Dewey","54x30inClamShell"
-"Top of Tow Rope",0.01,0,0,0,1,"Dewey","Top of Tow Rope"
+"Top of Tow Rope",0.01,0,0,0.65,1,"Dewey","Top of Tow Rope"
 "BPS Float",8000,1.5,0,1.6,1,"Dewey","BPS Float"
 "ADCP FloatTech",460,1.42,1.42,0.65,1,"Dewey","ADCP FloatTech"
 "FloatTech CF-12",11,0.3,0,1,1,"Dewey","FloatTech CF-12"
