@@ -45,6 +45,24 @@ fixnames <- function(names)
 #> count <- "      0.........1........2.........3.........4.........5.\n"
 #> print(head(d$floats, 3))
 
+# Instruments ('cms') FIXME: maybe some of 'miscs' should go here, too.
+instruments <- read.fwf(textConnection(d$cms),widths=c(18,7,6,6,6,5,4), col.names=names)
+originalName <- instruments$name
+instruments$name <- fixnames(instruments$name)
+instruments$height <- instruments$height / 100
+instruments$area <- instruments$height * (instruments$width / 100)
+instruments$width <- NULL              # have this info in area, so discard width
+instruments$diameter <- NULL           # always 0, and we don't use it in this package
+instruments <- cbind(instruments, source="Dewey")
+instruments <- cbind(instruments, originalName=trimws(originalName))
+for (w in which(0 == instruments$CD)) {
+    instruments$CD[w] <- median(instruments$CD)
+    warning("Float '", instruments$name[w], "': changed CD from 0 to ", instruments$CD[w], sep="")
+}
+write.csv(instruments, "instruments_dewey.csv", row.names=FALSE)
+
+
+# Releases
 releases <- read.fwf(textConnection(d$acrel),widths=c(18,7,6,6,6,5,4), col.names=names)
 originalName <- releases$name
 releases$name <- fixnames(releases$name)

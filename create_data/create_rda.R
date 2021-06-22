@@ -67,10 +67,11 @@ for (file in list.files(pattern="^instruments.*csv$")) {
         print(d)
     if (any(d$name %in% instruments$name))
         stop("name conflict")
-    if (class(d$buoyancy) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancy))
-    if (class(d$height) != "numeric") stop("height is not numeric; it is ", class(d$height))
-    if (class(d$area) != "numeric") stop("width is not numeric; it is ", class(d$area))
-    if (class(d$CD) != "numeric") stop("CD is not numeric; it is ", class(d$CD))
+    for (item in c("buoyancy", "height", "area", "CD")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
     instruments <- rbind(instruments, d)
 }
 
