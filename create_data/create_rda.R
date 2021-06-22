@@ -10,8 +10,11 @@ for (file in list.files(pattern="^anchors.*csv$")) {
         print(d)
     if (any(d$name %in% anchors$name))
         stop("name conflict")
-    if (class(d$buoyancy) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancy))
-    if (class(d$height) != "numeric") stop("height is not numeric; it is ", class(d$height))
+    for (item in c("buoyancy", "height")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
     anchors <- rbind(anchors, d)
 }
 

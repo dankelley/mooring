@@ -44,9 +44,27 @@ fixnames <- function(names)
 #> Use next to count spaces
 #> count <- "      0.........1........2.........3.........4.........5.\n"
 #> print(head(d$floats, 3))
+# NOTE: was c(18,7,6,6,6,5,4) previously, but when I added 'anchors' I saw that was wrong
+widths <- c(17, 8, 6, 6, 6, 5, 4)
+
+# Anchors ('anchors') FIXME: maybe some of 'miscs' should go here, too.
+anchors <- read.fwf(textConnection(d$anchors),widths=widths, col.names=names)
+originalName <- anchors$name
+anchors$name <- fixnames(anchors$name)
+anchors$height <- anchors$height / 100
+# NOTE: we do not use width, area or CD, because we
+# are not solving for drag non these things
+anchors$width <- NULL
+anchors$diameter <- NULL
+anchors$CD <- NULL
+anchors <- cbind(anchors, source="Dewey")
+anchors <- cbind(anchors, originalName=trimws(originalName))
+write.csv(anchors, "anchors_dewey.csv", row.names=FALSE)
+
 
 # Instruments ('cms') FIXME: maybe some of 'miscs' should go here, too.
-instruments <- read.fwf(textConnection(d$cms),widths=c(18,7,6,6,6,5,4), col.names=names)
+#instruments <- read.fwf(textConnection(d$cms),widths=c(18,7,6,6,6,5,4), col.names=names)
+instruments <- read.fwf(textConnection(d$cms),widths=widths, col.names=names)
 originalName <- instruments$name
 instruments$name <- fixnames(instruments$name)
 instruments$height <- instruments$height / 100
@@ -63,7 +81,8 @@ write.csv(instruments, "instruments_dewey.csv", row.names=FALSE)
 
 
 # Releases
-releases <- read.fwf(textConnection(d$acrel),widths=c(18,7,6,6,6,5,4), col.names=names)
+#releases <- read.fwf(textConnection(d$acrel),widths=c(18,7,6,6,6,5,4), col.names=names)
+releases <- read.fwf(textConnection(d$acrel),widths=widths, col.names=names)
 originalName <- releases$name
 releases$name <- fixnames(releases$name)
 releases$height <- releases$height / 100
@@ -78,7 +97,8 @@ for (w in which(0 == releases$CD)) {
 write.csv(releases, "releases_dewey.csv", row.names=FALSE)
 
 
-floats <- read.fwf(textConnection(d$floats),widths=c(18,7,6,6,6,5,4), col.names=names)
+#floats <- read.fwf(textConnection(d$floats),widths=c(18,7,6,6,6,5,4), col.names=names)
+floats <- read.fwf(textConnection(d$floats),widths=widths, col.names=names)
 originalName <- floats$name
 floats$name <- fixnames(floats$name)
 floats$height <- floats$height / 100
@@ -96,7 +116,8 @@ write.csv(floats, "floats_dewey.csv", row.names=FALSE)
 # later (I guess, to distinguish from floats) but we are not trying
 # to make tidy data and there's no need for such tricks, so we call
 # his 'width' as 'diameter'.
-wires <- read.fwf(textConnection(d$wires),widths=c(18,7,6,6,6,5,4), col.names=names)
+#wires <- read.fwf(textConnection(d$wires),widths=c(18,7,6,6,6,5,4), col.names=names)
+wires <- read.fwf(textConnection(d$wires),widths=widths, col.names=names)
 originalName <- wires$name
 wires$name <- fixnames(wires$name)
 # Remove 'height', because it's meaningless for a wire.  (It's always 100 in the file.)
@@ -118,7 +139,7 @@ write.csv(wires, "wires_dewey.csv", row.names=FALSE)
 # I call things as 'chain' if they are used in variable lengths (and then I
 # store buoyancyPerMeter, kg/m) and 'connector' otherwise (and then I store
 # buoyancy, kg).
-cc <- read.fwf(textConnection(d$chains),widths=c(18,7,6,6,6,5,4), col.names=names)
+cc <- read.fwf(textConnection(d$chains),widths=widths, col.names=names)
 originalName <- cc$name
 cc$name <- fixnames(cc$name)
 isChain <- cc$height == 100
