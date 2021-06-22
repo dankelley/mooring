@@ -185,8 +185,12 @@ knitr::kable(read.csv("instruments_bio.csv"), caption="Contents of instruments_b
 
 ## `releases_bio.csv`
 
-Note the omission of an entry for type `BENTHOS 875 RELEASE`, because it has no
-value listed in col G (area `A (m*2/m)`) or col I (area `AW (m*2)`).
+Notes:
+1. There is no entry for type `BENTHOS 875 RELEASE`, because it has no value
+   listed in col G (area `A (m*2/m)`) or col I (area `AW (m*2)`).
+
+2. The word 'release' is dropped from names, since it's redudant from the
+   object class.
 
 ### `height`
 Use `LENGTH` (col C).

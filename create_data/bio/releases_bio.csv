@@ -1,8 +1,8 @@
 name,buoyancy,height,width,CD,code,source,originalName
 EG&G 723a,-15.20,1.194,0.1173,0.65,NA,BIO,"EG&G 723A"
 EG&G 723a with tension bar,-25.87,1.32,0.1061,0.65,NA,BIO,"EG&G 723A WITH TENSION BAR"
-benthos 965a release,-36.73,1.23,0.1033,0.65,NA,BIO,"BENTHOS 965A RELEASE"
-benthos 966a and 866a release,-13.16,0.68,0.1647,0.65,NA,BIO,"BENTHOS 966A and 866A RELEASE"
-benthos 865a release,-27.86,1,0.1990,0.65,NA,BIO,"BENTHOS 865A RELEASE"
-vr2w release with float collar,-12.11,0.4,0.5925,0.65,NA,BIO,"VR2W RELEASE with float collar"
+benthos 965a,-36.73,1.23,0.1033,0.65,NA,BIO,"BENTHOS 965A RELEASE"
+benthos 966a and 866a,-13.16,0.68,0.1647,0.65,NA,BIO,"BENTHOS 966A and 866A RELEASE"
+benthos 865a,-27.86,1,0.1990,0.65,NA,BIO,"BENTHOS 865A RELEASE"
+vr2w with float collar,-12.11,0.4,0.5925,0.65,NA,BIO,"VR2W RELEASE with float collar"
 

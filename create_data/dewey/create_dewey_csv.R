@@ -11,7 +11,7 @@
 
 
 library(R.matlab)
-d <- readMat("mdcodes.mat")
+d <- R.matlab::readMat("mdcodes.mat")
 # Discover elements within the dataset
 #> names(d)
 # Set up names for columns.
@@ -44,6 +44,22 @@ fixnames <- function(names)
 #> Use next to count spaces
 #> count <- "      0.........1........2.........3.........4.........5.\n"
 #> print(head(d$floats, 3))
+
+releases <- read.fwf(textConnection(d$acrel),widths=c(18,7,6,6,6,5,4), col.names=names)
+originalName <- releases$name
+releases$name <- fixnames(releases$name)
+releases$height <- releases$height / 100
+releases$width <- releases$diameter / 100
+releases$diameter <- NULL # this is always 0, and we don't use it in this package
+releases <- cbind(releases, source="Dewey")
+releases <- cbind(releases, originalName=trimws(originalName))
+for (w in which(0 == releases$CD)) {
+    releases$CD[w] <- median(releases$CD)
+    warning("Float '", releases$name[w], "': changed CD from 0 to ", releases$CD[w], sep="")
+}
+write.csv(releases, "releases_dewey.csv", row.names=FALSE)
+
+
 floats <- read.fwf(textConnection(d$floats),widths=c(18,7,6,6,6,5,4), col.names=names)
 originalName <- floats$name
 floats$name <- fixnames(floats$name)

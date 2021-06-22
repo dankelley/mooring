@@ -45,7 +45,7 @@ microcat <- instrument("SBE37 microcat clamp-on style") # "SBE MICROCAT"
 
 m <- mooring(anchor(depth=1400),
              chain("5/8in galvanized chain", length=10),
-             release("benthos 965a release"),  # dual benthos 965-a
+             release("benthos 965a"),  # dual benthos 965-a
              BUB3,
              W(34),
              microcat,
@@ -223,7 +223,7 @@ coefficient an especially important factor in mooring design; see e.g.
 u <- function(depth) 0.5*exp(-depth/1000)
 mDraggy <- mooring(anchor(depth=1400),
                    chain("5/8in galvanized chain", length=10),
-                   release("benthos 965a release"),  # dual benthos 965-a
+                   release("benthos 965a"),  # dual benthos 965-a
                    BUB3,
                    W(34),
                    microcat,
