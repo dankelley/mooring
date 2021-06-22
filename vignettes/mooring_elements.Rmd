@@ -92,6 +92,18 @@ o <- order(mooringElements$instruments$name)
 knitr::kable(mooringElements$instruments[o,], row.names=FALSE)
 ```
 
+## Misc characteristics
+
+The `buoyancy` values are in kg, while `height` is in m, `width` is in m^2, and
+`CD` is unitless.  The `code` values are listed for data from Dewey only, and
+they are not used in this package.
+
+```{r echo=FALSE}
+data(mooringElements, package="mooring")
+o <- order(mooringElements$miscs$name)
+knitr::kable(mooringElements$miscs[o,], row.names=FALSE)
+```
+
 
 ## Release characteristics
 

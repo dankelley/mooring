@@ -171,4 +171,21 @@ for (w in which(0 == connectors$CD)) {
 }
 write.csv(connectors, "connectors_dewey.csv", row.names=FALSE)
 
+# FIXME: some of these are instruments, others floats, and still others
+# ballasts. Should we move them to separate categories?
+
+# We change # to ^, so it won't be a comment
+miscs <- read.fwf(textConnection(gsub("#","^",d$miscs)), widths=widths, col.names=names)
+miscs$name <- gsub("\\^", "#", miscs$name)
+originalName <- miscs$name
+miscs$height <- miscs$height / 100
+# we keep area (computed) and discard width and diameter
+miscs$width <- miscs$width / 100
+miscs$diameter <- miscs$diameter / 100
+miscs$area <- ifelse(miscs$diameter == 0, miscs$height * miscs$width, pi*(miscs$diameter/2)^2)
+miscs$width <- NULL
+miscs$diameter <- NULL
+miscs <- cbind(miscs, source="Dewey")
+miscs <- cbind(miscs, originalName=trimws(originalName))
+write.csv(miscs, "miscs_dewey.csv", row.names=FALSE)
 
