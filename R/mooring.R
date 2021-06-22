@@ -80,9 +80,9 @@ isMooring <- function(m=NULL) {
 #'
 #' Create a anchor object,
 #' either by looking up a known object from the database, or defining a new type.
-#'
 #' This must be the first element of a mooring constructed with
-#' [mooring()].
+#' [mooring()].  The default is 3 trainwheels with zero height (to simplify
+#' test cases).
 #' Note that `depth` is not a characteristic of the anchor, but rather of
 #' the domain into which it is placed.
 #'
@@ -109,7 +109,7 @@ isMooring <- function(m=NULL) {
 #' @export
 #'
 #' @author Dan Kelley
-anchor <- function(model="trainwheel", buoyancy=NULL, height=NULL, depth=0)
+anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, depth=0)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")

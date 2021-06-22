@@ -4,7 +4,7 @@ library(mooring)
 test_that("mooring construction", {
           m <- mooring(anchor(depth=200), wire(length=100), float())
           b <- buoyancy(m)
-          expect_equal(b, c(320, -13, -1000))
+          expect_equal(b, c(320, -13, -1050))
           expect_equal(rep(0, 3), x(m))
           expect_equal(c(-99, -100, -200), z(m))
           expect_equal(c(99, 100, 200), depth(m))

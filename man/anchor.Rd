@@ -4,7 +4,7 @@
 \alias{anchor}
 \title{Create an anchor object}
 \usage{
-anchor(model = "trainwheel", buoyancy = NULL, height = NULL, depth = 0)
+anchor(model = "3 trainwheels", buoyancy = NULL, height = NULL, depth = 0)
 }
 \arguments{
 \item{model}{character value indicating the type of anchor.
@@ -39,10 +39,9 @@ Note that \code{height} is ignored if \code{model} is recognized.}
 \description{
 Create a anchor object,
 either by looking up a known object from the database, or defining a new type.
-}
-\details{
 This must be the first element of a mooring constructed with
-\code{\link[=mooring]{mooring()}}.
+\code{\link[=mooring]{mooring()}}.  The default is 3 trainwheels with zero height (to simplify
+test cases).
 Note that \code{depth} is not a characteristic of the anchor, but rather of
 the domain into which it is placed.
 }
