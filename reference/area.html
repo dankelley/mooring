@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Area of mooring elements — area • mooring</title>
+<title>Horizontally-projected area of mooring elements — area • mooring</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,17 @@
 
 
 
-<meta property="og:title" content="Area of mooring elements — area" />
-<meta property="og:description" content="Area of mooring elements" />
+<meta property="og:title" content="Horizontally-projected area of mooring elements — area" />
+<meta property="og:description" content="The areas are not computed by this function, but rather looked up
+for each element.  To learn how areas are computed during
+setup, see the help page for
+anchor(),
+chain(),
+connector(),
+float(),
+instrument(),
+misc(), or
+release()." />
 
 
 
@@ -135,13 +144,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Area of mooring elements</h1>
+    <h1>Horizontally-projected area of mooring elements</h1>
     <small class="dont-index">Source: <a href='https://github.com/dankelley/mooring/blob/master/R/mooring.R'><code>R/mooring.R</code></a></small>
     <div class="hidden name"><code>area.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Area of mooring elements</p>
+    <p>The areas are not computed by this function, but rather looked up
+for each element.  To learn how areas are computed during
+setup, see the help page for
+<code><a href='anchor.html'>anchor()</a></code>,
+<code><a href='chain.html'>chain()</a></code>,
+<code><a href='connector.html'>connector()</a></code>,
+<code><a href='float.html'>float()</a></code>,
+<code><a href='instrument.html'>instrument()</a></code>,
+<code><a href='misc.html'>misc()</a></code>, or
+<code><a href='release.html'>release()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>area</span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span></pre>
@@ -160,6 +178,21 @@ mooring-element object, created with <code><a href='anchor.html'>anchor()</a></c
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>area</code> returns a numeric value of the area viewed from a horizontal, in m^2.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>For a summary of characteristics of the predefined models,
+see the vignette named</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Dewey, Richard K. "Mooring Design &amp; Dynamics-a Matlab® Package for
+Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
+(December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X</p>
+<p>Dewey, Richard. "Mooring Design and Dynamics:
+A Matlab Package for Designing and Testing
+Oceanographic Moorings And Towed Bodies."
+Accessed May 15, 2021.
+http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
+http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
