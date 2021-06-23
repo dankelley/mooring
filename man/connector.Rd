@@ -32,9 +32,10 @@ For other elements, it is buoyancy, expressed in kg.
 Note that \code{buoyancy} is ignored if \code{model} is recognized.}
 
 \item{height}{numeric value for the height (in m) of the element.
-This value is used in the computation of (a) the mooring geometry
-and (b) the area of the element (which is in turn used in
-the drag computation).
+This value is used in the computation of the mooring geometry.
+In some cases, as e.g. in Dewey-derived data that have "diameter" tabulated
+as zero, it is also used in the computation of the area
+of the element, as height*width.
 Note that \code{height} is ignored if \code{model} is recognized.}
 
 \item{width}{numeric value for the width (in m)
@@ -51,7 +52,8 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \description{
 Create an object that describes mooring connector such as shackles,
-either by looking up a known object from the database, or defining a new type.
+either by looking up a known object from the database, or by defining a new type.
+Area is formulated as height*width, for consistency with Dewey's Matlab code.
 }
 \details{
 Many of the built-in items have \code{height} and \code{width} defined
@@ -87,6 +89,7 @@ Other functions that create mooring objects:
 \code{\link{chain}()},
 \code{\link{float}()},
 \code{\link{instrument}()},
+\code{\link{misc}()},
 \code{\link{release}()},
 \code{\link{wire}()}
 }

@@ -41,7 +41,8 @@
 
 <meta property="og:title" content="Create a mooring-release object — release" />
 <meta property="og:description" content="Create a mooring-release object,
-either by looking up a known object from the database, or defining a new type." />
+either by looking up a known object from the database, or by defining a new type.
+Area is formulated as length*width, for consistency with Dewey's Matlab code." />
 
 
 
@@ -143,7 +144,8 @@ either by looking up a known object from the database, or defining a new type." 
 
     <div class="ref-description">
     <p>Create a mooring-release object,
-either by looking up a known object from the database, or defining a new type.</p>
+either by looking up a known object from the database, or by defining a new type.
+Area is formulated as length*width, for consistency with Dewey's Matlab code.</p>
     </div>
 
     <pre class="usage"><span class='fu'>release</span><span class='op'>(</span>
@@ -182,9 +184,10 @@ Note that <code>buoyancy</code> is ignored if <code>model</code> is recognized.<
     <tr>
       <th>height</th>
       <td><p>numeric value for the height (in m) of the element.
-This value is used in the computation of (a) the mooring geometry
-and (b) the area of the element (which is in turn used in
-the drag computation).
+This value is used in the computation of the mooring geometry.
+In some cases, as e.g. in Dewey-derived data that have "diameter" tabulated
+as zero, it is also used in the computation of the area
+of the element, as height*width.
 Note that <code>height</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
@@ -225,6 +228,7 @@ objects, use e.g.</p><pre>
 <code><a href='connector.html'>connector</a>()</code>,
 <code><a href='float.html'>float</a>()</code>,
 <code><a href='instrument.html'>instrument</a>()</code>,
+<code><a href='misc.html'>misc</a>()</code>,
 <code><a href='wire.html'>wire</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 

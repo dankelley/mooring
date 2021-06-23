@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{area}
 \alias{area}
-\title{Area of mooring elements}
+\title{Horizontally-projected area of mooring elements}
 \usage{
 area(m)
 }
@@ -15,12 +15,37 @@ mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\lin
 \code{area} returns a numeric value of the area viewed from a horizontal, in m^2.
 }
 \description{
-Area of mooring elements
+The areas are not computed by this function, but rather looked up
+for each element.  To learn how areas are computed during
+setup, see the help page for
+\code{\link[=anchor]{anchor()}},
+\code{\link[=chain]{chain()}},
+\code{\link[=connector]{connector()}},
+\code{\link[=float]{float()}},
+\code{\link[=instrument]{instrument()}},
+\code{\link[=misc]{misc()}}, or
+\code{\link[=release]{release()}}.
+}
+\details{
+For a summary of characteristics of the predefined models,
+see the vignette named
 }
 \examples{
 library(mooring)
 area(float())
 
+}
+\references{
+Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
+Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
+(December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
+
+Dewey, Richard. "Mooring Design and Dynamics:
+A Matlab Package for Designing and Testing
+Oceanographic Moorings And Towed Bodies."
+Accessed May 15, 2021.
+http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
+http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
 }
 \author{
 Dan Kelley

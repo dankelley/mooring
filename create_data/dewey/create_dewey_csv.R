@@ -178,6 +178,7 @@ write.csv(connectors, "connectors_dewey.csv", row.names=FALSE)
 miscs <- read.fwf(textConnection(gsub("#","^",d$miscs)), widths=widths, col.names=names)
 miscs$name <- gsub("\\^", "#", miscs$name)
 originalName <- miscs$name
+miscs$name <- fixnames(miscs$name)
 miscs$height <- miscs$height / 100
 # we keep area (computed) and discard width and diameter
 miscs$width <- miscs$width / 100

@@ -44,9 +44,14 @@ NULL
 #'
 #' @references
 #' Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
-#' Designing and Analyzing Oceanographic Moorings." Marine Models 1, no. 1
+#' Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
 #' (December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
-#' Dewey, Richard. "Mooring Design and Dynamics." Accessed May 15, 2021.
+#'
+#' Dewey, Richard. "Mooring Design and Dynamics:
+#' A Matlab Package for Designing and Testing
+#' Oceanographic Moorings And Towed Bodies."
+#' Accessed May 15, 2021.
+#' http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
 #' http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
 NULL
 
@@ -79,7 +84,7 @@ isMooring <- function(m=NULL) {
 #' Create an anchor object
 #'
 #' Create a anchor object,
-#' either by looking up a known object from the database, or defining a new type.
+#' either by looking up a known object from the database, or by defining a new type.
 #' This must be the first element of a mooring constructed with
 #' [mooring()].  The default is 3 trainwheels with zero height (to simplify
 #' test cases).
@@ -140,7 +145,8 @@ anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, depth=0)
 #' Create a mooring-release object
 #'
 #' Create a mooring-release object,
-#' either by looking up a known object from the database, or defining a new type.
+#' either by looking up a known object from the database, or by defining a new type.
+#' Area is formulated as length*width, for consistency with Dewey's Matlab code.
 #'
 #' @templateVar subclass release
 #' @template modelTemplate
@@ -206,7 +212,8 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
 #' Create a wire object
 #'
 #' Creates a wire (or rope, chain, etc.) object,
-#' either by looking up a known object from the database, or defining a new type.
+#' either by looking up a known object from the database, or by defining a new type.
+#' Area is formulated as length*diameter, for consistency with Dewey's Matlab code.
 #'
 #' @templateVar subclass wire
 #' @template modelTemplate
@@ -272,7 +279,8 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
 #' Create a chain object
 #'
 #' Create an object that describes mooring chain elements such as shackles,
-#' either by looking up a known object from the database, or defining a new type.
+#' either by looking up a known object from the database, or by defining a new type.
+#' Area is formulated as length*width, for consistency with Dewey's Matlab code.
 #'
 #' @templateVar subclass chain
 #' @template modelTemplate
@@ -338,7 +346,8 @@ chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, width=NULL, CD=
 #' Create a connector object
 #'
 #' Create an object that describes mooring connector such as shackles,
-#' either by looking up a known object from the database, or defining a new type.
+#' either by looking up a known object from the database, or by defining a new type.
+#' Area is formulated as height*width, for consistency with Dewey's Matlab code.
 #'
 #' Many of the built-in items have `height` and `width` defined
 #' to be zero, because the sources did not list these things.  Likely, this is not
@@ -416,8 +425,8 @@ connector <- function(model="swivel", buoyancy=NULL, height=NULL, width=NULL, CD
 #' @templateVar subclass float
 #'
 #' Create a float object, either by looking up a known object from the database,
-#' or defining a new type.
-#'
+#' or by defining a new type.
+#' Area is formulated as pi*(diameter/2)^2, for consistency with Dewey's Matlab code.
 #'
 #' Note that `HMB` in a name is a short-hand for `Hydrofloat Mooring Buoy`.  Data for these
 #' floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the `CD` value
@@ -492,7 +501,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #' Create an instrument object
 #'
 #' Create an instrument object,
-#' either by looking up a known object from the database, or defining a new type.
+#' either by looking up a known object from the database, or by defining a new type.
 #'
 #' @templateVar subclass instrument
 #' @template modelTemplate
@@ -554,6 +563,90 @@ instrument <- function(model="sbe37 microcat clamp-on style", buoyancy=NULL, hei
     class(rval) <- c("mooring", "instrument")
     rval
 }                                      # instrument()
+
+#' Create a misc object
+#'
+#' Create a miscellaneous object,
+#' either by looking up a known object from the database, or by defining a new type.
+#' The function name, and most of the built-in data
+#' values, come from Dewey's (1999, 2021) database.
+#' For data derived from the Dewey database,
+#' area is computed as in Dewey's Matlab code: if tabulated diameter is zero,
+#' then the product of tabulated height and width is used; otherwise,
+#' pi*(diameter/2)^2 is used.
+#'
+#' @templateVar subclass misc
+#' @template modelTemplate
+#'
+#' @template buoyancyTemplate
+#'
+#' @template heightTemplate
+#'
+#' @template areaTemplate
+#'
+#' @template CDTemplate
+#'
+#' @template sourceTemplate
+#'
+#' @return `misc` returns an object of the `"mooring"` class and `"misc"` subclass.
+#'
+#' @family functions that create mooring objects
+#'
+#' @examples
+#' library(mooring)
+#' # List known misc types
+#' misc("?")
+#'
+#' @references
+#' Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
+#' Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
+#' (December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
+#'
+#' Dewey, Richard. "Mooring Design and Dynamics:
+#' A Matlab Package for Designing and Testing
+#' Oceanographic Moorings And Towed Bodies."
+#' Accessed May 15, 2021.
+#' http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
+#' http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
+#'
+#' @export
+#'
+#' @author Dan Kelley
+misc <- function(model="AanderaaT.chain", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
+{
+    data("mooringElements", package="mooring", envir=environment())
+    mooringElements <- get("mooringElements")
+    if (model == "?")
+        return(sort(mooringElements$misc$name))
+    else if (substring(model, 1, 1) == "?")
+        return(findElement(substring(model, 2), search="instrument"))
+    w <- which(mooringElements$misc$name == model)
+    if (1 == length(w)) {
+        me <- mooringElements$misc[w,]
+        if (!is.null(buoyancy))
+            warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
+        if (!is.null(height))
+            warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
+        if (!is.null(area))
+            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
+        if (!is.null(CD))
+            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
+        buoyancy <- me$buoyancy
+        height <- me$height
+        area <- me$area
+        CD <- me$CD
+        source <- me$source
+    } else {
+        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new misc model")
+        if (is.null(height)) stop("must supply height, if creating a new misc model")
+        if (is.null(area)) stop("must supply area, if creating a new misc model")
+        if (is.null(CD)) stop("must supply CD, if creating a new misc model")
+        source <- ""
+    }
+    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, area=area, CD=CD)
+    class(rval) <- c("mooring", "misc")
+    rval
+}                                      # misc()
 
 
 #' Get mooring/element drag coefficient
@@ -757,6 +850,11 @@ print.mooring <- function(x, ...)
         } else if (inherits(xi, 'instrument')) {
             cat(sprintf("%s%d: '%s' instrument, %gkg, area %gm^2",
                          prefix, i, xi$model, xi$buoyancy, xi$area), sep='')
+            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
+            lastWasChain <- lastWasWire <- FALSE
+        } else if (inherits(xi, 'misc')) {
+            cat(sprintf("%s%d: '%s' misc, %gkg, height %gm, area %gm^2",
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'release')) {
@@ -1415,7 +1513,23 @@ tension <- function(m, stagnant=FALSE)
     }
 }                                      # tension()
 
-#' Area of mooring elements
+#' Horizontally-projected area of mooring elements
+#'
+#' The areas are not computed by this function, but rather looked up
+#' for each element.  To learn how areas are computed during
+#' setup, see the help page for
+#' [anchor()],
+#' [chain()],
+#' [connector()],
+#' [float()],
+#' [instrument()],
+#' [misc()], or
+#' [release()].
+#'
+#' For a summary of characteristics of the predefined models,
+#' see the vignette named
+#'
+## @template mooringElementVignetteName
 #'
 #' @template meTemplate
 #'
@@ -1424,6 +1538,18 @@ tension <- function(m, stagnant=FALSE)
 #' @examples
 #' library(mooring)
 #' area(float())
+#'
+#' @references
+#' Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
+#' Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
+#' (December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
+#'
+#' Dewey, Richard. "Mooring Design and Dynamics:
+#' A Matlab Package for Designing and Testing
+#' Oceanographic Moorings And Towed Bodies."
+#' Accessed May 15, 2021.
+#' http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
+#' http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
 #'
 #' @export
 #'

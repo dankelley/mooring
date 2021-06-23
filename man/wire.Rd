@@ -46,7 +46,8 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \description{
 Creates a wire (or rope, chain, etc.) object,
-either by looking up a known object from the database, or defining a new type.
+either by looking up a known object from the database, or by defining a new type.
+Area is formulated as length*diameter, for consistency with Dewey's Matlab code.
 }
 \section{Data sources}{
 
@@ -73,6 +74,7 @@ Other functions that create mooring objects:
 \code{\link{connector}()},
 \code{\link{float}()},
 \code{\link{instrument}()},
+\code{\link{misc}()},
 \code{\link{release}()}
 }
 \author{

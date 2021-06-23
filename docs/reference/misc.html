@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a float object — float • mooring</title>
+<title>Create a misc object — misc • mooring</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,15 @@
 
 
 
-<meta property="og:title" content="Create a float object — float" />
-<meta property="og:description" content="Create a float object" />
+<meta property="og:title" content="Create a misc object — misc" />
+<meta property="og:description" content="Create a miscellaneous object,
+either by looking up a known object from the database, or by defining a new type.
+The function name, and most of the built-in data
+values, come from Dewey's (1999, 2021) database.
+For data derived from the Dewey database,
+area is computed as in Dewey's Matlab code: if tabulated diameter is zero,
+then the product of tabulated height and width is used; otherwise,
+pi*(diameter/2)^2 is used." />
 
 
 
@@ -135,20 +142,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a float object</h1>
+    <h1>Create a misc object</h1>
     <small class="dont-index">Source: <a href='https://github.com/dankelley/mooring/blob/master/R/mooring.R'><code>R/mooring.R</code></a></small>
-    <div class="hidden name"><code>float.Rd</code></div>
+    <div class="hidden name"><code>misc.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a float object</p>
+    <p>Create a miscellaneous object,
+either by looking up a known object from the database, or by defining a new type.
+The function name, and most of the built-in data
+values, come from Dewey's (1999, 2021) database.
+For data derived from the Dewey database,
+area is computed as in Dewey's Matlab code: if tabulated diameter is zero,
+then the product of tabulated height and width is used; otherwise,
+pi*(diameter/2)^2 is used.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>float</span><span class='op'>(</span>
-  model <span class='op'>=</span> <span class='st'>"Kiel SFS40in"</span>,
+    <pre class="usage"><span class='fu'>misc</span><span class='op'>(</span>
+  model <span class='op'>=</span> <span class='st'>"AanderaaT.chain"</span>,
   buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
   height <span class='op'>=</span> <span class='cn'>NULL</span>,
-  diameter <span class='op'>=</span> <span class='cn'>NULL</span>,
+  area <span class='op'>=</span> <span class='cn'>NULL</span>,
   CD <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -157,14 +171,16 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>character value indicating the type of float
+      <td><p>character value indicating the type of misc.
 There are three possibilities for <code>model</code>.
 (1) If this is <code>"?"</code>, then the function returns a vector of permitted
 character values. (2) If this is <code>"?X"</code>, where X is a set of
 characters, then <code><a href='findElement.html'>findElement()</a></code> is called to do a fuzzy search,
-with the <code>search</code> argument set to <code>"float (3) If it is recognized, i.e. if that type is stored in </code>data(mooringElements)`, then the that stored value
+with the <code>search</code> argument set to <code>"misc"</code>.
+(3) If it is recognized, i.e. if that type is
+stored in <code><a href='https://rdrr.io/r/utils/data.html'>data(mooringElements)</a></code>, then the that stored value
 is used, and all other arguments to this function are ignored.
-(4) Otherwise, a new float
+(4) Otherwise, a new misc object is created, using
 values specified in the other arguments (all of which must
 be supplied).</p></td>
     </tr>
@@ -185,12 +201,9 @@ of the element, as height*width.
 Note that <code>height</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
-      <th>diameter</th>
-      <td><p>numeric value for the diameter (in m)
-of the element as viewed from a horizontal direction.
-This is used to compute area, for drag calculations, as
-pi*(diameter/2)^2.
-Note that <code>diameter</code> is ignored if <code>model</code> is recognized.</p></td>
+      <th>area</th>
+      <td><p>a numerical value indicating the horizontal instrument area
+in \(m^2\).</p></td>
     </tr>
     <tr>
       <th>CD</th>
@@ -201,34 +214,38 @@ Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></t
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>float</code> returns an object of the <code>"mooring"</code> class and <code>"float"</code> subclass.</p>
+    <p><code>misc</code> returns an object of the <code>"mooring"</code> class and <code>"misc"</code> subclass.</p>
     <h2 class="hasAnchor" id="data-sources"><a class="anchor" href="#data-sources"></a>Data sources</h2>
 
     
 
 
 <p>To learn more about the data used for the built-in
-float
+misc
 objects, use e.g.</p><pre>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mooringElements</span><span class='op'>)</span>
-<span class='va'>mooringElements</span><span class='op'>$</span><span class='va'>float</span>
+<span class='va'>mooringElements</span><span class='op'>$</span><span class='va'>miscs</span>
 </pre>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    
-<ol>
-<li><p><a href='https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf'>https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf</a></p></li>
-</ol>
-
+    <p>Dewey, Richard K. "Mooring Design &amp; Dynamics-a Matlab® Package for
+Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
+(December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X</p>
+<p>Dewey, Richard. "Mooring Design and Dynamics:
+A Matlab Package for Designing and Testing
+Oceanographic Moorings And Towed Bodies."
+Accessed May 15, 2021.
+http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
+http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions that create mooring objects: 
 <code><a href='anchor.html'>anchor</a>()</code>,
 <code><a href='chain.html'>chain</a>()</code>,
 <code><a href='connector.html'>connector</a>()</code>,
+<code><a href='float.html'>float</a>()</code>,
 <code><a href='instrument.html'>instrument</a>()</code>,
-<code><a href='misc.html'>misc</a>()</code>,
 <code><a href='release.html'>release</a>()</code>,
 <code><a href='wire.html'>wire</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
@@ -237,58 +254,15 @@ objects, use e.g.</p><pre>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
-<span class='co'># List known float types</span>
-<span class='fu'>float</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "16in Viny"                           
-#&gt;  [2] "17in glass"                          
-#&gt;  [3] "28in ORE"                            
-#&gt;  [4] "3 pack Viny 12b-3 floats"            
-#&gt;  [5] "30in float"                          
-#&gt;  [6] "37in ORE"                            
-#&gt;  [7] "41in ORE"                            
-#&gt;  [8] "48in ORE"                            
-#&gt;  [9] "54cm Alum CAP3"                      
-#&gt; [10] "54x30inClamShell"                    
-#&gt; [11] "61in ORE"                            
-#&gt; [12] "a2 package ADCP and 2 Viny balls"    
-#&gt; [13] "ADCP / 2x c3 subs assembly"          
-#&gt; [14] "ADCP FloatTech"                      
-#&gt; [15] "BENTHOS 17in"                        
-#&gt; [16] "Billings 12in"                       
-#&gt; [17] "BPS Float"                           
-#&gt; [18] "BUB 2x17in glass"                    
-#&gt; [19] "CDMS 1.2m sphere"                    
-#&gt; [20] "CDMS 2m sphere"                      
-#&gt; [21] "Double 16in Viny"                    
-#&gt; [22] "Double 17in"                         
-#&gt; [23] "FloatTech CF-12"                     
-#&gt; [24] "Geodyn 8ft Toroid"                   
-#&gt; [25] "HMB 20"                              
-#&gt; [26] "HMB 25"                              
-#&gt; [27] "HMB 31"                              
-#&gt; [28] "HMB 36"                              
-#&gt; [29] "HMB 40"                              
-#&gt; [30] "HMB 44"                              
-#&gt; [31] "HMB 49"                              
-#&gt; [32] "HMB 51"                              
-#&gt; [33] "HMB 56"                              
-#&gt; [34] "HMB 62"                              
-#&gt; [35] "IPS / 2x b3 subs assembly"           
-#&gt; [36] "Kiel SFS40in"                        
-#&gt; [37] "new glass streamlined float c2"      
-#&gt; [38] "stablemoor 1000lb 3500 msw with ADCP"
-#&gt; [39] "stablemoor 1015lb 1500 msw with ADCP"
-#&gt; [40] "stablemoor 533lb 3500 msw with ADCP" 
-#&gt; [41] "stablemoor 580lb 1500 msw with ADCP" 
-#&gt; [42] "streamlined BUB 2x 17in glass"       
-#&gt; [43] "streamlined BUB 3 Viny balls"        
-#&gt; [44] "syn. float with ADCP bracket"        
-#&gt; [45] "syn. float, bracket and 109lb ADCP"  
-#&gt; [46] "Top of Tow Rope"                     
-#&gt; [47] "Torp. flt, 3-28"                     
-#&gt; [48] "Tripple FT CF-12"                    
-#&gt; [49] "Trpl 12in glass"                     
-#&gt; [50] "Trpl 16in Viny"                      </div><div class='input'>
+<span class='co'># List known misc types</span>
+<span class='fu'>misc</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "A. tide gauge"    "AanderaaT.chain"  "Benthos Xpdr"     "BPS Package"     
+#&gt;  [5] "Brancker TR1000"  "Brancker XL-200"  "Brancker XL-210"  "CDMS 10sqft Tow" 
+#&gt;  [9] "CDMS 30sqft Tow"  "DataSonics Xpdr"  "Heavy Sphere"     "Heavy Sphere 2"  
+#&gt; [13] "IceProfiler4+Flt" "Keil sedmt trap"  "McLane Mk78 SdTr" "McLane Mk8 SedTr"
+#&gt; [17] "Oceanetic Pinger" "ONC-uCatADop"     "SBE 19+ cage"     "SBE-16"          
+#&gt; [21] "SubOcean2d"       "SubOcean2d2"      "TowedCylinder"    "TowedSphere"     
+#&gt; [25] "ULS#2/APL"       </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

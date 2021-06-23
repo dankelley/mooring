@@ -46,7 +46,8 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \description{
 Create an object that describes mooring chain elements such as shackles,
-either by looking up a known object from the database, or defining a new type.
+either by looking up a known object from the database, or by defining a new type.
+Area is formulated as length*width, for consistency with Dewey's Matlab code.
 }
 \section{Data sources}{
 
@@ -72,6 +73,7 @@ Other functions that create mooring objects:
 \code{\link{connector}()},
 \code{\link{float}()},
 \code{\link{instrument}()},
+\code{\link{misc}()},
 \code{\link{release}()},
 \code{\link{wire}()}
 }
