@@ -33,10 +33,13 @@ devtools::install_github("dankelley/mooring")
 ```
 ## Example
 
-This following shows how to assess the knockdown of a 20-inch float atop 100m of wire in
-a 0.5 m/s (roughly 1-knot) current.  As an exercise, try increasing
-the current to 1 m/s to see how much further the float gets
-knocked down.  Then try some other float types, using `float("?")` to get a list of the types that are supported.
+The following shows how to assess the knockdown of a mooring consisting of a
+bottom anchor, 100 m of wire, and a 20-inch diameter float, in a region of
+water depth 120 m with a constant current of 0.5 m/s (roughly 1 knot).  To
+learn more, (a) increse the current to 1 m/s and observe changes in the mooring
+shape, (b) set the `which` argument of `plot.mooring()`, to focus more directly
+on the knockdown, then (c) explore the effects of specifying depth-dependent
+currents in the `knockdown()` call.
 
 ```{r example}
 library(mooring)
