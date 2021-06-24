@@ -106,7 +106,7 @@ for (file in list.files(pattern="^releases.*csv$")) {
         print(d)
     if (any(d$name %in% releases$name))
         stop("name conflict")
-    for (item in c("buoyancy", "height", "width", "CD")) {
+    for (item in c("buoyancy", "height", "area", "CD")) {
         if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
             stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
         d[[item]] <- as.numeric(d[[item]])

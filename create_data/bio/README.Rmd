@@ -186,16 +186,14 @@ knitr::kable(read.csv("instruments_bio.csv"), caption="Contents of instruments_b
 ## `releases_bio.csv`
 
 Notes:
-1. There is no entry for type `BENTHOS 875 RELEASE`, because it has no value
+1. The release data are in rows 13 to 19 in the spreadsheet (with grey underlay).
+2. There is no entry for type `BENTHOS 875 RELEASE`, because it has no value
    listed in col G (area `A (m*2/m)`) or col I (area `AW (m*2)`).
-
-2. The word 'release' is dropped from names, since it's redudant from the
+3. The word 'release' is dropped from names, since it's redudant from the
    object class.
 
-### `height`
-Use `LENGTH` (col C).
-
 ### `buoyancy`
+
 Use the negative of `NEWTONS` (col E), divided by g=9.8m/s^2, rounded to 2 decimal
 places.
 ```{r}
@@ -203,7 +201,34 @@ N <- c(149, 253.5, 360,	129, 273, 118.7)
 round(N/9.8, 2)
 ```
 
-### `width`
+### `height`
+
+Use `LENGTH` (col C), ignoring row 16 (BENTHOS 875 RELEASE) since no area for that.
+```{r}
+(C <- c(1.194, 1.32, 1.23,  0.68,  1,     0.4))
+```
+
+### area
+
+Use the product of `LENGTH/m` (col C) and `A (m&2/m)` (col G) .  Note that
+there is also a column labelled `LENGTH(m)` (col F) but this is ignored because
+(a) it has lots of blank values, and (b) where there *are* values, they appear
+to be no more than rounded versions col C.  Also, note that there is no area
+reported for `BENTHOS 875 RELEASE`, so that value (row 16) is omitted.
+
+```{r}
+C <- c(1.194, 1.32, 1.23,  0.68,  1,     0.4)
+G <- c(0.14,  0.14, 0.127, 0.112, 0.199, 0.237)
+(area <- round(C * G, 4))
+```
+Note the `NA` value -- this is "benthos 875 release", which we will not use
+here, since there's no point in guessing.  (Put another way, if someone at BIO
+wants to take a measuring tape to that thing to find it's diameter, we'll
+incorporate it!)
+
+
+### OLD: delete
+
 Use the ratio of `A (m&2/m)` (col G) to `LENGTH` (col C).
 ```{r}
 G <- c(0.14,0.14,0.127,0.112,0.199,0.237)

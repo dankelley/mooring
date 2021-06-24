@@ -5,10 +5,10 @@
 \title{Create a mooring-release object}
 \usage{
 release(
-  model = "eg&g 723a",
+  model = "EG&G 723a",
   buoyancy = NULL,
   height = NULL,
-  width = NULL,
+  area = NULL,
   CD = NULL
 )
 }
@@ -38,11 +38,8 @@ as zero, it is also used in the computation of the area
 of the element, as height*width.
 Note that \code{height} is ignored if \code{model} is recognized.}
 
-\item{width}{numeric value for the width (in m)
-of the element as viewed from above.
-This is multiplied by \code{height} to compute the
-area of the element, as part of the drag computation.
-Note that \code{width} is ignored if \code{model} is recognized.}
+\item{area}{a numerical value indicating the horizontal instrument area
+in \eqn{m^2}{m^2}.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}

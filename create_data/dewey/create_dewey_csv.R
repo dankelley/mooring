@@ -85,8 +85,11 @@ releases <- read.fwf(textConnection(d$acrel),widths=widths, col.names=names)
 originalName <- releases$name
 releases$name <- fixnames(releases$name)
 releases$height <- releases$height / 100
-releases$width <- releases$diameter / 100
-releases$diameter <- NULL # this is always 0, and we don't use it in this package
+# note renaming, to keep area and height in adjacent columns
+releases$width <- releases$height * releases$width / 100
+names(releases) <- gsub("width", "area", names(releases))
+# remove diameter, which is always 0 in Dewey's data for releases
+releases$diameter <- NULL
 releases <- cbind(releases, source="Dewey")
 releases <- cbind(releases, originalName=trimws(originalName))
 for (w in which(0 == releases$CD)) {

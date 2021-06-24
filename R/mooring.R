@@ -155,7 +155,7 @@ anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, depth=0)
 #'
 #' @template heightTemplate
 #'
-#' @template widthTemplate
+#' @template areaTemplate
 #'
 #' @template CDTemplate
 #'
@@ -173,7 +173,7 @@ anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, depth=0)
 #' @export
 #'
 #' @author Dan Kelley
-release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, CD=NULL)
+release <- function(model="EG&G 723a", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -188,23 +188,23 @@ release <- function(model="eg&g 723a", buoyancy=NULL, height=NULL, width=NULL, C
             warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
         if (!is.null(height))
             warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(width))
-            warning("ignoring supplied diameter, because \"", width, "\" is already in the database\n")
+        if (!is.null(area))
+            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
         if (!is.null(CD))
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
         buoyancy <- me$buoyancy
         height <- me$height
-        width <- me$width
+        area <- me$area
         CD <- me$CD
         source <- me$source
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new release model")
         if (is.null(height)) stop("must supply height, if creating a new release model")
-        if (is.null(width)) stop("must supply width, if creating a new release model")
+        if (is.null(area)) stop("must supply area, if creating a new release model")
         if (is.null(CD)) stop("must supply CD, if creating a new release model")
         source <- ""
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD, area=height*width)
+    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, area=area, CD=CD)
     class(rval) <- c("mooring", "release")
     rval
 }                                      # release()
@@ -858,8 +858,8 @@ print.mooring <- function(x, ...)
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, 'release')) {
-            cat(sprintf("%s%d: '%s' release, %gkg, height %gm, width %gm",
-                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+            cat(sprintf("%s%d: '%s' release, %gkg, height %gm, area %gm",
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
             cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
         } else if (inherits(xi, "wire")) {
