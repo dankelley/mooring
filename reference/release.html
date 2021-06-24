@@ -149,10 +149,10 @@ Area is formulated as length*width, for consistency with Dewey's Matlab code.</p
     </div>
 
     <pre class="usage"><span class='fu'>release</span><span class='op'>(</span>
-  model <span class='op'>=</span> <span class='st'>"eg&amp;g 723a"</span>,
+  model <span class='op'>=</span> <span class='st'>"EG&amp;G 723a"</span>,
   buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
   height <span class='op'>=</span> <span class='cn'>NULL</span>,
-  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  area <span class='op'>=</span> <span class='cn'>NULL</span>,
   CD <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -191,12 +191,9 @@ of the element, as height*width.
 Note that <code>height</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
-      <th>width</th>
-      <td><p>numeric value for the width (in m)
-of the element as viewed from above.
-This is multiplied by <code>height</code> to compute the
-area of the element, as part of the drag computation.
-Note that <code>width</code> is ignored if <code>model</code> is recognized.</p></td>
+      <th>area</th>
+      <td><p>a numerical value indicating the horizontal instrument area
+in \(m^2\).</p></td>
     </tr>
     <tr>
       <th>CD</th>
