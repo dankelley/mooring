@@ -137,7 +137,7 @@ anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, depth=0)
         if (is.null(height)) stop("must supply height, if creating a new anchor model")
         source <- ""
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, depth=depth, area=0)
+    rval <- list(model=model, buoyancy=buoyancy, height=height, area=0, depth=depth, source=source)
     class(rval) <- c("mooring", "anchor")
     rval
 }                                      # anchor()
@@ -213,14 +213,13 @@ release <- function(model="EG&G 723a", buoyancy=NULL, height=NULL, area=NULL, CD
 #'
 #' Creates a wire (or rope, chain, etc.) object,
 #' either by looking up a known object from the database, or by defining a new type.
-#' Area is formulated as length*diameter, for consistency with Dewey's Matlab code.
 #'
 #' @templateVar subclass wire
 #' @template modelTemplate
 #'
 #' @template buoyancyPerMeterTemplate
 #'
-#' @template diameterTemplate
+#' @template areaPerMeterTemplate
 #'
 #' @template CDTemplate
 #'
@@ -242,7 +241,7 @@ release <- function(model="EG&G 723a", buoyancy=NULL, height=NULL, area=NULL, CD
 #' @importFrom utils data
 #'
 #' @author Dan Kelley
-wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, CD=NULL, length=NULL)
+wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, areaPerMeter=NULL, CD=NULL, length=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -257,21 +256,21 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
         me <- mooringElements$wires[w,]
         if (!is.null(buoyancyPerMeter))
             warning("ignoring supplied buoyancyPerMeter, because \"", model, "\" is already in the database\n")
-        if (!is.null(diameter))
-            warning("ignoring supplied diameter, because \"", model, "\" is already in the database\n")
+        if (!is.null(areaPerMeter))
+            warning("ignoring supplied areaPerMeter, because \"", model, "\" is already in the database\n")
         if (!is.null(CD))
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
         buoyancyPerMeter<- me$buoyancyPerMeter
-        diameter <- me$diameter
+        areaPerMeter <- me$areaPerMeter
         CD <- me$CD
         source <- me$source
     } else {
         if (is.null(buoyancyPerMeter)) stop("must supply buoyancyPerMeter, if creating a new wire model")
-        if (is.null(diameter)) stop("must supply diameter, if creating a new wire model")
+        if (is.null(areaPerMeter)) stop("must supply areaPerMeter, if creating a new wire model")
         if (is.null(CD)) stop("must supply CD, if creating a new wire model")
         source <- ""
     }
-    rval <- list( model=model, source=source, buoyancyPerMeter=buoyancyPerMeter, diameter=diameter, CD=CD, height=length, diameter=diameter, area=length*diameter)
+    rval <- list(model=model, buoyancy=length*buoyancyPerMeter, height=length, area=length*areaPerMeter, CD=CD, source=source)
     class(rval) <- c("mooring", "wire")
     rval
 }                                      # wire()
@@ -287,7 +286,7 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
 #'
 #' @template buoyancyPerMeterTemplate
 #'
-#' @template widthTemplate
+#' @template areaPerMeterTemplate
 #'
 #' @template CDTemplate
 #'
@@ -309,7 +308,7 @@ wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, diameter=NULL, 
 #' chain("?")
 #'
 #' @author Dan Kelley
-chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, width=NULL, CD=NULL, length=NULL)
+chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, areaPerMeter=NULL, CD=NULL, length=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -324,21 +323,21 @@ chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, width=NULL, CD=
         me <- mooringElements$chains[w,]
         if (!is.null(buoyancyPerMeter))
             warning("ignoring supplied buoyancyPerMeter, because \"", model, "\" is already in the database\n")
-        if (!is.null(width))
-            warning("ignoring supplied width, because \"", model, "\" is already in the database\n")
+        if (!is.null(areaPerMeter))
+            warning("ignoring supplied areaPerMeter, because \"", model, "\" is already in the database\n")
         if (!is.null(CD))
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
         buoyancyPerMeter<- me$buoyancyPerMeter
-        width <- me$width
+        areaPerMeter <- me$areaPerMeter
         CD <- me$CD
         source <- me$source
     } else {
         if (is.null(buoyancyPerMeter)) stop("must supply buoyancyPerMeter, if creating a new chain model")
-        if (is.null(width)) stop("must supply width, if creating a new chain model")
+        if (is.null(areaPerMeter)) stop("must supply areaPerMeter, if creating a new chain model")
         if (is.null(CD)) stop("must supply CD, if creating a new chain model")
         source <- ""
     }
-    rval <- list(model=model, source=source, buoyancyPerMeter=buoyancyPerMeter, height=length, width=width, CD=CD, area=length*width)
+    rval <- list(model=model, buoyancy=length*buoyancyPerMeter, height=length, area=length*areaPerMeter, CD=CD, source=source)
     class(rval) <- c("mooring", "chain")
     rval
 }                                      # chain()
@@ -365,7 +364,7 @@ chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, width=NULL, CD=
 #'
 #' @template heightTemplate
 #'
-#' @template widthTemplate
+#' @template areaTemplate
 #'
 #' @template CDTemplate
 #'
@@ -385,7 +384,7 @@ chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, width=NULL, CD=
 #' connector("?")
 #'
 #' @author Dan Kelley
-connector <- function(model="swivel", buoyancy=NULL, height=NULL, width=NULL, CD=NULL)
+connector <- function(model="swivel", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -400,23 +399,23 @@ connector <- function(model="swivel", buoyancy=NULL, height=NULL, width=NULL, CD
             warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
         if (!is.null(height))
             warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(width))
-            warning("ignoring supplied width, because \"", model, "\" is already in the database\n")
+        if (!is.null(area))
+            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
         if (!is.null(CD))
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
         buoyancy <- me$buoyancy
         height <- me$height
-        width <- me$width
+        area <- me$area
         CD <- me$CD
         source <- me$source
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new connectors model")
         if (is.null(height)) stop("must supply height, if creating a new connectors model")
-        if (is.null(width)) stop("must supply width, if creating a new connectors model")
+        if (is.null(area)) stop("must supply area, if creating a new connectors model")
         if (is.null(CD)) stop("must supply CD, if creating a new connectors model")
         source <- ""
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, width=width, CD=CD, area=height*width)
+    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
     class(rval) <- c("mooring", "connector")
     rval
 }                                      # connector()
@@ -439,7 +438,7 @@ connector <- function(model="swivel", buoyancy=NULL, height=NULL, width=NULL, CD
 #'
 #' @template heightTemplate
 #'
-#' @template diameterTemplate
+#' @template areaTemplate
 #'
 #' @template CDTemplate
 #'
@@ -460,7 +459,7 @@ connector <- function(model="swivel", buoyancy=NULL, height=NULL, width=NULL, CD
 #' @export
 #'
 #' @author Dan Kelley
-float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NULL, CD=NULL)
+float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -475,25 +474,25 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
             warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
         if (!is.null(height))
             warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(diameter))
-            warning("ignoring supplied diameter, because \"", model, "\" is already in the database\n")
+        if (!is.null(area))
+            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
         if (!is.null(CD))
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
         buoyancy <- me$buoyancy
         height <- me$height
-        diameter <- me$diameter
+        area <- me$area
         CD <- me$CD
         source <- me$source
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new float model")
         if (is.null(height)) stop("must supply height, if creating a new float model")
-        if (is.null(diameter)) stop("must supply diameter, if creating a new float model")
+        if (is.null(area)) stop("must supply area, if creating a new float model")
         if (is.null(CD)) stop("must supply CD, if creating a new float model")
         source <- ""
     }
     # Floats are assumed to be circular in the flow direction, following
     # Dewey's convention, so the area is pi*radius^2.
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, diameter=diameter, CD=CD, area=pi*(diameter/2)^2)
+    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
     class(rval) <- c("mooring", "float")
     rval
 }                                      # float()
@@ -528,7 +527,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, diameter=NUL
 #' @export
 #'
 #' @author Dan Kelley
-instrument <- function(model="sbe37 microcat clamp-on style", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
+instrument <- function(model="SBE37 microcat clamp-on style", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -559,7 +558,7 @@ instrument <- function(model="sbe37 microcat clamp-on style", buoyancy=NULL, hei
         if (is.null(CD)) stop("must supply CD, if creating a new instrument model")
         source <- ""
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, area=area, CD=CD)
+    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
     class(rval) <- c("mooring", "instrument")
     rval
 }                                      # instrument()
@@ -643,7 +642,7 @@ misc <- function(model="AanderaaT.chain", buoyancy=NULL, height=NULL, area=NULL,
         if (is.null(CD)) stop("must supply CD, if creating a new misc model")
         source <- ""
     }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, area=area, CD=CD)
+    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
     class(rval) <- c("mooring", "misc")
     rval
 }                                      # misc()
@@ -812,10 +811,10 @@ print.mooring <- function(x, ...)
         xi <- if (elementary) x else x[[i]]
         #> cat("i=", i, " class=", paste(class(xi), collapse=","), "\n", sep="")
         if (inherits(xi, "anchor")) {
-            cat(sprintf("%s%d: '%s' anchor, %gkg, height %gm, in %gm water depth",
+            cat(sprintf("%s%d: '%s' anchor, %gkg, height %gm, in %gm water depth\n",
                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
-            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
+            i <- i + 1L
         } else if (inherits(xi, "chain")) {
             # See if there are more chain elements following this.
             count <- 1L
@@ -826,42 +825,44 @@ print.mooring <- function(x, ...)
             }
             #> message("chain count: ", count)
             if (count == 1L) {
-                cat(sprintf("%s%d: '%s' chain, %gkg, length %gm, width %gm\n",
+                cat(sprintf("%s%d: '%s' chain, %gkg, length %gm, area %gm^2\n",
                             prefix, i, xi$model,
-                            xi$buoyancyPerMeter*xi$height,
-                            xi$height, xi$width), sep="")
+                            xi$buoyancy,
+                            xi$height,
+                            xi$area), sep="")
             } else {
                 cat(sprintf("%s%d-%d: '%s' chain, %gm, length %gm, width %gm\n",
                             prefix, i, i+count-1L, xi$model,
-                            xi$buoyancyPerMeter*xi$height,
-                            xi$height, xi$width), sep="")
+                            xi$buoyancy,
+                            xi$height,
+                            xi$area), sep="")
             }
-            i <- i + count - 1 # account for skipped-over elements
+            i <- i + count             # account for skipped-over elements
         } else if (inherits(xi, 'connector')) {
-            cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, width %gm",
+            cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, width %gm\n",
                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
-            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
+            i <- i + 1L
         } else if (inherits(xi, 'float')) {
-            cat(sprintf("%s%d: '%s' float, %gkg, height %gm, diameter %gm",
+            cat(sprintf("%s%d: '%s' float, %gkg, height %gm, diameter %gm\n",
                          prefix, i, xi$model, xi$buoyancy, xi$height, xi$diameter), sep='')
-            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
+            i <- i + 1L
         } else if (inherits(xi, 'instrument')) {
-            cat(sprintf("%s%d: '%s' instrument, %gkg, area %gm^2",
+            cat(sprintf("%s%d: '%s' instrument, %gkg, area %gm^2\n",
                          prefix, i, xi$model, xi$buoyancy, xi$area), sep='')
-            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
+            i <- i + 1L
         } else if (inherits(xi, 'misc')) {
-            cat(sprintf("%s%d: '%s' misc, %gkg, height %gm, area %gm^2",
+            cat(sprintf("%s%d: '%s' misc, %gkg, height %gm, area %gm^2\n",
                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
-            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
+            i <- i + 1L
         } else if (inherits(xi, 'release')) {
-            cat(sprintf("%s%d: '%s' release, %gkg, height %gm, area %gm",
+            cat(sprintf("%s%d: '%s' release, %gkg, height %gm, area %gm\n",
                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
-            cat(sprintf(", x=%g m, z=%g m\n", xi$x, xi$z))
             lastWasChain <- lastWasWire <- FALSE
+            i <- i + 1L
         } else if (inherits(xi, "wire")) {
             # See if there are more wire elements following this.
             count <- 1L
@@ -872,22 +873,22 @@ print.mooring <- function(x, ...)
             }
             #> message("wire count: ", wire)
             if (count == 1L) {
-                cat(sprintf("%s%d: '%s' wire, %gkg, length %gm, diameter %gm\n",
+                cat(sprintf("%s%d: '%s' wire, %gkg, length %gm, area %gm^2\n",
                             prefix, i, xi$model,
-                            xi$buoyancyPerMeter*xi$height,
+                            xi$buoyancy,
                             xi$height,
-                            xi$diameter), sep="")
+                            xi$area), sep="")
             } else {
-                cat(sprintf("%s%d-%d: '%s' wire, %gkg, length %gm, width %gm\n",
+                cat(sprintf("%s%d-%d: '%s' wire, %gkg, length %gm, area %gm\n",
                             prefix, i, i+count-1L, xi$model,
-                            xi$buoyancyPerMeter*xi$height,
-                            xi$height, xi$diameter), sep=)
+                            xi$buoyancy,
+                            xi$height,
+                            xi$area), sep="")
             }
-            i <- i + count - 1 # account for skipped-over elements
+            i <- i + count             # account for skipped-over elements
         } else {
             stop("unknown class c(\"", paste(class(xi), collapse="\", \""), "\")")
         }
-        i <- i + 1L
     }
     invisible(x)
 }
@@ -1185,10 +1186,10 @@ discretise <- function(m, by=1)
         if (isWire || isChain) {
             height <- item$height
             n <- max(1L, as.integer(round(height/by)))
-            dheight <- height / n
             portion <- item
-            portion$height <- dheight
-            portion$area <- dheight * if (isWire) portion$diameter else portion$width
+            portion$height <- height / n
+            portion$area <- portion$area / n
+            portion$buoyancy <- portion$buoyancy / n
             portion$group <- group # so we can undo this later
             for (i in seq_len(n))
                 rval[[1+length(rval)]] <- portion
@@ -1296,6 +1297,8 @@ knockdown <- function(m, u=1, debug=0L)
     # Next two are Equation 5 in the 'Mooring Model' vignette.
     T[1] <- sqrt(D[1]^2 + B[1]^2)
     phi[1] <- atan2(D[1], B[1])
+    if (debug)
+        cat("T[1]=", T[1], ", phi[1]=", phi[1], "\n")
     # Next block, run only if more than 2 elements, computes rest of T and phi
     # values, using Equation 8 in the 'Mooring Model' vignette.
     # For tension at bookmark B1c, see bookmarks B1a and B1b.
@@ -1556,10 +1559,15 @@ tension <- function(m, stagnant=FALSE)
 #' @author Dan Kelley
 area <- function(m)
 {
+    if (!inherits(m, "mooring"))
+        stop("only works for objects created by mooring(), or by float(), etc")
     if (isMooring(m)) {
         sapply(m, function(mi) mi$area)
     } else {
-        if (length(class(m)) == 2) m$area else stop("area can only be computed for a mooring or an element")
+        if (length(class(m)) == 2)
+            m$area
+        else
+            stop("area can only be computed for a mooring or an individual element")
     }
 }
 
@@ -1606,13 +1614,10 @@ buoyancy <- function(m, debug=0L)
         mooringDebug(debug, "  object is a mooring with", length(m), "elements, so will analyse them individually\n")
         sapply(m, function(mi) buoyancy(mi, debug=debug))
     } else {
-        if (inherits(m, "wire") || inherits(m, "chain"))  {
-            mooringDebug(debug, "  object is a wire or a chain, so returning buoyancyPerMeter*height\n")
-            m$buoyancyPerMeter * m$height
-        } else {
-            mooringDebug(debug, "  object is a not a wire, so returning buoyancy\n")
+        if ("buoyancy" %in% names(m))
             m$buoyancy
-        }
+        else
+            stop("no buoyancy in m")
     }
     mooringDebug(debug, "} # buoyancy()\n")
     rval
@@ -1624,7 +1629,8 @@ buoyancy <- function(m, debug=0L)
 #' `findElement` does a fuzzy search for an element model, using
 #' [agrep()].  The output (if any) is in the form of suggested calls
 #' to element-creating functions
-#' [anchor()], [chain()], [connector()], [float()], [instrument()], and [wire()].
+#' [anchor()], [chain()], [connector()], [float()], [instrument()], [misc()]
+#' and [wire()].
 #' The list is in alphabetical order, not the order of the closeness of the match.
 #'
 #' `findElement` is used by e.g. `float("?BUB")`.

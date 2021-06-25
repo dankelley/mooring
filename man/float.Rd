@@ -8,7 +8,7 @@ float(
   model = "Kiel SFS40in",
   buoyancy = NULL,
   height = NULL,
-  diameter = NULL,
+  area = NULL,
   CD = NULL
 )
 }
@@ -36,11 +36,8 @@ as zero, it is also used in the computation of the area
 of the element, as height*width.
 Note that \code{height} is ignored if \code{model} is recognized.}
 
-\item{diameter}{numeric value for the diameter (in m)
-of the element as viewed from a horizontal direction.
-This is used to compute area, for drag calculations, as
-pi*(diameter/2)^2.
-Note that \code{diameter} is ignored if \code{model} is recognized.}
+\item{area}{a numerical value indicating the horizontal instrument area
+in \eqn{m^2}{m^2}.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}

@@ -43,9 +43,11 @@ knitr::kable(mooringElements$anchors[o,], row.names=FALSE)
 
 ## Chain characteristics
 
-The `buoyancyPerMeter` values are in kg/m, while `height` and `width` are in m,
-and `CD` is unitless.  The `code` values are listed for data from Dewey only,
-and they are not used in this package.
+The `buoyancyPerMeter` values are in kg/m, while `areaPerMeter` is in m, and
+`CD` is unitless.  For the Dewey data, area is computed from stated chain
+width.  The `code` values are listed for data from Dewey only, and they are not
+used in this package.
+
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
@@ -70,8 +72,9 @@ knitr::kable(mooringElements$connectors[o,], row.names=FALSE)
 ## Float characteristics
 
 The `buoyancy` values are in kg, while `height` and `diameter` are in m, and
-`CD` is unitless.  The `code` values are listed for data from Dewey only, and
-they are not used in this package.
+`CD` is unitless.  For the Dewey data, area is computed from stated float
+diameter.  The `code` values are listed for data from Dewey only, and they are
+not used in this package.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")
@@ -94,7 +97,7 @@ knitr::kable(mooringElements$instruments[o,], row.names=FALSE)
 
 ## Misc characteristics
 
-The `buoyancy` values are in kg, while `height` is in m, `width` is in m^2, and
+The `buoyancy` values are in kg, while `height` is in m, `area` is in m^2, and
 `CD` is unitless.  The `code` values are listed for data from Dewey only, and
 they are not used in this package.
 
@@ -119,14 +122,10 @@ knitr::kable(mooringElements$releases[o,], row.names=FALSE)
 
 ## Wire characteristics
 
-The `buoyancyPerMeter` values are in kg/m, while `diameter` is in m, and `CD`
-is unitless.  The `code` values are listed for data from Dewey only, and they
-are not used in this package.
-
-Note that Dewey sets diameter to 0 for wires, saves diameter in a width field,
-and lists a nonsense value for height.  These are signals that let his code
-distinguish between floats, wires, etc., but the present package handles this
-differently.
+The `buoyancyPerMeter` values are in kg/m, while `areaPerMeter` is in m, and
+`CD` is unitless.  For the Dewey data, area is computed from stated wire width.
+The `code` values are listed for data from Dewey only, and they are not used in
+this package.
 
 ```{r echo=FALSE}
 data(mooringElements, package="mooring")

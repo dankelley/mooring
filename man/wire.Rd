@@ -7,7 +7,7 @@
 wire(
   model = "1/4in wire/jack",
   buoyancyPerMeter = NULL,
-  diameter = NULL,
+  areaPerMeter = NULL,
   CD = NULL,
   length = NULL
 )
@@ -30,11 +30,10 @@ be supplied).}
 of length, expressed as kg/m.
 Note that \code{buoyancyPerMeter} is ignored if \code{model} is recognized.}
 
-\item{diameter}{numeric value for the diameter (in m)
-of the element as viewed from a horizontal direction.
-This is used to compute area, for drag calculations, as
-pi*(diameter/2)^2.
-Note that \code{diameter} is ignored if \code{model} is recognized.}
+\item{areaPerMeter}{numeric value indicating the frontal area per meter
+of length, expressed as m^2. (This is equivalent to the width, or diameter, of
+the wire.)
+Note that \code{areaPerMeter} is ignored if \code{model} is recognized.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
@@ -47,7 +46,6 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \description{
 Creates a wire (or rope, chain, etc.) object,
 either by looking up a known object from the database, or by defining a new type.
-Area is formulated as length*diameter, for consistency with Dewey's Matlab code.
 }
 \section{Data sources}{
 

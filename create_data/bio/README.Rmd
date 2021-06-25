@@ -1,7 +1,7 @@
 ---
 title: Ingesting object data from a BIO excel file
 author: Dan Kelley
-date: 2021-05-28, 2021-06-08, and 2021-06-09
+date: 2021-05-28, 2021-06-08, 2021-06-09 and 2021-06-25
 output:
     pdf_document:
         toc: true
@@ -12,7 +12,11 @@ output:
 
 # Document Revisions
 
-1. 2021-06-08 (thanks to @formulafunracing and @clayton33 for advice on this)
+1. 2021-06-25
+   1. Floats store area, not diameter
+   2. Connectors store area, not width
+   3. Wires and chains store areaPerMeter instead of diameter or width
+2. 2021-06-08 (thanks to @formulafunracing and @clayton33 for advice on this)
    1. Move discrete chain items like shackles to a new entity, "connector".
    2. Make `chain` objects have `length`, not `height`.
    3. Rename some items for consistency and readability.
@@ -48,8 +52,10 @@ These are green-background in the excel file, rows 7 through 12. I put `5/8"
 galvanized chain` (row 11) into `chains_bio.csv` and the rest into
 `connectors_bio.csv`.
 
-The `swivel` has no listed dimensions, so I made up a height of 0.15m and a
-width of 0.03m, to avoid zero height and area.
+No lengths or areas are listed for the first 4 items, but height is set to
+0.05m here, as a plausibe estimate.  Similarly, the area is set to 0.0025m^2,
+on the assumption that the item is 5cm wide and 5cm tall.  These are both such
+small values that they will have little effect on the calculations.
 
 ### `buoyancy`
 
@@ -63,14 +69,12 @@ round(N/9.8, 3)
 
 The is copied directly from col B, with 0 for the first 4 entries.
 
-### `width`
-
+### `area` (replaces width)
 This is inferred as the ratio of `A (m*2/m)` (col G) to `LENGTH` (col C)
 ```{r}
 G <- c(NA,NA,NA,NA,0.05715,0.0254)
 C <- c(NA,NA,NA,NA,1,1)
-length <- round(G/C, 4)
-length
+(area <- round(G*C, 4))
 ```
 
 ### `CD`
@@ -124,8 +128,7 @@ with height (length) 1.187m (which matches colC) and frontal area 0.5531 m^2.
 As a check, the product of colC (1.187) and colG (0.466) is `r 0.466*1.187`m^2,
 which matches the value stated on the above-stated URL.
 
-So, the procedure is (a) compute are as colC times colG, (b) compute diameter
-as as `2*sqrt(area/pi)`.
+So, area will be computed as the product of colC and colG.
 
 ```{r}
 # Notice that row 37 is ignored, because no weight is listed for it
@@ -133,8 +136,6 @@ colC <- c(0.87, 0.74,0.563,1,0.563,1.187,1,1,1.286,1.286,1.286,1.286,2.42,2.42)
 colG <- c(0.21, 0.22,0.22,0.22,0.22,0.466,0.44,0.65,1.822,1.822,1.807,1.822,0.51,0.51)
 area <- colG*colC
 round(area, 3)
-diameter <- 2 * sqrt(colC * colG / pi)
-round(diameter, 3)
 ```
 
 ```{r}

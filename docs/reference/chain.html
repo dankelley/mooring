@@ -151,7 +151,7 @@ Area is formulated as length*width, for consistency with Dewey's Matlab code.</p
     <pre class="usage"><span class='fu'>chain</span><span class='op'>(</span>
   model <span class='op'>=</span> <span class='st'>"1in buoy chain"</span>,
   buoyancyPerMeter <span class='op'>=</span> <span class='cn'>NULL</span>,
-  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  areaPerMeter <span class='op'>=</span> <span class='cn'>NULL</span>,
   CD <span class='op'>=</span> <span class='cn'>NULL</span>,
   length <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
@@ -181,12 +181,11 @@ of length, expressed as kg/m.
 Note that <code>buoyancyPerMeter</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
-      <th>width</th>
-      <td><p>numeric value for the width (in m)
-of the element as viewed from above.
-This is multiplied by <code>height</code> to compute the
-area of the element, as part of the drag computation.
-Note that <code>width</code> is ignored if <code>model</code> is recognized.</p></td>
+      <th>areaPerMeter</th>
+      <td><p>numeric value indicating the frontal area per meter
+of length, expressed as m^2. (This is equivalent to the width, or diameter, of
+the wire.)
+Note that <code>areaPerMeter</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
       <th>CD</th>

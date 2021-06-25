@@ -72,7 +72,7 @@ m <- mooring(anchor(depth=1400),
              W(146),
              microcat,
              connector("swivel"),
-             connector("ballast", -100/2.2, height=1, width=0.05, CD=1),
+             connector("ballast", -100/2.2, height=1, area=0.05, CD=1),
              float("syn. float, bracket and 109lb ADCP"),
              W(149),
              microcat,
@@ -183,7 +183,7 @@ str(m[[2]])
 
 You may go further with e.g.
 ```{r}
-m[[2]]$width
+m[[2]]$area
 ```
 
 **Exercise 1.** Double the chain density, to see the effect on knock-down.
@@ -210,8 +210,8 @@ One way to do this is to replace the `W` definition with
 ```{r}
 W <- function(length) {
     w0 <- wire("3/16in galvanized wire coated to 1/4in", length=1)
-    wire("draggy wire", buoyancyPerMeter=w0$buoyancyPerMeter,
-         diameter=w0$diameter, CD=2*w0$CD, length=length)
+    wire("draggy wire", buoyancyPerMeter=w0$buoyancy,
+         areaPerMeter=w0$area, CD=2*w0$CD, length=length)
 }
 ```
 and then create `m`, `md` and `mdk` as before. The results are as follows. Note
@@ -250,7 +250,7 @@ mDraggy <- mooring(anchor(depth=1400),
                    W(146),
                    microcat,
                    connector("swivel"),
-                   connector("ballast", -100/2.2, height=1, width=0.05, CD=1),
+                   connector("ballast", -100/2.2, height=1, area=0.05, CD=1),
                    float("syn. float, bracket and 109lb ADCP"),
                    W(149),
                    microcat,

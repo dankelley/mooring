@@ -225,9 +225,10 @@ Rfloat <- f$height / 2
 Afloat <- pi * Rfloat^2
 Bfloat <- f$buoyancy
 
-w <- wire(length=100)
+L <- 100
+w <- wire(length=L)
 dzcable <- 1
-Acable <-  dzcable * w$diameter
+Acable <-  dzcable * w$area / L
 Bcable <- w$buoyancy
 CD <- w$CD
 g <- 9.8                               # m/s^2

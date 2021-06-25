@@ -14,7 +14,7 @@ library(R.matlab)
 d <- R.matlab::readMat("mdcodes.mat")
 # Discover elements within the dataset
 #> names(d)
-# Set up names for columns.
+# Set up names for columns based on guesses about Deweys' file.
 names <- c("name","buoyancy","height","width","diameter","CD","code")
 
 fixnames <- function(names)
@@ -104,8 +104,10 @@ floats <- read.fwf(textConnection(d$floats),widths=widths, col.names=names)
 originalName <- floats$name
 floats$name <- fixnames(floats$name)
 floats$height <- floats$height / 100
-floats$width <- NULL # this is always 0, and we don't use it in this package
-floats$diameter <- floats$diameter / 100
+# overwrite width (to keep it in same position after height
+floats$width <- pi * (0.5 * floats$diameter / 100)^2
+floats$diameter <- NULL
+names(floats) <- gsub("width", "area", names(floats))
 floats <- cbind(floats, source="Dewey")
 floats <- cbind(floats, originalName=trimws(originalName))
 for (w in which(0 == floats$CD)) {
@@ -118,14 +120,14 @@ write.csv(floats, "floats_dewey.csv", row.names=FALSE)
 # later (I guess, to distinguish from floats) but we are not trying
 # to make tidy data and there's no need for such tricks, so we call
 # his 'width' as 'diameter'.
-#wires <- read.fwf(textConnection(d$wires),widths=c(18,7,6,6,6,5,4), col.names=names)
 wires <- read.fwf(textConnection(d$wires),widths=widths, col.names=names)
 originalName <- wires$name
 wires$name <- fixnames(wires$name)
 # Remove 'height', because it's meaningless for a wire.  (It's always 100 in the file.)
 wires$height <- NULL
-wires$diameter <- wires$width / 100 # we will call it diameter, which makes more sense
-wires$width <- NULL
+wires$areaPerMeter <- wires$width / 100
+wires$width <- NULL # not being used
+wires$diameter <- NULL # not being used
 n <- names(wires)
 n[n == "buoyancy"] <- "buoyancyPerMeter"
 names(wires) <- n
@@ -135,6 +137,7 @@ for (w in which(0 == wires$CD)) {
     wires$CD[w] <- median(wires$CD)
     warning("Wire '", wires$name[w], "': changed CD from 0 to ", wires$CD[w], sep="")
 }
+wires <- wires[, c("name", "buoyancyPerMeter", "areaPerMeter", "CD", "code", "source", "originalName")]
 write.csv(wires, "wires_dewey.csv", row.names=FALSE)
 
 # Chains and connectors
@@ -148,10 +151,10 @@ isChain <- cc$height == 100
 chains <- cc[isChain, ]
 N <- names(chains)
 N[N=="buoyancy"] <- "buoyancyPerMeter"
+N[N=="width"] <- "areaPerMeter"
 names(chains) <- N
 chains$height <- NULL
-chains$width <- chains$width / 100 # convert to m
-chains$diameter <- NULL # is 0 anyway
+chains$areaPerMeter<- chains$areaPerMeter / 100 # convert to m
 chains$name <- fixnames(chains$name)
 chains <- cbind(chains, source="Dewey")
 chains <- cbind(chains, originalName=trimws(originalName[isChain]))
@@ -159,13 +162,16 @@ for (w in which(0 == chains$CD)) {
     chains$CD[w] <- median(chains$CD)
     warning("Chain '", chains$name[w], "': changed CD from 0 to ", chains$CD[w], sep="")
 }
+chains$diameter <- NULL
 write.csv(chains, "chains_dewey.csv", row.names=FALSE)
 
 connectors <- cc[!isChain, ]
-connectors
+head(connectors,2)
 connectors$diameter <- NULL # this is always 0, and we don't use it in this package
 connectors$height <- connectors$height / 100
-connectors$width <- connectors$width / 100
+# replace width with area
+connectors$width <- connectors$height * connectors$width / 100
+names(connectors) <- gsub("width", "area", names(connectors))
 connectors <- cbind(connectors, source="Dewey")
 connectors <- cbind(connectors, originalName=trimws(originalName[!isChain]))
 for (w in which(0 == connectors$CD)) {

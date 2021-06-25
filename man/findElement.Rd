@@ -29,7 +29,8 @@ of this argumebnt.}
 \code{findElement} does a fuzzy search for an element model, using
 \code{\link[=agrep]{agrep()}}.  The output (if any) is in the form of suggested calls
 to element-creating functions
-\code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=connector]{connector()}}, \code{\link[=float]{float()}}, \code{\link[=instrument]{instrument()}}, and \code{\link[=wire]{wire()}}.
+\code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=connector]{connector()}}, \code{\link[=float]{float()}}, \code{\link[=instrument]{instrument()}}, \code{\link[=misc]{misc()}}
+and \code{\link[=wire]{wire()}}.
 The list is in alphabetical order, not the order of the closeness of the match.
 }
 \details{

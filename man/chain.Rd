@@ -7,7 +7,7 @@
 chain(
   model = "1in buoy chain",
   buoyancyPerMeter = NULL,
-  width = NULL,
+  areaPerMeter = NULL,
   CD = NULL,
   length = NULL
 )
@@ -30,11 +30,10 @@ be supplied).}
 of length, expressed as kg/m.
 Note that \code{buoyancyPerMeter} is ignored if \code{model} is recognized.}
 
-\item{width}{numeric value for the width (in m)
-of the element as viewed from above.
-This is multiplied by \code{height} to compute the
-area of the element, as part of the drag computation.
-Note that \code{width} is ignored if \code{model} is recognized.}
+\item{areaPerMeter}{numeric value indicating the frontal area per meter
+of length, expressed as m^2. (This is equivalent to the width, or diameter, of
+the wire.)
+Note that \code{areaPerMeter} is ignored if \code{model} is recognized.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}

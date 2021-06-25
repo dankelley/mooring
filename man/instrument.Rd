@@ -5,7 +5,7 @@
 \title{Create an instrument object}
 \usage{
 instrument(
-  model = "sbe37 microcat clamp-on style",
+  model = "SBE37 microcat clamp-on style",
   buoyancy = NULL,
   height = NULL,
   area = NULL,

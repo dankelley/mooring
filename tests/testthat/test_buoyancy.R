@@ -17,3 +17,4 @@ test_that("chain buoyancy proportional to length", {
           expect_equal(3*buoyancy(chain(length=1)), buoyancy(chain(length=3)))
 })
 
+

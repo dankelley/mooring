@@ -4,8 +4,8 @@ debug <- 0
 
 anchors <- NULL
 for (file in list.files(pattern="^anchors.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% anchors$name))
@@ -20,13 +20,13 @@ for (file in list.files(pattern="^anchors.*csv$")) {
 
 chains <- NULL
 for (file in list.files(pattern="^chains.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% chains$name))
         stop("name conflict")
-    for (item in c("buoyancyPerMeter", "width", "CD")) {
+    for (item in c("buoyancyPerMeter", "areaPerMeter", "CD")) {
         if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
             stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
         d[[item]] <- as.numeric(d[[item]])
@@ -36,13 +36,13 @@ for (file in list.files(pattern="^chains.*csv$")) {
 
 connectors <- NULL
 for (file in list.files(pattern="^connectors.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% connectors$name))
         stop("name conflict")
-    for (item in c("buoyancy", "height", "width", "CD")) {
+    for (item in c("buoyancy", "height", "area", "CD")) {
         if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
             stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
         d[[item]] <- as.numeric(d[[item]])
@@ -52,13 +52,13 @@ for (file in list.files(pattern="^connectors.*csv$")) {
 
 floats <- NULL
 for (file in list.files(pattern="^floats.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% floats$name))
         stop("name conflict")
-    for (item in c("buoyancy", "height", "diameter", "CD")) {
+    for (item in c("buoyancy", "height", "area", "CD")) {
         if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
             stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
         d[[item]] <- as.numeric(d[[item]])
@@ -68,8 +68,8 @@ for (file in list.files(pattern="^floats.*csv$")) {
 
 instruments <- NULL
 for (file in list.files(pattern="^instruments.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% instruments$name))
@@ -84,8 +84,9 @@ for (file in list.files(pattern="^instruments.*csv$")) {
 
 miscs <- NULL
 for (file in list.files(pattern="^miscs.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
+    d$area <- round(d$area, 4) # seems the limit of what could be measured on height etc
     if (debug > 0)
         print(d)
     if (any(d$name %in% miscs$name))
@@ -97,11 +98,14 @@ for (file in list.files(pattern="^miscs.*csv$")) {
     }
     miscs <- rbind(miscs, d)
 }
+# reorder columns for consistency
+miscsOrig <- miscs
+miscs <- miscsOrig[, c("name", "buoyancy", "height", "area", "CD", "code", "source", "originalName")]
 
 releases <- NULL
 for (file in list.files(pattern="^releases.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% releases$name))
@@ -116,13 +120,13 @@ for (file in list.files(pattern="^releases.*csv$")) {
 
 wires <- NULL
 for (file in list.files(pattern="^wires.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
-        print(d)
+        print(head(d,2))
     if (any(d$name %in% wires$name))
         stop("name conflict")
-    for (item in c("buoyancyPerMeter", "diameter", "CD")) {
+    for (item in c("buoyancyPerMeter", "areaPerMeter", "CD")) {
         if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
             stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
         d[[item]] <- as.numeric(d[[item]])
