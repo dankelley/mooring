@@ -41,8 +41,7 @@
 
 <meta property="og:title" content="Create a wire object — wire" />
 <meta property="og:description" content="Creates a wire (or rope, chain, etc.) object,
-either by looking up a known object from the database, or by defining a new type.
-Area is formulated as length*diameter, for consistency with Dewey's Matlab code." />
+either by looking up a known object from the database, or by defining a new type." />
 
 
 
@@ -144,14 +143,13 @@ Area is formulated as length*diameter, for consistency with Dewey's Matlab code.
 
     <div class="ref-description">
     <p>Creates a wire (or rope, chain, etc.) object,
-either by looking up a known object from the database, or by defining a new type.
-Area is formulated as length*diameter, for consistency with Dewey's Matlab code.</p>
+either by looking up a known object from the database, or by defining a new type.</p>
     </div>
 
     <pre class="usage"><span class='fu'>wire</span><span class='op'>(</span>
   model <span class='op'>=</span> <span class='st'>"1/4in wire/jack"</span>,
   buoyancyPerMeter <span class='op'>=</span> <span class='cn'>NULL</span>,
-  diameter <span class='op'>=</span> <span class='cn'>NULL</span>,
+  areaPerMeter <span class='op'>=</span> <span class='cn'>NULL</span>,
   CD <span class='op'>=</span> <span class='cn'>NULL</span>,
   length <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
@@ -181,12 +179,11 @@ of length, expressed as kg/m.
 Note that <code>buoyancyPerMeter</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
-      <th>diameter</th>
-      <td><p>numeric value for the diameter (in m)
-of the element as viewed from a horizontal direction.
-This is used to compute area, for drag calculations, as
-pi*(diameter/2)^2.
-Note that <code>diameter</code> is ignored if <code>model</code> is recognized.</p></td>
+      <th>areaPerMeter</th>
+      <td><p>numeric value indicating the frontal area per meter
+of length, expressed as m^2. (This is equivalent to the width, or diameter, of
+the wire.)
+Note that <code>areaPerMeter</code> is ignored if <code>model</code> is recognized.</p></td>
     </tr>
     <tr>
       <th>CD</th>
