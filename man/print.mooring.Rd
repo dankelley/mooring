@@ -9,7 +9,8 @@
 \arguments{
 \item{x}{an object of the \code{"mooring"} class.}
 
-\item{...}{optional arguments (ignored).}
+\item{...}{optional arguments.  If this includes \code{debug}, and if that holds
+a number greater than zero, then some debugging information is printed.}
 }
 \description{
 Print a mooring

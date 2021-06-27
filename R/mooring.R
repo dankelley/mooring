@@ -772,7 +772,8 @@ mooring <- function(...)
 #'
 #' @param x an object of the `"mooring"` class.
 #'
-#' @param ... optional arguments (ignored).
+#' @param ... optional arguments.  If this includes `debug`, and if that holds
+#' a number greater than zero, then some debugging information is printed.
 #'
 #' @examples
 #' library(mooring)
@@ -783,6 +784,8 @@ mooring <- function(...)
 #' @author Dan Kelley
 print.mooring <- function(x, ...)
 {
+    debug <- if ("debug" %in% names(list(...))) list(...)$debug else 0L
+    mooringDebug(debug, "print.mooring() {\n", sep="")
     elementary <- 2 == length(class(x))
     n <- if (elementary) 1 else length(x)
     if (elementary) {
@@ -809,7 +812,7 @@ print.mooring <- function(x, ...)
     i <- 1L
     while (i <= n) {
         xi <- if (elementary) x else x[[i]]
-        #> cat("i=", i, " class=", paste(class(xi), collapse=","), "\n", sep="")
+        mooringDebug(debug, "i=", i, " class=", paste(class(xi), collapse=","), "\n", sep="")
         if (inherits(xi, "anchor")) {
             cat(sprintf("%s%d: '%s' anchor, %gkg, height %gm, in %gm water depth\n",
                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
@@ -844,8 +847,8 @@ print.mooring <- function(x, ...)
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
         } else if (inherits(xi, 'float')) {
-            cat(sprintf("%s%d: '%s' float, %gkg, height %gm, diameter %gm\n",
-                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$diameter), sep='')
+            cat(sprintf("%s%d: '%s' float, %gkg, height %gm, area %gm\n",
+                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
         } else if (inherits(xi, 'instrument')) {
@@ -890,6 +893,7 @@ print.mooring <- function(x, ...)
             stop("unknown class c(\"", paste(class(xi), collapse="\", \""), "\")")
         }
     }
+    mooringDebug(debug, "} # print.mooring()\n", sep="")
     invisible(x)
 }
 

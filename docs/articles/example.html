@@ -91,13 +91,13 @@
 
       
 
-      </header><script src="example_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="example_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>A Practical Example</h1>
                         <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-25</h4>
+            <h4 class="date">2021-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/example.Rmd"><code>vignettes/example.Rmd</code></a></small>
       <div class="hidden name"><code>example.Rmd</code></div>
@@ -197,8 +197,9 @@
 <p>Similarly, the ADCP is</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">md</span><span class="op">[[</span><span class="fl">152</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## 1: 'syn. float, bracket and 109lb ADCP' float, 789.8kg, height 2.42m, area 1.234m</code></pre>
 <p>We may use this to construct a diagnostic curve giving an overview of the mooring knockdown, as follows. Note that the <span class="math inline">\(x\)</span> axis of the resultant plot is showing velocity at the depth of the ADCP.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0.7</span>,<span class="fl">0</span><span class="op">)</span>, mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">iADCP</span> <span class="op">&lt;-</span> <span class="fl">152</span>
 <span class="va">imicrocat</span> <span class="op">&lt;-</span> <span class="fl">155</span>
@@ -228,15 +229,17 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>An overview of a mooring is provided by printing it, either with</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></code></pre></div>
 <p>or, in an interactive session, with</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m</span></code></pre></div>
 <p>For the mooring constructed above, the results are as follows.</p>
 <pre><code>## Mooring with 34 elements, listed from the top down:
+##   1: 'new glass streamlined float c2' float, 45.41kg, height 0.87m, area 0.183m
 ##   2: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
 ##   3: '3/16in galvanized wire coated to 1/4in' wire, -11.5475kg, length 149m, area 0.94615m^2
+##   4: 'syn. float, bracket and 109lb ADCP' float, 789.8kg, height 2.42m, area 1.234m
 ##   7: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
 ##   8: '3/16in galvanized wire coated to 1/4in' wire, -11.315kg, length 146m, area 0.9271m^2
 ##   9: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
@@ -251,14 +254,17 @@
 ##   18: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
 ##   19: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
 ##   20: '3/16in galvanized wire coated to 1/4in' wire, -3.565kg, length 46m, area 0.2921m^2
+##   21: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m
 ##   22: '3/16in galvanized wire coated to 1/4in' wire, -11.3925kg, length 147m, area 0.93345m^2
 ##   23: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
 ##   24: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
 ##   25: '3/16in galvanized wire coated to 1/4in' wire, -11.16kg, length 144m, area 0.9144m^2
+##   26: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m
 ##   27: '3/16in galvanized wire coated to 1/4in' wire, -3.875kg, length 50m, area 0.3175m^2
 ##   28: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
 ##   29: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
 ##   30: '3/16in galvanized wire coated to 1/4in' wire, -2.635kg, length 34m, area 0.2159m^2
+##   31: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m
 ##   32: 'benthos 965a' release, -36.73kg, height 1.23m, area 0.1562m
 ##   33: '5/8in galvanized chain' chain, -43.23kg, length 10m, area 0.572m^2
 ##   34: '3 trainwheels' anchor, -1050kg, height 0m, in 1400m water depth</code></pre>
@@ -269,18 +275,18 @@
 <h2 class="hasAnchor">
 <a href="#components" class="anchor"></a>Components</h2>
 <p>To learn more about, say, the second element (the chain from anchor to acoustic release), use</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <pre><code>## 1: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</code></pre>
 <p>and to see the full details, use</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dput.html">dput</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## structure(list(model = "SBE37 microcat clamp-on style", buoyancy = -1.53, 
 ##     height = 0.559, area = 0.117, CD = 0.65, source = "BIO", 
 ##     x = 0, z = -65.3389999999999, T = 43.88), class = c("mooring", 
 ## "instrument"))</code></pre>
 <p>or, with less detail but in a more digestible format,</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## List of 9
 ##  $ model   : chr "SBE37 microcat clamp-on style"
@@ -294,7 +300,7 @@
 ##  $ T       : num 43.9
 ##  - attr(*, "class")= chr [1:2] "mooring" "instrument"</code></pre>
 <p>You may go further with e.g.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">area</span></code></pre></div>
 <pre><code>## [1] 0.117</code></pre>
 <p><strong>Exercise 1.</strong> Double the chain density, to see the effect on knock-down.</p>
@@ -307,7 +313,7 @@
 <h3 class="hasAnchor">
 <a href="#doubling-chain-density" class="anchor"></a>1. Doubling chain density</h3>
 <p>A simple way to do this is to create <code>m</code> as before, but then to use</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">buoyancyPerMeter</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">buoyancyPerMeter</span></code></pre></div>
 <p>before using <code>digitise()</code>, <code><a href="../reference/knockdown.html">knockdown()</a></code> and then <code><a href="../reference/plot.mooring.html">plot.mooring()</a></code>. Before doing that though, you should ask yourself whether you expect to see a large effect.</p>
 </div>
@@ -315,7 +321,7 @@
 <h3 class="hasAnchor">
 <a href="#doubling-wire-drag" class="anchor"></a>2. Doubling wire drag</h3>
 <p>One way to do this is to replace the <code>W</code> definition with</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">W</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">length</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">w0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"3/16in galvanized wire coated to 1/4in"</span>, length<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
     <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"draggy wire"</span>, buoyancyPerMeter<span class="op">=</span><span class="va">w0</span><span class="op">$</span><span class="va">buoyancy</span>,
