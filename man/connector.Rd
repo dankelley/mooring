@@ -53,12 +53,6 @@ either by looking up a known object from the database, or by defining a new type
 Area is formulated as height*width, for consistency with Dewey's Matlab code.
 }
 \details{
-Many of the built-in items have \code{height} and \code{width} defined
-to be zero, because the sources did not list these things.  Likely, this is not
-terribly important, because these values are only used in computing drag, and
-connectors tend to be small, and are not likely to have significant drag compared
-with tens or hundreds of meters of wire, or with large floats.
-
 Also, it is worth noting that there are built-in connector objects that might not
 be thought of as connectors, e.g. \code{"ballast weight"}.
 }
