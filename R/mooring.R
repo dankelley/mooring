@@ -842,8 +842,8 @@ print.mooring <- function(x, ...)
             }
             i <- i + count             # account for skipped-over elements
         } else if (inherits(xi, 'connector')) {
-            cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, width %gm\n",
-                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$width), sep='')
+            cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, area %gm\n",
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
         } else if (inherits(xi, 'float')) {
