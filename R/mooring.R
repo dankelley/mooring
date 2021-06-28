@@ -1,3 +1,5 @@
+## vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
+
 ###################
 # 1. overall docs #
 ###################
@@ -5,7 +7,11 @@
 #' mooring: A Package for Analysing Oceanographic Moorings
 #'
 #' The mooring package provides functions for working with
-#' oceanographic moorings.
+#' oceanographic moorings.  The example provides a good
+#' starting point for learning, and the documentation
+#' for the key function, [mooring()], provides the
+#' next logical step in learning, after which the
+#' vignettes should be consulted.
 #'
 #' @examples
 #' library(mooring)
@@ -22,7 +28,7 @@
 #'
 #' @docType package
 #'
-#' @name mooring
+#' @name mooring-package
 NULL
 
 #' Dataset of wire, chain, and float properties
@@ -705,15 +711,31 @@ drag <- function(m, u, rho=1027, g=9.8)
 #' Create a mooring
 #'
 #' Assemble components into a mooring, starting with an anchor, created with [anchor()],
-#' and addind in wires, created with [wire()], instruments, created with [instrument()],
-#' floats, created with [float()], and so forth.
+#' and then adding wires, created with [wire()], instruments, created with [instrument()],
+#' floats, created with [float()], etc.
 #'
 #' @param ... two or more elementary objects, e.g. as created by [anchor()],
 #' [chain()], [wire()], or [float()].
 #'
 #' @examples
+#' # Example 1: most basic case: anchor, line, float.
 #' library(mooring)
 #' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
+#'
+#' # Example 2: mooring with mid-depth instrument and a float
+#' # just below it.  Note the definition of some functions,
+#' # to simplify the mooring setup. The final three lines
+#' # display the mooring in 0.5m/s current.
+#' # Exercise: add more floation between instruments,
+#' # to stiffen this floppy mooring.
+#' A <- anchor(depth=100)
+#' W <- function(l) wire("3/8in wire/jack", length=l)
+#' I <- instrument("SBE37 microcat clamp-on style")
+#' F <- float("HMB 20")
+#' m <- mooring(A, W(20), I, W(20), I, W(20), I, W(20), F)
+#' md <- discretise(m)
+#' mdk <- knockdown(md, 0.5)
+#' plot(mdk)
 #'
 #' @export
 #'

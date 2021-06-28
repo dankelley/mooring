@@ -97,7 +97,7 @@
       <h1 data-toc-skip>The mooring package</h1>
                         <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-27</h4>
+            <h4 class="date">2021-06-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/mooring.Rmd"><code>vignettes/mooring.Rmd</code></a></small>
       <div class="hidden name"><code>mooring.Rmd</code></div>
@@ -274,20 +274,20 @@
 <span class="va">depths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">us</span>, <span class="kw">function</span><span class="op">(</span><span class="va">u</span><span class="op">)</span>
                  <span class="op">{</span>
                      <span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, <span class="va">u</span><span class="op">)</span>
-                     <span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">mdk</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+                     <span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">mdk</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
                  <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0.7</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">us</span>, <span class="va">depths</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">depths</span><span class="op">)</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span>, pch<span class="op">=</span><span class="fl">20</span>, cex<span class="op">=</span><span class="fl">0.5</span>,
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">us</span>, <span class="va">depths</span>, xaxs<span class="op">=</span><span class="st">"i"</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">depths</span><span class="op">)</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span>, lwd<span class="op">=</span><span class="fl">2</span>,
      xlab<span class="op">=</span><span class="st">"Horiz. velo. [m/s]"</span>, ylab<span class="op">=</span><span class="st">"Float depth [m]"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/grid.html">grid</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.1</span><span class="op">)</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">1.1</span><span class="op">*</span><span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="mooring_files/figure-html/unnamed-chunk-13-1.png" alt="**Dependence of knockdown on current.**" width="700.0000032"><p class="caption">
-<strong>Dependence of knockdown on current.</strong>
+<img src="mooring_files/figure-html/unnamed-chunk-13-1.png" alt="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**" width="700.0000032"><p class="caption">
+<strong>Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.</strong>
 </p>
 </div>
-<p>The blue and red horizontal lines indicate zero knockdown (for zero current) and 10 percent knockdown, respectively. The diagram suggests that if a 10 depth increase is taken as a design limit, that this float will be sufficient up to speeds of approximately <span class="math inline">\(0.3\)</span>m/s.</p>
-<p><strong>Exercise 3: Find a float that will hold this mooring taut in 2m/s current.</strong></p>
+<p>This analysis suggests that a <span class="math inline">\(0.3\)</span>m/s current could yield a 10 percent increase in depth of the top mooring element, so the mooring needs more buoyancy if greater mooring stiffness is required, or if currents exceed this value.</p>
+<p><strong>Exercise 3: Suggest a float that will hold this mooring taut in 2m/s current.</strong></p>
 </div>
 </div>
 <div id="solutions-to-exercises" class="section level1">
@@ -333,11 +333,11 @@
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">drag</span>, <span class="va">df</span><span class="op">$</span><span class="va">buoyancy</span>, xlab<span class="op">=</span><span class="st">"Drag Force [N]"</span>, ylab<span class="op">=</span><span class="st">"Buoyancy Force [N]"</span>, log<span class="op">=</span><span class="st">"xy"</span><span class="op">)</span>
 <span class="co"># 3</span>
 <span class="va">drag</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">drag</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">drag</span><span class="op">)</span>, length.out<span class="op">=</span><span class="fl">100</span><span class="op">)</span>
-<span class="va">buoyancy</span> <span class="op">&lt;-</span> <span class="va">drag</span><span class="op">^</span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>
+<span class="va">buoyancy</span> <span class="op">&lt;-</span> <span class="fl">10</span><span class="op">*</span><span class="va">drag</span><span class="op">^</span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="co"># the factor is just for illustration</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">drag</span>, <span class="va">buoyancy</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="mooring_files/figure-html/unnamed-chunk-16-1.png" alt="**Float drag-buoyancy relationship.**" width="700.0000032"><p class="caption">
-<strong>Float drag-buoyancy relationship.</strong>
+<img src="mooring_files/figure-html/unnamed-chunk-16-1.png" alt="**Float drag-buoyancy relationship, in log-log scaling. Circles: data for the built-in float types, assuming a 1m/s current. Line: a scaling line of slope 3/2, with an arbitrary vertical shift for comparison with the data cloud.**" width="700.0000032"><p class="caption">
+<strong>Float drag-buoyancy relationship, in log-log scaling. Circles: data for the built-in float types, assuming a 1m/s current. Line: a scaling line of slope 3/2, with an arbitrary vertical shift for comparison with the data cloud.</strong>
 </p>
 </div>
 <p>The data cloud slope is similar to that of the indicated scaling line, created by assuming that drag is proportional to scale squared, while buoyancy is proportional to scale cubed. (Other factors are involved, so only the slope is of significance here.)</p>
@@ -346,7 +346,7 @@
 <div id="exercise-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#exercise-3" class="anchor"></a>Exercise 3</h2>
-<p>To find a float that will hold this mooring taut in 2m/s current, one approach is to use <code><a href="../reference/app.html">app()</a></code>, which has a pulldown menu for the float type. Another approach is to start with the table produced in Exercise 1, and try different float models in the code given in the “Mooring Design” section.</p>
+<p>To find a float that will hold this mooring reasonably taut in 2m/s current, one approach is to use <code><a href="../reference/app.html">app()</a></code>, which has a pulldown menu for the float type. Another approach is to start with the table produced in Exercise 1, and try different float models in the code given in the “Mooring Design” section. Of course, a criterion on tautness must be the starting point in such an analysis, and for simplicity, we take it to be 10 percent increase in the depth of the top mooring element.</p>
 <p>Exploration along these lines reveals that</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"CDMS 2m sphere"</span><span class="op">)</span></code></pre></div>
