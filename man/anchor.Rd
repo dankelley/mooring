@@ -4,7 +4,13 @@
 \alias{anchor}
 \title{Create an anchor object}
 \usage{
-anchor(model = "3 trainwheels", buoyancy = NULL, height = NULL, depth = 0)
+anchor(
+  model = "3 trainwheels",
+  buoyancy = NULL,
+  height = NULL,
+  CD = NULL,
+  depth = 0
+)
 }
 \arguments{
 \item{model}{character value indicating the type of anchor.
@@ -31,6 +37,9 @@ In some cases, as e.g. in Dewey-derived data that have "diameter" tabulated
 as zero, it is also used in the computation of the area
 of the element, as height*width.
 Note that \code{height} is ignored if \code{model} is recognized.}
+
+\item{CD}{numeric value (unitless) for the drag coefficient.
+Note that \code{CD} is ignored if \code{model} is recognized.}
 
 \item{depth}{numeric value giving water depth in m.}
 }

@@ -3,9 +3,8 @@ library(mooring)
 
 test_that("element names", {
           l <- 1
-          n <- c("model", "buoyancy", "height", "area", "depth")
           A <- anchor(depth=100)
-          expect_equal(names(A), c("model", "buoyancy", "height", "area", "depth", "source"))
+          expect_equal(names(A), c("model", "buoyancy", "height", "area", "CD", "depth", "source"))
 
           CH <- chain(length=l)
           expect_equal(names(CH), c("model", "buoyancy", "height", "area", "CD", "source"))

@@ -104,6 +104,9 @@ isMooring <- function(m=NULL) {
 #'
 #' @template heightTemplate
 #'
+#' @template CDTemplate
+#'
+#' @template heightTemplate
 #' @param depth numeric value giving water depth in m.
 #'
 #' @template sourceTemplate
@@ -120,7 +123,7 @@ isMooring <- function(m=NULL) {
 #' @export
 #'
 #' @author Dan Kelley
-anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, depth=0)
+anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, CD=NULL, depth=0)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
@@ -137,13 +140,15 @@ anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, depth=0)
             warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
         buoyancy <- me$buoyancy
         height <- me$height
+        CD <- me$CD
         source <- me$source
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new anchor model")
         if (is.null(height)) stop("must supply height, if creating a new anchor model")
+        if (is.null(CD)) stop("must supply CD, if creating a new anchor model")
         source <- ""
     }
-    rval <- list(model=model, buoyancy=buoyancy, height=height, area=0, depth=depth, source=source)
+    rval <- list(model=model, buoyancy=buoyancy, height=height, area=0, CD=CD, depth=depth, source=source)
     class(rval) <- c("mooring", "anchor")
     rval
 }                                      # anchor()
@@ -664,7 +669,7 @@ misc <- function(model="AanderaaT.chain", buoyancy=NULL, height=NULL, area=NULL,
 CD <- function(m)
 {
     if (isMooring(m)) {
-        sapply(m, function(item) if ("anchor" == class(item)[2]) 0 else item$CD)
+        sapply(m, function(item) item$CD)
     } else {
         if (length(class(m)) == 2) m$CD else stop("area can only be computed for a mooring or an element")
     }
@@ -706,6 +711,32 @@ drag <- function(m, u, rho=1027, g=9.8)
         stop("length of rho, ", length(rho), " must match length of m, ", length(m))
     uSquared <- if (is.function(u)) sapply(depth(m),u)^2 else u^2
     0.5 * area(m) * rho * CD(m) * uSquared / g
+}
+
+#' Get mooring/element height
+#'
+#' @template meTemplate
+#'
+#' @return `height` returns a numeric vector of element(s) height, in m.  This will be
+#' a single value if the first element is a single element, or a longer vector if it
+#' is a mooring.
+#'
+#' @examples
+#' library(mooring)
+#' height(float())
+#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
+#' height(m)
+#'
+#' @export
+#'
+#' @author Dan Kelley
+height <- function(m)
+{
+    if (isMooring(m)) {
+        sapply(m, function(item) item$height)
+    } else {
+        if (length(class(m)) == 2) m$height else stop("height can only be computed for a mooring or an element")
+    }
 }
 
 #' Create a mooring
@@ -1750,4 +1781,56 @@ summary.mooring <- function(object, ...)
     }
 }
 
+#' Access something in a mooring
+#'
+#' Retrieves values from (a) a mooring element, as created with
+#' [float()] or a similar function, or (b) a whole mooring, as created
+#' with [mooring()].
+#'
+#' @template mTemplate
+#'
+#' @param i either (a) an integer specifying index of item to be returned, or
+#' (b) a character string. The first case is used to look up components of
+#' a mooring. The second case requires `i` to be `"area"`, `"buoyancy"`,
+#' `"CD"`, or `"height"`, and the result is a single value if `m` is
+#' an elementary object (example 1) or a whole mooring (example 2).
+#'
+#' @examples
+#' library(mooring)
+#' F <- float("HMB 20")
+#' F["buoyancy"]
+#' m <- mooring(anchor(depth=120), wire(length=100), F)
+#' m["buoyancy"]
+#'
+#' @export
+#'
+#' @author Dan Kelley
+`[.mooring` <- function(m, i)
+{
+    known <- c("area", "buoyancy", "CD", "height")
+    if (isMooring(m)) {
+        if (is.numeric(i)) {
+            #message("m int")
+            unclass(m)[[i]]
+        } else {
+            #message("m char")
+            if (i %in% known)
+                sapply(m, function(mi) mi[[i]])
+            else
+                stop("'", i, "' not handled; try one of: '", paste(known, collapse="', '"), "'")
+        }
+    } else {
+        if (length(class(m)) != 2)
+            stop("only works for a mooring, or an element of a mooring")
+        if (is.numeric(i)) {
+            stop("integer lookup is not permitted for elementary objects")
+        } else {
+            #message("e char")
+            if (i %in% known)
+                unclass(m)[[i]]
+            else
+                stop("'", i, "' not handled; try one of: '", paste(known, collapse="', '"), "'")
+        }
+    }
+}
 

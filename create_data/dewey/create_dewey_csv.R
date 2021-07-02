@@ -51,11 +51,11 @@ anchors <- read.fwf(textConnection(d$anchors),widths=widths, col.names=names)
 originalName <- anchors$name
 anchors$name <- fixnames(anchors$name)
 anchors$height <- anchors$height / 100
-# NOTE: we do not use width, area or CD, because we
+# NOTE: we do not use width or area, because we
 # are not solving for drag non these things
-anchors$width <- NULL
+anchors$width <- anchors$height * anchors$width / 100
+names(anchors) <- gsub("width", "area", names(anchors))
 anchors$diameter <- NULL
-anchors$CD <- NULL
 anchors <- cbind(anchors, source="Dewey")
 anchors <- cbind(anchors, originalName=trimws(originalName))
 write.csv(anchors, "anchors_dewey.csv", row.names=FALSE)
