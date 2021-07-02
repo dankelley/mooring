@@ -97,7 +97,7 @@
       <h1 data-toc-skip>Test Case with Table Tennis Ball</h1>
                         <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-28</h4>
+            <h4 class="date">2021-07-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/table_tennis.Rmd"><code>vignettes/table_tennis.Rmd</code></a></small>
       <div class="hidden name"><code>table_tennis.Rmd</code></div>
@@ -166,7 +166,7 @@ z' = L - L\cos\phi
 <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="va">D</span><span class="op">/</span><span class="va">g</span>, <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">f</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span><span class="op">)</span>        <span class="co"># convert to kg to compare</span>
 
 <span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"gossamer"</span>, length<span class="op">=</span><span class="va">L</span>, buoyancyPerMeter<span class="op">=</span><span class="fl">0</span>, areaPerMeter<span class="op">=</span><span class="fl">0</span>, CD<span class="op">=</span><span class="fl">0</span><span class="op">)</span>
-<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="st">"fake"</span>, buoyancy<span class="op">=</span><span class="op">-</span><span class="fl">1000</span>, height<span class="op">=</span><span class="fl">0</span>, depth<span class="op">=</span><span class="va">L</span><span class="op">)</span>
+<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="st">"fake"</span>, buoyancy<span class="op">=</span><span class="op">-</span><span class="fl">1000</span>, height<span class="op">=</span><span class="fl">0</span>, depth<span class="op">=</span><span class="va">L</span>, CD<span class="op">=</span><span class="fl">0</span><span class="op">)</span>
 <span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">w</span>, <span class="va">f</span><span class="op">)</span>
 
 <span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">500</span> <span class="co"># number of sub-segments to use</span>

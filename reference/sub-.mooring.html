@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create an anchor object — anchor • mooring</title>
+<title>Access something in a mooring — [.mooring • mooring</title>
 
 
 <!-- jquery -->
@@ -39,14 +39,10 @@
 
 
 
-<meta property="og:title" content="Create an anchor object — anchor" />
-<meta property="og:description" content="Create a anchor object,
-either by looking up a known object from the database, or by defining a new type.
-This must be the first element of a mooring constructed with
-mooring().  The default is 3 trainwheels with zero height (to simplify
-test cases).
-Note that depth is not a characteristic of the anchor, but rather of
-the domain into which it is placed." />
+<meta property="og:title" content="Access something in a mooring — [.mooring" />
+<meta property="og:description" content="Retrieves values from (a) a mooring element, as created with
+float() or a similar function, or (b) a whole mooring, as created
+with mooring()." />
 
 
 
@@ -141,111 +137,48 @@ the domain into which it is placed." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create an anchor object</h1>
+    <h1>Access something in a mooring</h1>
     <small class="dont-index">Source: <a href='https://github.com/dankelley/mooring/blob/master/R/mooring.R'><code>R/mooring.R</code></a></small>
-    <div class="hidden name"><code>anchor.Rd</code></div>
+    <div class="hidden name"><code>sub-.mooring.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a anchor object,
-either by looking up a known object from the database, or by defining a new type.
-This must be the first element of a mooring constructed with
-<code><a href='mooring.html'>mooring()</a></code>.  The default is 3 trainwheels with zero height (to simplify
-test cases).
-Note that <code>depth</code> is not a characteristic of the anchor, but rather of
-the domain into which it is placed.</p>
+    <p>Retrieves values from (a) a mooring element, as created with
+<code><a href='float.html'>float()</a></code> or a similar function, or (b) a whole mooring, as created
+with <code><a href='mooring.html'>mooring()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>anchor</span><span class='op'>(</span>
-  model <span class='op'>=</span> <span class='st'>"3 trainwheels"</span>,
-  buoyancy <span class='op'>=</span> <span class='cn'>NULL</span>,
-  height <span class='op'>=</span> <span class='cn'>NULL</span>,
-  CD <span class='op'>=</span> <span class='cn'>NULL</span>,
-  depth <span class='op'>=</span> <span class='fl'>0</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"># S3 method for mooring
+[(m, i)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>model</th>
-      <td><p>character value indicating the type of anchor.
-There are three possibilities for <code>model</code>.
-(1) If this is <code>"?"</code>, then the function returns a vector of permitted
-character values. (2) If this is <code>"?X"</code>, where X is a set of
-characters, then <code><a href='findElement.html'>findElement()</a></code> is called to do a fuzzy search,
-with the <code>search</code> argument set to <code>"anchor"</code>.
-(3) If it is recognized, i.e. if that type is
-stored in <code><a href='https://rdrr.io/r/utils/data.html'>data(mooringElements)</a></code>, then the that stored value
-is used, and all other arguments to this function are ignored.
-(4) Otherwise, a new anchor object is created, using
-values specified in the other arguments (all of which must
-be supplied).</p></td>
+      <th>m</th>
+      <td><p>a mooring object, created by <code><a href='mooring.html'>mooring()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>buoyancy</th>
-      <td><p>numeric value indicating buoyancy.  For
-wire elements, this is buoyancy per length, expressed in kg/m.
-For other elements, it is buoyancy, expressed in kg.
-Note that <code>buoyancy</code> is ignored if <code>model</code> is recognized.</p></td>
-    </tr>
-    <tr>
-      <th>height</th>
-      <td><p>numeric value for the height (in m) of the element.
-This value is used in the computation of the mooring geometry.
-In some cases, as e.g. in Dewey-derived data that have "diameter" tabulated
-as zero, it is also used in the computation of the area
-of the element, as height*width.
-Note that <code>height</code> is ignored if <code>model</code> is recognized.</p></td>
-    </tr>
-    <tr>
-      <th>CD</th>
-      <td><p>numeric value (unitless) for the drag coefficient.
-Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></td>
-    </tr>
-    <tr>
-      <th>depth</th>
-      <td><p>numeric value giving water depth in m.</p></td>
+      <th>i</th>
+      <td><p>either (a) an integer specifying index of item to be returned, or
+(b) a character string. The first case is used to look up components of
+a mooring. The second case requires <code>i</code> to be <code>"area"</code>, <code>"buoyancy"</code>,
+<code>"CD"</code>, or <code>"height"</code>, and the result is a single value if <code>m</code> is
+an elementary object (example 1) or a whole mooring (example 2).</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code>anchor</code> returns an object of the <code>"mooring"</code> class and <code>"anchor"</code> subclass.</p>
-    <h2 class="hasAnchor" id="data-sources"><a class="anchor" href="#data-sources"></a>Data sources</h2>
-
-    
-
-
-<p>To learn more about the data used for the built-in
-anchor
-objects, use e.g.</p><pre>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mooringElements</span><span class='op'>)</span>
-<span class='va'>mooringElements</span><span class='op'>$</span><span class='va'>anchors</span>
-</pre>
-
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other functions that create mooring objects: 
-<code><a href='chain.html'>chain</a>()</code>,
-<code><a href='connector.html'>connector</a>()</code>,
-<code><a href='float.html'>float</a>()</code>,
-<code><a href='instrument.html'>instrument</a>()</code>,
-<code><a href='misc.html'>misc</a>()</code>,
-<code><a href='release.html'>release</a>()</code>,
-<code><a href='wire.html'>wire</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Dan Kelley</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dankelley.github.io/mooring/'>mooring</a></span><span class='op'>)</span>
-<span class='co'># List known anchor types</span>
-<span class='fu'>anchor</span><span class='op'>(</span><span class='st'>"?"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "1 Concrete Block"  "1 Large St/C Tire" "1 Railway Wheel"  
-#&gt;  [4] "1 Tire-St+Con"     "2 Concrete Blocks" "2 Railway Wheels" 
-#&gt;  [7] "3 Concrete Blocks" "3 Railway Wheels"  "3 trainwheels"    
-#&gt; [10] "4 Railway Wheels" </div><div class='input'>
+<span class='cn'>F</span> <span class='op'>&lt;-</span> <span class='fu'><a href='float.html'>float</a></span><span class='op'>(</span><span class='st'>"HMB 20"</span><span class='op'>)</span>
+<span class='cn'>F</span><span class='op'>[</span><span class='st'>"buoyancy"</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; [1] 34.5</div><div class='input'><span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mooring.html'>mooring</a></span><span class='op'>(</span><span class='fu'><a href='anchor.html'>anchor</a></span><span class='op'>(</span>depth<span class='op'>=</span><span class='fl'>120</span><span class='op'>)</span>, <span class='fu'><a href='wire.html'>wire</a></span><span class='op'>(</span>length<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>, <span class='cn'>F</span><span class='op'>)</span>
+<span class='va'>m</span><span class='op'>[</span><span class='st'>"buoyancy"</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; [1]    34.5   -13.0 -1050.0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
