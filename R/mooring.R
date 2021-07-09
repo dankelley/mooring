@@ -741,17 +741,23 @@ height <- function(m)
 
 #' Create a mooring
 #'
-#' Assemble components into a mooring, starting with an anchor, created with [anchor()],
-#' and then adding wires, created with [wire()], instruments, created with [instrument()],
-#' floats, created with [float()], etc.
+#' Assemble elementary components into a mooring string.
+#' The first argument must be an anchor, created
+#' with [anchor()].  These are stored in reverse order
+#' in the return value (see Example 1).
 #'
-#' @param ... two or more elementary objects, e.g. as created by [anchor()],
-#' [chain()], [wire()], or [float()].
+#' @param ... two or more elementary objects, as created by
+#' [anchor()], [release()], [chain()],
+#' [wire()], [connector()], [instrument()], [misc()] or [float()].
 #'
 #' @examples
 #' # Example 1: most basic case: anchor, line, float.
 #' library(mooring)
-#' m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
+#' m <- mooring(anchor(depth=100), wire(length=80), float())
+#' m                          # overview of float
+#' tail(m, 1)                 # anchor overview
+#' head(m, 1)                 # float overview
+#' str(m[1])                  # float details
 #'
 #' # Example 2: mooring with mid-depth instrument and a float
 #' # just below it.  Note the definition of some functions,
@@ -834,8 +840,8 @@ print.mooring <- function(x, ...)
     debug <- if ("debug" %in% names(list(...))) list(...)$debug else 0L
     mooringDebug(debug, "print.mooring() {\n", sep="")
     elementary <- 2 == length(class(x))
-    n <- if (elementary) 1 else length(x)
-    if (elementary) {
+    n <- if (elementary) 1L else length(x)
+    if (elementary || n == 1L) {
         prefix <- ""
     } else {
         if (is.null(attr(x, "discretised"))) {
@@ -867,8 +873,9 @@ print.mooring <- function(x, ...)
             i <- i + 1L
         } else if (inherits(xi, "chain")) {
             # See if there are more chain elements following this.
+            mooringDebug(debug, "a chain; n=", n, ", n-i=", n-i, "\n")
             count <- 1L
-            while (count <= n) {
+            while (count <= (n - i)) {
                 if (!inherits(x[[i+count]], "chain"))
                     break
                 count <- count + 1L
@@ -915,8 +922,9 @@ print.mooring <- function(x, ...)
             i <- i + 1L
         } else if (inherits(xi, "wire")) {
             # See if there are more wire elements following this.
+            mooringDebug(debug, "a wire; n=", n, ", n-i=", n-i, "\n")
             count <- 1L
-            while (count <= n) {
+            while (count <= (n - i)) {
                 if (!inherits(x[[i+count]], "wire"))
                     break
                 count <- count + 1L
@@ -1810,8 +1818,13 @@ summary.mooring <- function(object, ...)
     known <- c("area", "buoyancy", "CD", "height")
     if (isMooring(m)) {
         if (is.numeric(i)) {
-            #message("m int")
-            unclass(m)[[i]]
+            #message("m[i] with i=",paste(i, collapse=" "))
+            i <- subset(i, 0L < i & i <= length(m))
+            # message(" >> i=",paste(i, collapse=" "))
+            um <- unclass(m)
+            rval <- lapply(i, function(mi) um[[mi]])
+            class(rval) <- class(m)
+            rval
         } else {
             #message("m char")
             if (i %in% known)

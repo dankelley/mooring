@@ -8,8 +8,7 @@ height(m)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
-mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}}, \code{\link[=release]{release()}},
-\code{\link[=wire]{wire()}}, \code{\link[=instrument]{instrument()}}, or \code{\link[=float]{float()}}.}
+mooring-element object, created with}
 }
 \value{
 \code{height} returns a numeric vector of element(s) height, in m.  This will be

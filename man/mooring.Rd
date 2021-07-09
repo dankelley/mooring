@@ -7,18 +7,24 @@
 mooring(...)
 }
 \arguments{
-\item{...}{two or more elementary objects, e.g. as created by \code{\link[=anchor]{anchor()}},
-\code{\link[=chain]{chain()}}, \code{\link[=wire]{wire()}}, or \code{\link[=float]{float()}}.}
+\item{...}{two or more elementary objects, as created by
+\code{\link[=anchor]{anchor()}}, \code{\link[=release]{release()}}, \code{\link[=chain]{chain()}},
+\code{\link[=wire]{wire()}}, \code{\link[=connector]{connector()}}, \code{\link[=instrument]{instrument()}}, \code{\link[=misc]{misc()}} or \code{\link[=float]{float()}}.}
 }
 \description{
-Assemble components into a mooring, starting with an anchor, created with \code{\link[=anchor]{anchor()}},
-and then adding wires, created with \code{\link[=wire]{wire()}}, instruments, created with \code{\link[=instrument]{instrument()}},
-floats, created with \code{\link[=float]{float()}}, etc.
+Assemble elementary components into a mooring string.
+The first argument must be an anchor, created
+with \code{\link[=anchor]{anchor()}}.  These are stored in reverse order
+in the return value (see Example 1).
 }
 \examples{
 # Example 1: most basic case: anchor, line, float.
 library(mooring)
-m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
+m <- mooring(anchor(depth=100), wire(length=80), float())
+m                          # overview of float
+tail(m, 1)                 # anchor overview
+head(m, 1)                 # float overview
+str(m[1])                  # float details
 
 # Example 2: mooring with mid-depth instrument and a float
 # just below it.  Note the definition of some functions,
