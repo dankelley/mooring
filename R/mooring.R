@@ -896,12 +896,12 @@ print.mooring <- function(x, ...)
             }
             i <- i + count             # account for skipped-over elements
         } else if (inherits(xi, 'connector')) {
-            cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, area %gm\n",
+            cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, area %gm^2\n",
                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
         } else if (inherits(xi, 'float')) {
-            cat(sprintf("%s%d: '%s' float, %gkg, height %gm, area %gm\n",
+            cat(sprintf("%s%d: '%s' float, %gkg, height %gm, area %gm^2\n",
                          prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
@@ -916,7 +916,7 @@ print.mooring <- function(x, ...)
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
         } else if (inherits(xi, 'release')) {
-            cat(sprintf("%s%d: '%s' release, %gkg, height %gm, area %gm\n",
+            cat(sprintf("%s%d: '%s' release, %gkg, height %gm, area %gm^2\n",
                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
@@ -937,7 +937,7 @@ print.mooring <- function(x, ...)
                             xi$height,
                             xi$area), sep="")
             } else {
-                cat(sprintf("%s%d-%d: '%s' wire, %gkg, length %gm, area %gm\n",
+                cat(sprintf("%s%d-%d: '%s' wire, %gkg, length %gm, area %gm^2\n",
                             prefix, i, i+count-1L, xi$model,
                             xi$buoyancy,
                             xi$height,

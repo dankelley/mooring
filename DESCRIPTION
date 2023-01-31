@@ -22,7 +22,7 @@ Encoding: UTF-8
 URL: https://dankelley.github.io/mooring/
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 BuildVignettes: true
 VignetteBuilder: knitr
 Config/testthat/edition: 3

@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/mooring.html">Get started</a>
 </li>
@@ -50,7 +46,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/dankelley/mooring/">
+  <a href="https://github.com/dankelley/mooring/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,37 +87,58 @@
 
       
 
-      </header><script src="table_tennis_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Test Case with Table Tennis Ball</h1>
-                        <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
+                        <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-28</h4>
+            <h4 data-toc-skip class="date">2023-01-30</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/table_tennis.Rmd"><code>vignettes/table_tennis.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/table_tennis.Rmd" class="external-link"><code>vignettes/table_tennis.Rmd</code></a></small>
       <div class="hidden name"><code>table_tennis.Rmd</code></div>
 
     </div>
 
     
     
-<p><strong>Abstract.</strong> This vignette outlines a test of the model against theory for a very simple mooring, and ends with an idea for an instrument to measure flow based on mooring dynamics.</p>
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>As a test of the <code>mooring</code> code, and a possible motivation for a simple experiment, consider a table-tennis ball attached with a thin fishing line to a solid immovable object. These balls are very buoyant in water, consisting of a light and thin material with air inside. By contrast, fishing line is nearly neutrally buoyant in water. The area of the ball will appreciably exceed that of the line, unless the line is very long, and therefore the drag on the ball will be much larger than the drag on the line.</p>
+<p><strong>Abstract.</strong> This vignette outlines a test of the model
+against theory for a very simple mooring, and ends with an idea for an
+instrument to measure flow based on mooring dynamics.</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>As a test of the <code>mooring</code> code, and a possible motivation
+for a simple experiment, consider a table-tennis ball attached with a
+thin fishing line to a solid immovable object. These balls are very
+buoyant in water, consisting of a light and thin material with air
+inside. By contrast, fishing line is nearly neutrally buoyant in water.
+The area of the ball will appreciably exceed that of the line, unless
+the line is very long, and therefore the drag on the ball will be much
+larger than the drag on the line.</p>
 </div>
-<div id="theory" class="section level1">
-<h1 class="hasAnchor">
-<a href="#theory" class="anchor"></a>Theory</h1>
-<p>For simplicity, we may assume that the line has zero drag, and zero buoyancy.</p>
-<p>Let <span class="math inline">\(L\)</span> be the length of the line and <span class="math inline">\(R\)</span> the radius of the ball. Let the water density be <span class="math inline">\(\rho\)</span>. Assuming that the density of the ball (and air inside) is much less than water density, we may approximate the ball buoyancy force as <span class="math display">\[\begin{equation}
+<div class="section level2">
+<h2 id="theory">Theory<a class="anchor" aria-label="anchor" href="#theory"></a>
+</h2>
+<p>For simplicity, we may assume that the line has zero drag, and zero
+buoyancy.</p>
+<p>Let <span class="math inline">\(L\)</span> be the length of the line
+and <span class="math inline">\(R\)</span> the radius of the ball. Let
+the water density be <span class="math inline">\(\rho\)</span>. Assuming
+that the density of the ball (and air inside) is much less than water
+density, we may approximate the ball buoyancy force as <span class="math display">\[\begin{equation}
 B = \frac{4}{3}\pi \rho g R^3
-\end{equation}\]</span> where <span class="math inline">\(g\)</span> is the acceleration due to gravity. The drag on the ball may be approximated as <span class="math display">\[\begin{equation}
+\end{equation}\]</span> where <span class="math inline">\(g\)</span> is
+the acceleration due to gravity. The drag on the ball may be
+approximated as <span class="math display">\[\begin{equation}
 D = \frac{1}{2} C_D \rho \pi R^2 u^2
-\end{equation}\]</span> where <span class="math inline">\(C_D\)</span> is a drag coefficient and <span class="math inline">\(u\)</span> is the water speed in the <span class="math inline">\(x\)</span> direction.</p>
-<p>We assume a steady state. If <span class="math inline">\(T\)</span> represents tension in the fishing line, and <span class="math inline">\(\phi\)</span> the angle the line makes to the vertical, then force balance in the horizontal and vertical directions requires that <span class="math display">\[\begin{equation}
+\end{equation}\]</span> where <span class="math inline">\(C_D\)</span>
+is a drag coefficient and <span class="math inline">\(u\)</span> is the
+water speed in the <span class="math inline">\(x\)</span> direction.</p>
+<p>We assume a steady state. If <span class="math inline">\(T\)</span>
+represents tension in the fishing line, and <span class="math inline">\(\phi\)</span> the angle the line makes to the
+vertical, then force balance in the horizontal and vertical directions
+requires that <span class="math display">\[\begin{equation}
 T\sin\phi = D
 \end{equation}\]</span> and <span class="math display">\[\begin{equation}
 T\cos\phi = B
@@ -135,63 +152,88 @@ x' = L\sin\phi
 \end{equation}\]</span> and that it is at height <span class="math display">\[\begin{equation}
 z' = L - L\cos\phi
 \end{equation}\]</span> above the bottom.</p>
-<p>It is easy to imagine an experimental setup in which <span class="math inline">\(x'\)</span> might be measured (replace the anchor with a rod held vertical in the water column, with the line attached at the bottom, and sight downwards to get the distance of the float from the rod).</p>
+<p>It is easy to imagine an experimental setup in which <span class="math inline">\(x'\)</span> might be measured (replace the
+anchor with a rod held vertical in the water column, with the line
+attached at the bottom, and sight downwards to get the distance of the
+float from the rod).</p>
 </div>
-<div id="test" class="section level1">
-<h1 class="hasAnchor">
-<a href="#test" class="anchor"></a>Test</h1>
-<p>The predictions can be tested against the <code><a href="../reference/knockdown.html">knockdown()</a></code> function as follows. This imagines a river of depth 0.5m (about knee-deep) and a 1m/s current (about walking speed). Note that the prediction of the <code>mooring</code> code matches that (circled in blue) of the formulae given above.</p>
+<div class="section level2">
+<h2 id="test">Test<a class="anchor" aria-label="anchor" href="#test"></a>
+</h2>
+<p>The predictions can be tested against the <code><a href="../reference/knockdown.html">knockdown()</a></code>
+function as follows. This imagines a river of depth 0.5m (about
+knee-deep) and a 1m/s current (about walking speed). Note that the
+prediction of the <code>mooring</code> code matches that (circled in
+blue) of the formulae given above.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://testthat.r-lib.org">testthat</a></span><span class="op">)</span>
-<span class="va">L</span> <span class="op">&lt;-</span> <span class="fl">0.5</span>                               <span class="co"># tank depth, m</span>
-<span class="va">diameter</span> <span class="op">&lt;-</span> <span class="fl">0.04</span> <span class="co"># ping-pong balls have 40mm diameter</span>
-<span class="va">R</span> <span class="op">&lt;-</span> <span class="va">diameter</span> <span class="op">/</span> <span class="fl">2</span>
-<span class="va">area</span> <span class="op">&lt;-</span> <span class="va">pi</span><span class="op">*</span><span class="va">R</span><span class="op">^</span><span class="fl">2</span>
-<span class="va">volume</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">/</span><span class="fl">3</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">R</span><span class="op">^</span><span class="fl">3</span>
-<span class="va">rho</span> <span class="op">&lt;-</span> <span class="fl">1027</span>
-<span class="va">deltaRho</span> <span class="op">&lt;-</span> <span class="va">rho</span>                        <span class="co"># water vs air (round numbers)</span>
-<span class="va">g</span> <span class="op">&lt;-</span> <span class="fl">9.8</span>
-<span class="va">B</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">*</span> <span class="va">deltaRho</span> <span class="op">*</span> <span class="va">volume</span>             <span class="co"># Newtons</span>
-<span class="va">CD</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="va">u</span> <span class="op">&lt;-</span> <span class="fl">0.5</span>                               <span class="co"># speed, m/s</span>
-<span class="va">D</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">CD</span> <span class="op">*</span> <span class="va">area</span> <span class="op">*</span> <span class="va">rho</span> <span class="op">*</span> <span class="va">u</span><span class="op">^</span><span class="fl">2</span>       <span class="co"># Newtons</span>
-<span class="va">phi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">atan2</a></span><span class="op">(</span><span class="va">D</span>, <span class="va">B</span><span class="op">)</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="va">L</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span>
-<span class="va">l</span> <span class="op">&lt;-</span> <span class="va">L</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span>
-<span class="cn">T</span> <span class="op">&lt;-</span> <span class="va">B</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/">mooring</a></span><span class="op">)</span>
-<span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"pingpong"</span>, <span class="va">B</span><span class="op">/</span><span class="va">g</span>, height<span class="op">=</span><span class="fl">0</span>, area<span class="op">=</span><span class="va">pi</span><span class="op">*</span><span class="va">R</span><span class="op">^</span><span class="fl">2</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="va">B</span><span class="op">/</span><span class="va">g</span>, <span class="fu"><a href="../reference/buoyancy.html">buoyancy</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span>         <span class="co"># convert to kg to compare</span>
-<span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="va">D</span><span class="op">/</span><span class="va">g</span>, <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">f</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span><span class="op">)</span>        <span class="co"># convert to kg to compare</span>
-
-<span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"gossamer"</span>, length<span class="op">=</span><span class="va">L</span>, buoyancyPerMeter<span class="op">=</span><span class="fl">0</span>, areaPerMeter<span class="op">=</span><span class="fl">0</span>, CD<span class="op">=</span><span class="fl">0</span><span class="op">)</span>
-<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="st">"fake"</span>, buoyancy<span class="op">=</span><span class="op">-</span><span class="fl">1000</span>, height<span class="op">=</span><span class="fl">0</span>, depth<span class="op">=</span><span class="va">L</span><span class="op">)</span>
-<span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">w</span>, <span class="va">f</span><span class="op">)</span>
-
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">500</span> <span class="co"># number of sub-segments to use</span>
-<span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discretise.html">discretise</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">L</span><span class="op">/</span><span class="va">n</span><span class="op">)</span>
-<span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, fancy<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="co"># Check against theory</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">L</span><span class="op">-</span><span class="va">l</span>, col<span class="op">=</span><span class="fl">2</span>, cex<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://testthat.r-lib.org" class="external-link">testthat</a></span><span class="op">)</span></span>
+<span><span class="va">L</span> <span class="op">&lt;-</span> <span class="fl">0.5</span>                               <span class="co"># tank depth, m</span></span>
+<span><span class="va">diameter</span> <span class="op">&lt;-</span> <span class="fl">0.04</span> <span class="co"># ping-pong balls have 40mm diameter</span></span>
+<span><span class="va">R</span> <span class="op">&lt;-</span> <span class="va">diameter</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span><span class="va">area</span> <span class="op">&lt;-</span> <span class="va">pi</span><span class="op">*</span><span class="va">R</span><span class="op">^</span><span class="fl">2</span></span>
+<span><span class="va">volume</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">/</span><span class="fl">3</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">R</span><span class="op">^</span><span class="fl">3</span></span>
+<span><span class="va">rho</span> <span class="op">&lt;-</span> <span class="fl">1027</span></span>
+<span><span class="va">deltaRho</span> <span class="op">&lt;-</span> <span class="va">rho</span>                        <span class="co"># water vs air (round numbers)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fl">9.8</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">*</span> <span class="va">deltaRho</span> <span class="op">*</span> <span class="va">volume</span>             <span class="co"># Newtons</span></span>
+<span><span class="va">CD</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fl">0.5</span>                               <span class="co"># speed, m/s</span></span>
+<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">CD</span> <span class="op">*</span> <span class="va">area</span> <span class="op">*</span> <span class="va">rho</span> <span class="op">*</span> <span class="va">u</span><span class="op">^</span><span class="fl">2</span>       <span class="co"># Newtons</span></span>
+<span><span class="va">phi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">atan2</a></span><span class="op">(</span><span class="va">D</span>, <span class="va">B</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">L</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span></span>
+<span><span class="va">l</span> <span class="op">&lt;-</span> <span class="va">L</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span></span>
+<span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="va">B</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"pingpong"</span>, <span class="va">B</span><span class="op">/</span><span class="va">g</span>, height<span class="op">=</span><span class="fl">0</span>, area<span class="op">=</span><span class="va">pi</span><span class="op">*</span><span class="va">R</span><span class="op">^</span><span class="fl">2</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_equal</a></span><span class="op">(</span><span class="va">B</span><span class="op">/</span><span class="va">g</span>, <span class="fu"><a href="../reference/buoyancy.html">buoyancy</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span>         <span class="co"># convert to kg to compare</span></span>
+<span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_equal</a></span><span class="op">(</span><span class="va">D</span><span class="op">/</span><span class="va">g</span>, <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">f</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span><span class="op">)</span>        <span class="co"># convert to kg to compare</span></span>
+<span></span>
+<span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"gossamer"</span>, length<span class="op">=</span><span class="va">L</span>, buoyancyPerMeter<span class="op">=</span><span class="fl">0</span>, areaPerMeter<span class="op">=</span><span class="fl">0</span>, CD<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="st">"fake"</span>, buoyancy<span class="op">=</span><span class="op">-</span><span class="fl">1000</span>, height<span class="op">=</span><span class="fl">0</span>, depth<span class="op">=</span><span class="va">L</span>, CD<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">w</span>, <span class="va">f</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">500</span> <span class="co"># number of sub-segments to use</span></span>
+<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discretise.html">discretise</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">L</span><span class="op">/</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, fancy<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co"># Check against theory</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">L</span><span class="op">-</span><span class="va">l</span>, col<span class="op">=</span><span class="fl">2</span>, cex<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="table_tennis_files/figure-html/unnamed-chunk-1-1.png" width="700.0000032"></p>
 </div>
-<div id="results" class="section level1">
-<h1 class="hasAnchor">
-<a href="#results" class="anchor"></a>Results</h1>
-<p>The theory and the calculations using <code><a href="../reference/knockdown.html">knockdown()</a></code> agree well. There are three main observables that might be part of an experiment to test this in a natural environment.</p>
+<div class="section level2">
+<h2 id="results">Results<a class="anchor" aria-label="anchor" href="#results"></a>
+</h2>
+<p>The theory and the calculations using <code><a href="../reference/knockdown.html">knockdown()</a></code> agree
+well. There are three main observables that might be part of an
+experiment to test this in a natural environment.</p>
 <ol style="list-style-type: decimal">
-<li>The horizontal shift of the float, <span class="math inline">\(x'\)</span>. Here, a <span class="math inline">\(0.5\)</span> m/s current is predicted to yield <span class="math inline">\(x'=0.0\)</span> cm.</li>
-<li>The vertical float displacement over the zero-velocity case, <span class="math inline">\(z'\)</span>. Here, the prediction is <span class="math inline">\(50.0\)</span> cm.</li>
-<li>The tension in the line, <span class="math inline">\(T\)</span>. The prediction is <span class="math inline">\(0.374\)</span> Newtons, equivalent to 38.1 g.</li>
+<li>The horizontal shift of the float, <span class="math inline">\(x'\)</span>. Here, a <span class="math inline">\(0.5\)</span> m/s current is predicted to yield
+<span class="math inline">\(x'=21.6\)</span> cm.</li>
+<li>The vertical float displacement over the zero-velocity case, <span class="math inline">\(z'\)</span>. Here, the prediction is <span class="math inline">\(4.9\)</span> cm.</li>
+<li>The tension in the line, <span class="math inline">\(T\)</span>. The
+prediction is <span class="math inline">\(0.374\)</span> Newtons,
+equivalent to 38.1 g.</li>
 </ol>
 </div>
-<div id="measuring-currents" class="section level1">
-<h1 class="hasAnchor">
-<a href="#measuring-currents" class="anchor"></a>Measuring currents</h1>
-<p>Any of <span class="math inline">\(x'\)</span>, <span class="math inline">\(z'\)</span> and <span class="math inline">\(T\)</span> could be measured in a classroom or laboratory setting, although it might be harder to measure the tension force in the field, so a field apparatus should focus on measuring <span class="math inline">\(x'\)</span> and <span class="math inline">\(x'\)</span>. This would not be difficult, for this range of current, using a metre-stick, to which is attached a table-tennis ball with 1 m of thin mono-filament fishing line. A value of <span class="math inline">\(z'\)</span> could be obtained by lowering the rod slowly, until the float just sinks below the surface, and observing water level on the stick’s distance markings. A value of <span class="math inline">\(x'\)</span> could be obtained with a second meter stick held horizontally so that the ball position could be observed from overhead.</p>
-<p>In a laboratory setting, or with a bit of engineering for a field setting, the tension could be measured. An advantage of that method would be that it could be digitized and, using a microcontroller to do the calculations shown here, a readout could show the current speed.</p>
+<div class="section level2">
+<h2 id="measuring-currents">Measuring currents<a class="anchor" aria-label="anchor" href="#measuring-currents"></a>
+</h2>
+<p>Any of <span class="math inline">\(x'\)</span>, <span class="math inline">\(z'\)</span> and <span class="math inline">\(T\)</span> could be measured in a classroom or
+laboratory setting, although it might be harder to measure the tension
+force in the field, so a field apparatus should focus on measuring <span class="math inline">\(x'\)</span> and <span class="math inline">\(x'\)</span>. This would not be difficult, for
+this range of current, using a metre-stick, to which is attached a
+table-tennis ball with 1 m of thin mono-filament fishing line. A value
+of <span class="math inline">\(z'\)</span> could be obtained by
+lowering the rod slowly, until the float just sinks below the surface,
+and observing water level on the stick’s distance markings. A value of
+<span class="math inline">\(x'\)</span> could be obtained with a
+second meter stick held horizontally so that the ball position could be
+observed from overhead.</p>
+<p>In a laboratory setting, or with a bit of engineering for a field
+setting, the tension could be measured. An advantage of that method
+would be that it could be digitized and, using a microcontroller to do
+the calculations shown here, a readout could show the current speed.</p>
 </div>
   </div>
 
@@ -206,11 +248,13 @@ z' = L - L\cos\phi
 
 
       <footer><div class="copyright">
-  <p>Developed by Dan Kelley.</p>
+  <p></p>
+<p>Developed by Dan Kelley.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -218,6 +262,8 @@ z' = L - L\cos\phi
 
   
 
+
+  
 
   </body>
 </html>

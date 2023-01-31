@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/mooring.html">Get started</a>
 </li>
@@ -50,7 +46,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/dankelley/mooring/">
+  <a href="https://github.com/dankelley/mooring/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,245 +87,276 @@
 
       
 
-      </header><script src="example_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>A Practical Example</h1>
-                        <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
+                        <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-28</h4>
+            <h4 data-toc-skip class="date">2023-01-30</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/example.Rmd"><code>vignettes/example.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/example.Rmd" class="external-link"><code>vignettes/example.Rmd</code></a></small>
       <div class="hidden name"><code>example.Rmd</code></div>
 
     </div>
 
     
     
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>This vignette explains how to use the <code>mooring</code> package to create a simulation of mooring 1840 on the Sackville Spur, based on a diagram that appeared in a report provided by the Bedford Institute of Oceanography (Department of Fisheries and Oceans, Canada) containing a Notice to Mariners document.</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This vignette explains how to use the <code>mooring</code> package to
+create a simulation of mooring 1840 on the Sackville Spur, based on a
+diagram that appeared in a report provided by the Bedford Institute of
+Oceanography (Department of Fisheries and Oceans, Canada) containing a
+Notice to Mariners document.</p>
 </div>
-<div id="source-document" class="section level1">
-<h1 class="hasAnchor">
-<a href="#source-document" class="anchor"></a>Source Document</h1>
+<div class="section level2">
+<h2 id="source-document">Source Document<a class="anchor" aria-label="anchor" href="#source-document"></a>
+</h2>
 <div class="figure" style="text-align: center">
 <img src="mooring_1840_enhanced.png" alt="**Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**" width="70%"><p class="caption">
-<strong>Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur</strong>
+<strong>Diagram for Bedford Institute of Oceanograph mooring 1840 on
+Sackville Spur</strong>
 </p>
 </div>
 </div>
-<div id="mooring-construction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#mooring-construction" class="anchor"></a>Mooring Construction</h1>
+<div class="section level2">
+<h2 id="mooring-construction">Mooring Construction<a class="anchor" aria-label="anchor" href="#mooring-construction"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Mooring 1840 (p10 of doc)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/">mooring</a></span><span class="op">)</span>
-
-<span class="co"># Abbreviations for convenience</span>
-<span class="va">W</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">length</span><span class="op">)</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"3/16in galvanized wire coated to 1/4in"</span>, length<span class="op">=</span><span class="va">length</span><span class="op">)</span>
-<span class="va">BUB3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"streamlined BUB 3 Viny balls"</span><span class="op">)</span>
-<span class="va">RCM11</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/instrument.html">instrument</a></span><span class="op">(</span><span class="st">"RCM-11 in frame"</span><span class="op">)</span> <span class="co"># "AANDERAA RCM11"</span>
-<span class="va">microcat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/instrument.html">instrument</a></span><span class="op">(</span><span class="st">"SBE37 microcat clamp-on style"</span><span class="op">)</span> <span class="co"># "SBE MICROCAT"</span>
-
-<span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">1400</span><span class="op">)</span>,
-             <span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="st">"5/8in galvanized chain"</span>, length<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,
-             <span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="st">"benthos 965a"</span><span class="op">)</span>,  <span class="co"># dual benthos 965-a</span>
-             <span class="va">BUB3</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">34</span><span class="op">)</span>,
-             <span class="va">microcat</span>,
-             <span class="va">RCM11</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>,
-             <span class="va">BUB3</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">144</span><span class="op">)</span>,
-             <span class="va">microcat</span>,
-             <span class="va">RCM11</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">147</span><span class="op">)</span>,
-             <span class="va">BUB3</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">46</span><span class="op">)</span>,
-             <span class="va">microcat</span>,
-             <span class="va">RCM11</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">198</span><span class="op">)</span>,
-             <span class="va">microcat</span>,
-             <span class="va">RCM11</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">198</span><span class="op">)</span>,
-             <span class="va">microcat</span>,
-             <span class="va">RCM11</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">197</span><span class="op">)</span>,
-             <span class="va">microcat</span>,
-             <span class="va">RCM11</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">146</span><span class="op">)</span>,
-             <span class="va">microcat</span>,
-             <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"swivel"</span><span class="op">)</span>,
-             <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"ballast"</span>, <span class="op">-</span><span class="fl">100</span><span class="op">/</span><span class="fl">2.2</span>, height<span class="op">=</span><span class="fl">1</span>, area<span class="op">=</span><span class="fl">0.05</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,
-             <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"syn. float, bracket and 109lb ADCP"</span><span class="op">)</span>,
-             <span class="fu">W</span><span class="op">(</span><span class="fl">149</span><span class="op">)</span>,
-             <span class="va">microcat</span>,
-             <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">'new glass streamlined float c2'</span><span class="op">)</span><span class="op">)</span>
-<span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discretise.html">discretise</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Mooring 1840 (p10 of doc)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Abbreviations for convenience</span></span>
+<span><span class="va">W</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">length</span><span class="op">)</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"3/16in galvanized wire coated to 1/4in"</span>, length<span class="op">=</span><span class="va">length</span><span class="op">)</span></span>
+<span><span class="va">BUB3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"streamlined BUB 3 Viny balls"</span><span class="op">)</span></span>
+<span><span class="va">RCM11</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/instrument.html">instrument</a></span><span class="op">(</span><span class="st">"RCM-11 in frame"</span><span class="op">)</span> <span class="co"># "AANDERAA RCM11"</span></span>
+<span><span class="va">microcat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/instrument.html">instrument</a></span><span class="op">(</span><span class="st">"SBE37 microcat clamp-on style"</span><span class="op">)</span> <span class="co"># "SBE MICROCAT"</span></span>
+<span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">1400</span><span class="op">)</span>,</span>
+<span>             <span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="st">"5/8in galvanized chain"</span>, length<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>             <span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="st">"benthos 965a"</span><span class="op">)</span>,  <span class="co"># dual benthos 965-a</span></span>
+<span>             <span class="va">BUB3</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">34</span><span class="op">)</span>,</span>
+<span>             <span class="va">microcat</span>,</span>
+<span>             <span class="va">RCM11</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>,</span>
+<span>             <span class="va">BUB3</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">144</span><span class="op">)</span>,</span>
+<span>             <span class="va">microcat</span>,</span>
+<span>             <span class="va">RCM11</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">147</span><span class="op">)</span>,</span>
+<span>             <span class="va">BUB3</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">46</span><span class="op">)</span>,</span>
+<span>             <span class="va">microcat</span>,</span>
+<span>             <span class="va">RCM11</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">198</span><span class="op">)</span>,</span>
+<span>             <span class="va">microcat</span>,</span>
+<span>             <span class="va">RCM11</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">198</span><span class="op">)</span>,</span>
+<span>             <span class="va">microcat</span>,</span>
+<span>             <span class="va">RCM11</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">197</span><span class="op">)</span>,</span>
+<span>             <span class="va">microcat</span>,</span>
+<span>             <span class="va">RCM11</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">146</span><span class="op">)</span>,</span>
+<span>             <span class="va">microcat</span>,</span>
+<span>             <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"swivel"</span><span class="op">)</span>,</span>
+<span>             <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"ballast"</span>, <span class="op">-</span><span class="fl">100</span><span class="op">/</span><span class="fl">2.2</span>, height<span class="op">=</span><span class="fl">1</span>, area<span class="op">=</span><span class="fl">0.05</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>             <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"syn. float, bracket and 109lb ADCP"</span><span class="op">)</span>,</span>
+<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">149</span><span class="op">)</span>,</span>
+<span>             <span class="va">microcat</span>,</span>
+<span>             <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">'new glass streamlined float c2'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discretise.html">discretise</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="knockdown-simulation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#knockdown-simulation" class="anchor"></a>Knockdown Simulation</h1>
-<p>For illustration, this simulation uses an entirely made-up velocity structure.</p>
+<div class="section level2">
+<h2 id="knockdown-simulation">Knockdown Simulation<a class="anchor" aria-label="anchor" href="#knockdown-simulation"></a>
+</h2>
+<p>For illustration, this simulation uses an entirely made-up velocity
+structure.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">u</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="fl">0.5</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span>
-<span class="va">depth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">0</span>, length.out<span class="op">=</span><span class="fl">100</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,nrow<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, widths<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.25</span><span class="op">)</span><span class="op">)</span>
-<span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"knockdown"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span><span class="op">)</span>, showDetails<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"velocity"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="fl">0.5</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="va">depth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">0</span>, length.out<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html" class="external-link">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,nrow<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, widths<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"knockdown"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">40</span><span class="op">)</span>, showDetails<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"velocity"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="example_files/figure-html/unnamed-chunk-3-1.png" alt="**Simulation of knockdown with a depth-decaying current.**" width="100%"><p class="caption">
 <strong>Simulation of knockdown with a depth-decaying current.</strong>
 </p>
 </div>
-<p>Note that the limit set on the first plot sets aside enough space for the labels (and establishes a common scale used in a later exercise).</p>
+<p>Note that the limit set on the first plot sets aside enough space for
+the labels (and establishes a common scale used in a later
+exercise).</p>
 </div>
-<div id="knockdown-speed-diagram" class="section level1">
-<h1 class="hasAnchor">
-<a href="#knockdown-speed-diagram" class="anchor"></a>Knockdown-Speed Diagram</h1>
-<p>We may get an idea of the overall response of the mooring to water velocity by running simulations with a range of velocities. Noting that the top of the mooring, from the surface to 200m, is knocked over much more than the rest, let’s focus on the depth of the second microcat from the top, i.e. the one below the ADCP. Typing <code>md</code> in a console gives an overview, from which one may see that the second microcat from the top, i.e. the one below the ADCP, is element 155, i.e.</p>
+<div class="section level2">
+<h2 id="knockdown-speed-diagram">Knockdown-Speed Diagram<a class="anchor" aria-label="anchor" href="#knockdown-speed-diagram"></a>
+</h2>
+<p>We may get an idea of the overall response of the mooring to water
+velocity by running simulations with a range of velocities. Noting that
+the top of the mooring, from the surface to 200m, is knocked over much
+more than the rest, let’s focus on the depth of the second microcat from
+the top, i.e. the one below the ADCP. Typing <code>md</code> in a
+console gives an overview, from which one may see that the second
+microcat from the top, i.e. the one below the ADCP, is element 155,
+i.e.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">md</span><span class="op">[[</span><span class="fl">155</span><span class="op">]</span><span class="op">]</span></code></pre></div>
-<pre><code>## 1: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</code></pre>
+<code class="sourceCode R"><span><span class="va">md</span><span class="op">[[</span><span class="fl">155</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## 1: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span></code></pre>
 <p>Similarly, the ADCP is</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">md</span><span class="op">[[</span><span class="fl">152</span><span class="op">]</span><span class="op">]</span></code></pre></div>
-<pre><code>## 1: 'syn. float, bracket and 109lb ADCP' float, 789.8kg, height 2.42m, area 1.234m</code></pre>
-<p>We may use this to construct a diagnostic curve giving an overview of the mooring knockdown, as follows. Note that the <span class="math inline">\(x\)</span> axis of the resultant plot is showing velocity at the depth of the ADCP.</p>
+<code class="sourceCode R"><span><span class="va">md</span><span class="op">[[</span><span class="fl">152</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## 1: 'syn. float, bracket and 109lb ADCP' float, 789.8kg, height 2.42m, area 1.234m^2</span></span></code></pre>
+<p>We may use this to construct a diagnostic curve giving an overview of
+the mooring knockdown, as follows. Note that the <span class="math inline">\(x\)</span> axis of the resultant plot is showing
+velocity at the depth of the ADCP.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0.7</span>,<span class="fl">0</span><span class="op">)</span>, mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="va">iADCP</span> <span class="op">&lt;-</span> <span class="fl">152</span>
-<span class="va">imicrocat</span> <span class="op">&lt;-</span> <span class="fl">155</span>
-<span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">50</span>
-<span class="va">u0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, length.out<span class="op">=</span><span class="va">N</span><span class="op">)</span>
-<span class="va">dz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">N</span><span class="op">)</span>
-<span class="va">U</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">N</span><span class="op">)</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">u</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="va">u0</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span>
-    <span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, <span class="va">u</span><span class="op">)</span>
-    <span class="va">U</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">u</span><span class="op">(</span><span class="op">-</span><span class="va">k</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">z</span><span class="op">)</span>
-    <span class="va">dz</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">k</span><span class="op">[[</span><span class="va">imicrocat</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">z</span> <span class="op">-</span> <span class="va">md</span><span class="op">[[</span><span class="va">imicrocat</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">z</span>
-<span class="op">}</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">U</span>, <span class="va">dz</span>, lwd<span class="op">=</span><span class="fl">2</span>, type<span class="op">=</span><span class="st">"l"</span>, xlab<span class="op">=</span><span class="st">"Velocity [m/s]"</span>, ylab<span class="op">=</span><span class="st">"Knockdown [m]"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/grid.html">grid</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Knockdown of microcat #2, near %.0f m depth"</span>, <span class="op">-</span><span class="va">md</span><span class="op">[[</span><span class="va">imicrocat</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">z</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0.7</span>,<span class="fl">0</span><span class="op">)</span>, mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">iADCP</span> <span class="op">&lt;-</span> <span class="fl">152</span></span>
+<span><span class="va">imicrocat</span> <span class="op">&lt;-</span> <span class="fl">155</span></span>
+<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
+<span><span class="va">u0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, length.out<span class="op">=</span><span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">dz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">U</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">N</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">u</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="va">u0</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span></span>
+<span>    <span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, <span class="va">u</span><span class="op">)</span></span>
+<span>    <span class="va">U</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">u</span><span class="op">(</span><span class="op">-</span><span class="va">k</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">z</span><span class="op">)</span></span>
+<span>    <span class="va">dz</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">k</span><span class="op">[[</span><span class="va">imicrocat</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">z</span> <span class="op">-</span> <span class="va">md</span><span class="op">[[</span><span class="va">imicrocat</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">z</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">U</span>, <span class="va">dz</span>, lwd<span class="op">=</span><span class="fl">2</span>, type<span class="op">=</span><span class="st">"l"</span>, xlab<span class="op">=</span><span class="st">"Velocity [m/s]"</span>, ylab<span class="op">=</span><span class="st">"Knockdown [m]"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/grid.html" class="external-link">grid</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Knockdown of microcat #2, near %.0f m depth"</span>, <span class="op">-</span><span class="va">md</span><span class="op">[[</span><span class="va">imicrocat</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">z</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="example_files/figure-html/unnamed-chunk-6-1.png" alt="**Speed-knockdown summary diagram**" width="100%"><p class="caption">
 <strong>Speed-knockdown summary diagram</strong>
 </p>
 </div>
 </div>
-<div id="examining-moorings" class="section level1">
-<h1 class="hasAnchor">
-<a href="#examining-moorings" class="anchor"></a>Examining Moorings</h1>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div class="section level2">
+<h2 id="examining-moorings">Examining Moorings<a class="anchor" aria-label="anchor" href="#examining-moorings"></a>
+</h2>
+<div class="section level3">
+<h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h3>
 <p>An overview of a mooring is provided by printing it, either with</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
 <p>or, in an interactive session, with</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">m</span></span></code></pre></div>
 <p>For the mooring constructed above, the results are as follows.</p>
-<pre><code>## Mooring with 34 elements, listed from the top down:
-##   1: 'new glass streamlined float c2' float, 45.41kg, height 0.87m, area 0.183m
-##   2: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
-##   3: '3/16in galvanized wire coated to 1/4in' wire, -11.5475kg, length 149m, area 0.94615m^2
-##   4: 'syn. float, bracket and 109lb ADCP' float, 789.8kg, height 2.42m, area 1.234m
-##   5: 'ballast' connector, -45.4545kg, height 1m, area 0.05m
-##   6: 'swivel' connector, -0.953kg, height 0.05m, area 0.0025m
-##   7: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
-##   8: '3/16in galvanized wire coated to 1/4in' wire, -11.315kg, length 146m, area 0.9271m^2
-##   9: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
-##   10: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
-##   11: '3/16in galvanized wire coated to 1/4in' wire, -15.2675kg, length 197m, area 1.25095m^2
-##   12: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
-##   13: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
-##   14: '3/16in galvanized wire coated to 1/4in' wire, -15.345kg, length 198m, area 1.2573m^2
-##   15: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
-##   16: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
-##   17: '3/16in galvanized wire coated to 1/4in' wire, -15.345kg, length 198m, area 1.2573m^2
-##   18: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
-##   19: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
-##   20: '3/16in galvanized wire coated to 1/4in' wire, -3.565kg, length 46m, area 0.2921m^2
-##   21: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m
-##   22: '3/16in galvanized wire coated to 1/4in' wire, -11.3925kg, length 147m, area 0.93345m^2
-##   23: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
-##   24: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
-##   25: '3/16in galvanized wire coated to 1/4in' wire, -11.16kg, length 144m, area 0.9144m^2
-##   26: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m
-##   27: '3/16in galvanized wire coated to 1/4in' wire, -3.875kg, length 50m, area 0.3175m^2
-##   28: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2
-##   29: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2
-##   30: '3/16in galvanized wire coated to 1/4in' wire, -2.635kg, length 34m, area 0.2159m^2
-##   31: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m
-##   32: 'benthos 965a' release, -36.73kg, height 1.23m, area 0.1562m
-##   33: '5/8in galvanized chain' chain, -43.23kg, length 10m, area 0.572m^2
-##   34: '3 trainwheels' anchor, -1050kg, height 0m, in 1400m water depth</code></pre>
-<p>The number at the start is the component number (see next section).</p>
-<p>Note that the results for <code>md</code> will be similar, except there will be many more elements (for the segmented chain and wire components). If <code>mdk</code> is examined in this way, the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> values will be different.</p>
+<pre><code><span><span class="co">## Mooring with 34 elements, listed from the top down:</span></span>
+<span><span class="co">##   1: 'new glass streamlined float c2' float, 45.41kg, height 0.87m, area 0.183m^2</span></span>
+<span><span class="co">##   2: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   3: '3/16in galvanized wire coated to 1/4in' wire, -11.5475kg, length 149m, area 0.94615m^2</span></span>
+<span><span class="co">##   4: 'syn. float, bracket and 109lb ADCP' float, 789.8kg, height 2.42m, area 1.234m^2</span></span>
+<span><span class="co">##   5: 'ballast' connector, -45.4545kg, height 1m, area 0.05m^2</span></span>
+<span><span class="co">##   6: 'swivel' connector, -0.953kg, height 0.05m, area 0.0025m^2</span></span>
+<span><span class="co">##   7: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   8: '3/16in galvanized wire coated to 1/4in' wire, -11.315kg, length 146m, area 0.9271m^2</span></span>
+<span><span class="co">##   9: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   10: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   11: '3/16in galvanized wire coated to 1/4in' wire, -15.2675kg, length 197m, area 1.25095m^2</span></span>
+<span><span class="co">##   12: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   13: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   14: '3/16in galvanized wire coated to 1/4in' wire, -15.345kg, length 198m, area 1.2573m^2</span></span>
+<span><span class="co">##   15: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   16: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   17: '3/16in galvanized wire coated to 1/4in' wire, -15.345kg, length 198m, area 1.2573m^2</span></span>
+<span><span class="co">##   18: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   19: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   20: '3/16in galvanized wire coated to 1/4in' wire, -3.565kg, length 46m, area 0.2921m^2</span></span>
+<span><span class="co">##   21: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
+<span><span class="co">##   22: '3/16in galvanized wire coated to 1/4in' wire, -11.3925kg, length 147m, area 0.93345m^2</span></span>
+<span><span class="co">##   23: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   24: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   25: '3/16in galvanized wire coated to 1/4in' wire, -11.16kg, length 144m, area 0.9144m^2</span></span>
+<span><span class="co">##   26: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
+<span><span class="co">##   27: '3/16in galvanized wire coated to 1/4in' wire, -3.875kg, length 50m, area 0.3175m^2</span></span>
+<span><span class="co">##   28: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   29: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   30: '3/16in galvanized wire coated to 1/4in' wire, -2.635kg, length 34m, area 0.2159m^2</span></span>
+<span><span class="co">##   31: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
+<span><span class="co">##   32: 'benthos 965a' release, -36.73kg, height 1.23m, area 0.1562m^2</span></span>
+<span><span class="co">##   33: '5/8in galvanized chain' chain, -43.23kg, length 10m, area 0.572m^2</span></span>
+<span><span class="co">##   34: '3 trainwheels' anchor, -1050kg, height 0m, in 1400m water depth</span></span></code></pre>
+<p>The number at the start is the component number (see next
+section).</p>
+<p>Note that the results for <code>md</code> will be similar, except
+there will be many more elements (for the segmented chain and wire
+components). If <code>mdk</code> is examined in this way, the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> values will be different.</p>
 </div>
-<div id="components" class="section level2">
-<h2 class="hasAnchor">
-<a href="#components" class="anchor"></a>Components</h2>
-<p>To learn more about, say, the second element (the chain from anchor to acoustic release), use</p>
+<div class="section level3">
+<h3 id="components">Components<a class="anchor" aria-label="anchor" href="#components"></a>
+</h3>
+<p>To learn more about, say, the second element (the chain from anchor
+to acoustic release), use</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
-<pre><code>## 1: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</code></pre>
+<code class="sourceCode R"><span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## 1: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span></code></pre>
 <p>and to see the full details, use</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dput.html">dput</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>## structure(list(model = "SBE37 microcat clamp-on style", buoyancy = -1.53, 
-##     height = 0.559, area = 0.117, CD = 0.65, source = "BIO", 
-##     x = 0, z = -65.3389999999999, T = 43.88), class = c("mooring", 
-## "instrument"))</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dput.html" class="external-link">dput</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## structure(list(model = "SBE37 microcat clamp-on style", buoyancy = -1.53, </span></span>
+<span><span class="co">##     height = 0.559, area = 0.117, CD = 0.65, source = "BIO", </span></span>
+<span><span class="co">##     x = 0, z = -65.3389999999999, T = 43.88), class = c("mooring", </span></span>
+<span><span class="co">## "instrument"))</span></span></code></pre>
 <p>or, with less detail but in a more digestible format,</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>## List of 9
-##  $ model   : chr "SBE37 microcat clamp-on style"
-##  $ buoyancy: num -1.53
-##  $ height  : num 0.559
-##  $ area    : num 0.117
-##  $ CD      : num 0.65
-##  $ source  : chr "BIO"
-##  $ x       : num 0
-##  $ z       : num -65.3
-##  $ T       : num 43.9
-##  - attr(*, "class")= chr [1:2] "mooring" "instrument"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## List of 9</span></span>
+<span><span class="co">##  $ model   : chr "SBE37 microcat clamp-on style"</span></span>
+<span><span class="co">##  $ buoyancy: num -1.53</span></span>
+<span><span class="co">##  $ height  : num 0.559</span></span>
+<span><span class="co">##  $ area    : num 0.117</span></span>
+<span><span class="co">##  $ CD      : num 0.65</span></span>
+<span><span class="co">##  $ source  : chr "BIO"</span></span>
+<span><span class="co">##  $ x       : num 0</span></span>
+<span><span class="co">##  $ z       : num -65.3</span></span>
+<span><span class="co">##  $ T       : num 43.9</span></span>
+<span><span class="co">##  - attr(*, "class")= chr [1:2] "mooring" "instrument"</span></span></code></pre>
 <p>You may go further with e.g.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">area</span></code></pre></div>
-<pre><code>## [1] 0.117</code></pre>
-<p><strong>Exercise 1.</strong> Double the chain density, to see the effect on knock-down.</p>
-<p><strong>Exercise 2.</strong> Double the drag coefficient on the wire, to see how much this increases knockdown.</p>
+<code class="sourceCode R"><span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">area</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.117</span></span></code></pre>
+<p><strong>Exercise 1.</strong> Double the chain density, to see the
+effect on knock-down.</p>
+<p><strong>Exercise 2.</strong> Double the drag coefficient on the wire,
+to see how much this increases knockdown.</p>
 </div>
-<div id="answers-to-exercises" class="section level2">
-<h2 class="hasAnchor">
-<a href="#answers-to-exercises" class="anchor"></a>Answers to Exercises</h2>
-<div id="doubling-chain-density" class="section level3">
-<h3 class="hasAnchor">
-<a href="#doubling-chain-density" class="anchor"></a>1. Doubling chain density</h3>
-<p>A simple way to do this is to create <code>m</code> as before, but then to use</p>
+<div class="section level3">
+<h3 id="answers-to-exercises">Answers to Exercises<a class="anchor" aria-label="anchor" href="#answers-to-exercises"></a>
+</h3>
+<div class="section level4">
+<h4 id="doubling-chain-density">1. Doubling chain density<a class="anchor" aria-label="anchor" href="#doubling-chain-density"></a>
+</h4>
+<p>A simple way to do this is to create <code>m</code> as before, but
+then to use</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">buoyancyPerMeter</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">buoyancyPerMeter</span></code></pre></div>
-<p>before using <code>digitise()</code>, <code><a href="../reference/knockdown.html">knockdown()</a></code> and then <code><a href="../reference/plot.mooring.html">plot.mooring()</a></code>. Before doing that though, you should ask yourself whether you expect to see a large effect.</p>
+<code class="sourceCode R"><span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">buoyancyPerMeter</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">buoyancyPerMeter</span></span></code></pre></div>
+<p>before using <code>digitise()</code>, <code><a href="../reference/knockdown.html">knockdown()</a></code> and
+then <code><a href="../reference/plot.mooring.html">plot.mooring()</a></code>. Before doing that though, you should
+ask yourself whether you expect to see a large effect.</p>
 </div>
-<div id="doubling-wire-drag" class="section level3">
-<h3 class="hasAnchor">
-<a href="#doubling-wire-drag" class="anchor"></a>2. Doubling wire drag</h3>
-<p>One way to do this is to replace the <code>W</code> definition with</p>
+<div class="section level4">
+<h4 id="doubling-wire-drag">2. Doubling wire drag<a class="anchor" aria-label="anchor" href="#doubling-wire-drag"></a>
+</h4>
+<p>One way to do this is to replace the <code>W</code> definition
+with</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">W</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">length</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">w0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"3/16in galvanized wire coated to 1/4in"</span>, length<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
-    <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"draggy wire"</span>, buoyancyPerMeter<span class="op">=</span><span class="va">w0</span><span class="op">$</span><span class="va">buoyancy</span>,
-         areaPerMeter<span class="op">=</span><span class="va">w0</span><span class="op">$</span><span class="va">area</span>, CD<span class="op">=</span><span class="fl">2</span><span class="op">*</span><span class="va">w0</span><span class="op">$</span><span class="va">CD</span>, length<span class="op">=</span><span class="va">length</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p>and then create <code>m</code>, <code>md</code> and <code>mdk</code> as before. The results are as follows. Note that knockdown is approximately doubled. This makes determination of drag coefficient an especially important factor in mooring design; see e.g. <span class="citation">J. M. Hamilton (1989)</span> and <span class="citation">James M. Hamilton, Fowler, and Belliveau (1997)</span>.</p>
+<code class="sourceCode R"><span><span class="va">W</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">length</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">w0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"3/16in galvanized wire coated to 1/4in"</span>, length<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"draggy wire"</span>, buoyancyPerMeter<span class="op">=</span><span class="va">w0</span><span class="op">$</span><span class="va">buoyancy</span>,</span>
+<span>         areaPerMeter<span class="op">=</span><span class="va">w0</span><span class="op">$</span><span class="va">area</span>, CD<span class="op">=</span><span class="fl">2</span><span class="op">*</span><span class="va">w0</span><span class="op">$</span><span class="va">CD</span>, length<span class="op">=</span><span class="va">length</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>and then create <code>m</code>, <code>md</code> and <code>mdk</code>
+as before. The results are as follows. Note that knockdown is
+approximately doubled. This makes determination of drag coefficient an
+especially important factor in mooring design; see e.g. <span class="citation">J. M. Hamilton (1989)</span> and <span class="citation">James M. Hamilton, Fowler, and Belliveau
+(1997)</span>.</p>
 <div class="figure" style="text-align: center">
 <img src="example_files/figure-html/unnamed-chunk-17-1.png" alt="**Simulation with doubled wire drag.**" width="100%"><p class="caption">
 <strong>Simulation with doubled wire drag.</strong>
@@ -338,15 +365,21 @@
 </div>
 </div>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-hamilton_validation_1989" class="csl-entry">
-Hamilton, J. M. 1989. <span>“The Validation and Practical Applications of a Sub-Surface Mooring Model.”</span> 119. Bedford Institute of Oceanography. <a href="https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf">https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf</a>.
+Hamilton, J. M. 1989. <span>“The Validation and Practical Applications
+of a Sub-Surface Mooring Model.”</span> 119. Bedford Institute of
+Oceanography. <a href="https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf" class="external-link">https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf</a>.
 </div>
 <div id="ref-hamilton_mooring_1997" class="csl-entry">
-Hamilton, James M., George A. Fowler, and Donald J. Belliveau. 1997. <span>“Mooring <span>Vibration</span> as a <span>Source</span> of <span>Current</span> <span>Meter</span> <span>Error</span> and <span>Its</span> <span>Correction</span>.”</span> <em>Journal of Atmospheric and Oceanic Technology</em> 14 (3): 644–55. <a href="https://doi.org/10.1175/1520-0426(1997)014&lt;0644:MVAASO&gt;2.0.CO;2">https://doi.org/10.1175/1520-0426(1997)014&lt;0644:MVAASO&gt;2.0.CO;2</a>.
+Hamilton, James M., George A. Fowler, and Donald J. Belliveau. 1997.
+<span>“Mooring <span>Vibration</span> as a <span>Source</span> of
+<span>Current</span> <span>Meter</span> <span>Error</span> and
+<span>Its</span> <span>Correction</span>.”</span> <em>Journal of
+Atmospheric and Oceanic Technology</em> 14 (3): 644–55.
 </div>
 </div>
 </div>
@@ -363,11 +396,13 @@ Hamilton, James M., George A. Fowler, and Donald J. Belliveau. 1997. <span>“Mo
 
 
       <footer><div class="copyright">
-  <p>Developed by Dan Kelley.</p>
+  <p></p>
+<p>Developed by Dan Kelley.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -375,6 +410,8 @@ Hamilton, James M., George A. Fowler, and Donald J. Belliveau. 1997. <span>“Mo
 
   
 
+
+  
 
   </body>
 </html>
