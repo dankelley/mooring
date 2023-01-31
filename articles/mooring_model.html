@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/mooring.html">Get started</a>
 </li>
@@ -50,7 +46,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/dankelley/mooring/">
+  <a href="https://github.com/dankelley/mooring/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -95,11 +91,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Mooring Model</h1>
-                        <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
+                        <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-07-11</h4>
+            <h4 data-toc-skip class="date">2023-01-31</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/mooring_model.Rmd"><code>vignettes/mooring_model.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring_model.Rmd" class="external-link"><code>vignettes/mooring_model.Rmd</code></a></small>
       <div class="hidden name"><code>mooring_model.Rmd</code></div>
 
     </div>
@@ -107,15 +103,15 @@
     
     
 
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>Anchored oceanographic mooring lines are deformed by currents, in much the same way as trees are bent by wind. For very simple moorings, e.g. consisting of a single float connected by a uniform cable to an anchor at the bottom, the deformation can be calculated if the current is uniform. The physics is analogous to the sagging of telephone lines between poles, and falls into the general category of a catenary. However, things are more complicated for depth-varying currents, and for mooring lines that consist of many elements, of varying buoyancy and drag, connected by wires, chains, etc., that are also of varying buoyancy and drag.</p>
 <p>An approach to analysing realistic oceanographic moorings is to use lumped-mass theory, in which elements such as floats and instrument packages are parameterized by their buoyancy and drag characteristics, and in which cables envisioned as connected line elements. This approach was taken by <span class="citation">Dewey (1999)</span> in a GUI-based Matlab system. The present treatment is of similar foundation, although with some added simplifications (such as unidirectional current) that are relevant to the basic problem of computing “knock-down”, i.e. the vertical displacement of instruments that is caused by slanting of the mooring line.</p>
 </div>
-<div id="model" class="section level1">
-<h1 class="hasAnchor">
-<a href="#model" class="anchor"></a>Model</h1>
+<div class="section level2">
+<h2 id="model">Model<a class="anchor" aria-label="anchor" href="#model"></a>
+</h2>
 <p>Consider the case of unidirectional horizontal current aligned with the <span class="math inline">\(x\)</span> axis. Following oceanographic convention, let <span class="math inline">\(z\)</span> be the vertical coordinate, positive upwards, with <span class="math inline">\(z=0\)</span> at the surface. The mooring is modelled as a series of <span class="math inline">\(n\)</span> connected elements, with the top element being numbered <span class="math inline">\(i=1\)</span> and the bottom one numbered <span class="math inline">\(i=n\)</span>.</p>
 <p>Water density and velocity are assumed to be a functions of depth, with values <span class="math inline">\(\rho_i\)</span> and <span class="math inline">\(u_i\)</span> at the location <span class="math inline">\(z_i\)</span> of the <span class="math inline">\(i\)</span>-th element.</p>
 <p>Each element is described by the following properties.</p>
@@ -126,7 +122,7 @@
 <li>Drag coefficient, <span class="math inline">\(C_i\)</span>, defined as the ratio of drag force, <span class="math inline">\({\cal D}_i\)</span>, to <span class="math inline">\(\frac{1}{2}A_i\rho_i u_i|u_i|\)</span>.</li>
 </ul>
 <div class="figure">
-<img src="../man/figures/force_diagram.png" alt=""><p class="caption">Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a river that is 0.5m deep. Arrows show forces in the <span class="math inline">\(i\)</span>-th element (with <span class="math inline">\(i=1\)</span> in this case), and the corresponding angle is indicated alongside the gray line that represents the stagnant case. The brown region is the sediment below the river, and the dot is an anchor (element <span class="math inline">\(i=2\)</span>, for which there is no force calculation since it assumed to be immobile).</p>
+<img src="../reference/figures/force_diagram.png" alt=""><p class="caption">Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a river that is 0.5m deep. Arrows show forces in the <span class="math inline">\(i\)</span>-th element (with <span class="math inline">\(i=1\)</span> in this case), and the corresponding angle is indicated alongside the gray line that represents the stagnant case. The brown region is the sediment below the river, and the dot is an anchor (element <span class="math inline">\(i=2\)</span>, for which there is no force calculation since it assumed to be immobile).</p>
 </div>
 <p>A tension force exists between each interior mooring element. The tension below the <span class="math inline">\(i\)</span>-th interior element (thus pulling downward on it) is denoted <span class="math inline">\({\cal T}_i\)</span>. This is defined for all elements of a mooring except for the bottom one, which is labelled <span class="math inline">\(i=n\)</span>.</p>
 <p>The tension force is directed vertically if there is no current, but acquires a horizontal component if there is a current, because drag from the current will distort the mooring shape. The angle made by the <span class="math inline">\(i\)</span>-th element to the vertical is represented with <span class="math inline">\(\phi_i\)</span>. Determining these two quantities, <span class="math inline">\({\cal T}\)</span> and <span class="math inline">\(\phi\)</span>, is the key to inferring the response of a mooring to currents.</p>
@@ -175,9 +171,9 @@
 <p>This leads to a simple way to describe mooring response to a depth-independent current, in which <span class="math inline">\(D_i\)</span> and <span class="math inline">\(B_i\)</span> are known quantities for each <span class="math inline">\(i\)</span> from 1 to <span class="math inline">\(n\)</span>: 1. First, use Equation 5 to compute <span class="math inline">\({\cal T}_1\)</span> and <span class="math inline">\(\phi_1\)</span>, the angle and tension below the top (<span class="math inline">\(i=1)\)</span> element. 2. Then, use Equation 8 to compute <span class="math inline">\({\cal T}_i\)</span> and <span class="math inline">\(\phi_i\)</span> for <span class="math inline">\(i=2\)</span>, and then use it again to compute these things at <span class="math inline">\(i=3\)</span>, etc., down to <span class="math inline">\(i=n-1\)</span>.</p>
 <p>If the current varies with depth, then the drag of a given element will depend on depth of the element, which in turn depends on the shape of the mooring. This may be handled by an iterative scheme. In the first iteration, the vertical positions of mooring elements are inferred by summing their heights, and the above procedure is used to infer <span class="math inline">\(\phi_i\)</span>. Then, these angles are used to calculate a second estimate of element locations, and the procedure is repeated using drags appropriate to those locations. This may be repeated until the solution converges to within a stated criterion. In practice, for professional moorings that are sufficiently taut to meet scientific objectives, the changes in element depths are likely to be only a few percent of water depth, and so the need for iteration is arguable, given that uncertainties about velocity variations on such scales.</p>
 </div>
-<div id="example" class="section level1">
-<h1 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h1>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <p>Figure 1 shows the result of simulating a 20-inch Hydro Float Mooring Buoy (with <span class="math inline">\(34.5\)</span>kg buoyancy) connected to a bottom anchor with 100 m of quarter-inch jacketed wire (with <span class="math inline">\(-13\)</span>kg/m of buoyancy), in a depth-independent 0.5 m/s (roughly 1 knot) current. Note that the float is predicted to sink <span class="math inline">\(7.7\)</span>m with this current. However, the predicted knockdown increases to <span class="math inline">\(41.2\)</span>m with a <span class="math inline">\(1\)</span>m/s current, suggesting that this float would be of limited utility in supporting an oceanographic mooring a region with strong currents.</p>
 <div class="figure">
 <img src="mooring_model_files/figure-html/unnamed-chunk-2-1.png" alt="Response of a mooring to a $u=1$m/s current, as described in the text. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for the $u=1$m/s case. **Right:** Mooring shape, with same colour scheme as left panel." width="700.0000032"><p class="caption">
@@ -185,21 +181,21 @@ Response of a mooring to a <span class="math inline">\(u=1\)</span>m/s current, 
 </p>
 </div>
 </div>
-<div id="special-case-negligible-currents" class="section level1">
-<h1 class="hasAnchor">
-<a href="#special-case-negligible-currents" class="anchor"></a>Special case: negligible currents</h1>
+<div class="section level2">
+<h2 id="special-case-negligible-currents">Special case: negligible currents<a class="anchor" aria-label="anchor" href="#special-case-negligible-currents"></a>
+</h2>
 <p>As a special case, if <span class="math inline">\(u_i=0\)</span> for all <span class="math inline">\(i\)</span>, then there will be no drag, and so (assuming adequate buoyancy), the mooring will be aligned in the vertical, and the vertical equation becomes <span class="math display">\[\begin{equation}
 {\cal T}_{i+1} = {\cal T}_i + {\cal B}_i
 \end{equation}\]</span> which yields <span class="math display">\[\begin{equation}
 {\cal T}_i = \sum_{1}^{i-1} {\cal B}_j
 \end{equation}\]</span> for <span class="math inline">\(i&gt;1\)</span>. Physically, this means that the downward tension at any level balances the total upward buoyancy force of all the elements above it. The bottom tension, <span class="math inline">\({\cal T}_n\)</span>, may be interpreted as the minimum anchor weight that will hold the mooring in place in the absence of currents. However, it should be obvious that heavier weights will be required for practical situations.</p>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-dewey_mooring_1999">
-<p>Dewey, Richard K. 1999. “Mooring Design &amp; Dynamics—a Matlab® Package for Designing and Analyzing Oceanographic Moorings.” <em>Marine Models</em> 1 (1): 103–57. <a href="https://doi.org/10.1016/S1369-9350(00)00002-X">https://doi.org/10.1016/S1369-9350(00)00002-X</a>.</p>
+<p>Dewey, Richard K. 1999. “Mooring Design &amp; Dynamics—a Matlab® Package for Designing and Analyzing Oceanographic Moorings.” <em>Marine Models</em> 1 (1): 103–57. <a href="https://doi.org/10.1016/S1369-9350(00)00002-X" class="external-link">https://doi.org/10.1016/S1369-9350(00)00002-X</a>.</p>
 </div>
 </div>
 </div>
@@ -216,11 +212,13 @@ Response of a mooring to a <span class="math inline">\(u=1\)</span>m/s current, 
 
 
       <footer><div class="copyright">
-  <p>Developed by Dan Kelley.</p>
+  <p></p>
+<p>Developed by Dan Kelley.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -228,6 +226,8 @@ Response of a mooring to a <span class="math inline">\(u=1\)</span>m/s current, 
 
   
 
+
+  
 
   </body>
 </html>
