@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/dankelley/mooring/workflows/R-CMD-check/badge.svg)](https://github.com/dankelley/mooring/actions)
+[![R-CMD-check](https://github.com/dankelley/mooring/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dankelley/mooring/actions/workflows/R-CMD-check.yaml)
 
 <!-- badges: end -->
 
