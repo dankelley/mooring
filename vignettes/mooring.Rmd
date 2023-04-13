@@ -151,9 +151,9 @@ those arguments vary from type to type. For example,
 ```{r}
 i <- instrument("myNewInstrument", buoyancy=-5, height=1, area=0.1, CD=1)
 ```
-creates a new instrument object for something that has buoyancy -5kg (meaning
-it weighs 5kg in seawater), height 1m, area 0.1\eqn{m^2}, and drag coefficient
-1.
+creates a new instrument object for something that has buoyancy -5kg (meaning it
+weighs 5kg in seawater), height 1m, area 0.1 square metre, and drag coefficient
+equal to 1.
 
 ## Altering Existing Elements
 
