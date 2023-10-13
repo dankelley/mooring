@@ -226,8 +226,8 @@ mooring <- function(...)
     height <- rev(cumsum(sapply(rev(rval), function(x) x$height)))
     # bookmark B1a: same as B1b and analogous t0 B1c {{{
     b <- buoyancy(rval)[-n]
-    T <- cumsum(b)
-    T <- c(T, T[n-1])                  # repeat tension across anchor (for plot labelling; not used for calculations)
+    tau <- cumsum(b)
+    tau <- c(tau, tau[n-1])                  # repeat tension across anchor (for plot labelling; not used for calculations)
     # }}}
     x0 <- 0
     alongBottom <- 0L
@@ -241,7 +241,7 @@ mooring <- function(...)
         }
         rval[[i]]$x <- x0
         rval[[i]]$z <- z               # z is at the *top* of the element
-        rval[[i]]$T <- T[i]
+        rval[[i]]$tau <- tau[i]
     }
     if (alongBottom)
         warning("insufficient mooring buoyancy; placed ", alongBottom, " elements on the bottom")
@@ -440,12 +440,12 @@ print.mooring <- function(x, ...)
 #'
 #' @author Dan Kelley
 plot.mooring <- function(x, which="shape",
-                         showInterfaces=TRUE, showDepths=FALSE, showLabels=TRUE, showDetails=FALSE,
-                         fancy=FALSE, title="",
-                         mar=c(1.5, 3.5, 3.5, 1), mgp=c(2, 0.7, 0),
-                         xlim=NULL,
-                         type="l",
-                         ...)
+    showInterfaces=TRUE, showDepths=FALSE, showLabels=TRUE, showDetails=FALSE,
+    fancy=FALSE, title="",
+    mar=c(1.5, 3.5, 3.5, 1), mgp=c(2, 0.7, 0),
+    xlim=NULL,
+    type="l",
+    ...)
 {
     m <- x # we only use x above to obey the R rules on generics.
     if (!isMooring(m))
@@ -516,15 +516,15 @@ plot.mooring <- function(x, which="shape",
     if (is.null(xlim)) xlim <- extendrange(c(x, 0))
     plot.window(0, 0, xlim=xlim, ylim=ylim, asp=if (which=="shape") 1, log="")
     usrShape <- par("usr")
-    #. message(oce::vectorShow(xlim))
-    #. message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
+    #message(oce::vectorShow(xlim))
+    #message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
     plot(x, depth, xlim=xlim, ylim=usrShape[3:4], yaxs="i", asp=if (which=="shape") 1,
          type=type, xlab="", ylab="", axes=FALSE)
     xlab <- switch(which,
-                   "shape"="Horizontal Coordinate [m]",
-                   "knockdown"="Depth Increase [m]",
-                   "tension"="Tension [kg]",
-                   "velocity"="Velocity [m/s]")
+        "shape"="Horizontal Coordinate [m]",
+        "knockdown"="Depth Increase [m]",
+        "tension"="Tension [kg]",
+        "velocity"="Velocity [m/s]")
     ylab <- "Depth [m]"
     box()
     axis(2)
@@ -688,14 +688,14 @@ discretise <- function(m, by=1)
     }
     nrval <- length(rval)
     waterDepth <- rval[[nrval]]$depth
-    # Compute z and T values. (Leave x values alone.)
+    # Compute z and tau values. (Leave x values alone.)
     #OLD z <- rev(-rval[[length(rval)]]$depth + cumsum(sapply(rval, function(x) x$height)))
-    T <- tension(rval, stagnant=TRUE) # FIXME: ok?
+    tau <- tension(rval, stagnant=TRUE) # FIXME: ok?
     zz <- -waterDepth
     for (i in rev(seq_along(rval))) {
         zz <- zz + rval[[i]]$height
         rval[[i]]$z <- zz              # z is defined at TOP of item
-        rval[[i]]$T <- T[i]
+        rval[[i]]$tau <- tau[i]
     }
     class(rval) <- "mooring"
     attr(rval, "discretised") <- TRUE
@@ -768,9 +768,8 @@ knockdown <- function(m, u=1, debug=0L)
         stop("cannot apply knockdown() to the result of a previous call")
     if (is.null(attr(m, "discretised")))
         warning("accuracy is better if discretise() is used first\n")
-    if (is.function(u) && debug > 0L) {
+    if (is.function(u) && debug > 0L)
         warning("FIXME: u=function() case is not fully coded yet (no iteration is done)\n")
-    }
     # rename x,z into x0,z0 for the stagnant (u=0) case
     for (i in seq_len(n)) {
         m[[i]]$x0 <- m[[i]]$x
@@ -780,24 +779,24 @@ knockdown <- function(m, u=1, debug=0L)
     waterDepth <- m[[length(m)]]$depth
     B <- buoyancy(m)
     D <- drag(m, u)
-    T <- vector("numeric", n)
+    tau <- vector("numeric", n)
     phi <- vector("numeric", n)
     # Next two are Equation 5 in the Mooring Model vignette.
-    T[1] <- sqrt(D[1]^2 + B[1]^2)
+    tau[1] <- sqrt(D[1]^2 + B[1]^2)
     phi[1] <- atan2(D[1], B[1])
     if (debug)
-        cat("T[1]=", T[1], ", phi[1]=", phi[1], "\n")
-    # Next block, run only if more than 2 elements, computes rest of T and phi
+        cat("tau[1]=", tau[1], ", phi[1]=", phi[1], "\n")
+    # Next block, run only if more than 2 elements, computes rest of tau and phi
     # values, using Equation 8 in the Mooring Model vignette.
     # For tension at bookmark B1c, see bookmarks B1a and B1b.
     if (n > 2L) {
         for (i in seq(2L, n-1L)) {
-            T[i] <- sqrt((D[i]+T[i-1]*sin(phi[i-1]))^2 + (B[i]+T[i-1]*cos(phi[i-1]))^2) # bookmark B1c
-            phi[i] <- atan2(D[i]+T[i-1]*sin(phi[i-1]), B[i]+T[i-1]*cos(phi[i-1]))
+            tau[i] <- sqrt((D[i]+tau[i-1]*sin(phi[i-1]))^2 + (B[i]+tau[i-1]*cos(phi[i-1]))^2) # bookmark B1c
+            phi[i] <- atan2(D[i]+tau[i-1]*sin(phi[i-1]), B[i]+tau[i-1]*cos(phi[i-1]))
         }
     }
     # carry tension and angle through mooring (just for plotting; not used in calculations)
-    T[n] <- T[n-1L]
+    tau[n] <- tau[n-1L]
     phi[n] <- phi[n-1L]
     # Clip the angle (do not allow it to run "inside" the sediment)
     phi <- ifelse(phi > pi/2, pi/2, phi)
@@ -806,10 +805,10 @@ knockdown <- function(m, u=1, debug=0L)
     m[[n]]$phi <- phi[n-1] # does this matter? Is it ever used?
     m[[n]]$x <- 0
     m[[n]]$z <- -waterDepth
-    m[[n]]$T <- T[n]
+    m[[n]]$tau <- tau[n]
     for (i in seq(n-1L, 1L, -1L)) {
         m[[i]]$phi <- phi[i]
-        m[[i]]$T <- T[i]
+        m[[i]]$tau <- tau[i]
         m[[i]]$x <- m[[i+1]]$x + m[[i]]$height * sin(m[[i]]$phi)
         m[[i]]$z <- m[[i+1]]$z + m[[i]]$height * cos(m[[i]]$phi)
     }
@@ -902,9 +901,7 @@ mooringDebug <- function(debug, v, ..., overview=FALSE, round=FALSE)
 #'
 #' @author Dan Kelley
 depth <- function(m, stagnant=FALSE)
-{
     -z(m, stagnant=stagnant)
-}
 
 #' Horizontal coordinate of mooring elements
 #'
@@ -996,11 +993,12 @@ tension <- function(m, stagnant=FALSE)
         n <- length(m)
         # bookmark B1b: same as B1a and analogous to B1c {{{
         b <- buoyancy(m)[-n]
-        T <- cumsum(b)
-        c(T, T[n-1])                     # repeat tension across anchor (for plot labelling; not used for calculations)
+        tau <- cumsum(b)
+        # repeat tension across anchor (for plot labelling; not used for calculations)
+        c(tau, tau[n-1])
         # }}}
     } else {
-        sapply(m, function(mi) mi$T)
+        sapply(m, function(mi) mi$tau)
     }
 }                                      # tension()
 
@@ -1142,13 +1140,15 @@ buoyancy <- function(m, debug=0L)
 #' @export
 #'
 #' @author Dan Kelley
-findElement <- function(e, search=c("anchor", "chain", "connector", "float", "instrument", "wire"), ignore.case=TRUE, max.distance=0.1)
+findElement <- function(e,
+    search=c("anchor", "chain", "connector", "float", "instrument", "wire"),
+    ignore.case=TRUE, max.distance=0.1)
 {
     data("mooringElements", package="mooring", envir=environment())
     mooringElements <- get("mooringElements")
     rval <- NULL
     for (element in search) {
-        names <- mooringElements[[paste0(element,"s")]]$name
+        names <- mooringElements[[paste0(element, "s")]]$name
         match <- try(agrep(e, names, ignore.case=ignore.case, max.distance=max.distance), silent=TRUE)
         if (!inherits(match, "try-error")) {
             for (i in seq_along(match)) {

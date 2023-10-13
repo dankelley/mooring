@@ -93,7 +93,7 @@
       <h1 data-toc-skip>A Practical Example</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2023-01-30</h4>
+            <h4 data-toc-skip class="date">2023-10-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/example.Rmd" class="external-link"><code>vignettes/example.Rmd</code></a></small>
       <div class="hidden name"><code>example.Rmd</code></div>
@@ -204,11 +204,11 @@ microcat from the top, i.e. the one below the ADCP, is element 155,
 i.e.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">md</span><span class="op">[[</span><span class="fl">155</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span></code></pre>
+<pre><code><span><span class="co">## 1: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span></code></pre>
 <p>Similarly, the ADCP is</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">md</span><span class="op">[[</span><span class="fl">152</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1: 'syn. float, bracket and 109lb ADCP' float, 789.8kg, height 2.42m, area 1.234m^2</span></span></code></pre>
+<pre><code><span><span class="co">## 1: "syn. float, bracket and 109lb ADCP" float, 789.8kg, height 2.42m, area 1.234m^2</span></span></code></pre>
 <p>We may use this to construct a diagnostic curve giving an overview of
 the mooring knockdown, as follows. Note that the <span class="math inline">\(x\)</span> axis of the resultant plot is showing
 velocity at the depth of the ADCP.</p>
@@ -249,40 +249,40 @@ velocity at the depth of the ADCP.</p>
 <code class="sourceCode R"><span><span class="va">m</span></span></code></pre></div>
 <p>For the mooring constructed above, the results are as follows.</p>
 <pre><code><span><span class="co">## Mooring with 34 elements, listed from the top down:</span></span>
-<span><span class="co">##   1: 'new glass streamlined float c2' float, 45.41kg, height 0.87m, area 0.183m^2</span></span>
-<span><span class="co">##   2: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
-<span><span class="co">##   3: '3/16in galvanized wire coated to 1/4in' wire, -11.5475kg, length 149m, area 0.94615m^2</span></span>
-<span><span class="co">##   4: 'syn. float, bracket and 109lb ADCP' float, 789.8kg, height 2.42m, area 1.234m^2</span></span>
-<span><span class="co">##   5: 'ballast' connector, -45.4545kg, height 1m, area 0.05m^2</span></span>
-<span><span class="co">##   6: 'swivel' connector, -0.953kg, height 0.05m, area 0.0025m^2</span></span>
-<span><span class="co">##   7: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
-<span><span class="co">##   8: '3/16in galvanized wire coated to 1/4in' wire, -11.315kg, length 146m, area 0.9271m^2</span></span>
-<span><span class="co">##   9: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
-<span><span class="co">##   10: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
-<span><span class="co">##   11: '3/16in galvanized wire coated to 1/4in' wire, -15.2675kg, length 197m, area 1.25095m^2</span></span>
-<span><span class="co">##   12: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
-<span><span class="co">##   13: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
-<span><span class="co">##   14: '3/16in galvanized wire coated to 1/4in' wire, -15.345kg, length 198m, area 1.2573m^2</span></span>
-<span><span class="co">##   15: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
-<span><span class="co">##   16: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
-<span><span class="co">##   17: '3/16in galvanized wire coated to 1/4in' wire, -15.345kg, length 198m, area 1.2573m^2</span></span>
-<span><span class="co">##   18: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
-<span><span class="co">##   19: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
-<span><span class="co">##   20: '3/16in galvanized wire coated to 1/4in' wire, -3.565kg, length 46m, area 0.2921m^2</span></span>
-<span><span class="co">##   21: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
-<span><span class="co">##   22: '3/16in galvanized wire coated to 1/4in' wire, -11.3925kg, length 147m, area 0.93345m^2</span></span>
-<span><span class="co">##   23: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
-<span><span class="co">##   24: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
-<span><span class="co">##   25: '3/16in galvanized wire coated to 1/4in' wire, -11.16kg, length 144m, area 0.9144m^2</span></span>
-<span><span class="co">##   26: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
-<span><span class="co">##   27: '3/16in galvanized wire coated to 1/4in' wire, -3.875kg, length 50m, area 0.3175m^2</span></span>
-<span><span class="co">##   28: 'RCM-11 in frame' instrument, -20.31kg, area 0.078m^2</span></span>
-<span><span class="co">##   29: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span>
-<span><span class="co">##   30: '3/16in galvanized wire coated to 1/4in' wire, -2.635kg, length 34m, area 0.2159m^2</span></span>
-<span><span class="co">##   31: 'streamlined BUB 3 Viny balls' float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
-<span><span class="co">##   32: 'benthos 965a' release, -36.73kg, height 1.23m, area 0.1562m^2</span></span>
-<span><span class="co">##   33: '5/8in galvanized chain' chain, -43.23kg, length 10m, area 0.572m^2</span></span>
-<span><span class="co">##   34: '3 trainwheels' anchor, -1050kg, height 0m, in 1400m water depth</span></span></code></pre>
+<span><span class="co">##   1: "new glass streamlined float c2" float, 45.41kg, height 0.87m, area 0.183m^2</span></span>
+<span><span class="co">##   2: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   3: "3/16in galvanized wire coated to 1/4in" wire, -11.5475kg, length 149m, area 0.94615m^2</span></span>
+<span><span class="co">##   4: "syn. float, bracket and 109lb ADCP" float, 789.8kg, height 2.42m, area 1.234m^2</span></span>
+<span><span class="co">##   5: "ballast" connector, -45.4545kg, height 1m, area 0.05m^2</span></span>
+<span><span class="co">##   6: "swivel" connector, -0.953kg, height 0.05m, area 0.0025m^2</span></span>
+<span><span class="co">##   7: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   8: "3/16in galvanized wire coated to 1/4in" wire, -11.315kg, length 146m, area 0.9271m^2</span></span>
+<span><span class="co">##   9: "RCM-11 in frame" instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   10: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   11: "3/16in galvanized wire coated to 1/4in" wire, -15.2675kg, length 197m, area 1.25095m^2</span></span>
+<span><span class="co">##   12: "RCM-11 in frame" instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   13: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   14: "3/16in galvanized wire coated to 1/4in" wire, -15.345kg, length 198m, area 1.2573m^2</span></span>
+<span><span class="co">##   15: "RCM-11 in frame" instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   16: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   17: "3/16in galvanized wire coated to 1/4in" wire, -15.345kg, length 198m, area 1.2573m^2</span></span>
+<span><span class="co">##   18: "RCM-11 in frame" instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   19: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   20: "3/16in galvanized wire coated to 1/4in" wire, -3.565kg, length 46m, area 0.2921m^2</span></span>
+<span><span class="co">##   21: "streamlined BUB 3 Viny balls" float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
+<span><span class="co">##   22: "3/16in galvanized wire coated to 1/4in" wire, -11.3925kg, length 147m, area 0.93345m^2</span></span>
+<span><span class="co">##   23: "RCM-11 in frame" instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   24: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   25: "3/16in galvanized wire coated to 1/4in" wire, -11.16kg, length 144m, area 0.9144m^2</span></span>
+<span><span class="co">##   26: "streamlined BUB 3 Viny balls" float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
+<span><span class="co">##   27: "3/16in galvanized wire coated to 1/4in" wire, -3.875kg, length 50m, area 0.3175m^2</span></span>
+<span><span class="co">##   28: "RCM-11 in frame" instrument, -20.31kg, area 0.078m^2</span></span>
+<span><span class="co">##   29: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span>
+<span><span class="co">##   30: "3/16in galvanized wire coated to 1/4in" wire, -2.635kg, length 34m, area 0.2159m^2</span></span>
+<span><span class="co">##   31: "streamlined BUB 3 Viny balls" float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
+<span><span class="co">##   32: "benthos 965a" release, -36.73kg, height 1.23m, area 0.1562m^2</span></span>
+<span><span class="co">##   33: "5/8in galvanized chain" chain, -43.23kg, length 10m, area 0.572m^2</span></span>
+<span><span class="co">##   34: "3 trainwheels" anchor, -1050kg, height 0m, in 1400m water depth</span></span></code></pre>
 <p>The number at the start is the component number (see next
 section).</p>
 <p>Note that the results for <code>md</code> will be similar, except
@@ -296,13 +296,13 @@ components). If <code>mdk</code> is examined in this way, the <span class="math 
 to acoustic release), use</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">## 1: 'SBE37 microcat clamp-on style' instrument, -1.53kg, area 0.117m^2</span></span></code></pre>
+<pre><code><span><span class="co">## 1: "SBE37 microcat clamp-on style" instrument, -1.53kg, area 0.117m^2</span></span></code></pre>
 <p>and to see the full details, use</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dput.html" class="external-link">dput</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## structure(list(model = "SBE37 microcat clamp-on style", buoyancy = -1.53, </span></span>
 <span><span class="co">##     height = 0.559, area = 0.117, CD = 0.65, source = "BIO", </span></span>
-<span><span class="co">##     x = 0, z = -65.3389999999999, T = 43.88), class = c("mooring", </span></span>
+<span><span class="co">##     x = 0, z = -65.3389999999999, tau = 43.88), class = c("mooring", </span></span>
 <span><span class="co">## "instrument"))</span></span></code></pre>
 <p>or, with less detail but in a more digestible format,</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -316,7 +316,7 @@ to acoustic release), use</p>
 <span><span class="co">##  $ source  : chr "BIO"</span></span>
 <span><span class="co">##  $ x       : num 0</span></span>
 <span><span class="co">##  $ z       : num -65.3</span></span>
-<span><span class="co">##  $ T       : num 43.9</span></span>
+<span><span class="co">##  $ tau     : num 43.9</span></span>
 <span><span class="co">##  - attr(*, "class")= chr [1:2] "mooring" "instrument"</span></span></code></pre>
 <p>You may go further with e.g.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">

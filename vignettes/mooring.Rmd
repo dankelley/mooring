@@ -8,10 +8,10 @@ output:
     toc: true
     number_sections: true
     fig_caption: yes
-    fig.width: 4
-    fig.height: 3
+    fig.width: 5
+    fig.height: 4
     dpi: 72
-    dev.args: list(pointsize=12)
+    dev.args: list(pointsize=10)
 vignette: >
   %\VignetteIndexEntry{The mooring package}
   %\VignetteEngine{knitr::rmarkdown}

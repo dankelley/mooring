@@ -11,6 +11,7 @@
 ^pkgdown$
 ^doc$
 ^Meta$
+^R/.lintr$
 ^R/TAGS$
 ^README\.Rmd$
 ^TAGS$
