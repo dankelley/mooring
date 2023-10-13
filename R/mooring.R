@@ -1,4 +1,4 @@
-## vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
+# vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
 ###################
 # 1. overall docs #
@@ -65,7 +65,7 @@ NULL
 # 2. setup        #
 ###################
 
-g <- 9.8
+g <- 9.81
 
 #' Detect whether an object is a mooring
 #'
@@ -81,577 +81,6 @@ g <- 9.8
 isMooring <- function(m=NULL) {
     is.list(m) && length(m) > 1 && all(sapply(m, function(mi) inherits(mi, "mooring")))
 }
-
-
-##################
-# 3. Code        #
-##################
-
-#' Create an anchor object
-#'
-#' Create a anchor object,
-#' either by looking up a known object from the database, or by defining a new type.
-#' This must be the first element of a mooring constructed with
-#' [mooring()].  The default is 3 trainwheels with zero height (to simplify
-#' test cases).
-#' Note that `depth` is not a characteristic of the anchor, but rather of
-#' the domain into which it is placed.
-#'
-#' @templateVar subclass anchor
-#' @template modelTemplate
-#'
-#' @template buoyancyTemplate
-#'
-#' @template heightTemplate
-#'
-#' @template CDTemplate
-#'
-#' @template heightTemplate
-#' @param depth numeric value giving water depth in m.
-#'
-#' @template sourceTemplate
-#'
-#' @return `anchor` returns an object of the `"mooring"` class and `"anchor"` subclass.
-#'
-#' @family functions that create mooring objects
-#'
-#' @examples
-#' library(mooring)
-#' # List known anchor types
-#' anchor("?")
-#'
-#' @export
-#'
-#' @author Dan Kelley
-anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, CD=NULL, depth=0)
-{
-    data("mooringElements", package="mooring", envir=environment())
-    mooringElements <- get("mooringElements")
-    if (model == "?")
-        return(sort(mooringElements$anchors$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="anchor"))
-    w <- which(mooringElements$anchors$name == model)
-    if (1 == length(w)) {
-        me <- mooringElements$anchors[w,]
-        if (!is.null(buoyancy))
-            warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
-        if (!is.null(height))
-            warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        buoyancy <- me$buoyancy
-        height <- me$height
-        CD <- me$CD
-        source <- me$source
-    } else {
-        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new anchor model")
-        if (is.null(height)) stop("must supply height, if creating a new anchor model")
-        if (is.null(CD)) stop("must supply CD, if creating a new anchor model")
-        source <- ""
-    }
-    rval <- list(model=model, buoyancy=buoyancy, height=height, area=0, CD=CD, depth=depth, source=source)
-    class(rval) <- c("mooring", "anchor")
-    rval
-}                                      # anchor()
-
-#' Create a mooring-release object
-#'
-#' Create a mooring-release object,
-#' either by looking up a known object from the database, or by defining a new type.
-#' Area is formulated as length*width, for consistency with Dewey's Matlab code.
-#'
-#' @templateVar subclass release
-#' @template modelTemplate
-#'
-#' @template buoyancyTemplate
-#'
-#' @template heightTemplate
-#'
-#' @template areaTemplate
-#'
-#' @template CDTemplate
-#'
-#' @template sourceTemplate
-#'
-#' @return `release` returns an object of the `"mooring"` class and `"release"` subclass.
-#'
-#' @examples
-#' library(mooring)
-#' # List known wire types
-#' release("?")
-#'
-#' @family functions that create mooring objects
-#'
-#' @export
-#'
-#' @author Dan Kelley
-release <- function(model="EG&G 723a", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
-    mooringElements <- get("mooringElements")
-    if (model == "?")
-        return(sort(mooringElements$releases$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="release"))
-    w <- which(mooringElements$releases$name == model)
-    if (1 == length(w)) {
-        me <- mooringElements$releases[w,]
-        if (!is.null(buoyancy))
-            warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
-        if (!is.null(height))
-            warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(area))
-            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
-            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
-        buoyancy <- me$buoyancy
-        height <- me$height
-        area <- me$area
-        CD <- me$CD
-        source <- me$source
-    } else {
-        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new release model")
-        if (is.null(height)) stop("must supply height, if creating a new release model")
-        if (is.null(area)) stop("must supply area, if creating a new release model")
-        if (is.null(CD)) stop("must supply CD, if creating a new release model")
-        source <- ""
-    }
-    rval <- list(model=model, source=source, buoyancy=buoyancy, height=height, area=area, CD=CD)
-    class(rval) <- c("mooring", "release")
-    rval
-}                                      # release()
-
-#' Create a wire object
-#'
-#' Creates a wire (or rope, chain, etc.) object,
-#' either by looking up a known object from the database, or by defining a new type.
-#'
-#' @templateVar subclass wire
-#' @template modelTemplate
-#'
-#' @template buoyancyPerMeterTemplate
-#'
-#' @template areaPerMeterTemplate
-#'
-#' @template CDTemplate
-#'
-#' @param length (mandatory) numeric value indicating the length (in m) of the wire.
-#'
-#' @template sourceTemplate
-#'
-#' @return `wire` returns an object of the `"mooring"` class and `"wire"` subclass.
-#'
-#' @family functions that create mooring objects
-#'
-#' @examples
-#' library(mooring)
-#' # List known wire types
-#' wire("?")
-#'
-#' @export
-#'
-#' @importFrom utils data
-#'
-#' @author Dan Kelley
-wire <- function(model="1/4in wire/jack", buoyancyPerMeter=NULL, areaPerMeter=NULL, CD=NULL, length=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
-    mooringElements <- get("mooringElements")
-    if (model == "?")
-        return(sort(mooringElements$wires$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="wire"))
-    if (is.null(length))
-        stop("must supply length")
-    w <- which(mooringElements$wires$name == model)
-    if (1 == length(w)) {
-        me <- mooringElements$wires[w,]
-        if (!is.null(buoyancyPerMeter))
-            warning("ignoring supplied buoyancyPerMeter, because \"", model, "\" is already in the database\n")
-        if (!is.null(areaPerMeter))
-            warning("ignoring supplied areaPerMeter, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
-            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
-        buoyancyPerMeter<- me$buoyancyPerMeter
-        areaPerMeter <- me$areaPerMeter
-        CD <- me$CD
-        source <- me$source
-    } else {
-        if (is.null(buoyancyPerMeter)) stop("must supply buoyancyPerMeter, if creating a new wire model")
-        if (is.null(areaPerMeter)) stop("must supply areaPerMeter, if creating a new wire model")
-        if (is.null(CD)) stop("must supply CD, if creating a new wire model")
-        source <- ""
-    }
-    rval <- list(model=model, buoyancy=length*buoyancyPerMeter, height=length, area=length*areaPerMeter, CD=CD, source=source)
-    class(rval) <- c("mooring", "wire")
-    rval
-}                                      # wire()
-
-#' Create a chain object
-#'
-#' Create an object that describes mooring chain elements such as shackles,
-#' either by looking up a known object from the database, or by defining a new type.
-#' Area is formulated as length*width, for consistency with Dewey's Matlab code.
-#'
-#' @templateVar subclass chain
-#' @template modelTemplate
-#'
-#' @template buoyancyPerMeterTemplate
-#'
-#' @template areaPerMeterTemplate
-#'
-#' @template CDTemplate
-#'
-#' @param length (mandatory) numeric value indicating the length (in m) of the wire.
-#'
-#' @template sourceTemplate
-#'
-#' @return `chain` returns an object of the `"mooring"` class and `"chain"` subclass.
-#'
-#' @family functions that create mooring objects
-#'
-#' @export
-#'
-#' @importFrom utils data
-#'
-#' @examples
-#' library(mooring)
-#' # List known chain types
-#' chain("?")
-#'
-#' @author Dan Kelley
-chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, areaPerMeter=NULL, CD=NULL, length=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
-    mooringElements <- get("mooringElements")
-    if (model == "?")
-        return(sort(mooringElements$chains$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="chain"))
-    if (is.null(length))
-        stop("must supply length")
-    w <- which(mooringElements$chains$name == model)
-    if (1 == length(w)) {
-        me <- mooringElements$chains[w,]
-        if (!is.null(buoyancyPerMeter))
-            warning("ignoring supplied buoyancyPerMeter, because \"", model, "\" is already in the database\n")
-        if (!is.null(areaPerMeter))
-            warning("ignoring supplied areaPerMeter, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
-            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
-        buoyancyPerMeter<- me$buoyancyPerMeter
-        areaPerMeter <- me$areaPerMeter
-        CD <- me$CD
-        source <- me$source
-    } else {
-        if (is.null(buoyancyPerMeter)) stop("must supply buoyancyPerMeter, if creating a new chain model")
-        if (is.null(areaPerMeter)) stop("must supply areaPerMeter, if creating a new chain model")
-        if (is.null(CD)) stop("must supply CD, if creating a new chain model")
-        source <- ""
-    }
-    rval <- list(model=model, buoyancy=length*buoyancyPerMeter, height=length, area=length*areaPerMeter, CD=CD, source=source)
-    class(rval) <- c("mooring", "chain")
-    rval
-}                                      # chain()
-
-#' Create a connector object
-#'
-#' Create an object that describes mooring connector such as shackles,
-#' either by looking up a known object from the database, or by defining a new type.
-#' Area is formulated as height*width, for consistency with Dewey's Matlab code.
-#'
-#' Also, it is worth noting that there are built-in connector objects that might not
-#' be thought of as connectors, e.g. `"ballast weight"`.
-#'
-#' @templateVar subclass connector
-#' @template modelTemplate
-#'
-#' @template buoyancyTemplate
-#'
-#' @template heightTemplate
-#'
-#' @template areaTemplate
-#'
-#' @template CDTemplate
-#'
-#' @template sourceTemplate
-#'
-#' @return `connector` returns an object of the `"mooring"` class and `"connector"` subclass.
-#'
-#' @family functions that create mooring objects
-#'
-#' @export
-#'
-#' @importFrom utils data
-#'
-#' @examples
-#' library(mooring)
-#' # List known chain types
-#' connector("?")
-#'
-#' @author Dan Kelley
-connector <- function(model="swivel", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
-    mooringElements <- get("mooringElements")
-    if (model == "?")
-        return(sort(mooringElements$connectors$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="connector"))
-    w <- which(mooringElements$connectors$name == model)
-    if (1 == length(w)) {
-        me <- mooringElements$connectors[w,]
-        if (!is.null(buoyancy))
-            warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
-        if (!is.null(height))
-            warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(area))
-            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
-            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
-        buoyancy <- me$buoyancy
-        height <- me$height
-        area <- me$area
-        CD <- me$CD
-        source <- me$source
-    } else {
-        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new connectors model")
-        if (is.null(height)) stop("must supply height, if creating a new connectors model")
-        if (is.null(area)) stop("must supply area, if creating a new connectors model")
-        if (is.null(CD)) stop("must supply CD, if creating a new connectors model")
-        source <- ""
-    }
-    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
-    class(rval) <- c("mooring", "connector")
-    rval
-}                                      # connector()
-
-#' Create a float object
-#' @templateVar subclass float
-#'
-#' Create a float object, either by looking up a known object from the database,
-#' or by defining a new type.
-#' Area is formulated as pi*(diameter/2)^2, for consistency with Dewey's Matlab code.
-#'
-#' Note that `HMB` in a name is a short-hand for `Hydrofloat Mooring Buoy`.  Data for these
-#' floats was extracted from Reference 1 on 2021-05-19 by Dan Kelley, with the `CD` value
-#' being set at 0.65 (in the absence of any data from the manufacture) because that
-#' value is used in Dewey's dataset for many floats.
-#'
-#' @template modelTemplate
-#'
-#' @template buoyancyTemplate
-#'
-#' @template heightTemplate
-#'
-#' @template areaTemplate
-#'
-#' @template CDTemplate
-#'
-#' @template sourceTemplate
-#'
-#' @return `float` returns an object of the `"mooring"` class and `"float"` subclass.
-#'
-#' @references
-#' 1. \url{https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf}
-#'
-#' @family functions that create mooring objects
-#'
-#' @examples
-#' library(mooring)
-#' # List known float types
-#' float("?")
-#'
-#' @export
-#'
-#' @author Dan Kelley
-float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
-    mooringElements <- get("mooringElements")
-    if (model == "?")
-        return(sort(mooringElements$floats$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="float"))
-    w <- which(mooringElements$floats$name == model)
-    if (1 == length(w)) {
-        me <- mooringElements$floats[w,]
-        if (!is.null(buoyancy))
-            warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
-        if (!is.null(height))
-            warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(area))
-            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
-            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
-        buoyancy <- me$buoyancy
-        height <- me$height
-        area <- me$area
-        CD <- me$CD
-        source <- me$source
-    } else {
-        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new float model")
-        if (is.null(height)) stop("must supply height, if creating a new float model")
-        if (is.null(area)) stop("must supply area, if creating a new float model")
-        if (is.null(CD)) stop("must supply CD, if creating a new float model")
-        source <- ""
-    }
-    # Floats are assumed to be circular in the flow direction, following
-    # Dewey's convention, so the area is pi*radius^2.
-    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
-    class(rval) <- c("mooring", "float")
-    rval
-}                                      # float()
-
-#' Create an instrument object
-#'
-#' Create an instrument object,
-#' either by looking up a known object from the database, or by defining a new type.
-#'
-#' @templateVar subclass instrument
-#' @template modelTemplate
-#'
-#' @template buoyancyTemplate
-#'
-#' @template heightTemplate
-#'
-#' @template areaTemplate
-#'
-#' @template CDTemplate
-#'
-#' @template sourceTemplate
-#'
-#' @return `instrument` returns an object of the `"mooring"` class and `"instrument"` subclass.
-#'
-#' @family functions that create mooring objects
-#'
-#' @examples
-#' library(mooring)
-#' # List known instrument types
-#' instrument("?")
-#'
-#' @export
-#'
-#' @author Dan Kelley
-instrument <- function(model="SBE37 microcat clamp-on style", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
-    mooringElements <- get("mooringElements")
-    if (model == "?")
-        return(sort(mooringElements$instruments$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="instrument"))
-    w <- which(mooringElements$instruments$name == model)
-    if (1 == length(w)) {
-        me <- mooringElements$instruments[w,]
-        if (!is.null(buoyancy))
-            warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
-        if (!is.null(height))
-            warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(area))
-            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
-            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
-        buoyancy <- me$buoyancy
-        height <- me$height
-        area <- me$area
-        CD <- me$CD
-        source <- me$source
-    } else {
-        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new instrument model")
-        if (is.null(height)) stop("must supply height, if creating a new instrument model")
-        if (is.null(area)) stop("must supply area, if creating a new instrument model")
-        if (is.null(CD)) stop("must supply CD, if creating a new instrument model")
-        source <- ""
-    }
-    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
-    class(rval) <- c("mooring", "instrument")
-    rval
-}                                      # instrument()
-
-#' Create a misc object
-#'
-#' Create a miscellaneous object,
-#' either by looking up a known object from the database, or by defining a new type.
-#' The function name, and most of the built-in data
-#' values, come from Dewey's (1999, 2021) database.
-#' For data derived from the Dewey database,
-#' area is computed as in Dewey's Matlab code: if tabulated diameter is zero,
-#' then the product of tabulated height and width is used; otherwise,
-#' pi*(diameter/2)^2 is used.
-#'
-#' @templateVar subclass misc
-#' @template modelTemplate
-#'
-#' @template buoyancyTemplate
-#'
-#' @template heightTemplate
-#'
-#' @template areaTemplate
-#'
-#' @template CDTemplate
-#'
-#' @template sourceTemplate
-#'
-#' @return `misc` returns an object of the `"mooring"` class and `"misc"` subclass.
-#'
-#' @family functions that create mooring objects
-#'
-#' @examples
-#' library(mooring)
-#' # List known misc types
-#' misc("?")
-#'
-#' @references
-#' Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
-#' Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
-#' (December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
-#'
-#' Dewey, Richard. "Mooring Design and Dynamics:
-#' A Matlab Package for Designing and Testing
-#' Oceanographic Moorings And Towed Bodies."
-#' Accessed May 15, 2021.
-#' http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
-#' http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
-#'
-#' @export
-#'
-#' @author Dan Kelley
-misc <- function(model="AanderaaT.chain", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
-    mooringElements <- get("mooringElements")
-    if (model == "?")
-        return(sort(mooringElements$misc$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="instrument"))
-    w <- which(mooringElements$misc$name == model)
-    if (1 == length(w)) {
-        me <- mooringElements$misc[w,]
-        if (!is.null(buoyancy))
-            warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
-        if (!is.null(height))
-            warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(area))
-            warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
-            warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
-        buoyancy <- me$buoyancy
-        height <- me$height
-        area <- me$area
-        CD <- me$CD
-        source <- me$source
-    } else {
-        if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new misc model")
-        if (is.null(height)) stop("must supply height, if creating a new misc model")
-        if (is.null(area)) stop("must supply area, if creating a new misc model")
-        if (is.null(CD)) stop("must supply CD, if creating a new misc model")
-        source <- ""
-    }
-    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
-    class(rval) <- c("mooring", "misc")
-    rval
-}                                      # misc()
-
 
 #' Get mooring/element drag coefficient
 #'
@@ -709,7 +138,7 @@ drag <- function(m, u, rho=1027, g=9.8)
 {
     if (length(rho) > 1L && length(rho) != length(m))
         stop("length of rho, ", length(rho), " must match length of m, ", length(m))
-    uSquared <- if (is.function(u)) sapply(depth(m),u)^2 else u^2
+    uSquared <- if (is.function(u)) sapply(depth(m), u)^2 else u^2
     0.5 * area(m) * rho * CD(m) * uSquared / g
 }
 
@@ -787,7 +216,7 @@ mooring <- function(...)
        stop("first argument must be created with anchor()")
     w <- which(sapply(dots, function(x) !inherits(x, "mooring")))
     if (length(w))
-        stop("these are the indices of elements that are not of class 'mooring': ", paste(w, collapse=" "))
+        stop("these are the indices of elements that are not of class \"mooring\": ", paste(w, collapse=" "))
     w <- which(2 != sapply(dots, function(x) length(class(x))))
     if (length(w))
         stop("these are the indices of elements that are not elementary: ", paste(w, collapse=" "))
@@ -855,10 +284,10 @@ print.mooring <- function(x, ...)
         }
         prefix <- "  "
     }
-    # The 'lastWas*' variables keep track of repeats, e.g. as created by discretise().
+    # The'lastWas* variables keep track of repeats, e.g. as created by discretise().
     # This scheme will not work if a mooring is contructed with wire or chain elements
     # that are not joined by a connector, but that should not happen if the mooring
-    # reflects reality.  If this poses a problem, we could also look at the 'group'
+    # reflects reality.  If this poses a problem, we could also look at the group
     #' part of the item.
     lastWasChain <- FALSE
     lastWasWire <- FALSE
@@ -867,8 +296,8 @@ print.mooring <- function(x, ...)
         xi <- if (elementary) x else x[[i]]
         mooringDebug(debug, "i=", i, " class=", paste(class(xi), collapse=","), "\n", sep="")
         if (inherits(xi, "anchor")) {
-            cat(sprintf("%s%d: '%s' anchor, %gkg, height %gm, in %gm water depth\n",
-                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$depth), sep='')
+            cat(sprintf("%s%d: \"%s\" anchor, %gkg, height %gm, in %gm water depth\n",
+                prefix, i, xi$model, xi$buoyancy, xi$height, xi$depth), sep="")
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
         } else if (inherits(xi, "chain")) {
@@ -882,42 +311,42 @@ print.mooring <- function(x, ...)
             }
             #> message("chain count: ", count)
             if (count == 1L) {
-                cat(sprintf("%s%d: '%s' chain, %gkg, length %gm, area %gm^2\n",
-                            prefix, i, xi$model,
-                            xi$buoyancy,
-                            xi$height,
-                            xi$area), sep="")
+                cat(sprintf("%s%d: \"%s\" chain, %gkg, length %gm, area %gm^2\n",
+                    prefix, i, xi$model,
+                    xi$buoyancy,
+                    xi$height,
+                    xi$area), sep="")
             } else {
-                cat(sprintf("%s%d-%d: '%s' chain, %gm, length %gm, width %gm\n",
-                            prefix, i, i+count-1L, xi$model,
-                            xi$buoyancy,
-                            xi$height,
-                            xi$area), sep="")
+                cat(sprintf("%s%d-%d: \"%s\" chain, %gm, length %gm, width %gm\n",
+                    prefix, i, i+count-1L, xi$model,
+                    xi$buoyancy,
+                    xi$height,
+                    xi$area), sep="")
             }
             i <- i + count             # account for skipped-over elements
-        } else if (inherits(xi, 'connector')) {
-            cat(sprintf("%s%d: '%s' connector, %gkg, height %gm, area %gm^2\n",
-                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
+        } else if (inherits(xi, "connector")) {
+            cat(sprintf("%s%d: \"%s\" connector, %gkg, height %gm, area %gm^2\n",
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep="")
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
-        } else if (inherits(xi, 'float')) {
-            cat(sprintf("%s%d: '%s' float, %gkg, height %gm, area %gm^2\n",
-                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
+        } else if (inherits(xi, "float")) {
+            cat(sprintf("%s%d: \"%s\" float, %gkg, height %gm, area %gm^2\n",
+                         prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep="")
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
-        } else if (inherits(xi, 'instrument')) {
-            cat(sprintf("%s%d: '%s' instrument, %gkg, area %gm^2\n",
-                         prefix, i, xi$model, xi$buoyancy, xi$area), sep='')
+        } else if (inherits(xi, "instrument")) {
+            cat(sprintf("%s%d: \"%s\" instrument, %gkg, area %gm^2\n",
+                         prefix, i, xi$model, xi$buoyancy, xi$area), sep="")
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
-        } else if (inherits(xi, 'misc')) {
-            cat(sprintf("%s%d: '%s' misc, %gkg, height %gm, area %gm^2\n",
-                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
+        } else if (inherits(xi, "misc")) {
+            cat(sprintf("%s%d: \"%s\" misc, %gkg, height %gm, area %gm^2\n",
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep="")
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
-        } else if (inherits(xi, 'release')) {
-            cat(sprintf("%s%d: '%s' release, %gkg, height %gm, area %gm^2\n",
-                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep='')
+        } else if (inherits(xi, "release")) {
+            cat(sprintf("%s%d: \"%s\" release, %gkg, height %gm, area %gm^2\n",
+                        prefix, i, xi$model, xi$buoyancy, xi$height, xi$area), sep="")
             lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L
         } else if (inherits(xi, "wire")) {
@@ -931,13 +360,13 @@ print.mooring <- function(x, ...)
             }
             #> message("wire count: ", wire)
             if (count == 1L) {
-                cat(sprintf("%s%d: '%s' wire, %gkg, length %gm, area %gm^2\n",
+                cat(sprintf("%s%d: \"%s\" wire, %gkg, length %gm, area %gm^2\n",
                             prefix, i, xi$model,
                             xi$buoyancy,
                             xi$height,
                             xi$area), sep="")
             } else {
-                cat(sprintf("%s%d-%d: '%s' wire, %gkg, length %gm, area %gm^2\n",
+                cat(sprintf("%s%d-%d: \"%s\" wire, %gkg, length %gm, area %gm^2\n",
                             prefix, i, i+count-1L, xi$model,
                             xi$buoyancy,
                             xi$height,
@@ -1018,7 +447,7 @@ plot.mooring <- function(x, which="shape",
                          type="l",
                          ...)
 {
-    m <- x # we only use 'x' above to obey the R rules on generics.
+    m <- x # we only use x above to obey the R rules on generics.
     if (!isMooring(m))
         stop("only works for objects created by mooring()")
     # Handle showDetails, converting it to a logical if not, and creating a list if required
@@ -1353,13 +782,13 @@ knockdown <- function(m, u=1, debug=0L)
     D <- drag(m, u)
     T <- vector("numeric", n)
     phi <- vector("numeric", n)
-    # Next two are Equation 5 in the 'Mooring Model' vignette.
+    # Next two are Equation 5 in the Mooring Model vignette.
     T[1] <- sqrt(D[1]^2 + B[1]^2)
     phi[1] <- atan2(D[1], B[1])
     if (debug)
         cat("T[1]=", T[1], ", phi[1]=", phi[1], "\n")
     # Next block, run only if more than 2 elements, computes rest of T and phi
-    # values, using Equation 8 in the 'Mooring Model' vignette.
+    # values, using Equation 8 in the Mooring Model vignette.
     # For tension at bookmark B1c, see bookmarks B1a and B1b.
     if (n > 2L) {
         for (i in seq(2L, n-1L)) {
@@ -1830,7 +1259,7 @@ summary.mooring <- function(object, ...)
             if (i %in% known)
                 sapply(m, function(mi) mi[[i]])
             else
-                stop("'", i, "' not handled; try one of: '", paste(known, collapse="', '"), "'")
+                stop("\"", i, "\" not handled; try one of: \"", paste(known, collapse="\", \""), "\"")
         }
     } else {
         if (length(class(m)) != 2)
@@ -1846,4 +1275,3 @@ summary.mooring <- function(object, ...)
         }
     }
 }
-
