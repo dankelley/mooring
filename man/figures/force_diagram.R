@@ -18,12 +18,12 @@ l <- L * cos(phi)
 T <- B / cos(phi)
 
 library(mooring)
-f <- float("pingpong", Bkg, height=0, diameter=2*R, CD=1)
+f <- float("pingpong", Bkg, height=0, area=area, CD=1)
 expect_equal(Bkg, buoyancy(f))
-expect_equal(D, drag(f, u=u))
+expect_equal(D/g, drag(f, u=u))
 
-w <- wire("gossamer", length=L, buoyancyPerMeter=0, CD=0, diameter=0)
-a <- anchor("fake", buoyancy=-1000, height=0, depth=L)
+w <- wire("gossamer", length=L, buoyancyPerMeter=0, CD=0, areaPerMeter=0)
+a <- anchor("fake", buoyancy=-1000, height=0, CD=1, depth=L)
 m <- mooring(a, w, f)
 
 n <- 500 # number of sub-segments to use
@@ -57,7 +57,7 @@ arrows(x, L-l, x+scale*Tx, L-l+scale*Tz, length=length, col=col, lwd=lwd)
 text(2*tweak+x+scale*Tx, tweak/3+L-l+scale*Tz, expression(T[i]), font=2, col=col, pos=1, cex=cex)
 
 # Angle
-text(2*tweak+head(x(mdk), 1), -4*tweak+head(depth(mdk),1), expression(phi[i]), col=col, font=2, cex=1.2*cex)
+text(2*tweak+tail(x(mdk), 1), -4*tweak+tail(depth(mdk),1), expression(phi[i]), col=col, font=2, cex=1.2*cex)
 
 if (!interactive())
     dev.off()
