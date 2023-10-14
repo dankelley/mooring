@@ -93,7 +93,7 @@
       <h1 data-toc-skip>A Practical Example</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2023-10-13</h4>
+            <h4 data-toc-skip class="date">2023-10-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/example.Rmd" class="external-link"><code>vignettes/example.Rmd</code></a></small>
       <div class="hidden name"><code>example.Rmd</code></div>
@@ -134,40 +134,48 @@ Sackville Spur</strong>
 <span><span class="va">RCM11</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/instrument.html">instrument</a></span><span class="op">(</span><span class="st">"RCM-11 in frame"</span><span class="op">)</span> <span class="co"># "AANDERAA RCM11"</span></span>
 <span><span class="va">microcat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/instrument.html">instrument</a></span><span class="op">(</span><span class="st">"SBE37 microcat clamp-on style"</span><span class="op">)</span> <span class="co"># "SBE MICROCAT"</span></span>
 <span></span>
-<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">1400</span><span class="op">)</span>,</span>
-<span>             <span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="st">"5/8in galvanized chain"</span>, length<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span>             <span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="st">"benthos 965a"</span><span class="op">)</span>,  <span class="co"># dual benthos 965-a</span></span>
-<span>             <span class="va">BUB3</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">34</span><span class="op">)</span>,</span>
-<span>             <span class="va">microcat</span>,</span>
-<span>             <span class="va">RCM11</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>,</span>
-<span>             <span class="va">BUB3</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">144</span><span class="op">)</span>,</span>
-<span>             <span class="va">microcat</span>,</span>
-<span>             <span class="va">RCM11</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">147</span><span class="op">)</span>,</span>
-<span>             <span class="va">BUB3</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">46</span><span class="op">)</span>,</span>
-<span>             <span class="va">microcat</span>,</span>
-<span>             <span class="va">RCM11</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">198</span><span class="op">)</span>,</span>
-<span>             <span class="va">microcat</span>,</span>
-<span>             <span class="va">RCM11</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">198</span><span class="op">)</span>,</span>
-<span>             <span class="va">microcat</span>,</span>
-<span>             <span class="va">RCM11</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">197</span><span class="op">)</span>,</span>
-<span>             <span class="va">microcat</span>,</span>
-<span>             <span class="va">RCM11</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">146</span><span class="op">)</span>,</span>
-<span>             <span class="va">microcat</span>,</span>
-<span>             <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"swivel"</span><span class="op">)</span>,</span>
-<span>             <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"ballast"</span>, <span class="op">-</span><span class="fl">100</span><span class="op">/</span><span class="fl">2.2</span>, height<span class="op">=</span><span class="fl">1</span>, area<span class="op">=</span><span class="fl">0.05</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
-<span>             <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"syn. float, bracket and 109lb ADCP"</span><span class="op">)</span>,</span>
-<span>             <span class="fu">W</span><span class="op">(</span><span class="fl">149</span><span class="op">)</span>,</span>
-<span>             <span class="va">microcat</span>,</span>
-<span>             <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">'new glass streamlined float c2'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># The database does not have a 5-wheel anchor, but we may construct</span></span>
+<span><span class="co"># one as follows.  Note that this does not matter to the knockdown</span></span>
+<span><span class="co"># calculation, but it might be useful in cases where an anchor was</span></span>
+<span><span class="co"># not heavy enough to hold the mooring in place.</span></span>
+<span><span class="va">buoyancy</span> <span class="op">&lt;-</span> <span class="fl">5</span><span class="op">/</span><span class="fl">3</span><span class="op">*</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="st">"3 trainwheels"</span><span class="op">)</span><span class="op">$</span><span class="va">buoyancy</span></span>
+<span><span class="va">height</span> <span class="op">&lt;-</span> <span class="fl">5</span><span class="op">/</span><span class="fl">3</span><span class="op">*</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="st">"3 trainwheels"</span><span class="op">)</span><span class="op">$</span><span class="va">height</span></span>
+<span><span class="va">CD</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="st">"3 trainwheels"</span><span class="op">)</span><span class="op">$</span><span class="va">CD</span></span>
+<span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="st">"5 trainwheels"</span>, buoyancy<span class="op">=</span><span class="va">buoyancy</span>, height<span class="op">=</span><span class="va">height</span>, CD<span class="op">=</span><span class="va">CD</span>, depth<span class="op">=</span><span class="fl">1400</span><span class="op">)</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="va">A</span>,</span>
+<span>    <span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="st">"5/8in galvanized chain"</span>, length<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/release.html">release</a></span><span class="op">(</span><span class="st">"benthos 965a"</span><span class="op">)</span>,  <span class="co"># dual benthos 965-a</span></span>
+<span>    <span class="va">BUB3</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">34</span><span class="op">)</span>,</span>
+<span>    <span class="va">microcat</span>,</span>
+<span>    <span class="va">RCM11</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>,</span>
+<span>    <span class="va">BUB3</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">144</span><span class="op">)</span>,</span>
+<span>    <span class="va">microcat</span>,</span>
+<span>    <span class="va">RCM11</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">147</span><span class="op">)</span>,</span>
+<span>    <span class="va">BUB3</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">46</span><span class="op">)</span>,</span>
+<span>    <span class="va">microcat</span>,</span>
+<span>    <span class="va">RCM11</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">198</span><span class="op">)</span>,</span>
+<span>    <span class="va">microcat</span>,</span>
+<span>    <span class="va">RCM11</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">198</span><span class="op">)</span>,</span>
+<span>    <span class="va">microcat</span>,</span>
+<span>    <span class="va">RCM11</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">197</span><span class="op">)</span>,</span>
+<span>    <span class="va">microcat</span>,</span>
+<span>    <span class="va">RCM11</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">146</span><span class="op">)</span>,</span>
+<span>    <span class="va">microcat</span>,</span>
+<span>    <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"swivel"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/connector.html">connector</a></span><span class="op">(</span><span class="st">"ballast"</span>, <span class="op">-</span><span class="fl">100</span><span class="op">/</span><span class="fl">2.2</span>, height<span class="op">=</span><span class="fl">1</span>, area<span class="op">=</span><span class="fl">0.05</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"syn. float, bracket and 109lb ADCP"</span><span class="op">)</span>,</span>
+<span>    <span class="fu">W</span><span class="op">(</span><span class="fl">149</span><span class="op">)</span>,</span>
+<span>    <span class="va">microcat</span>,</span>
+<span>    <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">'new glass streamlined float c2'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discretise.html">discretise</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -282,7 +290,7 @@ velocity at the depth of the ADCP.</p>
 <span><span class="co">##   31: "streamlined BUB 3 Viny balls" float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
 <span><span class="co">##   32: "benthos 965a" release, -36.73kg, height 1.23m, area 0.1562m^2</span></span>
 <span><span class="co">##   33: "5/8in galvanized chain" chain, -43.23kg, length 10m, area 0.572m^2</span></span>
-<span><span class="co">##   34: "3 trainwheels" anchor, -1050kg, height 0m, in 1400m water depth</span></span></code></pre>
+<span><span class="co">##   34: "5 trainwheels" anchor, -1750kg, height 0m, in 1400m water depth</span></span></code></pre>
 <p>The number at the start is the component number (see next
 section).</p>
 <p>Note that the results for <code>md</code> will be similar, except
