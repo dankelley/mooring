@@ -3,8 +3,9 @@
 #' Run a GUI app for interactive simulations
 #'
 #' This makes a simple mooring with an anchor, a line, and a float, in
-#' a depth-uniform current.  Sliders adjust line length and current speed.
-#' Pulldown menus adjust wire and float types.
+#' a depth-uniform current, or one of a few other current profiles.
+#' Sliders are provided for the adjustment of line length and current speed,
+#' and pulldown menus are provided to adjust wire and float types.
 #'
 #' @importFrom shiny shinyApp
 #'
@@ -37,7 +38,7 @@ app <- function()
         "<tt>wire(\"1/4in wire/jack\")</tt><br>A list of float types is obtained with <br>",
         indent, "<tt>float(\"?\")</tt><br>and <br>",
         indent,
-        "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Deweey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>",
+        "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Dewey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>",
         dewey1999, "</li><li>", dewey2021, "</li></ul>")
     ui <- shiny::fluidPage(
         shiny::tags$style(shiny::HTML("body {font-family: 'Arial'; font-size: 10px; margin-left:1ex}")),
