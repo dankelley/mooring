@@ -1,5 +1,4 @@
-^TAGS$
-^R/TAGS$
+^issues$
 ^create_data$
 ^.github$
 ^man-roxygen$
@@ -12,4 +11,7 @@
 ^pkgdown$
 ^doc$
 ^Meta$
+^R/.lintr$
+^R/TAGS$
 ^README\.Rmd$
+^TAGS$

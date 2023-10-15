@@ -4,102 +4,133 @@ debug <- 0
 
 anchors <- NULL
 for (file in list.files(pattern="^anchors.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% anchors$name))
         stop("name conflict")
-    if (class(d$buoyancy) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancy))
-    if (class(d$height) != "numeric") stop("height is not numeric; it is ", class(d$height))
+    for (item in c("buoyancy", "height")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
     anchors <- rbind(anchors, d)
 }
 
 chains <- NULL
 for (file in list.files(pattern="^chains.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% chains$name))
         stop("name conflict")
-    if (class(d$buoyancyPerMeter) != "numeric") stop("buoyancyPerMeter is not numeric; it is ", class(d$buoyancyPerMeter))
-    if (class(d$width) != "numeric") stop("width is not numeric; it is ", class(d$width))
-    if (class(d$CD) != "numeric") stop("CD is not numeric; it is ", class(d$CD))
+    for (item in c("buoyancyPerMeter", "areaPerMeter", "CD")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
     chains <- rbind(chains, d)
 }
 
 connectors <- NULL
 for (file in list.files(pattern="^connectors.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% connectors$name))
         stop("name conflict")
-    if (class(d$buoyancy) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancy))
-    if (class(d$height) != "numeric") stop("height is not numeric; it is ", class(d$length))
-    if (class(d$width) != "numeric") stop("width is not numeric; it is ", class(d$width))
-    if (class(d$CD) != "numeric") stop("CD is not numeric; it is ", class(d$CD))
+    for (item in c("buoyancy", "height", "area", "CD")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
     connectors <- rbind(connectors, d)
 }
 
 floats <- NULL
 for (file in list.files(pattern="^floats.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% floats$name))
         stop("name conflict")
-    if (class(d$buoyancy) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancy))
-    if (class(d$height) != "numeric") stop("height is not numeric; it is ", class(d$height))
-    if (class(d$diameter) != "numeric") stop("diameter is not numeric; it is ", class(d$diameter))
-    if (class(d$CD) != "numeric") stop("CD is not numeric; it is ", class(d$CD))
+    for (item in c("buoyancy", "height", "area", "CD")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
     floats <- rbind(floats, d)
 }
 
 instruments <- NULL
 for (file in list.files(pattern="^instruments.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% instruments$name))
         stop("name conflict")
-    if (class(d$buoyancy) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancy))
-    if (class(d$height) != "numeric") stop("height is not numeric; it is ", class(d$height))
-    if (class(d$area) != "numeric") stop("width is not numeric; it is ", class(d$area))
-    if (class(d$CD) != "numeric") stop("CD is not numeric; it is ", class(d$CD))
+    for (item in c("buoyancy", "height", "area", "CD")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
     instruments <- rbind(instruments, d)
 }
 
+miscs <- NULL
+for (file in list.files(pattern="^miscs.*csv$")) {
+    d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
+    d$area <- round(d$area, 4) # seems the limit of what could be measured on height etc
+    if (debug > 0)
+        print(d)
+    if (any(d$name %in% miscs$name))
+        stop("name conflict")
+    for (item in c("buoyancy", "height", "area", "CD")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
+    miscs <- rbind(miscs, d)
+}
+# reorder columns for consistency
+miscsOrig <- miscs
+miscs <- miscsOrig[, c("name", "buoyancy", "height", "area", "CD", "code", "source", "originalName")]
+
 releases <- NULL
 for (file in list.files(pattern="^releases.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
         print(d)
     if (any(d$name %in% releases$name))
         stop("name conflict")
-    if (class(d$buoyancy) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancy))
-    if (class(d$height) != "numeric") stop("height is not numeric; it is ", class(d$height))
-    if (class(d$width) != "numeric") stop("width is not numeric; it is ", class(d$width))
-    if (class(d$CD) != "numeric") stop("CD is not numeric; it is ", class(d$CD))
+    for (item in c("buoyancy", "height", "area", "CD")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
     releases <- rbind(releases, d)
 }
 
 wires <- NULL
 for (file in list.files(pattern="^wires.*csv$")) {
-    message(file)
     d <- read.csv(file)
+    message(paste(file, "has", length(names(d)), "cols"))
     if (debug > 0)
-        print(d)
+        print(head(d,2))
     if (any(d$name %in% wires$name))
         stop("name conflict")
-    if (class(d$buoyancyPerMeter) != "numeric") stop("buoyancy is not numeric; it is ", class(d$buoyancyPerMeter))
-    if (class(d$diameter) != "numeric") stop("diameter is not numeric; it is ", class(d$diameter))
-    if (class(d$CD) != "numeric") stop("CD is not numeric; it is ", class(d$CD))
+    for (item in c("buoyancyPerMeter", "areaPerMeter", "CD")) {
+        if (class(d[[item]]) != "numeric" && class(d[[item]]) != "integer")
+            stop("'", item, "' is not numeric or integer; it is ", class(d[[item]]))
+        d[[item]] <- as.numeric(d[[item]])
+    }
     wires <- rbind(wires, d)
 }
 
@@ -108,6 +139,7 @@ mooringElements <- list(anchors=anchors,
                         connectors=connectors,
                         floats=floats,
                         instruments=instruments,
+                        miscs=miscs,
                         releases=releases,
                         wires=wires)
 save(mooringElements, file="mooringElements.rda")

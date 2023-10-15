@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/mooring.html">Get started</a>
 </li>
@@ -50,17 +46,20 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/knockdown_model.html">Mooring Response to Unidirectional Flow</a>
+      <a href="../articles/example.html">A Practical Example</a>
     </li>
     <li>
       <a href="../articles/mooring_elements.html">Default Values for Mooring Elements</a>
+    </li>
+    <li>
+      <a href="../articles/mooring_model.html">Mooring Model</a>
     </li>
     <li>
       <a href="../articles/object_orientation.html">Object-orientation Scheme</a>
@@ -73,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/dankelley/mooring/">
+  <a href="https://github.com/dankelley/mooring/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,28 +87,38 @@
 
       
 
-      </header><script src="object_orientation_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Object-orientation Scheme</h1>
-                        <h4 class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
+                        <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 class="date">2021-06-08</h4>
+            <h4 data-toc-skip class="date">2023-10-14</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/master/vignettes/object_orientation.Rmd"><code>vignettes/object_orientation.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/object_orientation.Rmd" class="external-link"><code>vignettes/object_orientation.Rmd</code></a></small>
       <div class="hidden name"><code>object_orientation.Rmd</code></div>
 
     </div>
 
     
     
-<p>The S3 scheme is used for objects created by functions in the <code>mooring</code> package. These objects inherit from the <code>"mooring"</code> class. The contents consist of a list that in turn contains one or more lists.</p>
-<p>The elementary functions, [anchor()], [chain()], [wire()] and [float()], produce objects with main class <code>"mooring"</code> and sub-class with the function name. The contents vary from subclass to subclass. For example, a discrete object like an anchor or a float has a certain buoyancy, so that is saved in a field called <code>buoyancy</code> that has units of kg (converted from Newtons by dividing by the acceleration due to gravity). However, a wire’s <code>buoyancy</code> field in units of kg/m, representing buoyancy per length. Another difference relates to size. Following Dewey’s convention, a float is stored with a diameter, whereas a wire or a chain is stored with a width. Allowances for these different aspects are made in [knockdown()], as it computes drag and buoyancy forces on elements.</p>
+<p>The S3 scheme is used for objects created by functions in the
+<code>mooring</code> package. These objects inherit from the
+<code>"mooring"</code> class. The contents consist of a list that in
+turn contains one or more lists.</p>
+<p>The elementary functions, such as <code><a href="../reference/anchor.html">anchor()</a></code>,
+<code><a href="../reference/wire.html">wire()</a></code>, <code><a href="../reference/float.html">float()</a></code>, etc., produce objects with
+main class <code>"mooring"</code> and sub-class with the function name.
+The contents vary from subclass to subclass. Allowances for these
+different aspects are made in <code><a href="../reference/knockdown.html">knockdown()</a></code>, as it computes
+drag and buoyancy forces on elements.</p>
 <p>For example,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/">mooring</a></span><span class="op">)</span>
-<span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length<span class="op">=</span><span class="fl">75</span><span class="op">)</span>, <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>produces a list with 3 elements, one that holds information on the anchor, a second that holds information on the wire, and a third that holds information on the float.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span>depth<span class="op">=</span><span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length<span class="op">=</span><span class="fl">75</span><span class="op">)</span>, <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>produces a list with 3 elements, one that holds information on the
+anchor, a second that holds information on the wire, and a third that
+holds information on the float.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -121,11 +130,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Dan Kelley.</p>
+  <p></p>
+<p>Developed by Dan Kelley.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -133,6 +144,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -2,17 +2,21 @@
 % Please edit documentation in R/mooring.R
 \name{plot.mooring}
 \alias{plot.mooring}
-\title{Plot a mooring object}
+\title{Plot a mooring}
 \usage{
 \method{plot}{mooring}(
   x,
   which = "shape",
-  showDepths = TRUE,
+  showInterfaces = TRUE,
+  showDepths = FALSE,
   showLabels = TRUE,
+  showDetails = FALSE,
   fancy = FALSE,
   title = "",
   mar = c(1.5, 3.5, 3.5, 1),
   mgp = c(2, 0.7, 0),
+  xlim = NULL,
+  type = "l",
   ...
 )
 }
@@ -20,13 +24,19 @@
 \item{x}{an object of the \code{"mooring"} class.}
 
 \item{which}{character value indicating the desired plot, with
-choices: \code{"shape"} and \code{"tension"}.}
+choices: \code{"shape"} (the default), \code{"knockdown"}, \code{"tension"} and \code{"velocity"}.}
+
+\item{showInterfaces}{logical value indicating whether to indicate the water
+surface with a blue line and the ocean bottom with a brown line.}
 
 \item{showDepths}{logical value indicating whether to indicate the depths of
 floats, to the left of the symbols.}
 
 \item{showLabels}{logical value indicating whether to indicate anchors,
 instruments and floats with \code{A}, \code{I} and \code{F}, respectively.}
+
+\item{showDetails}{logical value indicating whether to show details for anchors,
+instruments and floats with text.}
 
 \item{fancy}{logical value indicating whether to indicate the
 water and sediments with filled rectangles.  The alternative
@@ -43,10 +53,16 @@ and tightens the margins on bottom and right.}
 geometry.  The default value moves numbers and labels closer
 to the axes than the usual R default.}
 
+\item{xlim}{optional numeric vector of length 2 that can
+be used to specify the limits of the horizontal axis.}
+
+\item{type}{character value indicating type of plot. The default, \code{"l"},
+means to draw lines, while e.g. \code{"p"} means to draw points.}
+
 \item{...}{optional arguments.}
 }
 \description{
-Plot a mooring object
+Plot a mooring
 }
 \examples{
 # Create, summarize, and plot a simple mooring comprising

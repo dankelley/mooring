@@ -8,10 +8,10 @@ output:
     toc: true
     number_sections: true
     fig_caption: yes
-    fig.width: 4
-    fig.height: 3
+    fig.width: 5
+    fig.height: 4
     dpi: 72
-    dev.args: list(pointsize=12)
+    dev.args: list(pointsize=10)
 vignette: >
   %\VignetteIndexEntry{The mooring package}
   %\VignetteEngine{knitr::rmarkdown}
@@ -151,9 +151,9 @@ those arguments vary from type to type. For example,
 ```{r}
 i <- instrument("myNewInstrument", buoyancy=-5, height=1, area=0.1, CD=1)
 ```
-creates a new instrument object for something that has buoyancy -5kg (meaning
-it weighs 5kg in seawater), height 1m, area 0.1\eqn{m^2}, and drag coefficient
-1.
+creates a new instrument object for something that has buoyancy -5kg (meaning it
+weighs 5kg in seawater), height 1m, area 0.1 square metre, and drag coefficient
+equal to 1.
 
 ## Altering Existing Elements
 
@@ -189,7 +189,7 @@ water, with a 1/4-inch jacketed wire cable connecting a subsurface float to a
 bottom anchor. How much buoyancy will be required to hold this mooring
 acceptably upright?  To answer this, we may do as follows.
 
-```{r fig.cap="**Dependence of knockdown on current.**", fig.align="center"}
+```{r fig.cap="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**", fig.align="center"}
 library(mooring)
 a <- anchor(depth=1000)
 w <- wire(length=900)
@@ -200,21 +200,21 @@ md <- discretise(m)
 depths <- sapply(us, function(u)
                  {
                      mdk <- knockdown(md, u)
-                     depth(tail(mdk,1))
+                     depth(mdk)[1]
                  })
 par(mar=c(3,3,1,1), mgp=c(2,0.7,0))
-plot(us, depths, ylim=rev(range(depths)), type="l", pch=20, cex=0.5,
+plot(us, depths, xaxs="i", ylim=rev(range(depths)), type="l", lwd=2,
      xlab="Horiz. velo. [m/s]", ylab="Float depth [m]")
 grid()
-abline(h=100*c(1, 1.1), col=c(4,2))
+abline(h=1.1*depth(md)[1], lty=2)
 ```
 
-The blue and red horizontal lines indicate zero knockdown (for zero current)
-and 10 percent knockdown, respectively. The diagram suggests that if a 10 depth
-increase is taken as a design limit, that this float will be sufficient up to
-speeds of approximately $0.3$m/s.
+This analysis suggests that a $0.3$m/s current could yield a 10 percent
+increase in depth of the top mooring element, so the mooring needs more
+buoyancy if greater mooring stiffness is required, or if currents exceed this
+value.
 
-**Exercise 3: Find a float that will hold this mooring taut in 2m/s current.**
+**Exercise 3: Suggest a float that will hold this mooring taut in 2m/s current.**
 
 
 # Solutions to Exercises
@@ -248,7 +248,7 @@ We do this in three steps (see comments in the code).
    radius.  On this log-log plot, therefore, the data ought to lie along a line
    of slope 2/3.
 
-```{r, fig.cap="**Float drag-buoyancy relationship.**", fig.align="center"}
+```{r, fig.cap="**Float drag-buoyancy relationship, in log-log scaling. Circles: data for the built-in float types, assuming a 1m/s current. Line: a scaling line of slope 3/2, with an arbitrary vertical shift for comparison with the data cloud.**", fig.align="center"}
 # 1
 library(mooring)
 f <- float("?")
@@ -260,8 +260,9 @@ df <- data.frame(float=f[ok], drag=d[ok], buoyancy=b[ok])
 plot(df$drag, df$buoyancy, xlab="Drag Force [N]", ylab="Buoyancy Force [N]", log="xy")
 # 3
 drag <- seq(min(df$drag), max(df$drag), length.out=100)
-buoyancy <- drag^(3/2)
+buoyancy <- 10*drag^(3/2) # the factor is just for illustration
 lines(drag, buoyancy)
+
 ```
 
 The data cloud slope is similar to that of the indicated scaling line, created
@@ -277,10 +278,13 @@ that is another matter!
 
 ## Exercise 3
 
-To find a float that will hold this mooring taut in 2m/s current, one approach
-is to use `app()`, which has a pulldown menu for the float type.  Another
-approach is to start with the table produced in Exercise 1, and try different
-float models in the code given in the "Mooring Design" section.
+To find a float that will hold this mooring reasonably taut in 2m/s current,
+one approach is to use `app()`, which has a pulldown menu for the float type.
+Another approach is to start with the table produced in Exercise 1, and try
+different float models in the code given in the "Mooring Design" section.  Of
+course, a criterion on tautness must be the starting point in such an analysis,
+and for simplicity, we take it to be 10 percent increase in the depth of the
+top mooring element.
 
 Exploration along these lines reveals that
 ```{r}

@@ -1,11 +1,12 @@
-pandoc: '2.13'
-pkgdown: 1.6.1
+pandoc: 3.1.1
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  knockdown_model: knockdown_model.html
+  example: example.html
   mooring: mooring.html
   mooring_elements: mooring_elements.html
+  mooring_model: mooring_model.html
   object_orientation: object_orientation.html
   table_tennis: table_tennis.html
-last_built: 2021-06-08T21:45Z
+last_built: 2023-10-14T20:15Z
 

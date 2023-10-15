@@ -1,5 +1,5 @@
 all:
-	echo "author: use 'make rda' and then 'make install'; others: leave"
+	echo "author: use 'make rda install'; others: please do not use this Makefile"
 rda: force
 	Rscript create_rda.R
 install: force

@@ -2,15 +2,17 @@
 % Please edit documentation in R/mooring.R
 \name{tension}
 \alias{tension}
-\title{Return tension, in kg, between elements in mooring.}
+\title{Tension between mooring elements}
 \usage{
 tension(m, stagnant = FALSE)
 }
 \arguments{
-\item{m}{an object of the \code{"mooring"} class.}
+\item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
 
-\item{stagnant}{a logical indicating whether to compute tension
-as though no currents were present.}
+\item{stagnant}{logical value indicating whether to return
+values for the mooring configuration in the stagnant case
+(with zero velocity) or the present case (possibly with
+nonzero velocity).}
 }
 \value{
 a numeric vector of tension, in kg.

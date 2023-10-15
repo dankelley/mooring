@@ -8,8 +8,9 @@ app()
 }
 \description{
 This makes a simple mooring with an anchor, a line, and a float, in
-a depth-uniform current.  Sliders adjust line length and current speed.
-Pulldown menus adjust wire and float types.
+a depth-uniform current, or one of a few other current profiles.
+Sliders are provided for the adjustment of line length and current speed,
+and pulldown menus are provided to adjust wire and float types.
 }
 \author{
 Dan Kelley

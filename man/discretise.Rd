@@ -2,12 +2,13 @@
 % Please edit documentation in R/mooring.R
 \name{discretise}
 \alias{discretise}
-\title{Discretise the wire portions of a mooring}
+\alias{discretize}
+\title{Discretise chain and wire portions of a mooring}
 \usage{
 discretise(m, by = 1)
 }
 \arguments{
-\item{m}{an object of the \code{"mooring"} class.}
+\item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
 
 \item{by}{numeric value giving the rough size of the chunks.
 The actual size is computed as the length of wire, divided
@@ -25,7 +26,7 @@ to \code{m} except that wire portions are chopped up into shorter
 pieces.
 }
 \description{
-Break up \code{wire} portions of a mooring into smaller chunks,
+Break up \code{chain} and \code{wire} portions of a mooring into smaller chunks,
 so that the deformation by a current can be traced more
 accurately by \code{\link[=knockdown]{knockdown()}}.
 }

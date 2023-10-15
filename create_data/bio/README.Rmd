@@ -1,35 +1,48 @@
 ---
 title: Ingesting object data from a BIO excel file
 author: Dan Kelley
-date: 2021-05-28 and 2021-06-08
+date: 2021-05-28, 2021-06-08, 2021-06-09 and 2021-06-25
 output:
-    toc: true
-    number_sections: true
+    pdf_document:
+        toc: true
+        number_sections: true
+        extra_dependencies:
+            fullpage
 ---
 
 # Document Revisions
 
-1. 2021-06-08 (thanks to @formulafunracing and @clayton33 for advice on this)
+1. 2021-06-25
+   1. Floats store area, not diameter
+   2. Connectors store area, not width
+   3. Wires and chains store areaPerMeter instead of diameter or width
+2. 2021-06-08 (thanks to @formulafunracing and @clayton33 for advice on this)
    1. Move discrete chain items like shackles to a new entity, "connector".
-      Those objects will have `height` and `width`.
    2. Make `chain` objects have `length`, not `height`.
+   3. Rename some items for consistency and readability.
+   4. Add `originalName` column.
 
 # Introduction
 
-This directory contains an R file here in which I tried to decode things
-automatically.  This proved to be difficult, because the meanings of things
-were (I think) indicated by colour underlays, and I don't know how to catch
-that nuance in a program.  Also, there were *lots* of weird things in the file,
-like text in numeric fields, negative lengths, etc., and so the R file became a
-mess of special cases.  So, and partly because this work would not pay off for
-other datasets, I decided to drop the idea of decoding the excel file with R,
-instead doing the work "by hand" by copying cells into csv files. (In addition
-to copying cells, I had to do computations, e.g. converting Newtons to kg.)
+This directory contains a file named `bio.R` in which I tried to decode things
+automatically.  This proved to be difficult, because the meanings of things are
+(I gather) indicated by colour underlays, and I don't know how to catch that
+nuance in a program.  Another problem was that there are *lots* of weird things
+in the excel file, like text in numeric fields, negative lengths, etc., and so
+the R code for renaming became a mess of special cases. After a while, I just
+gave up on decoding the excel file with R code, instead creating csv files
+semi-manually, by copy-pasting into this file to do some calculations, then
+copy-pasting back to csv.  I outline some of the steps here but, as is always
+the case for non-automatic work, this record is best regarded as a rough
+sketch.
 
-For the names of items, I switched from all upper-case to all lower-case, which
-is easier to type, and fits with the Dewey names.  I also removed the `"`
-symbols, which are hard to type in code, and appear in some instances and not
-in others.  And I change groups of multiple spaces into single spaces.
+The names were altered in an attempt to improve consistency within these
+datasets and also with the Dewey datasets.  In this second category, for
+example, I removed double spaces, and replaced `"` characters with the string
+`in`, for inches. The original names are stored in the column named
+`originalNames` and are verbatim from the excel file, *except* that multiple
+consecutive spaces are converted to single spaces, leading and trailing spaces
+are removed, and trailing asterisks (for footnotes) are removed.
 
 # Details
 
@@ -38,6 +51,11 @@ in others.  And I change groups of multiple spaces into single spaces.
 These are green-background in the excel file, rows 7 through 12. I put `5/8"
 galvanized chain` (row 11) into `chains_bio.csv` and the rest into
 `connectors_bio.csv`.
+
+No lengths or areas are listed for the first 4 items, but height is set to
+0.05m here, as a plausibe estimate.  Similarly, the area is set to 0.0025m^2,
+on the assumption that the item is 5cm wide and 5cm tall.  These are both such
+small values that they will have little effect on the calculations.
 
 ### `buoyancy`
 
@@ -51,14 +69,12 @@ round(N/9.8, 3)
 
 The is copied directly from col B, with 0 for the first 4 entries.
 
-### `width`
-
+### `area` (replaces width)
 This is inferred as the ratio of `A (m*2/m)` (col G) to `LENGTH` (col C)
 ```{r}
 G <- c(NA,NA,NA,NA,0.05715,0.0254)
 C <- c(NA,NA,NA,NA,1,1)
-length <- round(G/C, 4)
-length
+(area <- round(G*C, 4))
 ```
 
 ### `CD`
@@ -71,13 +87,13 @@ These are in the order of the spreadsheet; note that `chains("?")` merges all
 datasets, and orders by name.
 
 ```{r}
-knitr::kable(read.csv("chains_bio.csv"))
+knitr::kable(read.csv("chains_bio.csv"), caption="Contents of chains_bio.csv")
 ```
 
 and here are the connectors:
 
 ```{r}
-knitr::kable(read.csv("connectors_bio.csv"))
+knitr::kable(read.csv("connectors_bio.csv"), caption="Contents of connectors_bio.csv")
 ```
 
 
@@ -87,12 +103,13 @@ knitr::kable(read.csv("connectors_bio.csv"))
 These are yellow-background in the excel file.
 
 The first item, named `"new glass streamlined float"`, has no listed weight in
-pounds or newtons, so I ignored that entry.
+pounds or newtons, but a personal communication suggests using buoyancy 100
+pounds, i.e. 445N i.e. 45.41kg.
 
 For buoyancy, I took `NEWTONS` (col E) and divided by 9.8m/s^2 to get kg, rounding
 to 2 digits after the decimal place.
 ```{r}
-N <- c(445,285,560,516,429,773,414,1886,3963,4030,2095,8224,7740)
+N <- c(445, 445,285,560,516,429,773,414,1886,3963,4030,2095,8224,7740)
 round(N/9.8, 2)
 ```
 
@@ -100,22 +117,30 @@ There are two length columns in the file, but the values are either identical
 or relatable by rounding, so I could choose either.  But is that in the x or
 the y direction?
 
-Two columns contain things related to area, one with name `A (m*2/m)` and other
-with name `AW (m*2)`.  I think the former is the projected area per meter of z
-(as it is for wires).  So, if we assume that the length is in the z direction,
-or that the object is roughly spherical, we can infer what the package needs,
-namely `height` and `diameter`, from the ratio of the second area to the first
-length.  Whether that's sensible, I just don't know.
+Two columns contain things related to area, colG labelled `A (m*2/m)` and colI
+labelled `AW (m*2)`.  From
+https://github.com/dankelley/mooring/issues/24#issuecomment-857715929, we know
+that the frontal area is given by the product of colC and colG.
+
+We take as a test case: the `"BUB 2x178" GLASS"` value, in row 42.  The
+above-stated URL indicates that a BUB is a package with two 17in glass spheres,
+with height (length) 1.187m (which matches colC) and frontal area 0.5531 m^2.
+As a check, the product of colC (1.187) and colG (0.466) is `r 0.466*1.187`m^2,
+which matches the value stated on the above-stated URL.
+
+So, area will be computed as the product of colC and colG.
+
 ```{r}
-A<-c(0.164,0.5,0.073,0.5,0.164,1.5,1.5,1.86,2.84,2.474,1.67,2.7,2.7)
-L<-c(0.74,0.563,1,0.563,1.187,1,1,1.286,1.286,1.286,1.286,2.42,2.42)
-round(A/L,3)
+# Notice that row 37 is ignored, because no weight is listed for it
+colC <- c(0.87, 0.74,0.563,1,0.563,1.187,1,1,1.286,1.286,1.286,1.286,2.42,2.42)
+colG <- c(0.21, 0.22,0.22,0.22,0.22,0.466,0.44,0.65,1.822,1.822,1.807,1.822,0.51,0.51)
+area <- colG*colC
+round(area, 3)
 ```
 
 ```{r}
 f <- read.csv("floats_bio.csv")
-o <- order(f$name)
-knitr::kable(f[o,])
+knitr::kable(f, caption="Contents of floats_bio.csv")
 ```
 
 ## `instruments_bio.csv`
@@ -155,19 +180,21 @@ find them.
 ### Results
 
 ```{r}
-knitr::kable(read.csv("instruments_bio.csv"))
+knitr::kable(read.csv("instruments_bio.csv"), caption="Contents of instruments_bio.csv")
 ```
 
 
 ## `releases_bio.csv`
 
-Note the ommision of an entry for type `BENTHOS 875 RELEASE`, because it has no
-value listed in col G (area `A (m*2/m)`) or col I (area `AW (m*2)`).
-
-### `height`
-Use `LENGTH` (col C).
+Notes:
+1. The release data are in rows 13 to 19 in the spreadsheet (with grey underlay).
+2. There is no entry for type `BENTHOS 875 RELEASE`, because it has no value
+   listed in col G (area `A (m*2/m)`) or col I (area `AW (m*2)`).
+3. The word 'release' is dropped from names, since it's redudant from the
+   object class.
 
 ### `buoyancy`
+
 Use the negative of `NEWTONS` (col E), divided by g=9.8m/s^2, rounded to 2 decimal
 places.
 ```{r}
@@ -175,7 +202,34 @@ N <- c(149, 253.5, 360,	129, 273, 118.7)
 round(N/9.8, 2)
 ```
 
-### `width`
+### `height`
+
+Use `LENGTH` (col C), ignoring row 16 (BENTHOS 875 RELEASE) since no area for that.
+```{r}
+(C <- c(1.194, 1.32, 1.23,  0.68,  1,     0.4))
+```
+
+### area
+
+Use the product of `LENGTH/m` (col C) and `A (m&2/m)` (col G) .  Note that
+there is also a column labelled `LENGTH(m)` (col F) but this is ignored because
+(a) it has lots of blank values, and (b) where there *are* values, they appear
+to be no more than rounded versions col C.  Also, note that there is no area
+reported for `BENTHOS 875 RELEASE`, so that value (row 16) is omitted.
+
+```{r}
+C <- c(1.194, 1.32, 1.23,  0.68,  1,     0.4)
+G <- c(0.14,  0.14, 0.127, 0.112, 0.199, 0.237)
+(area <- round(C * G, 4))
+```
+Note the `NA` value -- this is "benthos 875 release", which we will not use
+here, since there's no point in guessing.  (Put another way, if someone at BIO
+wants to take a measuring tape to that thing to find it's diameter, we'll
+incorporate it!)
+
+
+### OLD: delete
+
 Use the ratio of `A (m&2/m)` (col G) to `LENGTH` (col C).
 ```{r}
 G <- c(0.14,0.14,0.127,0.112,0.199,0.237)
@@ -194,7 +248,7 @@ be similar.
 ### Result for releases
 
 ```{r}
-knitr::kable(read.csv("releases_bio.csv"))
+knitr::kable(read.csv("releases_bio.csv"), caption="Contents of releases_bio.csv")
 ```
 
 ## wires_bio.csv
@@ -229,7 +283,7 @@ There are no entries in the file and I did not know what `DRAG -N` and `DRAG
 ### Result for `wires`
 
 ```{r}
-knitr::kable(read.csv("wires_bio.csv"))
+knitr::kable(read.csv("wires_bio.csv"), caption="Contents of wires_bio.csv")
 ```
 
 

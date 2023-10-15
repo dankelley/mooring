@@ -2,18 +2,24 @@
 % Please edit documentation in R/mooring.R
 \name{z}
 \alias{z}
-\title{Return vertical coordinate, in m, of elements in mooring.}
+\title{Vertical coordinate of mooring elements}
 \usage{
-z(m)
+z(m, stagnant = FALSE)
 }
 \arguments{
-\item{m}{an object of the \code{"mooring"} class.}
+\item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
+
+\item{stagnant}{logical value indicating whether to return
+values for the mooring configuration in the stagnant case
+(with zero velocity) or the present case (possibly with
+nonzero velocity).}
 }
 \value{
 a numeric vector of vertical coordinate in metres.
 }
 \description{
-This is the negative of \code{\link[=depth]{depth()}}.
+This is the z coordinate of the \emph{top} of the element. See also
+\code{\link[=depth]{depth()}}, which is the negative of the result from \code{z()}.
 }
 \examples{
 library(mooring)

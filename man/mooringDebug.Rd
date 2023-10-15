@@ -2,7 +2,7 @@
 % Please edit documentation in R/mooring.R
 \name{mooringDebug}
 \alias{mooringDebug}
-\title{Optionally print a debugging message}
+\title{Print a debugging message}
 \usage{
 mooringDebug(debug, v, ..., overview = FALSE, round = FALSE)
 }
