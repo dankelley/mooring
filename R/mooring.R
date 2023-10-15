@@ -178,6 +178,13 @@ height <- function(m)
 #' @param ... two or more elementary objects, as created by
 #' [anchor()], [release()], [chain()],
 #' [wire()], [connector()], [instrument()], [misc()] or [float()].
+#' FIXME: discuss order here (and in relation to 'surface' argument).
+#'
+#' @param type character value indicating the type of mooring.
+#' The default, `"bottom"`, indicates a mooring attached to
+#' the bottom.  The other alternative, `"surface"`, is not handled
+#' yet, but the plan is to handle moorings that are attached to
+#' the surface, via a float, attachment to ice, etc.
 #'
 #' @examples
 #' # Example 1: most basic case: anchor, line, float.
@@ -206,9 +213,18 @@ height <- function(m)
 #' @export
 #'
 #' @author Dan Kelley
-mooring <- function(..., surface=FALSE)
+mooring <- function(..., type="bottom")
 {
     dots <- list(...)
+    if (!type %in% c("bottom", "surface")) {
+        stop("type \"", type, "\" not handled; it must be either \"bottom\" or \"surface\"")
+    }
+    isSurface <- identical(type, "surface")
+    if (isSurface) {
+        message("Next is dots:")
+        print(dots)
+        stop("type=\"surface\" is not handled yet")
+    }
     n <- length(dots)
     if (n < 3L)
         stop("need 2 or more arguments")
