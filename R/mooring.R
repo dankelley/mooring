@@ -206,7 +206,7 @@ height <- function(m)
 #' @export
 #'
 #' @author Dan Kelley
-mooring <- function(...)
+mooring <- function(..., surface=FALSE)
 {
     dots <- list(...)
     n <- length(dots)
