@@ -10,13 +10,14 @@ mooring(..., type = "bottom")
 \item{...}{two or more elementary objects, as created by
 \code{\link[=anchor]{anchor()}}, \code{\link[=release]{release()}}, \code{\link[=chain]{chain()}},
 \code{\link[=wire]{wire()}}, \code{\link[=connector]{connector()}}, \code{\link[=instrument]{instrument()}}, \code{\link[=misc]{misc()}} or \code{\link[=float]{float()}}.
-FIXME: discuss order here (and in relation to 'surface' argument).}
+\strong{FIXME: discuss order here (and in relation to the 'type' argument).}}
 
 \item{type}{character value indicating the type of mooring.
 The default, \code{"bottom"}, indicates a mooring attached to
-the bottom.  The other alternative, \code{"surface"}, is not handled
-yet, but the plan is to handle moorings that are attached to
-the surface, via a float, attachment to ice, etc.}
+the bottom.  The other alternative, \code{"surface"}, indicates
+a mooring that is attached to the surface, via a float, attachment
+to ice, etc.
+\strong{FIXME: handle type.}}
 }
 \description{
 Assemble elementary components into a mooring string.
