@@ -9,6 +9,8 @@
 #'
 #' @template stagnantTemplate
 #'
+#' @template skipWire
+#'
 #' @return a numeric vector of depth in metres.
 #'
 #' @examples
@@ -19,7 +21,7 @@
 #' @export
 #'
 #' @author Dan Kelley
-depth <- function(m, stagnant=FALSE)
+depth <- function(m, stagnant=FALSE, skipWire=FALSE)
 {
-    -z(m, stagnant=stagnant)
+    -z(m, stagnant=stagnant, skipWire=skipWire)
 }

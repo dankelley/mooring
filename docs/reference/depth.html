@@ -51,6 +51,9 @@ z(), which is the negative of the result from depth()."><!-- mathjax --><script 
       <a href="../articles/table_tennis.html">Test Case with Table Tennis Ball</a>
     </li>
   </ul></li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/dankelley/mooring/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
@@ -77,7 +80,7 @@ z(), which is the negative of the result from depth()."><!-- mathjax --><script 
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">depth</span><span class="op">(</span><span class="va">m</span>, stagnant <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">depth</span><span class="op">(</span><span class="va">m</span>, stagnant <span class="op">=</span> <span class="cn">FALSE</span>, skipWire <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -91,6 +94,10 @@ z(), which is the negative of the result from depth()."><!-- mathjax --><script 
 values for the mooring configuration in the stagnant case
 (with zero velocity) or the present case (possibly with
 nonzero velocity).</p></dd>
+
+
+<dt>skipWire</dt>
+<dd><p>logical value indicating whether to skip wire elements, i.e. to return values just for floats, instruments, etc.</p></dd>
 
 </dl></div>
     <div id="value">

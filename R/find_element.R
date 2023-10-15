@@ -42,7 +42,7 @@ findElement <- function(e,
         match <- try(agrep(e, names, ignore.case=ignore.case, max.distance=max.distance), silent=TRUE)
         if (!inherits(match, "try-error")) {
             for (i in seq_along(match)) {
-                rval <- c(rval, paste0(element, "('", names[match], "')"))
+                rval <- c(rval, paste0(element, "(\"", names[match], "\")"))
             }
         }
     }

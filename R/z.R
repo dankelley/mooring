@@ -9,6 +9,8 @@
 #'
 #' @template stagnantTemplate
 #'
+#' @template skipWire
+#'
 #' @return a numeric vector of vertical coordinate in metres.
 #'
 #' @examples
@@ -19,14 +21,13 @@
 #' @export
 #'
 #' @author Dan Kelley
-z <- function(m, stagnant=FALSE)
+z <- function(m, stagnant=FALSE, skipWire=FALSE)
 {
-    if (stagnant) {
-        if ("z0" %in% names(m[[1]]))
-            sapply(m, function(mi) mi$z0)
-        else
-            sapply(m, function(mi) mi$z)
+    rval <- if (stagnant) {
+        if ("z0" %in% names(m[[1]])) sapply(m, function(mi) mi$z0)
+        else sapply(m, function(mi) mi$z)
     } else {
         sapply(m, function(mi) mi$z)
     }
+    if (skipWire) rval[!isWire(m)] else rval
 }

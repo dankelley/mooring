@@ -6,6 +6,8 @@
 #'
 #' @template stagnantTemplate
 #'
+#' @template skipWire
+#'
 #' @return a numeric vector of horizontal coordinate in metres.
 #'
 #' @examples
@@ -16,14 +18,13 @@
 #' @export
 #'
 #' @author Dan Kelley
-x <- function(m, stagnant=FALSE)
+x <- function(m, stagnant=FALSE, skipWire=FALSE)
 {
-    if (stagnant) {
-        if ("x0" %in% names(m[[1]]))
-            sapply(m, function(mi) mi$x0)
-        else
-            sapply(m, function(mi) mi$x)
+    rval <- if (stagnant) {
+        if ("x0" %in% names(m[[1]])) sapply(m, function(mi) mi$x0)
+        else sapply(m, function(mi) mi$x)
     } else {
         sapply(m, function(mi) mi$x)
     }
+    if (skipWire) rval[!isWire(m)] else rval
 }
