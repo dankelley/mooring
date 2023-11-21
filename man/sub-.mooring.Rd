@@ -24,7 +24,7 @@ with \code{\link[=mooring]{mooring()}}.
 library(mooring)
 F <- float("HMB 20")
 F["buoyancy"]
-m <- mooring(anchor(depth=120), wire(length=100), F)
+m <- mooring(anchor(depth = 120), wire(length = 100), F)
 m["buoyancy"]
 
 }

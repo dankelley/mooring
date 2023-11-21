@@ -39,25 +39,29 @@
 #' @export
 #'
 #' @author Dan Kelley
-float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
+float <- function(model = "Kiel SFS40in", buoyancy = NULL, height = NULL, area = NULL, CD = NULL) {
+    data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
-    if (model == "?")
+    if (model == "?") {
         return(sort(mooringElements$floats$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="float"))
+    } else if (substring(model, 1, 1) == "?") {
+        return(findElement(substring(model, 2), search = "float"))
+    }
     w <- which(mooringElements$floats$name == model)
     if (1 == length(w)) {
         me <- mooringElements$floats[w, ]
-        if (!is.null(buoyancy))
+        if (!is.null(buoyancy)) {
             warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
-        if (!is.null(height))
+        }
+        if (!is.null(height)) {
             warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(area))
+        }
+        if (!is.null(area)) {
             warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
+        }
+        if (!is.null(CD)) {
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
+        }
         buoyancy <- me$buoyancy
         height <- me$height
         area <- me$area
@@ -72,7 +76,7 @@ float <- function(model="Kiel SFS40in", buoyancy=NULL, height=NULL, area=NULL, C
     }
     # Floats are assumed to be circular in the flow direction, following
     # Dewey's convention, so the area is pi*radius^2.
-    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
+    rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
     class(rval) <- c("mooring", "float")
     rval
-}                                      # float()
+} # float()

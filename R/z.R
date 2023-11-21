@@ -15,17 +15,19 @@
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
+#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 #' z(m)
 #'
 #' @export
 #'
 #' @author Dan Kelley
-z <- function(m, stagnant=FALSE, skipWire=FALSE)
-{
+z <- function(m, stagnant = FALSE, skipWire = FALSE) {
     rval <- if (stagnant) {
-        if ("z0" %in% names(m[[1]])) sapply(m, function(mi) mi$z0)
-        else sapply(m, function(mi) mi$z)
+        if ("z0" %in% names(m[[1]])) {
+            sapply(m, function(mi) mi$z0)
+        } else {
+            sapply(m, function(mi) mi$z)
+        }
     } else {
         sapply(m, function(mi) mi$z)
     }

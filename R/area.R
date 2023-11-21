@@ -41,10 +41,10 @@
 #' @export
 #'
 #' @author Dan Kelley
-area <- function(m)
-{
-    if (!inherits(m, "mooring"))
+area <- function(m) {
+    if (!inherits(m, "mooring")) {
         stop("only works for objects created by mooring(), or by float(), etc")
+    }
     if (isMooring(m)) {
         sapply(m, function(mi) mi$area)
     } else {

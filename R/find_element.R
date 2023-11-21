@@ -30,16 +30,16 @@
 #' @export
 #'
 #' @author Dan Kelley
-findElement <- function(e,
-    search=c("anchor", "chain", "connector", "float", "instrument", "wire"),
-    ignore.case=TRUE, max.distance=0.1)
-{
-    data("mooringElements", package="mooring", envir=environment())
+findElement <- function(
+    e,
+    search = c("anchor", "chain", "connector", "float", "instrument", "wire"),
+    ignore.case = TRUE, max.distance = 0.1) {
+    data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
     rval <- NULL
     for (element in search) {
         names <- mooringElements[[paste0(element, "s")]]$name
-        match <- try(agrep(e, names, ignore.case=ignore.case, max.distance=max.distance), silent=TRUE)
+        match <- try(agrep(e, names, ignore.case = ignore.case, max.distance = max.distance), silent = TRUE)
         if (!inherits(match, "try-error")) {
             for (i in seq_along(match)) {
                 rval <- c(rval, paste0(element, "(\"", names[match], "\")"))
@@ -47,12 +47,13 @@ findElement <- function(e,
         }
     }
     if (is.null(rval)) {
-        cat("Sorry, found no good matches for \"", e, "\".\n", sep="")
+        cat("Sorry, found no good matches for \"", e, "\".\n", sep = "")
     } else {
         cat("Some possible matches:\n")
         rval <- sort(unique(rval))
-        for (i in seq_along(rval))
+        for (i in seq_along(rval)) {
             cat("    ", rval[i], "\n")
+        }
     }
     invisible(rval)
 }

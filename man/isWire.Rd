@@ -18,7 +18,7 @@ Indicate which mooring elements are wires
 }
 \examples{
 library(mooring)
-m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
+m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 isWire(m)
 
 }

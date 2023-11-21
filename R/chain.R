@@ -31,26 +31,30 @@
 #' chain("?")
 #'
 #' @author Dan Kelley
-chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, areaPerMeter=NULL, CD=NULL, length=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
+chain <- function(model = "1in buoy chain", buoyancyPerMeter = NULL, areaPerMeter = NULL, CD = NULL, length = NULL) {
+    data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
-    if (model == "?")
+    if (model == "?") {
         return(sort(mooringElements$chains$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="chain"))
-    if (is.null(length))
+    } else if (substring(model, 1, 1) == "?") {
+        return(findElement(substring(model, 2), search = "chain"))
+    }
+    if (is.null(length)) {
         stop("must supply length")
+    }
     w <- which(mooringElements$chains$name == model)
     if (1 == length(w)) {
         me <- mooringElements$chains[w, ]
-        if (!is.null(buoyancyPerMeter))
+        if (!is.null(buoyancyPerMeter)) {
             warning("ignoring supplied buoyancyPerMeter, because \"", model, "\" is already in the database\n")
-        if (!is.null(areaPerMeter))
+        }
+        if (!is.null(areaPerMeter)) {
             warning("ignoring supplied areaPerMeter, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
+        }
+        if (!is.null(CD)) {
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
-        buoyancyPerMeter<- me$buoyancyPerMeter
+        }
+        buoyancyPerMeter <- me$buoyancyPerMeter
         areaPerMeter <- me$areaPerMeter
         CD <- me$CD
         source <- me$source
@@ -60,7 +64,7 @@ chain <- function(model="1in buoy chain", buoyancyPerMeter=NULL, areaPerMeter=NU
         if (is.null(CD)) stop("must supply CD, if creating a new chain model")
         source <- ""
     }
-    rval <- list(model=model, buoyancy=length*buoyancyPerMeter, height=length, area=length*areaPerMeter, CD=CD, source=source)
+    rval <- list(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source)
     class(rval) <- c("mooring", "chain")
     rval
-}                                      # chain()
+} # chain()

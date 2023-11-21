@@ -17,7 +17,7 @@ Print a mooring
 }
 \examples{
 library(mooring)
-m <- mooring(anchor(depth=100), wire(length=80), float("HMB 20"))
+m <- mooring(anchor(depth = 100), wire(length = 80), float("HMB 20"))
 
 }
 \author{

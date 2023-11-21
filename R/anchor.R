@@ -36,21 +36,23 @@
 #' @export
 #'
 #' @author Dan Kelley
-anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, CD=NULL, depth=0)
-{
-    data("mooringElements", package="mooring", envir=environment())
+anchor <- function(model = "3 trainwheels", buoyancy = NULL, height = NULL, CD = NULL, depth = 0) {
+    data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
-    if (model == "?")
+    if (model == "?") {
         return(sort(mooringElements$anchors$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="anchor"))
+    } else if (substring(model, 1, 1) == "?") {
+        return(findElement(substring(model, 2), search = "anchor"))
+    }
     w <- which(mooringElements$anchors$name == model)
     if (1 == length(w)) {
         me <- mooringElements$anchors[w, ]
-        if (!is.null(buoyancy))
+        if (!is.null(buoyancy)) {
             warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
-        if (!is.null(height))
+        }
+        if (!is.null(height)) {
             warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
+        }
         buoyancy <- me$buoyancy
         height <- me$height
         CD <- me$CD
@@ -61,7 +63,7 @@ anchor <- function(model="3 trainwheels", buoyancy=NULL, height=NULL, CD=NULL, d
         if (is.null(CD)) stop("must supply CD, if creating a new anchor model")
         source <- ""
     }
-    rval <- list(model=model, buoyancy=buoyancy, height=height, area=0, CD=CD, depth=depth, source=source)
+    rval <- list(model = model, buoyancy = buoyancy, height = height, area = 0, CD = CD, depth = depth, source = source)
     class(rval) <- c("mooring", "anchor")
     rval
-}                                      # anchor()
+} # anchor()

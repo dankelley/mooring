@@ -25,7 +25,7 @@ This is the depth of the \emph{top} of the element. See also
 }
 \examples{
 library(mooring)
-m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
+m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 depth(m)
 
 }

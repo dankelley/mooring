@@ -20,32 +20,40 @@ in the return value (see Example 1).
 \examples{
 # Example 1: most basic case: anchor, line, float.
 library(mooring)
-m <- mooring(anchor(depth=100), wire(length=80), float())
-m                          # whole-mooring overview
-head(m, 1)                 # float overview
+m <- mooring(anchor(depth = 100), wire(length = 80), float())
+m # whole-mooring overview
+head(m, 1) # float overview
 
 # Example 2: compare a simple mooring (with inadequate
 # buoyancy) with a stiffer one that has extra buoyancy
 # near an instrument.  Note that the stiffness is
 # concentrated in the depth region that is being sampled
 # with the instrument (a "microcat").
-A <- anchor(depth=150)
-W <- function(l) wire("3/8in wire/jack", length=l)
+A <- anchor(depth = 150)
+W <- function(l) wire("3/8in wire/jack", length = l)
 MC <- instrument("SBE37 microcat clamp-on style")
 BUB <- float("BUB 2x17in glass")
 top <- float("Trpl 16in Viny")
 m1 <- mooring(A, W(45), W(5), MC, W(5), W(80), top)
 m2 <- mooring(A, W(45), BUB, W(5), MC, W(5), BUB, W(80), top)
-m1k <- m1 |> discretise() |> knockdown(u=0.5)
-m2k <- m2 |> discretise() |> knockdown(u=0.5)
+m1k <- m1 |>
+    discretise() |>
+    knockdown(u = 0.5)
+m2k <- m2 |>
+    discretise() |>
+    knockdown(u = 0.5)
 plot(m1k)
 # Show stiffened mooring in red
-lines(x(m2k), depth(m2k), col=2, lwd=2)
-points(x(m2k, skipWire=TRUE), depth(m2k, skipWire=TRUE), col=2, pch=20)
+lines(x(m2k), depth(m2k), col = 2, lwd = 2)
+points(x(m2k, skipWire = TRUE), depth(m2k, skipWire = TRUE), col = 2, pch = 20)
 type <- sapply(m2k, \(i) class(i)[2])[!isWire(m2k)]
 typeAbbrev <- unname(sapply(type, \(t)
-    switch(t, float="F", instrument="I", anchor="A")))
-text(x(m2k, skipWire=TRUE), depth(m2k, skipWire=TRUE), typeAbbrev, col=2, pos=2)
+switch(t,
+    float = "F",
+    instrument = "I",
+    anchor = "A"
+)))
+text(x(m2k, skipWire = TRUE), depth(m2k, skipWire = TRUE), typeAbbrev, col = 2, pos = 2)
 
 }
 \author{
