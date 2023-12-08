@@ -41,8 +41,8 @@ envisioned as connected line elements.  This approach was taken by
 @dewey_mooring_1999 in a GUI-based Matlab system.  The present treatment is of
 similar foundation, although with some added simplifications (such as
 unidirectional current) that are relevant to the basic problem of computing
-"knock-down", i.e. the vertical displacement of instruments that is caused
-by slanting of the mooring line.
+"knock-down", i.e. the vertical displacement of instruments that is caused by
+slanting of the mooring line.
 
 # Model
 
@@ -62,17 +62,17 @@ Each element is described by the following properties.
 * Area, $A_i$ [m$^2$] projected in the $x$ direction, again for an element as
   it would be oriented in a taut mooring.
 * Buoyancy 'force' expressed in kilograms, i.e. the actual force in Newtons,
-  divided by $g$, the acceleration due to gravity.
-  For a solid object such as a float or instrument, this is a simple number,
-  denoted $m_i$ below. For a wire or chain, it is expressed per unit length of
-  cable, i.e. in kg/m, and denoted $\mu_i$ below.  Manufacturers tend to
-  provide $m$ or $\mu$ values in technical documentation about mooring
-  components. Note that they refer to in-water buoyancy force, but the
-  distinction between freshwater and seawater is seldom made clear.
+  divided by $g$, the acceleration due to gravity. For a solid object such as a
+  float or instrument, this is a simple number, denoted $m_i$ below. For a wire
+  or chain, it is expressed per unit length of cable, i.e. in kg/m, and denoted
+  $\mu_i$ below.  Manufacturers tend to provide $m$ or $\mu$ values in
+  technical documentation about mooring components. Note that they refer to
+  in-water buoyancy force, but the distinction between freshwater and seawater
+  is seldom made clear.
 * Drag coefficient, $C_i$, defined as the ratio of drag force, $\D_i$, to
   $\frac{1}{2}A_i\rho_i u_i|u_i|$.
 
-![*Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a river that is 0.5m deep. Arrows show forces in the $i$-th element (with $i=1$ in this case), and the corresponding angle is indicated alongside the gray line that represents the stagnant case. The brown region is the sediment below the river, and the dot is an anchor (element $i=2$, for which there is no force calculation since it assumed to be immobile).*](../man/figures/force_diagram.png)
+![*Figure 1. Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a river that is 0.5m deep. Arrows show forces in the $i$-th element (with $i=1$ in this case), and the corresponding angle is indicated alongside the gray line that represents the stagnant case. The brown region is the sediment below the river, and the dot is an anchor (element $i=2$, for which there is no force calculation since it assumed to be immobile).*](../man/figures/force_diagram.png)
 
 A tension force exists between each interior mooring element.  The tension
 below the $i$-th interior element (thus pulling downward on it) is denoted
@@ -92,18 +92,21 @@ objects that would rise if unattached to a mooring) acts only in the vertical,
 upwards if $m$ or $\mu$ is positive.
 
 The buoyancy force for a solid object such as an anchor or a float is found
-with (Equation 1)
+with
 \begin{equation}
+\tag{1}
 \B_i = -g m_i
 \end{equation}
-while it is represented with (Equation 2)
+while it is represented with
 \begin{equation}
+\tag{2}
 \B_i = -g \mu_i \Delta l_i
 \end{equation}
 for a portion of a cable of length $\Delta l_i$.
 
-The drag force is expressed with (Equation 3)
+The drag force is expressed with
 \begin{equation}
+\tag{3}
 \D_i = \frac{1}{2} A_i C_i \rho_i u_i |u_i|
 \end{equation}
 where $A_i$ is the area projected in the flow direction.
@@ -123,13 +126,16 @@ tension force, $\T$, along the connection between elements.  The tension force
 has only a vertical component for an upright mooring, but horizontal components
 occur for a mooring that is tilted by a current.
 
-By definition, the top element has no tension from above, and so its force
-balance is (Equation 4)
+By definition, the top element has no tension from above, and so a
+consideration of its force balance yields
 \begin{equation}
-\begin{split}
-\D_1 &= \T_1 \sin\phi_1\cr
-\B_1 &= \T_1 \cos\phi_1
-\end{split}
+\tag{4}
+\D_1 = \T_1 \sin\phi_1
+\end{equation}
+and
+\begin{equation}
+\tag{5}
+\B_1 = \T_1 \cos\phi_1
 \end{equation}
 where $\T_1$ is the tension between this element and the one below it, and
 $\phi_1$ is the angle that this tension force makes to the vertical.
@@ -138,38 +144,50 @@ Consider first the case of a depth-independent current, so that the drag $D_i$
 on the $i$-th element my be computed without consideration for the position of
 the element in the water column. In such a case,  both $D_1$ and $B_1$ are
 known, these two equations may be solved for $\T_1$ and $\phi_1$, yielding
-(Equation 5)
 \begin{equation}
-\begin{split}
-\T_1 &= \sqrt{\D_1^2 + \B_1^2}\cr
-\phi_1 &= \tan^{-1}\frac{\D_1}{\B_1}
-\end{split}
+\tag{6}
+\T_1 = \sqrt{\D_1^2 + \B_1^2}
+and
+\end{equation}
+\begin{equation}
+\tag{7}
+\phi_1 = \tan^{-1}\frac{\D_1}{\B_1}
 \end{equation}
 
-If there are more than 2 elements in the mooring, this same reasoning may be extended
-to the next element, although now there is a tension force pulling upward. This situation is described by (Equation 6)
+If there are more than 2 elements in the mooring, this same reasoning may be
+extended to the next element, although now there is a tension force pulling
+upward. This situation is described by
 \begin{equation}
-\begin{split}
-\D_2 + \T_1 \sin\phi_1 &= \T_2 \sin\phi_2\cr
-\B_2 + \T_1 \cos\phi_1 &= \T_2 \cos\phi_2
-\end{split}
+\tag{8}
+\D_2 + \T_1 \sin\phi_1 = \T_2 \sin\phi_2
+\end{equation}
+and
+\begin{equation}
+\tag{9}
+\B_2 + \T_1 \cos\phi_1 = \T_2 \cos\phi_2
 \end{equation}
 
 Since $\phi_1$ and $\T_1$ are known from Equation 5, Equation 6 may be solved
-for $\T_2$ and $\phi_2$, using (Equation 7)
+for $\T_2$ and $\phi_2$, using
 \begin{equation}
-\begin{split}
-\T_2 &= \sqrt{(\D_2+\T_1\sin\phi_1)^2 + (\B_2+\T_1\cos\phi_1)^2}\cr
-\phi_2 &= \tan^{-1}\frac{\D_2+\T_1\sin\phi_1}{\B_2+\T_1\cos\phi_1}
-\end{split}
+\tag{10}
+\T_2 = \sqrt{(\D_2+\T_1\sin\phi_1)^2 + (\B_2+\T_1\cos\phi_1)^2}
+\end{equation}
+and
+\begin{equation}
+\tag{11}
+\phi_2 = \tan^{-1}\frac{\D_2+\T_1\sin\phi_1}{\B_2+\T_1\cos\phi_1}
 \end{equation}
 
-This may be generalized to larger moorings, with (Equation 8)
+This may be generalized to larger moorings, with
 \begin{equation}
-\begin{split}
-\T_i &= \sqrt{(\D_i+\T_{i-1}\sin\phi_{i-1})^2+(\B_i+\T_{i-1}\cos\phi_{i-1})^2}\cr
-\phi_i &= \tan^{-1}\frac{\D_i+\T_{i-1}\sin\phi_{i-1}}{\B_i+\T_{i-1}\cos\phi_{i-1}}
-\end{split}
+\tag{12}
+\T_i = \sqrt{(\D_i+\T_{i-1}\sin\phi_{i-1})^2+(\B_i+\T_{i-1}\cos\phi_{i-1})^2}
+\end{equation}
+and
+\begin{equation}
+\tag{13}
+\phi_i = \tan^{-1}\frac{\D_i+\T_{i-1}\sin\phi_{i-1}}{\B_i+\T_{i-1}\cos\phi_{i-1}}
 \end{equation}
 applying for elements $i=2,\dots,n-1$.  The limit ends at $n-1$ because is no
 tension below the bottom element, so neither $\T_n$ nor $\phi_n$ can be
@@ -178,10 +196,11 @@ defined.
 This leads to a simple way to describe mooring response to a depth-independent
 current, in which $D_i$ and $B_i$ are known quantities for each $i$ from 1 to
 $n$:
-1. First, use Equation 5 to compute $\T_1$ and $\phi_1$, the angle and tension below
-   the top ($i=1)$ element.
-2. Then, use Equation 8 to compute $\T_i$ and $\phi_i$ for $i=2$, and then use
-   it again to compute these things at $i=3$, etc., down to $i=n-1$.
+
+1. First, use Equations 4 through 7 to compute $\T_1$ and $\phi_1$, the angle and
+   tension below the top ($i=1)$ element.
+2. Use Equations 12 and 13 to compute $\T_i$ and $\phi_i$ for $i=2$.
+3. Continue as in step 2, until reaching the bottom ($i=n-1$) element.
 
 If the current varies with depth, then the drag of a given element will depend
 on depth of the element, which in turn depends on the shape of the mooring.
@@ -201,11 +220,10 @@ about velocity variations on such scales.
 ```{r echo=FALSE}
 library(mooring)
 f <- float("HMB 20")
-w <- wire(length=100)
+w <- wire(length = 100)
 ```
 
-
-Figure 1 shows the result of simulating a 20-inch Hydro Float Mooring Buoy
+Figure 2 shows the result of simulating a 20-inch Hydro Float Mooring Buoy
 (with $`r f$buoyancy`$kg buoyancy) connected to a bottom anchor with 100 m
 of quarter-inch jacketed wire (with $`r w$buoyancy`$kg/m of buoyancy), in
 a depth-independent 0.5 m/s (roughly 1 knot) current.  Note that the float is
@@ -214,10 +232,10 @@ increases to $41.2$m with a $1$m/s current, suggesting that this float would be
 of limited utility in supporting an oceanographic mooring a region with strong
 currents.
 
-```{r echo=FALSE,dev.args=list(pointsize=9),fig.cap="Response of a mooring to a $u=1$m/s current, as described in the text. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for the $u=1$m/s case. **Right:** Mooring shape, with same colour scheme as left panel."}
+```{r echo=FALSE,dev.args=list(pointsize=9),fig.cap="*Figure 2. Response of a mooring to a $u=1$m/s current, as described in the text. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for the $u=1$m/s case. **Right:** Mooring shape, with same colour scheme as left panel.*"}
 library(mooring)
 
-u <- 0.50                                # current [m/s]
+u <- 0.50 # current [m/s]
 
 f <- float("HMB 20")
 dzfloat <- f$height
@@ -226,13 +244,13 @@ Afloat <- pi * Rfloat^2
 Bfloat <- f$buoyancy
 
 L <- 100
-w <- wire(length=L)
+w <- wire(length = L)
 dzcable <- 1
-Acable <-  dzcable * w$area / L
+Acable <- dzcable * w$area / L
 Bcable <- w$buoyancy
 CD <- w$CD
-g <- 9.8                               # m/s^2
-rho <- 1027                            # kg/m^3 nominal
+g <- 9.8 # m/s^2
+rho <- 1027 # kg/m^3 nominal
 
 
 # Set up area vector for use in drag calculation
@@ -254,38 +272,38 @@ T <- rep(NA, n)
 phi[2] <- atan2(D[1], B[1]) # radians
 T[2] <- sqrt(D[1]^2 + B[1]^2)
 for (i in 3:n) {
-    phi[i] <- atan2(D[i-1]+T[i-1]*sin(phi[i-1]), B[i-1]+T[i-1]*cos(phi[i-1]))
-    T[i] <- sqrt((D[i-1]+T[i-1]*sin(phi[i-1]))^2+(B[i-1]+T[i-1]*cos(phi[i-1]))^2)
+    phi[i] <- atan2(D[i - 1] + T[i - 1] * sin(phi[i - 1]), B[i - 1] + T[i - 1] * cos(phi[i - 1]))
+    T[i] <- sqrt((D[i - 1] + T[i - 1] * sin(phi[i - 1]))^2 + (B[i - 1] + T[i - 1] * cos(phi[i - 1]))^2)
 }
 i <- 1:n
 
 # I don't think L is quite right
 L <- abs(diff(z)[1])
 X <- rev(L * cumsum(rev(sin(phi))))
-Z <- min(z, na.rm=TRUE) + rev(L * cumsum(rev(cos(phi))))
+Z <- min(z, na.rm = TRUE) + rev(L * cumsum(rev(cos(phi))))
 
-#if (!interactive()) png("example_01.png", width=7, height=3, pointsize=10, unit="in", res=200)
+# if (!interactive()) png("example_01.png", width=7, height=3, pointsize=10, unit="in", res=200)
 colStagnant <- "gray"
 lwdStagnant <- 2
-par(mfrow=c(1,2), mar=c(3,3,3,2), mgp=c(2,0.7,0))
-ylim <- c(min(z, na.rm=TRUE), 5)
+par(mfrow = c(1, 2), mar = c(3, 3, 3, 2), mgp = c(2, 0.7, 0))
+ylim <- c(min(z, na.rm = TRUE), 5)
 Tstagnant <- cumsum(B)
-xlim <- range(c(T/g, Tstagnant/g), na.rm=TRUE)
-plot(T/g, Z, xlim=xlim, ylim=ylim, type="l", yaxs="i", xlab="Tension [kg]", ylab="z [m]")
+xlim <- range(c(T / g, Tstagnant / g), na.rm = TRUE)
+plot(T / g, Z, xlim = xlim, ylim = ylim, type = "l", yaxs = "i", xlab = "Tension [kg]", ylab = "z [m]")
 grid()
-lines(Tstagnant/g, z, col=colStagnant, lwd=lwdStagnant)
-lines(T/g, Z, lwd=2)
+lines(Tstagnant / g, z, col = colStagnant, lwd = lwdStagnant)
+lines(T / g, Z, lwd = 2)
 
-plot(X, Z, ylim=ylim, asp=1, type="l", yaxs="i", xlab="x [m]", ylab="z [m]")
+plot(X, Z, ylim = ylim, asp = 1, type = "l", yaxs = "i", xlab = "x [m]", ylab = "z [m]")
 grid()
 lines(X, Z)
-lines(c(0, 0), range(z, na.rm=TRUE), col=colStagnant, lwd=lwdStagnant)
-points(0, max(z, na.rm=TRUE), pch=20, col="gray")
-points(X[2], Z[2], pch=20)
-knockdown <- max(z,na.rm=TRUE) - max(Z,na.rm=TRUE)
-mtext(sprintf("%s with u=%.1fm/s", f$model, u), cex=par("cex"), line=1)
-mtext(sprintf("Knockdown %.1fm ", knockdown), cex=par("cex"), line=0)
-#if (!interactive()) dev.off()
+lines(c(0, 0), range(z, na.rm = TRUE), col = colStagnant, lwd = lwdStagnant)
+points(0, max(z, na.rm = TRUE), pch = 20, col = "gray")
+points(X[2], Z[2], pch = 20)
+knockdown <- max(z, na.rm = TRUE) - max(Z, na.rm = TRUE)
+mtext(sprintf("%s with u=%.1fm/s", f$model, u), cex = par("cex"), line = 1)
+mtext(sprintf("Knockdown %.1fm ", knockdown), cex = par("cex"), line = 0)
+# if (!interactive()) dev.off()
 
 # "HFB 20" (hydro float buoy 20") float with 100m of 3x19-3/16 cable below
 # u [m/s]   knockdown [m]
@@ -300,11 +318,13 @@ As a special case, if $u_i=0$ for all $i$, then there will be no drag, and so
 (assuming adequate buoyancy), the mooring will be aligned in the vertical, and
 the vertical equation becomes
 \begin{equation}
+\tag{14}
 \T_{i+1} = \T_i + \B_i
 \end{equation}
 which yields
 \begin{equation}
-\T_i = \sum_{1}^{i-1} \B_j
+\tag{15}
+\T_i = \sum_{j=1}^{i-1} \B_j
 \end{equation}
 for $i>1$.  Physically, this means that the downward tension at any level
 balances the total upward buoyancy force of all the elements above it. The
@@ -313,5 +333,4 @@ will hold the mooring in place in the absence of currents. However, it should
 be obvious that heavier weights will be required for practical situations.
 
 # References
-
 
