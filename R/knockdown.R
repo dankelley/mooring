@@ -107,7 +107,13 @@ knockdown <- function(m, u = 1, debug = 0L) {
     # FIXME: save tension in object
     m[[n]]$phi <- phi[n - 1] # does this matter? Is it ever used?
     m[[n]]$x <- 0
-    m[[n]]$z <- -waterDepth
+    nm <- length(m)
+    m[[n]]$z <- if (inherits(m[[nm]], "anchor")) {
+        -waterDepth + m[[nm]]$height
+    } else {
+        -waterDepth
+    }
+    mooringDebug(debug, "  n=", n, ", z=", m[[n]]$z, "\n", sep="")
     m[[n]]$tau <- tau[n]
     for (i in seq(n - 1L, 1L, -1L)) {
         m[[i]]$phi <- phi[i]

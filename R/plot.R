@@ -70,6 +70,13 @@ plot.mooring <- function(
     if (!isMooring(m)) {
         stop("only works for objects created by mooring()")
     }
+    # Set up debugging
+    dots <- list(...)
+    debug <- 0L
+    if ("debug" %in% names(dots)) {
+        debug <- as.integer(max(0L, dots$debug))
+    }
+    mooringDebug(debug, "plot.mooring(..., which=\"", which, "\") {\n", sep="")
     # Handle showDetails, converting it to a logical if not, creating a list if required
     if (is.list(showDetails)) {
         detailsControl <- list(
@@ -83,23 +90,17 @@ plot.mooring <- function(
     colWater <- "#ccdcff"
     colBottom <- "#e6bb98"
     colStagnant <- "darkgray"
-    dots <- list(...)
-    debug <- 0L
-    if ("debug" %in% names(dots)) {
-        debug <- as.integer(max(0L, dots$debug))
-    }
     nm <- length(m)
     #xshape <- x(m)
     #xtension <- tension(m)
     depth <- depth(m)
     waterDepth <- if (inherits(m[[nm]], "anchor")) {
-        mooringDebug(debug, "using waterDepth=", m[[nm]]$depth, "anchor case\n")
+        mooringDebug(debug, "    set waterDepth=", m[[nm]]$depth, " for anchor case\n", sep="")
         m[[nm]]$depth
     } else {
-        mooringDebug(debug, "using waterDepth=", max(abs(depth)), "non-anchor case\n")
+        mooringDebug(debug, "    set waterDepth=", max(abs(depth)), " for non-anchor case\n", sep="")
         max(abs(depth))
     }
-    mooringDebug(debug, waterDepth, overview = TRUE)
     par(mar = mar, mgp = mgp)
     # Determine depth scale by doing a sort of dry run of a shape plot
     xlimOrig <- xlim
@@ -179,6 +180,8 @@ plot.mooring <- function(
             abline(h = waterDepth, col = colBottom, lwd = 2)
         }
     }
+    # draw anchor
+    message("FIXME: draw anchor")
     # Redraw to cover grid
     if (type == "l") {
         lines(x, depth, lwd = 1.4 * par("lwd"))
