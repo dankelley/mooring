@@ -30,7 +30,7 @@ a <- function(depth) {
         depth = depth
     )
 }
-w <- \(length) wire(length = length)
+w <- function(length) wire(length = length)
 i <- instrument("SBE37 microcat clamp-on style")
 f <- float("my float", buoyancy = 20, height = 0.2, area = 0.2^2, CD = 1.3)
 # Construct unclamped mooring (m) and clamped mooring (M).
