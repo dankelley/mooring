@@ -1,7 +1,9 @@
 # mooring 0.1.1
 
-* `isWire()` added.
-* `mooring()` documentation shows how to compare two mooring plans in one plot.
+* Add `clamped()`.
+* Add `isWire()`.
+* Change `mooring()` documentation by improving plots.
+* Change `plot.mooring(..., which="shape")` to draw the anchor.
 
 # mooring 0.1.0
 
