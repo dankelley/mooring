@@ -181,7 +181,7 @@ plot.mooring <- function(
         }
     }
     # draw anchor
-    message("FIXME: draw anchor")
+    # message("FIXME: draw anchor")
     # Redraw to cover grid
     if (type == "l") {
         lines(x, depth, lwd = 1.4 * par("lwd"))
