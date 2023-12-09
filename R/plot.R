@@ -44,13 +44,15 @@
 #'
 #' @examples
 #' # Create, summarize, and plot a simple mooring comprising
-#' # a bottom anchor, a 100-metre wire, and a float.
+#' # a bottom anchor, a 100-metre wire, and a float, in
+#' # a current of 1 m/s.
 #' library(mooring)
-#' m <- mooring(anchor(depth = 100), wire(length = 80), float("HMB 20"))
-#' md <- discretise(m)
+#' m <- mooring(anchor(depth = 100), wire(length = 80), float("HMB 20")) |>
+#'     discretise() |>
+#'     knockdown(u = 1)
 #' par(mfrow = c(1, 2))
-#' plot(md)
-#' plot(md, which = "tension")
+#' plot(m)
+#' plot(m, which = "tension")
 #'
 #' @importFrom graphics abline axis box lines mtext par plot.window points polygon rect strwidth text
 #' @importFrom grDevices extendrange
@@ -180,11 +182,13 @@ plot.mooring <- function(
             abline(h = waterDepth, col = colBottom, lwd = 2)
         }
     }
-    # draw anchor: triangle of height A
-    waterDepth <- attr(m, "waterDepth")
-    A <- waterDepth - max(depth(m))
-    anchorSymbol <- list(x = sqrt(3.0 / 4.0) * c(-A, 0, A), y = waterDepth - c(0, A, 0))
-    polygon(anchorSymbol, col = colStagnant)
+    # draw anchor (only makes sense for shape diagrams)
+    if (which == "shape") {
+        waterDepth <- attr(m, "waterDepth")
+        A <- waterDepth - max(depth(m))
+        anchorSymbol <- list(x = sqrt(3.0 / 4.0) * c(-A, 0, A), y = waterDepth - c(0, A, 0))
+        polygon(anchorSymbol, col = colStagnant)
+    }
     # Redraw to cover grid
     if (type == "l") {
         lines(x, depth, lwd = 1.4 * par("lwd"))
