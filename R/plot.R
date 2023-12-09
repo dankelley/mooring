@@ -52,7 +52,7 @@
 #' plot(md)
 #' plot(md, which = "tension")
 #'
-#' @importFrom graphics abline axis box lines mtext par plot.window points rect strwidth text
+#' @importFrom graphics abline axis box lines mtext par plot.window points polygon rect strwidth text
 #' @importFrom grDevices extendrange
 #'
 #' @export
@@ -76,7 +76,7 @@ plot.mooring <- function(
     if ("debug" %in% names(dots)) {
         debug <- as.integer(max(0L, dots$debug))
     }
-    mooringDebug(debug, "plot.mooring(..., which=\"", which, "\") {\n", sep="")
+    mooringDebug(debug, "plot.mooring(..., which=\"", which, "\") {\n", sep = "")
     # Handle showDetails, converting it to a logical if not, creating a list if required
     if (is.list(showDetails)) {
         detailsControl <- list(
@@ -91,14 +91,14 @@ plot.mooring <- function(
     colBottom <- "#e6bb98"
     colStagnant <- "darkgray"
     nm <- length(m)
-    #xshape <- x(m)
-    #xtension <- tension(m)
+    # xshape <- x(m)
+    # xtension <- tension(m)
     depth <- depth(m)
     waterDepth <- if (inherits(m[[nm]], "anchor")) {
-        mooringDebug(debug, "    set waterDepth=", m[[nm]]$depth, " for anchor case\n", sep="")
+        mooringDebug(debug, "    set waterDepth=", m[[nm]]$depth, " for anchor case\n", sep = "")
         m[[nm]]$depth
     } else {
-        mooringDebug(debug, "    set waterDepth=", max(abs(depth)), " for non-anchor case\n", sep="")
+        mooringDebug(debug, "    set waterDepth=", max(abs(depth)), " for non-anchor case\n", sep = "")
         max(abs(depth))
     }
     par(mar = mar, mgp = mgp)
@@ -140,7 +140,7 @@ plot.mooring <- function(
     if (is.null(x)) {
         stop("which must be \"shape\", \"knockdown\", \"tension\" or \"velocity\"")
     }
-    #xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant = TRUE)
+    # xstagnant <- if (which == "shape") rep(0, length(m)) else if (which == "tension") tension(m, stagnant = TRUE)
     mooringDebug(debug, x, overview = TRUE, round = 2)
     mooringDebug(debug, depth, overview = TRUE, round = 2)
     ylim <- c(waterDepth, 0)
@@ -180,8 +180,11 @@ plot.mooring <- function(
             abline(h = waterDepth, col = colBottom, lwd = 2)
         }
     }
-    # draw anchor
-    # message("FIXME: draw anchor")
+    # draw anchor: isosceles triangle of height A
+    waterDepth <- attr(m, "waterDepth")
+    A <- waterDepth - max(depth(m))
+    anchorSymbol <- list(x = c(-A / 2, 0, A / 2), y = waterDepth - c(0, A, 0))
+    polygon(anchorSymbol, col = colStagnant)
     # Redraw to cover grid
     if (type == "l") {
         lines(x, depth, lwd = 1.4 * par("lwd"))
