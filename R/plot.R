@@ -180,10 +180,10 @@ plot.mooring <- function(
             abline(h = waterDepth, col = colBottom, lwd = 2)
         }
     }
-    # draw anchor: isosceles triangle of height A
+    # draw anchor: triangle of height A
     waterDepth <- attr(m, "waterDepth")
     A <- waterDepth - max(depth(m))
-    anchorSymbol <- list(x = c(-A / 2, 0, A / 2), y = waterDepth - c(0, A, 0))
+    anchorSymbol <- list(x = sqrt(3.0 / 4.0) * c(-A, 0, A), y = waterDepth - c(0, A, 0))
     polygon(anchorSymbol, col = colStagnant)
     # Redraw to cover grid
     if (type == "l") {
