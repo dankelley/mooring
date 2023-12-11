@@ -65,7 +65,7 @@ NULL
 # 2. setup        #
 ###################
 
-g <- 9.81
+#g <- 9.81
 
 #' Detect whether an object is a mooring
 #'
@@ -138,7 +138,7 @@ mooring <- function(...) {
     dots <- list(...)
     n <- length(dots)
     if (n < 3L) {
-        stop("need 2 or more arguments")
+        stop("need 3 or more arguments")
     }
     if (!inherits(dots[[1]], "anchor")) {
         stop("first argument must be created with anchor()")
