@@ -14,9 +14,7 @@
 #' [release()].
 #'
 #' For a summary of characteristics of the predefined models,
-#' see the vignette named
-#'
-## @template mooringElementVignetteName
+#' see the vignette named "Default Values for Mooring Elements".
 #'
 #' @template meTemplate
 #'
