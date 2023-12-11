@@ -27,7 +27,7 @@ setup, see the help page for
 }
 \details{
 For a summary of characteristics of the predefined models,
-see the vignette named
+see the vignette named "Default Values for Mooring Elements".
 }
 \examples{
 library(mooring)
