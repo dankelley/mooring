@@ -147,7 +147,7 @@ natural environment.
    which is slightly less than the mass of a 3/4-inch bolt, 136 g, and well
    under the weight of a 1-inch bolt, 195 g.  This suggests that a 1-inch bolt
    might be a good anchor for a demonstration of this effect in a flume.  (See
-   <https://www.portlandbolt.com/products/nuts/heahex-nut/> for a table of
+   <https://www.portlandbolt.com/products/nuts/hex-nuts/> for a table of
    bolt properties.)
 
 # Measuring currents
