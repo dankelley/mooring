@@ -17,3 +17,4 @@
 ^TAGS$
 check_package.R
 ^codemeta\.json$
+^revdep$
