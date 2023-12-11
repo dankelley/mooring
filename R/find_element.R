@@ -17,7 +17,7 @@
 #'
 #' @param max.distance numeric value, passed to [agrep()]. The default usually catches
 #' relevant cases; see the documentation for [agrep()] for the (somewhat subtle) meaning
-#' of this argumebnt.
+#' of this argument.
 #'
 #' @param search character vector holding the categories to be searched for.
 #'

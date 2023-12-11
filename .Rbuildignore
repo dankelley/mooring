@@ -15,3 +15,5 @@
 ^R/TAGS$
 ^README\.Rmd$
 ^TAGS$
+check_package.R
+^codemeta\.json$

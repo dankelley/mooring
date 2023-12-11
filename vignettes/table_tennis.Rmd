@@ -141,8 +141,14 @@ natural environment.
    predicted to yield $x'=`r sprintf("%.1f",xcm)`$ cm.
 2. The vertical float displacement over the zero-velocity case, $z'$. Here, the
    prediction is $`r sprintf("%.1f",zcm)`$ cm.
-3. The tension in the line, $T$.  The prediction is $`r round(T,3)`$ Newtons,
-   equivalent to `r round(1000*T/g,1)` g.
+3. The tension in the line, $T$, is predicted to be $`r round(T,3)`$ Newtons,
+   so that an anchor would need to have mass exceeding `r round(1000*T/g,1)` g
+   to avoid lifting by the drag. This mass rises to 74.3 g in a 1 m/s current,
+   which is slightly less than the mass of a 3/4-inch bolt, 136 g, and well
+   under the weight of a 1-inch bolt, 195 g.  This suggests that a 1-inch bolt
+   might be a good anchor for a demonstration of this effect in a flume.  (See
+   <https://www.portlandbolt.com/products/nuts/heahex-nut/> for a table of
+   bolt properties.)
 
 # Measuring currents
 

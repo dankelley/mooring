@@ -6,7 +6,7 @@
 #' coefficients with [CD()], then computes drag
 #' force (in Newtons) with
 #' \eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}
-#' and divides by `g` to get a mass equivalance, which
+#' and divides by `g` to get a mass equivalence, which
 #' is returned.
 #'
 #' Although fluid density `rho` and `g` are parameters to this
