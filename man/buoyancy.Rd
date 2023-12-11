@@ -36,7 +36,7 @@ necessitating an increase in CD for wire from 1.4 to 2.6
 }
 \examples{
 library(mooring)
-m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
+m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 buoyancy(m)
 
 }

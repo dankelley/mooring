@@ -25,7 +25,7 @@
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
+#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 #' buoyancy(m)
 #'
 #' @export
@@ -36,13 +36,14 @@
 #' Sciences. Bedford Institute of Oceanography, 1989.
 #'
 #' @author Dan Kelley
-buoyancy <- function(m, debug=0L)
-{
-    mooringDebug(debug, "buoyancy() {\n  class(m): ", paste(class(m), collapse=" "), "\n")
+buoyancy <- function(m, debug = 0L) {
+    mooringDebug(debug, "buoyancy() {\n  class(m): ", paste(class(m), collapse = " "), "\n")
     rval <- if (isMooring(m)) {
-        mooringDebug(debug, "  object is a mooring with",
-            length(m), "elements, so will analyse them individually\n")
-        sapply(m, function(mi) buoyancy(mi, debug=debug))
+        mooringDebug(
+            debug, "  object is a mooring with",
+            length(m), "elements, so will analyse them individually\n"
+        )
+        sapply(m, function(mi) buoyancy(mi, debug = debug))
     } else {
         if ("buoyancy" %in% names(m)) m$buoyancy else stop("no buoyancy in m")
     }

@@ -20,7 +20,7 @@ findElement(
 
 \item{max.distance}{numeric value, passed to \code{\link[=agrep]{agrep()}}. The default usually catches
 relevant cases; see the documentation for \code{\link[=agrep]{agrep()}} for the (somewhat subtle) meaning
-of this argumebnt.}
+of this argument.}
 }
 \value{
 \code{findElement} returns (silently) a list of the suggested function calls.

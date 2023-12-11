@@ -13,8 +13,7 @@
 #' @export
 #'
 #' @author Dan Kelley
-CD <- function(m)
-{
+CD <- function(m) {
     if (isMooring(m)) {
         sapply(m, function(item) item$CD)
     } else {

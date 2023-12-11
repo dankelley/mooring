@@ -11,14 +11,13 @@
 #' @examples
 #' library(mooring)
 #' height(float())
-#' m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
+#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 #' height(m)
 #'
 #' @export
 #'
 #' @author Dan Kelley
-height <- function(m)
-{
+height <- function(m) {
     if (isMooring(m)) {
         sapply(m, function(item) item$height)
     } else {

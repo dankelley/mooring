@@ -35,7 +35,7 @@ This looks up element areas with \code{\link[=area]{area()}} and drag
 coefficients with \code{\link[=CD]{CD()}}, then computes drag
 force (in Newtons) with
 \eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}
-and divides by \code{g} to get a mass equivalance, which
+and divides by \code{g} to get a mass equivalence, which
 is returned.
 }
 \details{

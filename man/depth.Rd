@@ -4,7 +4,7 @@
 \alias{depth}
 \title{Depth of mooring elements}
 \usage{
-depth(m, stagnant = FALSE)
+depth(m, stagnant = FALSE, skipWire = FALSE)
 }
 \arguments{
 \item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
@@ -13,6 +13,8 @@ depth(m, stagnant = FALSE)
 values for the mooring configuration in the stagnant case
 (with zero velocity) or the present case (possibly with
 nonzero velocity).}
+
+\item{skipWire}{logical value indicating whether to skip wire elements, i.e. to return values just for floats, instruments, etc.}
 }
 \value{
 a numeric vector of depth in metres.
@@ -23,7 +25,7 @@ This is the depth of the \emph{top} of the element. See also
 }
 \examples{
 library(mooring)
-m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
+m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 depth(m)
 
 }

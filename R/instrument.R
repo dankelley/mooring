@@ -30,25 +30,29 @@
 #' @export
 #'
 #' @author Dan Kelley
-instrument <- function(model="SBE37 microcat clamp-on style", buoyancy=NULL, height=NULL, area=NULL, CD=NULL)
-{
-    data("mooringElements", package="mooring", envir=environment())
+instrument <- function(model = "SBE37 microcat clamp-on style", buoyancy = NULL, height = NULL, area = NULL, CD = NULL) {
+    data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
-    if (model == "?")
+    if (model == "?") {
         return(sort(mooringElements$instruments$name))
-    else if (substring(model, 1, 1) == "?")
-        return(findElement(substring(model, 2), search="instrument"))
+    } else if (substring(model, 1, 1) == "?") {
+        return(findElement(substring(model, 2), search = "instrument"))
+    }
     w <- which(mooringElements$instruments$name == model)
     if (1 == length(w)) {
         me <- mooringElements$instruments[w, ]
-        if (!is.null(buoyancy))
+        if (!is.null(buoyancy)) {
             warning("ignoring supplied buoyancy, because \"", model, "\" is already in the database\n")
-        if (!is.null(height))
+        }
+        if (!is.null(height)) {
             warning("ignoring supplied height, because \"", model, "\" is already in the database\n")
-        if (!is.null(area))
+        }
+        if (!is.null(area)) {
             warning("ignoring supplied area, because \"", model, "\" is already in the database\n")
-        if (!is.null(CD))
+        }
+        if (!is.null(CD)) {
             warning("ignoring supplied CD, because \"", model, "\" is already in the database\n")
+        }
         buoyancy <- me$buoyancy
         height <- me$height
         area <- me$area
@@ -61,7 +65,7 @@ instrument <- function(model="SBE37 microcat clamp-on style", buoyancy=NULL, hei
         if (is.null(CD)) stop("must supply CD, if creating a new instrument model")
         source <- ""
     }
-    rval <- list(model=model, buoyancy=buoyancy, height=height, area=area, CD=CD, source=source)
+    rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
     class(rval) <- c("mooring", "instrument")
     rval
-}                                      # instrument()
+} # instrument()

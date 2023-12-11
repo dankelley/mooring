@@ -6,7 +6,7 @@
 #' coefficients with [CD()], then computes drag
 #' force (in Newtons) with
 #' \eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}
-#' and divides by `g` to get a mass equivalance, which
+#' and divides by `g` to get a mass equivalence, which
 #' is returned.
 #'
 #' Although fluid density `rho` and `g` are parameters to this
@@ -29,10 +29,10 @@
 #' @export
 #'
 #' @author Dan Kelley
-drag <- function(m, u, rho=1027, g=9.8)
-{
-    if (length(rho) > 1L && length(rho) != length(m))
+drag <- function(m, u, rho = 1027, g = 9.8) {
+    if (length(rho) > 1L && length(rho) != length(m)) {
         stop("length of rho, ", length(rho), " must match length of m, ", length(m))
+    }
     uSquared <- if (is.function(u)) sapply(depth(m), u)^2 else u^2
     0.5 * area(m) * rho * CD(m) * uSquared / g
 }

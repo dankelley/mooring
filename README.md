@@ -10,7 +10,7 @@
 <!-- badges: end -->
 
 The goal of mooring is to facilitate computations of the extent of
-‘knockdown’ of oceanographic moorings caused by ocean currents.
+knockdown of oceanographic moorings caused by ocean currents.
 
 ## Installation
 
@@ -27,7 +27,7 @@ devtools::install_github("dankelley/mooring")
 The following shows how to assess the knockdown of a mooring consisting
 of a bottom anchor, 100 m of wire, and a 20-inch diameter float, in a
 region of water depth 120 m with a constant current of 0.5 m/s (roughly
-1 knot). To learn more, (a) increse the current to 1 m/s and observe
+1 knot). To learn more, (a) increase the current to 1 m/s and observe
 changes in the mooring shape, (b) set the `which` argument of
 `plot.mooring()`, to focus more directly on the knockdown, then (c)
 explore the effects of specifying depth-dependent currents in the

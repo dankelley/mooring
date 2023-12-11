@@ -1,0 +1,101 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "mooring",
+  "description": "Calculates the response of oceanographic moorings to horizontal currents.",
+  "name": "mooring: Design and Model Oceanographic Moorings",
+  "codeRepository": "https://github.com/dankelley/mooring",
+  "issueTracker": "https://github.com/dankelley/mooring/issues",
+  "license": "https://spdx.org/licenses/GPL-3.0",
+  "version": "0.1.1",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.3.2 (2023-10-31)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Dan",
+      "familyName": "Kelley",
+      "email": "dan.kelley@dal.ca",
+      "@id": "https://orcid.org/0000-0001-7808-5911"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Dan",
+      "familyName": "Kelley",
+      "email": "dan.kelley@dal.ca",
+      "@id": "https://orcid.org/0000-0001-7808-5911"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "version": ">= 3.0.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    }
+  ],
+  "softwareRequirements": {
+    "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.5.0"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
+      "identifier": "shiny",
+      "name": "shiny",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=shiny"
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "3022.169KB",
+  "relatedLink": "https://dankelley.github.io/mooring/",
+  "releaseNotes": "https://github.com/dankelley/mooring/blob/master/NEWS.md",
+  "readme": "https://github.com/dankelley/mooring/blob/main/README.md",
+  "contIntegration": "https://github.com/dankelley/mooring/actions/workflows/R-CMD-check.yaml",
+  "keywords": ["oceanography", "mooring", "current"]
+}

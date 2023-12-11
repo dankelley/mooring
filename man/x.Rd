@@ -4,7 +4,7 @@
 \alias{x}
 \title{Horizontal coordinate of mooring elements}
 \usage{
-x(m, stagnant = FALSE)
+x(m, stagnant = FALSE, skipWire = FALSE)
 }
 \arguments{
 \item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
@@ -13,6 +13,8 @@ x(m, stagnant = FALSE)
 values for the mooring configuration in the stagnant case
 (with zero velocity) or the present case (possibly with
 nonzero velocity).}
+
+\item{skipWire}{logical value indicating whether to skip wire elements, i.e. to return values just for floats, instruments, etc.}
 }
 \value{
 a numeric vector of horizontal coordinate in metres.
@@ -22,7 +24,7 @@ Horizontal coordinate of mooring elements
 }
 \examples{
 library(mooring)
-m <- mooring(anchor(depth=120), wire(length=100), float("HMB 20"))
+m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 x(m)
 
 }

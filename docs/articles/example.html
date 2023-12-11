@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -69,6 +69,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -93,7 +96,7 @@
       <h1 data-toc-skip>A Practical Example</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2023-10-15</h4>
+            <h4 data-toc-skip class="date">2023-12-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/example.Rmd" class="external-link"><code>vignettes/example.Rmd</code></a></small>
       <div class="hidden name"><code>example.Rmd</code></div>
@@ -290,7 +293,7 @@ velocity at the depth of the ADCP.</p>
 <span><span class="co">##   31: "streamlined BUB 3 Viny balls" float, 52.65kg, height 0.563m, area 0.124m^2</span></span>
 <span><span class="co">##   32: "benthos 965a" release, -36.73kg, height 1.23m, area 0.1562m^2</span></span>
 <span><span class="co">##   33: "5/8in galvanized chain" chain, -43.23kg, length 10m, area 0.572m^2</span></span>
-<span><span class="co">##   34: "5 trainwheels" anchor, -1750kg, height 0m, in 1400m water depth</span></span></code></pre>
+<span><span class="co">##   34: "5 trainwheels" anchor, -1750kg, height 0.916667m, in 1400m water depth</span></span></code></pre>
 <p>The number at the start is the component number (see next
 section).</p>
 <p>Note that the results for <code>md</code> will be similar, except
@@ -310,7 +313,7 @@ to acoustic release), use</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dput.html" class="external-link">dput</a></span><span class="op">(</span><span class="va">m</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## structure(list(model = "SBE37 microcat clamp-on style", buoyancy = -1.53, </span></span>
 <span><span class="co">##     height = 0.559, area = 0.117, CD = 0.65, source = "BIO", </span></span>
-<span><span class="co">##     x = 0, z = -65.3389999999999, tau = 43.88), class = c("mooring", </span></span>
+<span><span class="co">##     x = 0, z = -64.4223333333334, tau = 43.88), class = c("mooring", </span></span>
 <span><span class="co">## "instrument"))</span></span></code></pre>
 <p>or, with less detail but in a more digestible format,</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -323,7 +326,7 @@ to acoustic release), use</p>
 <span><span class="co">##  $ CD      : num 0.65</span></span>
 <span><span class="co">##  $ source  : chr "BIO"</span></span>
 <span><span class="co">##  $ x       : num 0</span></span>
-<span><span class="co">##  $ z       : num -65.3</span></span>
+<span><span class="co">##  $ z       : num -64.4</span></span>
 <span><span class="co">##  $ tau     : num 43.9</span></span>
 <span><span class="co">##  - attr(*, "class")= chr [1:2] "mooring" "instrument"</span></span></code></pre>
 <p>You may go further with e.g.</p>

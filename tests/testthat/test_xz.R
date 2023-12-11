@@ -6,8 +6,8 @@ test_that("mooring construction", {
     b <- buoyancy(m)
     expect_equal(b, c(320, -13, -1050))
     expect_equal(rep(0, 3), x(m))
-    expect_equal(c(-99, -100, -200), z(m))
-    expect_equal(c(99, 100, 200), depth(m))
+    expect_equal(c(-98.45, -99.45, -199.45), z(m))
+    expect_equal(c(98.45, 99.45, 199.45), depth(m))
 })
 
 test_that("plot with x-y superimposed", {

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -69,6 +69,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -93,7 +96,7 @@
       <h1 data-toc-skip>Mooring Model</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2023-10-15</h4>
+            <h4 data-toc-skip class="date">2023-12-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring_model.Rmd" class="external-link"><code>vignettes/mooring_model.Rmd</code></a></small>
       <div class="hidden name"><code>mooring_model.Rmd</code></div>
@@ -159,15 +162,15 @@ D}_i\)</span>, to <span class="math inline">\(\frac{1}{2}A_i\rho_i
 u_i|u_i|\)</span>.</li>
 </ul>
 <div class="float">
-<img src="../reference/figures/force_diagram.png" alt="Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a river that is 0.5m deep. Arrows show forces in the i-th element (with i=1 in this case), and the corresponding angle is indicated alongside the gray line that represents the stagnant case. The brown region is the sediment below the river, and the dot is an anchor (element i=2, for which there is no force calculation since it assumed to be immobile)."><div class="figcaption"><em>Force diagram, showing an idealization of a
-table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s
-current flowing in a river that is 0.5m deep. Arrows show forces in the
-<span class="math inline">\(i\)</span>-th element (with <span class="math inline">\(i=1\)</span> in this case), and the corresponding
-angle is indicated alongside the gray line that represents the stagnant
-case. The brown region is the sediment below the river, and the dot is
-an anchor (element <span class="math inline">\(i=2\)</span>, for which
-there is no force calculation since it assumed to be
-immobile).</em></div>
+<img src="../reference/figures/force_diagram.png" alt="Figure 1. Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a river that is 0.5m deep. Arrows show forces in the i-th element (with i=1 in this case), and the corresponding angle is indicated alongside the gray line that represents the stagnant case. The brown region is the sediment below the river, and the dot is an anchor (element i=2, for which there is no force calculation since it assumed to be immobile)."><div class="figcaption"><em>Figure 1. Force diagram, showing an
+idealization of a table-tennis ball at the end of a very thin 0.5m
+fishing line in a 1 m/s current flowing in a river that is 0.5m deep.
+Arrows show forces in the <span class="math inline">\(i\)</span>-th
+element (with <span class="math inline">\(i=1\)</span> in this case),
+and the corresponding angle is indicated alongside the gray line that
+represents the stagnant case. The brown region is the sediment below the
+river, and the dot is an anchor (element <span class="math inline">\(i=2\)</span>, for which there is no force
+calculation since it assumed to be immobile).</em></div>
 </div>
 <p>A tension force exists between each interior mooring element. The
 tension below the <span class="math inline">\(i\)</span>-th interior
@@ -186,12 +189,15 @@ components in both the <span class="math inline">\(x\)</span> and <span class="m
 (defined as positive for objects that would rise if unattached to a
 mooring) acts only in the vertical, upwards if <span class="math inline">\(m\)</span> or <span class="math inline">\(\mu\)</span> is positive.</p>
 <p>The buoyancy force for a solid object such as an anchor or a float is
-found with (Equation 1) <span class="math display">\[\begin{equation}
+found with <span class="math display">\[\begin{equation}
+\tag{1}
 {\cal B}_i = -g m_i
-\end{equation}\]</span> while it is represented with (Equation 2) <span class="math display">\[\begin{equation}
+\end{equation}\]</span> while it is represented with <span class="math display">\[\begin{equation}
+\tag{2}
 {\cal B}_i = -g \mu_i \Delta l_i
 \end{equation}\]</span> for a portion of a cable of length <span class="math inline">\(\Delta l_i\)</span>.</p>
-<p>The drag force is expressed with (Equation 3) <span class="math display">\[\begin{equation}
+<p>The drag force is expressed with <span class="math display">\[\begin{equation}
+\tag{3}
 {\cal D}_i = \frac{1}{2} A_i C_i \rho_i u_i |u_i|
 \end{equation}\]</span> where <span class="math inline">\(A_i\)</span>
 is the area projected in the flow direction.</p>
@@ -208,12 +214,13 @@ between a component and the background water, and (c) a tension force,
 between elements. The tension force has only a vertical component for an
 upright mooring, but horizontal components occur for a mooring that is
 tilted by a current.</p>
-<p>By definition, the top element has no tension from above, and so its
-force balance is (Equation 4) <span class="math display">\[\begin{equation}
-\begin{split}
-{\cal D}_1 &amp;= {\cal T}_1 \sin\phi_1\cr
-{\cal B}_1 &amp;= {\cal T}_1 \cos\phi_1
-\end{split}
+<p>By definition, the top element has no tension from above, and so a
+consideration of its force balance yields <span class="math display">\[\begin{equation}
+\tag{4}
+{\cal D}_1 = {\cal T}_1 \sin\phi_1
+\end{equation}\]</span> and <span class="math display">\[\begin{equation}
+\tag{5}
+{\cal B}_1 = {\cal T}_1 \cos\phi_1
 \end{equation}\]</span> where <span class="math inline">\({\cal
 T}_1\)</span> is the tension between this element and the one below it,
 and <span class="math inline">\(\phi_1\)</span> is the angle that this
@@ -222,51 +229,56 @@ tension force makes to the vertical.</p>
 drag <span class="math inline">\(D_i\)</span> on the <span class="math inline">\(i\)</span>-th element my be computed without
 consideration for the position of the element in the water column. In
 such a case, both <span class="math inline">\(D_1\)</span> and <span class="math inline">\(B_1\)</span> are known, these two equations may be
-solved for <span class="math inline">\({\cal T}_1\)</span> and <span class="math inline">\(\phi_1\)</span>, yielding (Equation 5) <span class="math display">\[\begin{equation}
-\begin{split}
-{\cal T}_1 &amp;= \sqrt{{\cal D}_1^2 + {\cal B}_1^2}\cr
-\phi_1 &amp;= \tan^{-1}\frac{{\cal D}_1}{{\cal B}_1}
-\end{split}
+solved for <span class="math inline">\({\cal T}_1\)</span> and <span class="math inline">\(\phi_1\)</span>, yielding <span class="math display">\[\begin{equation}
+\tag{6}
+{\cal T}_1 = \sqrt{{\cal D}_1^2 + {\cal B}_1^2}
+and
+\end{equation}\]</span> <span class="math display">\[\begin{equation}
+\tag{7}
+\phi_1 = \tan^{-1}\frac{{\cal D}_1}{{\cal B}_1}
 \end{equation}\]</span></p>
 <p>If there are more than 2 elements in the mooring, this same reasoning
 may be extended to the next element, although now there is a tension
-force pulling upward. This situation is described by (Equation 6) <span class="math display">\[\begin{equation}
-\begin{split}
-{\cal D}_2 + {\cal T}_1 \sin\phi_1 &amp;= {\cal T}_2 \sin\phi_2\cr
-{\cal B}_2 + {\cal T}_1 \cos\phi_1 &amp;= {\cal T}_2 \cos\phi_2
-\end{split}
+force pulling upward. This situation is described by <span class="math display">\[\begin{equation}
+\tag{8}
+{\cal D}_2 + {\cal T}_1 \sin\phi_1 = {\cal T}_2 \sin\phi_2
+\end{equation}\]</span> and <span class="math display">\[\begin{equation}
+\tag{9}
+{\cal B}_2 + {\cal T}_1 \cos\phi_1 = {\cal T}_2 \cos\phi_2
 \end{equation}\]</span></p>
 <p>Since <span class="math inline">\(\phi_1\)</span> and <span class="math inline">\({\cal T}_1\)</span> are known from Equation 5,
 Equation 6 may be solved for <span class="math inline">\({\cal
 T}_2\)</span> and <span class="math inline">\(\phi_2\)</span>, using
-(Equation 7) <span class="math display">\[\begin{equation}
-\begin{split}
-{\cal T}_2 &amp;= \sqrt{({\cal D}_2+{\cal T}_1\sin\phi_1)^2 + ({\cal
-B}_2+{\cal T}_1\cos\phi_1)^2}\cr
-\phi_2 &amp;= \tan^{-1}\frac{{\cal D}_2+{\cal T}_1\sin\phi_1}{{\cal
+<span class="math display">\[\begin{equation}
+\tag{10}
+{\cal T}_2 = \sqrt{({\cal D}_2+{\cal T}_1\sin\phi_1)^2 + ({\cal
+B}_2+{\cal T}_1\cos\phi_1)^2}
+\end{equation}\]</span> and <span class="math display">\[\begin{equation}
+\tag{11}
+\phi_2 = \tan^{-1}\frac{{\cal D}_2+{\cal T}_1\sin\phi_1}{{\cal
 B}_2+{\cal T}_1\cos\phi_1}
-\end{split}
 \end{equation}\]</span></p>
-<p>This may be generalized to larger moorings, with (Equation 8) <span class="math display">\[\begin{equation}
-\begin{split}
-{\cal T}_i &amp;= \sqrt{({\cal D}_i+{\cal
-T}_{i-1}\sin\phi_{i-1})^2+({\cal B}_i+{\cal
-T}_{i-1}\cos\phi_{i-1})^2}\cr
-\phi_i &amp;= \tan^{-1}\frac{{\cal D}_i+{\cal
-T}_{i-1}\sin\phi_{i-1}}{{\cal B}_i+{\cal T}_{i-1}\cos\phi_{i-1}}
-\end{split}
+<p>This may be generalized to larger moorings, with <span class="math display">\[\begin{equation}
+\tag{12}
+{\cal T}_i = \sqrt{({\cal D}_i+{\cal T}_{i-1}\sin\phi_{i-1})^2+({\cal
+B}_i+{\cal T}_{i-1}\cos\phi_{i-1})^2}
+\end{equation}\]</span> and <span class="math display">\[\begin{equation}
+\tag{13}
+\phi_i = \tan^{-1}\frac{{\cal D}_i+{\cal T}_{i-1}\sin\phi_{i-1}}{{\cal
+B}_i+{\cal T}_{i-1}\cos\phi_{i-1}}
 \end{equation}\]</span> applying for elements <span class="math inline">\(i=2,\dots,n-1\)</span>. The limit ends at <span class="math inline">\(n-1\)</span> because is no tension below the
 bottom element, so neither <span class="math inline">\({\cal
 T}_n\)</span> nor <span class="math inline">\(\phi_n\)</span> can be
 defined.</p>
 <p>This leads to a simple way to describe mooring response to a
-depth-independent current, in which <span class="math inline">\(D_i\)</span> and <span class="math inline">\(B_i\)</span> are known quantities for each <span class="math inline">\(i\)</span> from 1 to <span class="math inline">\(n\)</span>: 1. First, use Equation 5 to compute
-<span class="math inline">\({\cal T}_1\)</span> and <span class="math inline">\(\phi_1\)</span>, the angle and tension below the
-top (<span class="math inline">\(i=1)\)</span> element. 2. Then, use
-Equation 8 to compute <span class="math inline">\({\cal T}_i\)</span>
-and <span class="math inline">\(\phi_i\)</span> for <span class="math inline">\(i=2\)</span>, and then use it again to compute
-these things at <span class="math inline">\(i=3\)</span>, etc., down to
-<span class="math inline">\(i=n-1\)</span>.</p>
+depth-independent current, in which <span class="math inline">\(D_i\)</span> and <span class="math inline">\(B_i\)</span> are known quantities for each <span class="math inline">\(i\)</span> from 1 to <span class="math inline">\(n\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li>First, use Equations 4 through 7 to compute <span class="math inline">\({\cal T}_1\)</span> and <span class="math inline">\(\phi_1\)</span>, the angle and tension below the
+top (<span class="math inline">\(i=1)\)</span> element.</li>
+<li>Use Equations 12 and 13 to compute <span class="math inline">\({\cal
+T}_i\)</span> and <span class="math inline">\(\phi_i\)</span> for <span class="math inline">\(i=2\)</span>.</li>
+<li>Continue as in step 2, until reaching the bottom (<span class="math inline">\(i=n-1\)</span>) element.</li>
+</ol>
 <p>If the current varies with depth, then the drag of a given element
 will depend on depth of the element, which in turn depends on the shape
 of the mooring. This may be handled by an iterative scheme. In the first
@@ -284,7 +296,7 @@ scales.</p>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>Figure 1 shows the result of simulating a 20-inch Hydro Float Mooring
+<p>Figure 2 shows the result of simulating a 20-inch Hydro Float Mooring
 Buoy (with <span class="math inline">\(34.5\)</span>kg buoyancy)
 connected to a bottom anchor with 100 m of quarter-inch jacketed wire
 (with <span class="math inline">\(-13\)</span>kg/m of buoyancy), in a
@@ -294,13 +306,10 @@ current. However, the predicted knockdown increases to <span class="math inline"
 would be of limited utility in supporting an oceanographic mooring a
 region with strong currents.</p>
 <div class="figure">
-<img src="mooring_model_files/figure-html/unnamed-chunk-2-1.png" alt="Response of a mooring to a $u=1$m/s current, as described in the text. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for the $u=1$m/s case. **Right:** Mooring shape, with same colour scheme as left panel." width="700.0000032"><p class="caption">
-Response of a mooring to a <span class="math inline">\(u=1\)</span>m/s
-current, as described in the text. <strong>Left</strong>: Cable tension,
-in kg, with gray for the <span class="math inline">\(u=0\)</span> case
-and black for the <span class="math inline">\(u=1\)</span>m/s case.
-<strong>Right:</strong> Mooring shape, with same colour scheme as left
-panel.
+<img src="mooring_model_files/figure-html/unnamed-chunk-2-1.png" alt="*Figure 2. Response of a mooring to a $u=1$m/s current, as described in the text. **Left**: Cable tension, in kg, with gray for the $u=0$ case and black for the $u=1$m/s case. **Right:** Mooring shape, with same colour scheme as left panel.*" width="700.0000032"><p class="caption">
+<em>Figure 2. Response of a mooring to a <span class="math inline">\(u=1\)</span>m/s current, as described in the text.
+<strong>Left</strong>: Cable tension, in kg, with gray for the <span class="math inline">\(u=0\)</span> case and black for the <span class="math inline">\(u=1\)</span>m/s case. <strong>Right:</strong>
+Mooring shape, with same colour scheme as left panel.</em>
 </p>
 </div>
 </div>
@@ -311,9 +320,11 @@ panel.
 all <span class="math inline">\(i\)</span>, then there will be no drag,
 and so (assuming adequate buoyancy), the mooring will be aligned in the
 vertical, and the vertical equation becomes <span class="math display">\[\begin{equation}
+\tag{14}
 {\cal T}_{i+1} = {\cal T}_i + {\cal B}_i
 \end{equation}\]</span> which yields <span class="math display">\[\begin{equation}
-{\cal T}_i = \sum_{1}^{i-1} {\cal B}_j
+\tag{15}
+{\cal T}_i = \sum_{j=1}^{i-1} {\cal B}_j
 \end{equation}\]</span> for <span class="math inline">\(i&gt;1\)</span>.
 Physically, this means that the downward tension at any level balances
 the total upward buoyancy force of all the elements above it. The bottom
