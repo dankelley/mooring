@@ -2,24 +2,28 @@
 
 #' Run a GUI app for interactive simulations
 #'
-#' This makes a simple mooring with an anchor, a line, and a float, in
-#' a depth-uniform current, or one of a few other current profiles.
-#' Sliders are provided for the adjustment of line length and current speed,
-#' and pulldown menus are provided to adjust wire and float types.
+#' This makes a simple mooring with an anchor, an instrument, and
+#' a float. It differs from `app()` in having the instrument,
+#' and also by having a pared-down interface. It permits
+#' a depth-uniform current, along with a few other current profiles.
 #'
 #' @importFrom shiny shinyApp
 #'
 #' @export
 #'
 #' @author Dan Kelley
-app <- function() {
+app2 <- function() {
     if (!requireNamespace("shiny")) {
-        stop("must install.packages(\"shiny\") for app() to work")
+        stop("must install.packages(\"shiny\") for app2() to work")
     }
-    floatChoices <- float("?")
-    floatBuoyancy <- lapply(floatChoices, \(f) float(f)$buoyancy) |> unlist()
+    anchorChoices <- anchor("?")
+    anchorBuoyancy <- lapply(anchorChoices, \(w) anchor(w)$buoyancy) |> unlist()
     wireChoices <- wire("?")
     wireBuoyancy <- lapply(wireChoices, \(w) wire(w, length = 1)$buoyancy) |> unlist()
+    instrumentChoices <- instrument("?")
+    instrumentBuoyancy <- lapply(instrumentChoices, \(f) instrument(f)$buoyancy) |> unlist()
+    floatChoices <- float("?")
+    floatBuoyancy <- lapply(floatChoices, \(f) float(f)$buoyancy) |> unlist()
     dewey1999 <- paste(
         "Dewey, Richard K.",
         "\"Mooring Design & Dynamics-a Matlab",
@@ -47,33 +51,23 @@ app <- function() {
     ui <- shiny::fluidPage(
         shiny::tags$style(shiny::HTML("body {font-family: 'Arial'; font-size: 10px; margin-left:1ex}")),
         shiny::fluidRow(
-            shiny::column(
-                2,
-                shiny::actionButton("help", "Help")
-            ),
-            shiny::column(
-                2,
-                shiny::actionButton("code", "Code")
-            )
+            shiny::column(2, shiny::actionButton("help", "Help")),
+            shiny::column(2, shiny::actionButton("code", "Code")),
+            shiny::column(4, shiny::radioButtons("orderBy", "Order Elements By", choices = c("name", "buoyancy"), selected = "name"))
         ),
         shiny::fluidRow(
-            shiny::column(6, shiny::sliderInput("waterDepth",
+            shiny::column(4, shiny::sliderInput("waterDepth",
                 "Water Depth [m]",
-                min = 50.0, max = 500.0, value = 100.0, width = "100%"
+                min = 2.0, max = 500.0, value = 100.0, width = "100%"
             )),
-            shiny::column(6, shiny::uiOutput("wireLength"))
+            shiny::column(4, shiny::uiOutput("instrumentDepth")),
+            shiny::column(4, shiny::uiOutput("wireLength"))
         ),
         shiny::fluidRow(
-            shiny::column(10, shiny::uiOutput("wireType")),
-            shiny::column(2, shiny::radioButtons("wireOrder", "Order wires by",
-                choices = c("name", "buoyancy"), selected = "name"
-            ))
-        ),
-        shiny::fluidRow(
-            shiny::column(10, shiny::uiOutput("floatType")),
-            shiny::column(2, shiny::radioButtons("floatOrder", "Order floats by",
-                choices = c("name", "buoyancy"), selected = "name"
-            ))
+            shiny::column(3, shiny::uiOutput("anchorType")),
+            shiny::column(3, shiny::uiOutput("wireType")),
+            shiny::column(3, shiny::uiOutput("instrumentType")),
+            shiny::column(3, shiny::uiOutput("floatType"))
         ),
         shiny::fluidRow(
             shiny::column(
@@ -147,27 +141,52 @@ app <- function() {
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
 
+        output$instrumentDepth <- shiny::renderUI({
+            value <- if (input$waterDepth > 10) input$waterDepth - 10 else input$waterDepth
+            shiny::sliderInput("instrumentDepth", "Instrument Depth [m]",
+                min = 0.5, max = input$waterDepth, value = value, step = 0.1, width = "100%"
+            )
+        })
+
         output$wireLength <- shiny::renderUI({
             value <- if (input$waterDepth > 10) input$waterDepth - 10 else input$waterDepth
             shiny::sliderInput("wireLength", "Wire Length [m]",
-                min = 1.0, max = input$waterDepth, value = value, step = 1.0, width = "100%"
+                min = 0.5, max = input$waterDepth, value = value, step = 0.1, width = "100%"
+            )
+        })
+
+        output$anchorType <- shiny::renderUI({
+            o <- if (input$orderBy == "name") seq_along(anchorChoices) else order(anchorBuoyancy)
+            shiny::selectInput("anchorModel", "Anchor Type",
+                choices = paste0(anchorChoices[o], " [", anchorBuoyancy[o], "kg/m]"),
+                selected = anchorChoices[o[1]],
+                width = "100%"
             )
         })
 
         output$wireType <- shiny::renderUI({
-            o <- if (input$wireOrder == "name") seq_along(wireChoices) else order(wireBuoyancy)
+            o <- if (input$orderBy == "name") seq_along(wireChoices) else order(wireBuoyancy)
             shiny::selectInput("wireModel", "Wire Type",
                 choices = paste0(wireChoices[o], " [", wireBuoyancy[o], "kg/m]"),
-                selected = "1/4in wire/jack [-0.13kg/m]",
+                selected = wireChoices[o[1]],
+                width = "100%"
+            )
+        })
+
+        output$instrumentType <- shiny::renderUI({
+            o <- if (input$orderBy == "name") seq_along(instrumentChoices) else order(instrumentBuoyancy)
+            shiny::selectInput("instrumentModel", "instrument Type",
+                choices = paste0(instrumentChoices[o], " [", instrumentBuoyancy[o], "kg/m]"),
+                selected = instrumentChoices[o[1]],
                 width = "100%"
             )
         })
 
         output$floatType <- shiny::renderUI({
-            o <- if (input$floatOrder == "name") seq_along(floatChoices) else order(floatBuoyancy)
+            o <- if (input$orderBy == "name") seq_along(floatChoices) else order(floatBuoyancy)
             shiny::selectInput("floatModel", "Float Type",
                 choices = paste0(floatChoices[o], " [", floatBuoyancy[o], "kg]"),
-                selected = "Kiel SFS40in [320kg]",
+                selected = floatChoices[o[1]],
                 width = "100%"
             )
         })
@@ -178,6 +197,7 @@ app <- function() {
                 wireLength <- input$wireLength
                 if (!is.null(wireLength)) { # undefined at the start, since it depends on another slider
                     u <- input$u
+                    anchorModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$anchorModel)
                     wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
                     floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
                     #> message("currentModel='", input$currentModel, "'")
@@ -186,7 +206,7 @@ app <- function() {
                     #> message("  u=", u)
                     #> message("  wireModel=", wireModel)
                     #> message("  floatModel=", floatModel)
-                    m <- mooring(anchor(depth = waterDepth), wire(model = wireModel, length = wireLength), float(model = floatModel))
+                    m <- mooring(anchor(anchorModel, depth = waterDepth), wire(model = wireModel, length = wireLength), float(model = floatModel))
                     md <- discretise(m, 1)
                     u <- switch(input$currentModel,
                         "Constant" = input$u,

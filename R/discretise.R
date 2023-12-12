@@ -8,15 +8,11 @@
 #'
 #' @template mTemplate
 #'
-#' @param by numeric value giving the rough size of the chunks.
-#' The actual size is computed as the length of wire, divided
-#' by the rounded ratio of that length to `by`. For example,
-#' using `by=10` with a 95-m length of wire will result
-#' in chunks of length 9.5m, not 10m.  In shallow water moorings,
-#' the default value of 1m makes sense, but larger values
-#' might be employed for moorings in the deep ocean. If `by`
-#' exceeds the height of a wire portion, then that portion is not
-#' subdivided.
+#' @param by numeric value giving the rough size of the chunks,
+#' which is 1m by default. This is considered in the context of
+#' the total length of the element, `L` say. If `L/by` exceeds
+#' 20, then chunks of length `by` are used.  Otherwise,
+#' 20 chunks, each of length `L/20`, are used.
 #'
 #' @return an object of the `"mooring"` class, identical
 #' to `m` except that wire portions are chopped up into shorter
@@ -35,24 +31,29 @@ discretise <- function(m, by = 1) {
     }
     n <- length(m)
     rval <- list()
-    group <- 1
+    group <- 1L
     for (item in m) {
-        isWire <- inherits(item, "wire")
-        isChain <- inherits(item, "chain")
-        if (isWire || isChain) {
+        if (inherits(item, "wire") || inherits(item, "chain")) {
             height <- item$height
-            n <- max(1L, as.integer(round(height / by)))
+            n <- as.integer(1 + floor(height / by))
+            #message(    "INITIAL: height=", height, ", by=", by, ", n=", n)
+            # Ensure at least 20 chunks
+            if (n < 20L) {
+                n <- 20L
+                by <- height / n
+                #message("  LATER:", height, ", by=", by, ", n=", n)
+            }
             portion <- item
             portion$height <- height / n
             portion$area <- portion$area / n
             portion$buoyancy <- portion$buoyancy / n
             portion$group <- group # so we can undo this later
             for (i in seq_len(n)) {
-                rval[[1 + length(rval)]] <- portion
+                rval[[1L + length(rval)]] <- portion
             }
-            group <- group + 1
+            group <- group + 1L
         } else {
-            rval[[1 + length(rval)]] <- item
+            rval[[1L + length(rval)]] <- item
         }
     }
     nrval <- length(rval)

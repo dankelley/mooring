@@ -90,6 +90,7 @@ plot.mooring <- function(
         detailsControl <- list(cex = 0.8, col = "darkblue")
     }
     colWater <- "#ccdcff"
+    colDragWarning <- "2"
     colBottom <- "#e6bb98"
     colStagnant <- "darkgray"
     nm <- length(m)
@@ -149,7 +150,13 @@ plot.mooring <- function(
     # Determine depth scale by doing a sort of dry run of a shape plot
     # . message("xlim given? ", !is.null(xlim))
     if (is.null(xlim)) {
-        xlim <- if (which == "shape") extendrange(c(x, 0)) else extendrange(x)
+        xlim <- if (which == "shape") {
+            extendrange(c(x, 0))
+        } else if (which == "tension") {
+            extendrange(c(x, anchorWeight(m)))
+        } else {
+            extendrange(x)
+        }
     }
     plot.window(xlim, ylim, xlim = xlim, ylim = ylim, asp = if (which == "shape") 1, log = "")
     usrShape <- par("usr")
@@ -176,7 +183,7 @@ plot.mooring <- function(
         usr <- par("usr")
         rect(usr[1], waterDepth, usr[2], 0, col = colWater, border = NA)
         grid(col = "white")
-        abline(h = 0, col = colWater)
+        abline(h = 0, col = colWater, lwd = 4, lty = 2)
     } else {
         grid()
         if (showInterfaces) {
@@ -215,7 +222,7 @@ plot.mooring <- function(
         points(xx[notWire], yy[notWire], pch = 20, col = colStagnant)
     } else if (which == "tension") {
         lines(tension(m, stagnant = TRUE), depth, col = colStagnant, lwd = 1.4 * par("lwd"))
-        # FIXME: red vertical line for max allowed tension (anchor weight)
+        abline(v = anchorWeight(m), col = colDragWarning, lwd = 3, lty = 2)
     }
     cex <- if (showDetails) detailsControl$cex else 1
     pch <- if (showDetails) detailsControl$pch else 20
@@ -268,7 +275,8 @@ plot.mooring <- function(
     }
     if (showDetails) {
         labels <- NULL
-        depths <- depthsStagnant <- NULL
+        #depths <- depthsStagnant <- NULL
+        depths <- NULL
         xs <- xsStagnant <- NULL
         #> message(oce::vectorShow(which))
         for (i in seq_along(m)) {
@@ -292,7 +300,7 @@ plot.mooring <- function(
         #> message(oce::vectorShow(X0))
         X <- rep(X0 + xspace, N)
         Y <- seq(usr[4] - yspace, usr[3] + yspace, length.out = N)
-        widths <- strwidth(labels, cex = cex)
+        #widths <- strwidth(labels, cex = cex)
         text(X, Y, labels, pos = 4, cex = detailsControl$cex, col = detailsControl$col)
         # points(X, Y, col=2)
         # points(xs, depths, col="magenta", pch=20)

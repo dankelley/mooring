@@ -10,15 +10,11 @@ discretise(m, by = 1)
 \arguments{
 \item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
 
-\item{by}{numeric value giving the rough size of the chunks.
-The actual size is computed as the length of wire, divided
-by the rounded ratio of that length to \code{by}. For example,
-using \code{by=10} with a 95-m length of wire will result
-in chunks of length 9.5m, not 10m.  In shallow water moorings,
-the default value of 1m makes sense, but larger values
-might be employed for moorings in the deep ocean. If \code{by}
-exceeds the height of a wire portion, then that portion is not
-subdivided.}
+\item{by}{numeric value giving the rough size of the chunks,
+which is 1m by default. This is considered in the context of
+the total length of the element, \code{L} say. If \code{L/by} exceeds
+20, then chunks of length \code{by} are used.  Otherwise,
+20 chunks, each of length \code{L/20}, are used.}
 }
 \value{
 an object of the \code{"mooring"} class, identical
