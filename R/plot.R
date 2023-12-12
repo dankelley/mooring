@@ -148,8 +148,10 @@ plot.mooring <- function(
     ylim <- c(waterDepth, 0)
     # Determine depth scale by doing a sort of dry run of a shape plot
     # . message("xlim given? ", !is.null(xlim))
-    if (is.null(xlim)) xlim <- extendrange(c(x, 0))
-    plot.window(0, 0, xlim = xlim, ylim = ylim, asp = if (which == "shape") 1, log = "")
+    if (is.null(xlim)) {
+        xlim <- if (which == "shape") extendrange(c(x, 0)) else extendrange(x)
+    }
+    plot.window(xlim, ylim, xlim = xlim, ylim = ylim, asp = if (which == "shape") 1, log = "")
     usrShape <- par("usr")
     # message(oce::vectorShow(xlim))
     # message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
@@ -213,6 +215,7 @@ plot.mooring <- function(
         points(xx[notWire], yy[notWire], pch = 20, col = colStagnant)
     } else if (which == "tension") {
         lines(tension(m, stagnant = TRUE), depth, col = colStagnant, lwd = 1.4 * par("lwd"))
+        # FIXME: red vertical line for max allowed tension (anchor weight)
     }
     cex <- if (showDetails) detailsControl$cex else 1
     pch <- if (showDetails) detailsControl$pch else 20
