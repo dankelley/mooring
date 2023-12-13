@@ -51,14 +51,14 @@ app2 <- function() {
     ui <- shiny::fluidPage(
         shiny::tags$style(shiny::HTML("body {font-family: 'Arial'; font-size: 10px; margin-left:1ex}")),
         shiny::fluidRow(
-            shiny::column(2, shiny::actionButton("help", "Help")),
-            shiny::column(2, shiny::actionButton("code", "Code")),
-            shiny::column(4, shiny::radioButtons("orderBy", "Order Elements By", choices = c("name", "buoyancy"), selected = "name"))
+            shiny::column(1, shiny::actionButton("help", "Help")),
+            shiny::column(1, shiny::actionButton("code", "Code")),
+            shiny::column(6, shiny::radioButtons("orderBy", "", choices = c("name", "buoyancy"), selected = "name", inline = TRUE, width = "100%"))
         ),
         shiny::fluidRow(
             shiny::column(4, shiny::sliderInput("waterDepth",
                 "Water Depth [m]",
-                min = 2.0, max = 500.0, value = 100.0, width = "100%"
+                min = 2.0, max = 300.0, value = 100.0, width = "100%"
             )),
             shiny::column(4, shiny::uiOutput("instrumentDepth")),
             shiny::column(4, shiny::uiOutput("wireLength"))
@@ -80,7 +80,7 @@ app2 <- function() {
                         "exp(z/100)",
                         "exp(z/300)"
                     ),
-                    selected = "Constant"
+                    selected = "Linear"
                 )
             ),
             shiny::column(6, shiny::sliderInput("u",
@@ -88,6 +88,12 @@ app2 <- function() {
                 min = 0.0, max = 5.0, value = 1.0, step = 0.01, width = "100%"
             ))
         ),
+        shiny::fluidRow(shiny::column(6, shiny::checkboxGroupInput(
+            inputId = "plotChoices", label = NULL,
+            choices = c("tension", "shape", "knockdown", "velocity"),
+            selected = c("shape", "tension"),
+            inline = TRUE, width = "100%"
+        ))),
         shiny::fluidRow(shiny::plotOutput("plot"))
     )
 
@@ -142,7 +148,7 @@ app2 <- function() {
         })
 
         output$instrumentDepth <- shiny::renderUI({
-            value <- if (input$waterDepth > 10) input$waterDepth - 10 else input$waterDepth
+            value <- if (input$waterDepth > 10) input$waterDepth - 10 else input$waterDepth / 2
             shiny::sliderInput("instrumentDepth", "Instrument Depth [m]",
                 min = 0.5, max = input$waterDepth, value = value, step = 0.1, width = "100%"
             )
@@ -158,7 +164,7 @@ app2 <- function() {
         output$anchorType <- shiny::renderUI({
             o <- if (input$orderBy == "name") seq_along(anchorChoices) else order(anchorBuoyancy)
             shiny::selectInput("anchorModel", "Anchor Type",
-                choices = paste0(anchorChoices[o], " [", anchorBuoyancy[o], "kg/m]"),
+                choices = paste0(anchorChoices[o], " [", anchorBuoyancy[o], "kg]"),
                 selected = anchorChoices[o[1]],
                 width = "100%"
             )
@@ -176,7 +182,7 @@ app2 <- function() {
         output$instrumentType <- shiny::renderUI({
             o <- if (input$orderBy == "name") seq_along(instrumentChoices) else order(instrumentBuoyancy)
             shiny::selectInput("instrumentModel", "instrument Type",
-                choices = paste0(instrumentChoices[o], " [", instrumentBuoyancy[o], "kg/m]"),
+                choices = paste0(instrumentChoices[o], " [", instrumentBuoyancy[o], "kg]"),
                 selected = instrumentChoices[o[1]],
                 width = "100%"
             )
@@ -197,16 +203,22 @@ app2 <- function() {
                 wireLength <- input$wireLength
                 if (!is.null(wireLength)) { # undefined at the start, since it depends on another slider
                     u <- input$u
-                    anchorModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$anchorModel)
+                    anchorModel <- gsub("[ ]+\\[.*kg\\]$", "", input$anchorModel)
                     wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
                     floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
+                    instrumentModel <- gsub("[ ]+\\[.*kg\\]$", "", input$instrumentModel)
                     #> message("currentModel='", input$currentModel, "'")
                     #> message("waterDepth=", waterDepth)
                     #> message("  wireLength=", wireLength)
                     #> message("  u=", u)
                     #> message("  wireModel=", wireModel)
                     #> message("  floatModel=", floatModel)
-                    m <- mooring(anchor(anchorModel, depth = waterDepth), wire(model = wireModel, length = wireLength), float(model = floatModel))
+                    # FIXME: add instrument here
+                    m <- mooring(
+                        anchor(anchorModel, depth = waterDepth),
+                        wire(model = wireModel, length = wireLength),
+                        float(model = floatModel)
+                    )
                     md <- discretise(m, 1)
                     u <- switch(input$currentModel,
                         "Constant" = input$u,
@@ -216,12 +228,26 @@ app2 <- function() {
                         "exp(z/300)" = function(depth) input$u * exp(-depth / 300)
                     )
                     mdk <- knockdown(md, u)
-                    par(mfrow = c(1, 2))
-                    plot(mdk, which = "tension", fancy = TRUE, showDepths = FALSE)
-                    plot(mdk, fancy = TRUE)
+                    mar <- c(2.5, 2.5, 0.5, 0.5)
+                    mpg <- c(1.5, 0.5, 0)
+                    cex <- 1.2
+                    nchoices <- length(input$plotChoices)
+                    if (nchoices == 1) {
+                        par(mfrow = c(1, 1), mar = mar, mgp = mpg, cex = cex)
+                    } else if (nchoices == 2) {
+                        par(mfrow = c(1, 2), mar = mar, mgp = mpg, cex = cex)
+                    } else if (nchoices == 3) {
+                        par(mfrow = c(1, 3), mar = mar, mgp = mpg, cex = cex)
+                    } else if (nchoices == 4) {
+                        par(mfrow = c(2, 2), mar = mar, mgp = mpg, cex = cex)
+                    }
+                    for (choice in input$plotChoices) {
+                        plot(mdk, which = choice, fancy = TRUE, showDepths = FALSE)
+                    }
                 }
             },
-            pointsize = 12
+            pointsize = 16, # this has no effect
+            height = 500
         ) # , height=500)
     }
     shiny::shinyApp(ui = ui, server = server)

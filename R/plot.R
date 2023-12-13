@@ -119,6 +119,12 @@ plot.mooring <- function(
         plot(velocityProfile, d, ylim = usrShape[3:4], yaxs = "i", ylab = "", xlab = "", type = type, axes = FALSE)
         box()
         grid()
+        if (fancy) {
+            usr <- par("usr")
+            rect(usr[1], usr[3], usr[2], waterDepth, col = colBottom, border = NA)
+            rect(usr[1], waterDepth, usr[2], 0, col = colWater, border = NA)
+            grid(col = "white")
+        }
         if (showInterfaces) {
             abline(h = 0, col = colWater, lwd = 2)
             abline(h = waterDepth, col = colBottom, lwd = 2)
@@ -183,7 +189,7 @@ plot.mooring <- function(
         usr <- par("usr")
         rect(usr[1], waterDepth, usr[2], 0, col = colWater, border = NA)
         grid(col = "white")
-        abline(h = 0, col = colWater, lwd = 4, lty = 2)
+        #abline(h = 0, col = colWater, lwd = 4, lty = 2)
     } else {
         grid()
         if (showInterfaces) {
