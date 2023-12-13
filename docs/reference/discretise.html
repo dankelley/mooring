@@ -92,15 +92,11 @@ accurately by <code><a href="knockdown.html">knockdown()</a></code>.</p>
 
 
 <dt>by</dt>
-<dd><p>numeric value giving the rough size of the chunks.
-The actual size is computed as the length of wire, divided
-by the rounded ratio of that length to <code>by</code>. For example,
-using <code>by=10</code> with a 95-m length of wire will result
-in chunks of length 9.5m, not 10m.  In shallow water moorings,
-the default value of 1m makes sense, but larger values
-might be employed for moorings in the deep ocean. If <code>by</code>
-exceeds the height of a wire portion, then that portion is not
-subdivided.</p></dd>
+<dd><p>numeric value giving the rough size of the chunks,
+which is 1m by default. This is considered in the context of
+the total length of the element, <code>L</code> say. If <code>L/by</code> exceeds
+20, then chunks of length <code>by</code> are used.  Otherwise,
+20 chunks, each of length <code>L/20</code>, are used.</p></dd>
 
 </dl></div>
     <div id="value">

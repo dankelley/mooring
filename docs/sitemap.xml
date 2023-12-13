@@ -46,10 +46,16 @@
     <loc>/reference/anchor.html</loc>
   </url>
   <url>
+    <loc>/reference/anchorWeight.html</loc>
+  </url>
+  <url>
     <loc>/reference/angle.html</loc>
   </url>
   <url>
     <loc>/reference/app.html</loc>
+  </url>
+  <url>
+    <loc>/reference/app2.html</loc>
   </url>
   <url>
     <loc>/reference/area.html</loc>
@@ -92,6 +98,21 @@
   </url>
   <url>
     <loc>/reference/instrument.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is.anchor.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is.float.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is.instrument.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is.mooring.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is.wire.html</loc>
   </url>
   <url>
     <loc>/reference/isMooring.html</loc>
