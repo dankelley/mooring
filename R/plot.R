@@ -69,7 +69,7 @@ plot.mooring <- function(
     type = "l",
     ...) {
     m <- x # we only use x above to obey the R rules on generics.
-    if (!isMooring(m)) {
+    if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
     # Set up debugging
@@ -224,7 +224,7 @@ plot.mooring <- function(
         xx <- x(m, stagnant = TRUE)
         yy <- depth(m, stagnant = TRUE)
         lines(xx, yy, col = colStagnant)
-        notWire <- !isWire(m)
+        notWire <- !is.wire(m)
         points(xx[notWire], yy[notWire], pch = 20, col = colStagnant)
     } else if (which == "tension") {
         lines(tension(m, stagnant = TRUE), depth, col = colStagnant, lwd = 1.4 * par("lwd"))

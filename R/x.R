@@ -28,5 +28,5 @@ x <- function(m, stagnant = FALSE, skipWire = FALSE) {
     } else {
         sapply(m, function(mi) mi$x)
     }
-    if (skipWire) rval[!isWire(m)] else rval
+    if (skipWire) rval[!is.wire(m)] else rval
 }

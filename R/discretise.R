@@ -23,7 +23,7 @@
 #'
 #' @author Dan Kelley
 discretise <- function(m, by = 1) {
-    if (!isMooring(m)) {
+    if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
     if (by <= 0) {

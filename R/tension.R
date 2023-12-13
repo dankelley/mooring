@@ -24,7 +24,7 @@
 #'
 #' @author Dan Kelley
 tension <- function(m, stagnant = FALSE) {
-    if (!isMooring(m)) {
+    if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
     if (stagnant || all(x(m) == 0.0)) {

@@ -46,7 +46,7 @@ plot(m1k)
 # Show stiffened mooring in red
 lines(x(m2k), depth(m2k), col = 2, lwd = 2)
 points(x(m2k, skipWire = TRUE), depth(m2k, skipWire = TRUE), col = 2, pch = 20)
-type <- sapply(m2k, \(i) class(i)[2])[!isWire(m2k)]
+type <- sapply(m2k, \(i) class(i)[2])[!is.wire(m2k)]
 typeAbbrev <- unname(sapply(type, \(t)
 switch(t,
     float = "F",

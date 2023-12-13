@@ -18,7 +18,7 @@
 #'
 #' @author Dan Kelley
 height <- function(m) {
-    if (isMooring(m)) {
+    if (is.mooring(m)) {
         sapply(m, function(item) item$height)
     } else {
         if (length(class(m)) == 2) m$height else stop("height can only be computed for a mooring or an element")

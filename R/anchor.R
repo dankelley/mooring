@@ -80,7 +80,7 @@ anchor <- function(model = "3 trainwheels", buoyancy = NULL, height = NULL, CD =
 #' @author Dan Kelley
 anchorWeight <- function(m)
 {
-    if (!isMooring(m)) {
+    if (!is.mooring(m)) {
         stop("m must be a mooring object, created with mooring()")
     }
     # FIXME: check that it has more than 0 objects, and that one is an anchor

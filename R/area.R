@@ -43,7 +43,7 @@ area <- function(m) {
     if (!inherits(m, "mooring")) {
         stop("only works for objects created by mooring(), or by float(), etc")
     }
-    if (isMooring(m)) {
+    if (is.mooring(m)) {
         sapply(m, function(mi) mi$area)
     } else {
         if (length(class(m)) == 2) m$area else stop("area can only be computed for a mooring or an individual element")
