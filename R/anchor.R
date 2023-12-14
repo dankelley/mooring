@@ -68,7 +68,7 @@ anchor <- function(model = "3 trainwheels", buoyancy = NULL, height = NULL, CD =
     rval
 } # anchor()
 
-#' Find Anchor Wweight of a Mooring
+#' Find Anchor Weight of a Mooring
 #'
 #' @param m an object of class `"mooring"`, created with [mooring()].
 #'

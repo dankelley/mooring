@@ -2,7 +2,7 @@
 % Please edit documentation in R/anchor.R
 \name{anchorWeight}
 \alias{anchorWeight}
-\title{Find Anchor Wweight of a Mooring}
+\title{Find Anchor Weight of a Mooring}
 \usage{
 anchorWeight(m)
 }
@@ -14,7 +14,7 @@ anchorWeight(m)
 buoyancy) of the anchor in the mooring.
 }
 \description{
-Find Anchor Wweight of a Mooring
+Find Anchor Weight of a Mooring
 }
 \author{
 Dan Kelley

@@ -1,0 +1,29 @@
+---
+title: Ingesting object data from a CMAR sources
+author: Dan Kelley
+date: 2023-12-14
+output:
+    pdf_document:
+        toc: true
+        number_sections: true
+        extra_dependencies:
+            fullpage
+---
+
+# Introduction
+
+Members of Centre for Marine Applied Research (CMAS) sent me information on
+their mooring equipment, in a combination of emails and a csv file. For details
+of how I processed these, see the `work/cmar.R` and `work/Makefile` files.
+
+The results of the processing are as follows, with buoyancy in kg, distance in
+metres, and area in square metres. All these entries are incorporated into the
+built-in objects.
+
+```{r echo=FALSE}
+knitr::kable(read.csv("anchors_cmar.csv"), caption="Contents of the `anchors_cmar.csv` file.")
+knitr::kable(read.csv("floats_cmar.csv"), caption="Contents of `floats_cmar.csv` file.")
+knitr::kable(read.csv("instruments_cmar.csv"), caption="Contents of `instruments_cmar.csv` file.")
+knitr::kable(read.csv("wires_cmar.csv"), caption="Contents of `wires_cmar.csv` file. Note that long names are shown in two lines, and that the headers for `buoyancyPerMeter` and `areaPerMeter` are mashed together in the PDF version of this `README.Rmd` file.")
+```
+
