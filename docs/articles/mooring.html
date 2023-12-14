@@ -155,21 +155,22 @@ possible wire types (which include non-metallic wires) is:</p>
 <span><span class="co">## [21] "3/4in Polyprop"                        </span></span>
 <span><span class="co">## [22] "3/8in AmSteel-Blue"                    </span></span>
 <span><span class="co">## [23] "3/8in Kevlar"                          </span></span>
-<span><span class="co">## [24] "3/8in wire rope"                       </span></span>
-<span><span class="co">## [25] "3/8in wire/jack"                       </span></span>
-<span><span class="co">## [26] "5/16in Kevlar"                         </span></span>
-<span><span class="co">## [27] "5/16in wire rope"                      </span></span>
-<span><span class="co">## [28] "5/16in wire/jack"                      </span></span>
-<span><span class="co">## [29] "5/8in AmSteel-Blue"                    </span></span>
-<span><span class="co">## [30] "5/8in Kevlar"                          </span></span>
-<span><span class="co">## [31] "5/8in Nylon"                           </span></span>
-<span><span class="co">## [32] "7/16in Dacron"                         </span></span>
-<span><span class="co">## [33] "7/16in Kevlar"                         </span></span>
-<span><span class="co">## [34] "7/16in VLS"                            </span></span>
-<span><span class="co">## [35] "9/16in Dacron"                         </span></span>
-<span><span class="co">## [36] "9/16in Kevlar"                         </span></span>
-<span><span class="co">## [37] "BPS Cable"                             </span></span>
-<span><span class="co">## [38] "BPS Power/Coms"</span></span></code></pre>
+<span><span class="co">## [24] "3/8in leaded polypropylene"            </span></span>
+<span><span class="co">## [25] "3/8in wire rope"                       </span></span>
+<span><span class="co">## [26] "3/8in wire/jack"                       </span></span>
+<span><span class="co">## [27] "5/16in Kevlar"                         </span></span>
+<span><span class="co">## [28] "5/16in wire rope"                      </span></span>
+<span><span class="co">## [29] "5/16in wire/jack"                      </span></span>
+<span><span class="co">## [30] "5/8in AmSteel-Blue"                    </span></span>
+<span><span class="co">## [31] "5/8in Kevlar"                          </span></span>
+<span><span class="co">## [32] "5/8in Nylon"                           </span></span>
+<span><span class="co">## [33] "7/16in Dacron"                         </span></span>
+<span><span class="co">## [34] "7/16in Kevlar"                         </span></span>
+<span><span class="co">## [35] "7/16in VLS"                            </span></span>
+<span><span class="co">## [36] "9/16in Dacron"                         </span></span>
+<span><span class="co">## [37] "9/16in Kevlar"                         </span></span>
+<span><span class="co">## [38] "BPS Cable"                             </span></span>
+<span><span class="co">## [39] "BPS Power/Coms"</span></span></code></pre>
 <p>More details on the functions are provided with
 e.g. <code><a href="../reference/wire.html">?wire</a></code>. Details of the objects are provided in the
 vignette called <em>Default Values for Mooring Elements</em>. Each
@@ -385,11 +386,11 @@ in 2m/s current.</strong></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">b</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">[</span><span class="va">o</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##              float buoyancy</span></span>
-<span><span class="co">## 46 Top of Tow Rope     0.01</span></span>
-<span><span class="co">## 16   Billings 12in    10.00</span></span>
-<span><span class="co">## 23 FloatTech CF-12    11.00</span></span>
-<span><span class="co">## 1        16in Viny    19.00</span></span></code></pre>
+<pre><code><span><span class="co">##                      float buoyancy</span></span>
+<span><span class="co">## 49         Top of Tow Rope    0.010</span></span>
+<span><span class="co">## 14  8in centre hole tfloat    2.752</span></span>
+<span><span class="co">## 1  11in centre hole tfloat    7.770</span></span>
+<span><span class="co">## 19           Billings 12in   10.000</span></span></code></pre>
 <p>(Note that not all entries in this table are subsurface floats!)</p>
 </div>
 <div class="section level3">
