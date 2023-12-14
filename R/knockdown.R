@@ -57,7 +57,7 @@ knockdown <- function(m, u = 1, debug = 0L) {
     if (n < 3L) {
         stop("mooring must have 2 or more elements")
     }
-    if (!isMooring(m)) {
+    if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
     if (!inherits(m[[length(m)]], "anchor")) {

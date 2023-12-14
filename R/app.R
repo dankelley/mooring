@@ -17,9 +17,9 @@ app <- function() {
         stop("must install.packages(\"shiny\") for app() to work")
     }
     floatChoices <- float("?")
-    floatBuoyancy <- unlist(lapply(floatChoices, function(f) float(f)$buoyancy))
+    floatBuoyancy <- lapply(floatChoices, \(f) float(f)$buoyancy) |> unlist()
     wireChoices <- wire("?")
-    wireBuoyancy <- unlist(lapply(wireChoices, function(w) wire(w, length = 1)$buoyancy))
+    wireBuoyancy <- lapply(wireChoices, \(w) wire(w, length = 1)$buoyancy) |> unlist()
     dewey1999 <- paste(
         "Dewey, Richard K.",
         "\"Mooring Design & Dynamics-a Matlab",

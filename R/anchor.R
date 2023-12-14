@@ -67,3 +67,22 @@ anchor <- function(model = "3 trainwheels", buoyancy = NULL, height = NULL, CD =
     class(rval) <- c("mooring", "anchor")
     rval
 } # anchor()
+
+#' Find Anchor Weight of a Mooring
+#'
+#' @param m an object of class `"mooring"`, created with [mooring()].
+#'
+#' @return `anchorWeight` returns the weight (i.e. the negative of the
+#' buoyancy) of the anchor in the mooring.
+#'
+#' @export
+#'
+#' @author Dan Kelley
+anchorWeight <- function(m)
+{
+    if (!is.mooring(m)) {
+        stop("m must be a mooring object, created with mooring()")
+    }
+    # FIXME: check that it has more than 0 objects, and that one is an anchor
+    -m[[length(m)]]$buoyancy
+}

@@ -1,7 +1,9 @@
 # mooring 0.1.1
 
 * Add `clamped()`.
-* Add `isWire()`.
+* Add `is.wire()` and similar functions.
+* Add 8x8x16 cinder/concrete block anchors.
+* Add CMAR components.
 * Change `mooring()` documentation by improving plots.
 * Change `plot.mooring(..., which="shape")` to draw the anchor.
 

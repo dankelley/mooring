@@ -65,22 +65,8 @@ NULL
 # 2. setup        #
 ###################
 
-g <- 9.81
+#g <- 9.81
 
-#' Detect whether an object is a mooring
-#'
-#' An object is a mooring if it is a list that has more than one element, and
-#' if each element inherits from the `"mooring"` class.  For example, the
-#' output of [mooring()] is a mooring, but the output of [anchor()] is not.
-#' This function is mainly designed for use within the package that that, e.g.
-#' [knockdown()] will produce an error if its first argument is not a mooring.
-#'
-#' @param m an object to be tested
-#'
-#' @export
-isMooring <- function(m = NULL) {
-    is.list(m) && length(m) > 1 && all(sapply(m, function(mi) inherits(mi, "mooring")))
-}
 
 #' Create a mooring
 #'
@@ -122,7 +108,7 @@ isMooring <- function(m = NULL) {
 #' # Show stiffened mooring in red
 #' lines(x(m2k), depth(m2k), col = 2, lwd = 2)
 #' points(x(m2k, skipWire = TRUE), depth(m2k, skipWire = TRUE), col = 2, pch = 20)
-#' type <- sapply(m2k, \(i) class(i)[2])[!isWire(m2k)]
+#' type <- sapply(m2k, \(i) class(i)[2])[!is.wire(m2k)]
 #' typeAbbrev <- unname(sapply(type, \(t)
 #' switch(t,
 #'     float = "F",
@@ -138,7 +124,7 @@ mooring <- function(...) {
     dots <- list(...)
     n <- length(dots)
     if (n < 3L) {
-        stop("need 2 or more arguments")
+        stop("need 3 or more arguments")
     }
     if (!inherits(dots[[1]], "anchor")) {
         stop("first argument must be created with anchor()")

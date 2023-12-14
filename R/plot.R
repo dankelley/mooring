@@ -69,7 +69,7 @@ plot.mooring <- function(
     type = "l",
     ...) {
     m <- x # we only use x above to obey the R rules on generics.
-    if (!isMooring(m)) {
+    if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
     # Set up debugging
@@ -90,6 +90,7 @@ plot.mooring <- function(
         detailsControl <- list(cex = 0.8, col = "darkblue")
     }
     colWater <- "#ccdcff"
+    colDragWarning <- "2"
     colBottom <- "#e6bb98"
     colStagnant <- "darkgray"
     nm <- length(m)
@@ -118,6 +119,12 @@ plot.mooring <- function(
         plot(velocityProfile, d, ylim = usrShape[3:4], yaxs = "i", ylab = "", xlab = "", type = type, axes = FALSE)
         box()
         grid()
+        if (fancy) {
+            usr <- par("usr")
+            rect(usr[1], usr[3], usr[2], waterDepth, col = colBottom, border = NA)
+            rect(usr[1], waterDepth, usr[2], 0, col = colWater, border = NA)
+            grid(col = "white")
+        }
         if (showInterfaces) {
             abline(h = 0, col = colWater, lwd = 2)
             abline(h = waterDepth, col = colBottom, lwd = 2)
@@ -148,12 +155,21 @@ plot.mooring <- function(
     ylim <- c(waterDepth, 0)
     # Determine depth scale by doing a sort of dry run of a shape plot
     # . message("xlim given? ", !is.null(xlim))
-    if (is.null(xlim)) xlim <- extendrange(c(x, 0))
-    plot.window(0, 0, xlim = xlim, ylim = ylim, asp = if (which == "shape") 1, log = "")
+    if (is.null(xlim)) {
+        xlim <- if (which == "shape") {
+            extendrange(c(x, 0))
+        } else if (which == "tension") {
+            extendrange(c(x, anchorWeight(m)))
+        } else {
+            extendrange(x)
+        }
+    }
+    plot.window(xlim, ylim, xlim = xlim, ylim = ylim, asp = if (which == "shape") 1, log = "")
     usrShape <- par("usr")
     # message(oce::vectorShow(xlim))
     # message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
-    plot(x, depth,
+    look <- if (which == "tension") seq(2L, length(m) - 1L) else seq_along(m)
+    plot(x[look], depth[look],
         xlim = xlim, ylim = usrShape[3:4], yaxs = "i", asp = if (which == "shape") 1,
         type = type, xlab = "", ylab = "", axes = FALSE
     )
@@ -174,7 +190,7 @@ plot.mooring <- function(
         usr <- par("usr")
         rect(usr[1], waterDepth, usr[2], 0, col = colWater, border = NA)
         grid(col = "white")
-        abline(h = 0, col = colWater)
+        # abline(h = 0, col = colWater, lwd = 4, lty = 2)
     } else {
         grid()
         if (showInterfaces) {
@@ -191,16 +207,16 @@ plot.mooring <- function(
     }
     # Redraw to cover grid
     if (type == "l") {
-        lines(x, depth, lwd = 1.4 * par("lwd"))
+        lines(x[look], depth[look], lwd = 1.4 * par("lwd"), col = "magenta")
     } else {
-        points(x, depth, lwd = 1.4 * par("lwd"))
+        points(x[look], depth[look], lwd = 1.4 * par("lwd"))
     }
     # Draw conditions for u=0 case
     if (fancy) {
         rect(usr[1], usr[3], usr[2], waterDepth, col = colBottom, border = NA)
     }
     # Redraw in case line runs along bottom
-    lines(x, depth, lwd = 1.4 * par("lwd"))
+    lines(x[look], depth[look], lwd = 1.4 * par("lwd"))
     if (which == "shape") {
         # mooringLength <- sum(sapply(m, function(x) x$height))
         # lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=1.4*par("lwd"))
@@ -209,10 +225,14 @@ plot.mooring <- function(
         xx <- x(m, stagnant = TRUE)
         yy <- depth(m, stagnant = TRUE)
         lines(xx, yy, col = colStagnant)
-        notWire <- !isWire(m)
+        notWire <- !is.wire(m)
         points(xx[notWire], yy[notWire], pch = 20, col = colStagnant)
     } else if (which == "tension") {
-        lines(tension(m, stagnant = TRUE), depth, col = colStagnant, lwd = 1.4 * par("lwd"))
+        look <- seq(2L, length(m) - 1L)
+        lines(tension(m, stagnant = TRUE)[look], depth[look],
+            col = colStagnant, lwd = 1.4 * par("lwd")
+        )
+        abline(v = anchorWeight(m), col = colDragWarning, lwd = 3, lty = 2)
     }
     cex <- if (showDetails) detailsControl$cex else 1
     pch <- if (showDetails) detailsControl$pch else 20
@@ -221,7 +241,7 @@ plot.mooring <- function(
         type <- class(m[[i]])[2]
         xi <- x[i]
         zi <- m[[i]]$z
-        if (type == "anchor") {
+        if (type == "anchor" && which != "tension") {
             if (debug) {
                 cat("i=", i, " (anchor at xi=", xi, ", zi=", zi, ")\n")
             }
@@ -229,7 +249,7 @@ plot.mooring <- function(
             if (showLabels && !showDetails) {
                 text(xi, -zi, "A", pos = 2)
             }
-        } else if (type == "float") {
+        } else if (type == "float" && which != "tension") {
             if (debug) {
                 cat("i=", i, " (float at xi=", xi, ", zi=", zi, ")\n")
             }
@@ -265,7 +285,8 @@ plot.mooring <- function(
     }
     if (showDetails) {
         labels <- NULL
-        depths <- depthsStagnant <- NULL
+        # depths <- depthsStagnant <- NULL
+        depths <- NULL
         xs <- xsStagnant <- NULL
         #> message(oce::vectorShow(which))
         for (i in seq_along(m)) {
@@ -289,7 +310,7 @@ plot.mooring <- function(
         #> message(oce::vectorShow(X0))
         X <- rep(X0 + xspace, N)
         Y <- seq(usr[4] - yspace, usr[3] + yspace, length.out = N)
-        widths <- strwidth(labels, cex = cex)
+        # widths <- strwidth(labels, cex = cex)
         text(X, Y, labels, pos = 4, cex = detailsControl$cex, col = detailsControl$col)
         # points(X, Y, col=2)
         # points(xs, depths, col="magenta", pch=20)

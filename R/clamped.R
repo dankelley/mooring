@@ -1,8 +1,8 @@
 # vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
-#' Clamp an Instrument on the Wire
+#' Clamp an Instrument on a Wire
 #'
-#' This changes the `height` field of an [instrument] object to 0,
+#' This changes the `height` field of an `instrument` object to 0,
 #' so that it does not contribute to the overall length of the mooring.
 #' Using this in deep water is unlikely to make much difference,
 #' but it is handy for shallow-water cases, if the device was
@@ -11,9 +11,10 @@
 #' The example illustrates this, for mooring in very shallow water.
 #'
 #' @param instrument a `mooring` object of subtype `instrument`,
-#' typically as created with [instrument()].
+#' as created with [instrument()].
 #'
-#' @return `clamped` returns an object of the `"mooring"` class and `"instrument"` subclass.
+#' @return `clamped` returns a copy of its input, but with
+#' its `height` value set to 0.
 #'
 #' @family functions that create mooring objects
 #'

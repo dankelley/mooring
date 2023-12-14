@@ -2,19 +2,20 @@
 % Please edit documentation in R/clamped.R
 \name{clamped}
 \alias{clamped}
-\title{Clamp an Instrument on the Wire}
+\title{Clamp an Instrument on a Wire}
 \usage{
 clamped(instrument)
 }
 \arguments{
 \item{instrument}{a \code{mooring} object of subtype \code{instrument},
-typically as created with \code{\link[=instrument]{instrument()}}.}
+as created with \code{\link[=instrument]{instrument()}}.}
 }
 \value{
-\code{clamped} returns an object of the \code{"mooring"} class and \code{"instrument"} subclass.
+\code{clamped} returns a copy of its input, but with
+its \code{height} value set to 0.
 }
 \description{
-This changes the \code{height} field of an \link{instrument} object to 0,
+This changes the \code{height} field of an \code{instrument} object to 0,
 so that it does not contribute to the overall length of the mooring.
 Using this in deep water is unlikely to make much difference,
 but it is handy for shallow-water cases, if the device was

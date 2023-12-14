@@ -173,56 +173,59 @@ objects, use e.g.</p><div class="sourceCode"><pre><code><span></span>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># List known float types</span></span></span>
 <span class="r-in"><span><span class="fu">float</span><span class="op">(</span><span class="st">"?"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "16in Viny"                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2] "17in glass"                          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "28in ORE"                            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "3 pack Viny 12b-3 floats"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "30in float"                          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] "37in ORE"                            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "41in ORE"                            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "48in ORE"                            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "54cm Alum CAP3"                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "54x30inClamShell"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "61in ORE"                            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [12] "ADCP / 2x c3 subs assembly"          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "ADCP FloatTech"                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [14] "BENTHOS 17in"                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "BPS Float"                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "BUB 2x17in glass"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "Billings 12in"                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [18] "CDMS 1.2m sphere"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "CDMS 2m sphere"                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20] "Double 16in Viny"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "Double 17in"                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "FloatTech CF-12"                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [23] "Geodyn 8ft Toroid"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [24] "HMB 20"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "HMB 25"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [26] "HMB 31"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [27] "HMB 36"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "HMB 40"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "HMB 44"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [30] "HMB 49"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "HMB 51"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [32] "HMB 56"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "HMB 62"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "IPS / 2x b3 subs assembly"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [35] "Kiel SFS40in"                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [36] "Top of Tow Rope"                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "Torp. flt, 3-28"                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [38] "Tripple FT CF-12"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [39] "Trpl 12in glass"                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "Trpl 16in Viny"                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "a2 package ADCP and 2 Viny balls"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [42] "new glass streamlined float c2"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "stablemoor 1000lb 3500 msw with ADCP"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [44] "stablemoor 1015lb 1500 msw with ADCP"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "stablemoor 533lb 3500 msw with ADCP" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "stablemoor 580lb 1500 msw with ADCP" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [47] "streamlined BUB 2x 17in glass"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [48] "streamlined BUB 3 Viny balls"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "syn. float with ADCP bracket"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [50] "syn. float, bracket and 109lb ADCP"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "11in centre hole tfloat"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2] "14in centre hole tfloat"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "16in Viny"                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "17in glass"                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "28in ORE"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] "3 pack Viny 12b-3 floats"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "30in float"                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "37in ORE"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "41in ORE"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "48in ORE"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "54cm Alum CAP3"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [12] "54x30inClamShell"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "61in ORE"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [14] "8in centre hole tfloat"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "ADCP / 2x c3 subs assembly"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "ADCP FloatTech"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "BENTHOS 17in"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [18] "BPS Float"                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "BUB 2x17in glass"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20] "Billings 12in"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "CDMS 1.2m sphere"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "CDMS 2m sphere"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [23] "Double 16in Viny"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [24] "Double 17in"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "FloatTech CF-12"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] "Geodyn 8ft Toroid"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [27] "HMB 20"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "HMB 25"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "HMB 31"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [30] "HMB 36"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "HMB 40"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [32] "HMB 44"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "HMB 49"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "HMB 51"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [35] "HMB 56"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [36] "HMB 62"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "IPS / 2x b3 subs assembly"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [38] "Kiel SFS40in"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39] "Top of Tow Rope"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "Torp. flt, 3-28"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "Tripple FT CF-12"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [42] "Trpl 12in glass"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "Trpl 16in Viny"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [44] "a2 package ADCP and 2 Viny balls"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "new glass streamlined float c2"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "stablemoor 1000lb 3500 msw with ADCP"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [47] "stablemoor 1015lb 1500 msw with ADCP"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [48] "stablemoor 533lb 3500 msw with ADCP" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "stablemoor 580lb 1500 msw with ADCP" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [50] "streamlined BUB 2x 17in glass"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [51] "streamlined BUB 3 Viny balls"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [52] "syn. float with ADCP bracket"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [53] "syn. float, bracket and 109lb ADCP"  </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

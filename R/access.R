@@ -26,7 +26,7 @@
 #' @author Dan Kelley
 `[.mooring` <- function(m, i) {
     known <- c("area", "buoyancy", "CD", "height")
-    if (isMooring(m)) {
+    if (is.mooring(m)) {
         if (is.numeric(i)) {
             # message("m[i] with i=",paste(i, collapse=" "))
             i <- subset(i, 0L < i & i <= length(m))

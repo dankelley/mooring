@@ -21,7 +21,7 @@
 #' @author Dan Kelley
 summary.mooring <- function(object, ...) {
     m <- object # use a more useful name
-    if (!isMooring(m)) {
+    if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
     n <- length(m)

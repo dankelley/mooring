@@ -38,7 +38,7 @@
 #' @author Dan Kelley
 buoyancy <- function(m, debug = 0L) {
     mooringDebug(debug, "buoyancy() {\n  class(m): ", paste(class(m), collapse = " "), "\n")
-    rval <- if (isMooring(m)) {
+    rval <- if (is.mooring(m)) {
         mooringDebug(
             debug, "  object is a mooring with",
             length(m), "elements, so will analyse them individually\n"
