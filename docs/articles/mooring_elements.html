@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Default Values for Mooring Elements</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2023-12-14</h4>
+            <h4 data-toc-skip class="date">2023-12-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring_elements.Rmd" class="external-link"><code>vignettes/mooring_elements.Rmd</code></a></small>
       <div class="hidden name"><code>mooring_elements.Rmd</code></div>
@@ -105,32 +105,40 @@
 
     
     
-<p>The data stored in <code>data(mooringElements)</code> were extracted
-from Dewey’s Matlab matlab file named <code>mdcodes.mat</code>, which
-were apparently extracted from more primary sources. Neither the
-provenance and accuracy of individual items was checked before inclusion
-here.</p>
-<p>Dewey reports dimensions in centimetres, but these are converted to
-metres here.</p>
-<p>The column names are not the same as Dewey uses. The meaning of the
-final column is unknown, so it is just called <code>code</code> here,
-and its values are not are used in this package.</p>
+<p>The data stored in <code>data(mooringElements)</code>, key features
+of which are presented below, are based on the following sources. Each
+entry has a column named <code>name</code> that indicates how the item
+is designated in calls to functions within the package, and another
+column named <code>OriginalName</code> that indicates the name used in
+the original source.</p>
+<ol style="list-style-type: decimal">
+<li>A Matlab file named <code>mdcodes.mat</code>, contained within
+Dewey’s <a href="http://web.uvic.ca/~rdewey/mooring/moordyn.php" class="external-link">Matlab-based
+mooring package</a> (which was the inspiration for the present package).
+These entries have “Dewey” in the source column in the tables. The
+details of data provenance were not pursued, in creating the present R
+package.</li>
+<li>Information obtained from <a href="https://www.bio.gc.ca/index-en.php" class="external-link">Bedford Institute of
+Oceanography</a> (“BIO” in the source column), based in Dartmouth, Nova
+Scotia, Canada.</li>
+<li>Information obtained from the <a href="https://cmar.ca" class="external-link">Centre for
+Marine Applied Research</a> (“CMAR” in the tables), based in Dartmouth,
+Nova Scotia, Canada.</li>
+</ol>
 <div class="section level2">
 <h2 id="anchor-characteristics">Anchor characteristics<a class="anchor" aria-label="anchor" href="#anchor-characteristics"></a>
 </h2>
 <p>The <code>buoyancy</code> values are in kg and the
-<code>height</code> values are in m. Note that the values shown below
-have no affect on the computation of mooring knockdown.</p>
-<table style="width:100%;" class="table">
+<code>height</code> values are in m.</p>
+<table class="table">
 <colgroup>
-<col width="26%">
+<col width="28%">
 <col width="12%">
+<col width="10%">
+<col width="10%">
+<col width="5%">
 <col width="9%">
-<col width="9%">
-<col width="4%">
-<col width="6%">
-<col width="8%">
-<col width="21%">
+<col width="23%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -138,7 +146,6 @@ have no affect on the computation of mooring knockdown.</p>
 <th align="right">height</th>
 <th align="right">area</th>
 <th align="right">CD</th>
-<th align="right">code</th>
 <th align="left">source</th>
 <th align="left">originalName</th>
 </tr></thead>
@@ -149,7 +156,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.50000</td>
 <td align="right">0.40000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1 Concrete Block</td>
 </tr>
@@ -159,7 +165,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.15000</td>
 <td align="right">0.07500</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1 Large St/C Tire</td>
 </tr>
@@ -169,7 +174,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.15000</td>
 <td align="right">0.15000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1 Railway Wheel</td>
 </tr>
@@ -179,7 +183,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.06350</td>
 <td align="right">0.01854</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -189,7 +192,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.15000</td>
 <td align="right">0.07500</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1 Tire-St+Con</td>
 </tr>
@@ -199,7 +201,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.20066</td>
 <td align="right">0.18542</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -209,7 +210,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.70000</td>
 <td align="right">0.70000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">2 Concrete Blocks</td>
 </tr>
@@ -219,7 +219,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.35000</td>
 <td align="right">0.35000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">2 Railway Wheels</td>
 </tr>
@@ -229,7 +228,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.07874</td>
 <td align="right">0.03708</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -239,7 +237,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">1.00000</td>
 <td align="right">1.00000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3 Concrete Blocks</td>
 </tr>
@@ -249,7 +246,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.55000</td>
 <td align="right">0.55000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3 Railway Wheels</td>
 </tr>
@@ -259,7 +255,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.09398</td>
 <td align="right">0.05563</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -269,7 +264,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.55000</td>
 <td align="right">0.00000</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -279,7 +273,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.70000</td>
 <td align="right">0.70000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">4 Railway Wheels</td>
 </tr>
@@ -289,7 +282,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.10922</td>
 <td align="right">0.07417</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -299,7 +291,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.12446</td>
 <td align="right">0.09271</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -309,7 +300,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.13970</td>
 <td align="right">0.11125</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -319,7 +309,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.15494</td>
 <td align="right">0.12979</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -329,7 +318,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.17018</td>
 <td align="right">0.14834</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -339,7 +327,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.20300</td>
 <td align="right">0.08260</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -349,7 +336,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.20300</td>
 <td align="right">0.08260</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -359,7 +345,6 @@ have no affect on the computation of mooring knockdown.</p>
 <td align="right">0.18542</td>
 <td align="right">0.16688</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">-</td>
 </tr>
@@ -371,25 +356,21 @@ have no affect on the computation of mooring knockdown.</p>
 </h2>
 <p>The <code>buoyancyPerMeter</code> values are in kg/m, while
 <code>areaPerMeter</code> is in m, and <code>CD</code> is unitless. For
-the Dewey data, area is computed from stated chain width. The
-<code>code</code> values are listed for data from Dewey only, and they
-are not used in this package.</p>
+the Dewey data, area is computed from stated chain width.</p>
 <table class="table">
 <colgroup>
-<col width="25%">
-<col width="18%">
+<col width="26%">
+<col width="19%">
 <col width="14%">
 <col width="4%">
-<col width="5%">
-<col width="7%">
-<col width="25%">
+<col width="8%">
+<col width="26%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
 <th align="right">buoyancyPerMeter</th>
 <th align="right">areaPerMeter</th>
 <th align="right">CD</th>
-<th align="right">code</th>
 <th align="left">source</th>
 <th align="left">originalName</th>
 </tr></thead>
@@ -399,7 +380,6 @@ are not used in this package.</p>
 <td align="right">-13.000</td>
 <td align="right">0.0400</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1 chain SL</td>
 </tr>
@@ -408,7 +388,6 @@ are not used in this package.</p>
 <td align="right">-3.070</td>
 <td align="right">0.0250</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2” buoy chain</td>
 </tr>
@@ -417,7 +396,6 @@ are not used in this package.</p>
 <td align="right">-3.100</td>
 <td align="right">0.0300</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 chain LL</td>
 </tr>
@@ -426,7 +404,6 @@ are not used in this package.</p>
 <td align="right">-4.120</td>
 <td align="right">0.0300</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 chain SL</td>
 </tr>
@@ -435,7 +412,6 @@ are not used in this package.</p>
 <td align="right">-1.690</td>
 <td align="right">0.0150</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/4 chain SL</td>
 </tr>
@@ -444,7 +420,6 @@ are not used in this package.</p>
 <td align="right">-12.250</td>
 <td align="right">0.0500</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1” buoy chain</td>
 </tr>
@@ -453,7 +428,6 @@ are not used in this package.</p>
 <td align="right">-6.870</td>
 <td align="right">0.0400</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3/4” buoy chain</td>
 </tr>
@@ -462,7 +436,6 @@ are not used in this package.</p>
 <td align="right">-1.677</td>
 <td align="right">0.0200</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3/8” buoy chain</td>
 </tr>
@@ -471,7 +444,6 @@ are not used in this package.</p>
 <td align="right">-2.330</td>
 <td align="right">0.0220</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3/8 chain SL</td>
 </tr>
@@ -480,7 +452,6 @@ are not used in this package.</p>
 <td align="right">-4.730</td>
 <td align="right">0.0350</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">5/8” buoy chain</td>
 </tr>
@@ -489,7 +460,6 @@ are not used in this package.</p>
 <td align="right">-4.323</td>
 <td align="right">0.0572</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">5/8” GALVANIZED CHAIN</td>
 </tr>
@@ -505,19 +475,17 @@ all data sources list <code>height</code> and <code>width</code> (or
 comparable values) and so zeros are used in such instances. Since the
 only use of these values in the package are to compute area, for a drag
 calculation, and since the drag on floats and wires is likely to exceed
-that on small elements, this zeroing-out may not pose a large problem.
-The <code>code</code> values are listed for data from Dewey only, and
-they are not used in this package.</p>
+that on small elements, this zeroing-out may not pose a large
+problem.</p>
 <table class="table">
 <colgroup>
-<col width="28%">
+<col width="29%">
 <col width="10%">
-<col width="7%">
 <col width="8%">
+<col width="9%">
 <col width="4%">
-<col width="5%">
-<col width="7%">
-<col width="26%">
+<col width="8%">
+<col width="28%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -525,7 +493,6 @@ they are not used in this package.</p>
 <th align="right">height</th>
 <th align="right">area</th>
 <th align="right">CD</th>
-<th align="right">code</th>
 <th align="left">source</th>
 <th align="left">originalName</th>
 </tr></thead>
@@ -536,7 +503,6 @@ they are not used in this package.</p>
 <td align="right">0.100</td>
 <td align="right">0.00250</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 galv link</td>
 </tr>
@@ -546,7 +512,6 @@ they are not used in this package.</p>
 <td align="right">0.120</td>
 <td align="right">0.00300</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 shac+3/8shac</td>
 </tr>
@@ -556,7 +521,6 @@ they are not used in this package.</p>
 <td align="right">0.080</td>
 <td align="right">0.00200</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 shackle</td>
 </tr>
@@ -566,7 +530,6 @@ they are not used in this package.</p>
 <td align="right">0.100</td>
 <td align="right">0.00250</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 SS link</td>
 </tr>
@@ -576,7 +539,6 @@ they are not used in this package.</p>
 <td align="right">0.140</td>
 <td align="right">0.00700</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 swivel</td>
 </tr>
@@ -586,7 +548,6 @@ they are not used in this package.</p>
 <td align="right">0.050</td>
 <td align="right">0.00250</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">1/4” NICOPRESS SLEEVE</td>
 </tr>
@@ -596,7 +557,6 @@ they are not used in this package.</p>
 <td align="right">0.080</td>
 <td align="right">0.00240</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1” shackle</td>
 </tr>
@@ -606,7 +566,6 @@ they are not used in this package.</p>
 <td align="right">0.060</td>
 <td align="right">0.00150</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3/4” shackle</td>
 </tr>
@@ -616,7 +575,6 @@ they are not used in this package.</p>
 <td align="right">0.140</td>
 <td align="right">0.00560</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3/4 swivel</td>
 </tr>
@@ -626,7 +584,6 @@ they are not used in this package.</p>
 <td align="right">0.040</td>
 <td align="right">0.00100</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3/8 shackle</td>
 </tr>
@@ -636,7 +593,6 @@ they are not used in this package.</p>
 <td align="right">0.105</td>
 <td align="right">0.00420</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3T SeineSwivel</td>
 </tr>
@@ -646,7 +602,6 @@ they are not used in this package.</p>
 <td align="right">0.050</td>
 <td align="right">0.00250</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">5/16” HEAVY SS THIMBLES</td>
 </tr>
@@ -656,7 +611,6 @@ they are not used in this package.</p>
 <td align="right">0.065</td>
 <td align="right">0.00325</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">5/8 shackle</td>
 </tr>
@@ -666,7 +620,6 @@ they are not used in this package.</p>
 <td align="right">0.050</td>
 <td align="right">0.00250</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">7/16” SHACKLE</td>
 </tr>
@@ -676,7 +629,6 @@ they are not used in this package.</p>
 <td align="right">1.000</td>
 <td align="right">0.02540</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">BALLAST WEIGHT</td>
 </tr>
@@ -686,7 +638,6 @@ they are not used in this package.</p>
 <td align="right">0.400</td>
 <td align="right">0.00800</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">shac-3link-shac</td>
 </tr>
@@ -696,7 +647,6 @@ they are not used in this package.</p>
 <td align="right">0.200</td>
 <td align="right">0.00400</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">shac-Pring-shac</td>
 </tr>
@@ -706,7 +656,6 @@ they are not used in this package.</p>
 <td align="right">0.300</td>
 <td align="right">0.00750</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">shac-ring-shac</td>
 </tr>
@@ -716,7 +665,6 @@ they are not used in this package.</p>
 <td align="right">0.050</td>
 <td align="right">0.00250</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SWIVEL</td>
 </tr>
@@ -728,19 +676,16 @@ they are not used in this package.</p>
 </h2>
 <p>The <code>buoyancy</code> values are in kg, while <code>height</code>
 and <code>diameter</code> are in m, and <code>CD</code> is unitless. For
-the Dewey data, area is computed from stated float diameter. The
-<code>code</code> values are listed for data from Dewey only, and they
-are not used in this package.</p>
+the Dewey data, area is computed from stated float diameter.</p>
 <table class="table">
 <colgroup>
-<col width="31%">
+<col width="32%">
 <col width="7%">
-<col width="5%">
+<col width="6%">
 <col width="8%">
 <col width="4%">
-<col width="4%">
-<col width="5%">
-<col width="32%">
+<col width="6%">
+<col width="33%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -748,7 +693,6 @@ are not used in this package.</p>
 <th align="right">height</th>
 <th align="right">area</th>
 <th align="right">CD</th>
-<th align="right">code</th>
 <th align="left">source</th>
 <th align="left">originalName</th>
 </tr></thead>
@@ -759,7 +703,6 @@ are not used in this package.</p>
 <td align="right">0.2790</td>
 <td align="right">0.0613120</td>
 <td align="right">1.30</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">11in centre hole tfloat</td>
 </tr>
@@ -769,7 +712,6 @@ are not used in this package.</p>
 <td align="right">0.3560</td>
 <td align="right">0.0993150</td>
 <td align="right">1.30</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">14in centre hole tfloat</td>
 </tr>
@@ -779,7 +721,6 @@ are not used in this package.</p>
 <td align="right">0.4000</td>
 <td align="right">0.1256637</td>
 <td align="right">0.60</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">16in Viny</td>
 </tr>
@@ -789,7 +730,6 @@ are not used in this package.</p>
 <td align="right">0.5700</td>
 <td align="right">0.2551759</td>
 <td align="right">0.95</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">17 in glass</td>
 </tr>
@@ -799,7 +739,6 @@ are not used in this package.</p>
 <td align="right">0.7100</td>
 <td align="right">0.3959192</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">28in ORE</td>
 </tr>
@@ -809,7 +748,6 @@ are not used in this package.</p>
 <td align="right">1.0000</td>
 <td align="right">0.2200000</td>
 <td align="right">1.10</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">3 pack VINY 12B-3 floats</td>
 </tr>
@@ -819,7 +757,6 @@ are not used in this package.</p>
 <td align="right">0.7600</td>
 <td align="right">0.4536460</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">30in float</td>
 </tr>
@@ -829,7 +766,6 @@ are not used in this package.</p>
 <td align="right">0.9400</td>
 <td align="right">0.6939778</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">37in ORE</td>
 </tr>
@@ -839,7 +775,6 @@ are not used in this package.</p>
 <td align="right">1.0400</td>
 <td align="right">0.8494867</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">41in ORE</td>
 </tr>
@@ -849,7 +784,6 @@ are not used in this package.</p>
 <td align="right">1.2340</td>
 <td align="right">1.1959698</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">48in ORE</td>
 </tr>
@@ -859,7 +793,6 @@ are not used in this package.</p>
 <td align="right">0.5500</td>
 <td align="right">0.2290221</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">54cm Alum CAP3</td>
 </tr>
@@ -869,7 +802,6 @@ are not used in this package.</p>
 <td align="right">1.4000</td>
 <td align="right">0.4417865</td>
 <td align="right">0.15</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">54x30inClamShell</td>
 </tr>
@@ -879,7 +811,6 @@ are not used in this package.</p>
 <td align="right">1.6500</td>
 <td align="right">2.1382465</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">61in ORE</td>
 </tr>
@@ -889,7 +820,6 @@ are not used in this package.</p>
 <td align="right">0.2030</td>
 <td align="right">0.0324290</td>
 <td align="right">1.30</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">8in centre hole tfloat</td>
 </tr>
@@ -899,7 +829,6 @@ are not used in this package.</p>
 <td align="right">0.5630</td>
 <td align="right">0.1240000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">A2 PACKAGE ADCP AND 2 VINY BALLS</td>
 </tr>
@@ -909,7 +838,6 @@ are not used in this package.</p>
 <td align="right">1.0000</td>
 <td align="right">0.6500000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">ADCP / 2x C3 SUBS ASSEMBLY</td>
 </tr>
@@ -919,7 +847,6 @@ are not used in this package.</p>
 <td align="right">1.4200</td>
 <td align="right">1.5836769</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">ADCP FloatTech</td>
 </tr>
@@ -929,7 +856,6 @@ are not used in this package.</p>
 <td align="right">0.5100</td>
 <td align="right">0.2042821</td>
 <td align="right">0.95</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">BENTHOS 17in</td>
 </tr>
@@ -939,7 +865,6 @@ are not used in this package.</p>
 <td align="right">0.3430</td>
 <td align="right">0.0924013</td>
 <td align="right">0.95</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Billings-12in</td>
 </tr>
@@ -949,7 +874,6 @@ are not used in this package.</p>
 <td align="right">1.5000</td>
 <td align="right">0.0000000</td>
 <td align="right">1.60</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">BPS Float</td>
 </tr>
@@ -959,7 +883,6 @@ are not used in this package.</p>
 <td align="right">1.1870</td>
 <td align="right">0.5530000</td>
 <td align="right">1.10</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">BUB 2x17” GLASS</td>
 </tr>
@@ -969,7 +892,6 @@ are not used in this package.</p>
 <td align="right">1.2000</td>
 <td align="right">1.1309734</td>
 <td align="right">0.50</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">CDMS 1.2m sphere</td>
 </tr>
@@ -979,7 +901,6 @@ are not used in this package.</p>
 <td align="right">2.0000</td>
 <td align="right">3.1415927</td>
 <td align="right">0.50</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">CDMS 2m sphere</td>
 </tr>
@@ -989,7 +910,6 @@ are not used in this package.</p>
 <td align="right">0.5000</td>
 <td align="right">0.2827433</td>
 <td align="right">0.60</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Double 16inViny</td>
 </tr>
@@ -999,7 +919,6 @@ are not used in this package.</p>
 <td align="right">0.5000</td>
 <td align="right">0.3318307</td>
 <td align="right">0.95</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Double 17in</td>
 </tr>
@@ -1009,7 +928,6 @@ are not used in this package.</p>
 <td align="right">0.3000</td>
 <td align="right">0.0000000</td>
 <td align="right">1.00</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">FloatTech CF-12</td>
 </tr>
@@ -1019,7 +937,6 @@ are not used in this package.</p>
 <td align="right">0.7620</td>
 <td align="right">0.0000000</td>
 <td align="right">0.65</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">Geodyn 8’ Toroid</td>
 </tr>
@@ -1029,7 +946,6 @@ are not used in this package.</p>
 <td align="right">0.5080</td>
 <td align="right">0.2027000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1039,7 +955,6 @@ are not used in this package.</p>
 <td align="right">0.6350</td>
 <td align="right">0.3167000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1049,7 +964,6 @@ are not used in this package.</p>
 <td align="right">0.7874</td>
 <td align="right">0.4869000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1059,7 +973,6 @@ are not used in this package.</p>
 <td align="right">0.9144</td>
 <td align="right">0.6567000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1069,7 +982,6 @@ are not used in this package.</p>
 <td align="right">1.0160</td>
 <td align="right">0.8107000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1079,7 +991,6 @@ are not used in this package.</p>
 <td align="right">1.1176</td>
 <td align="right">0.9810000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1089,7 +1000,6 @@ are not used in this package.</p>
 <td align="right">1.2446</td>
 <td align="right">1.2166000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1099,7 +1009,6 @@ are not used in this package.</p>
 <td align="right">1.2954</td>
 <td align="right">1.3179000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1109,7 +1018,6 @@ are not used in this package.</p>
 <td align="right">1.4224</td>
 <td align="right">1.5890000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1119,7 +1027,6 @@ are not used in this package.</p>
 <td align="right">1.5748</td>
 <td align="right">1.9478000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">Kelley</td>
 <td align="left">NA</td>
 </tr>
@@ -1129,7 +1036,6 @@ are not used in this package.</p>
 <td align="right">1.0000</td>
 <td align="right">0.4400000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">IPS / 2x B3 SUBS ASSEMBLY</td>
 </tr>
@@ -1139,7 +1045,6 @@ are not used in this package.</p>
 <td align="right">1.0000</td>
 <td align="right">0.7853982</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Kiel SFS40in</td>
 </tr>
@@ -1149,7 +1054,6 @@ are not used in this package.</p>
 <td align="right">0.8700</td>
 <td align="right">0.1830000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">NEW GLASS STREAMLINED FLOAT (C2)</td>
 </tr>
@@ -1159,7 +1063,6 @@ are not used in this package.</p>
 <td align="right">1.2860</td>
 <td align="right">2.3430000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">Stablemoor 1000 lb 3500 msw with ADCP</td>
 </tr>
@@ -1169,7 +1072,6 @@ are not used in this package.</p>
 <td align="right">1.2860</td>
 <td align="right">2.3240000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">Stablemoor 1015 lb 1500 msw with ADCP</td>
 </tr>
@@ -1179,7 +1081,6 @@ are not used in this package.</p>
 <td align="right">1.2860</td>
 <td align="right">2.3430000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">Stablemoor 533 lb 3500 msw with ADCP</td>
 </tr>
@@ -1189,7 +1090,6 @@ are not used in this package.</p>
 <td align="right">1.2860</td>
 <td align="right">2.3430000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">Stablemoor 580 lb 1500 msw with ADCP</td>
 </tr>
@@ -1199,7 +1099,6 @@ are not used in this package.</p>
 <td align="right">0.7400</td>
 <td align="right">0.1630000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">STREAMLINED BUB 2 x 17” GLASS</td>
 </tr>
@@ -1209,7 +1108,6 @@ are not used in this package.</p>
 <td align="right">0.5630</td>
 <td align="right">0.1240000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">STREAMLINED BUB 3 VINY BALLS</td>
 </tr>
@@ -1219,7 +1117,6 @@ are not used in this package.</p>
 <td align="right">2.4200</td>
 <td align="right">1.2340000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SYNTACTIC FLOAT WITH ADCP BRACKET</td>
 </tr>
@@ -1229,7 +1126,6 @@ are not used in this package.</p>
 <td align="right">2.4200</td>
 <td align="right">1.2340000</td>
 <td align="right">0.60</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SYN. FLOAT, BRACKET AND 109 LB.ADCP</td>
 </tr>
@@ -1239,7 +1135,6 @@ are not used in this package.</p>
 <td align="right">0.0000</td>
 <td align="right">0.0000000</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Top of Tow Rope</td>
 </tr>
@@ -1249,7 +1144,6 @@ are not used in this package.</p>
 <td align="right">0.8300</td>
 <td align="right">0.5410608</td>
 <td align="right">0.75</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Torp. flt, 3-28</td>
 </tr>
@@ -1259,7 +1153,6 @@ are not used in this package.</p>
 <td align="right">0.9000</td>
 <td align="right">0.0000000</td>
 <td align="right">1.00</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Tripple FT CF-12</td>
 </tr>
@@ -1269,7 +1162,6 @@ are not used in this package.</p>
 <td align="right">0.9500</td>
 <td align="right">0.3019071</td>
 <td align="right">1.00</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Trpl 12in glass</td>
 </tr>
@@ -1279,7 +1171,6 @@ are not used in this package.</p>
 <td align="right">1.5000</td>
 <td align="right">0.4417865</td>
 <td align="right">0.60</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Trpl 16 in Viny</td>
 </tr>
@@ -1290,19 +1181,16 @@ are not used in this package.</p>
 <h2 id="instrument-characteristics">Instrument characteristics<a class="anchor" aria-label="anchor" href="#instrument-characteristics"></a>
 </h2>
 <p>The <code>buoyancy</code> values are in kg, while <code>area</code>
-is in , and <code>CD</code> is unitless. The <code>code</code> values
-are listed for data from Dewey only, and they are not used in this
-package.</p>
+is in , and <code>CD</code> is unitless.</p>
 <table class="table">
 <colgroup>
-<col width="32%">
+<col width="34%">
 <col width="6%">
-<col width="4%">
+<col width="5%">
 <col width="6%">
 <col width="3%">
-<col width="3%">
-<col width="4%">
-<col width="37%">
+<col width="5%">
+<col width="39%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -1310,7 +1198,6 @@ package.</p>
 <th align="right">height</th>
 <th align="right">area</th>
 <th align="right">CD</th>
-<th align="right">code</th>
 <th align="left">source</th>
 <th align="left">originalName</th>
 </tr></thead>
@@ -1321,7 +1208,6 @@ package.</p>
 <td align="right">0.5500</td>
 <td align="right">0.070400</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Aanderaa RCM-4</td>
 </tr>
@@ -1331,7 +1217,6 @@ package.</p>
 <td align="right">0.5700</td>
 <td align="right">0.072960</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Aanderaa RCM-5</td>
 </tr>
@@ -1341,7 +1226,6 @@ package.</p>
 <td align="right">0.5500</td>
 <td align="right">0.070400</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Aanderaa RCM-7</td>
 </tr>
@@ -1351,7 +1235,6 @@ package.</p>
 <td align="right">0.5700</td>
 <td align="right">0.072960</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Aanderaa RCM-8</td>
 </tr>
@@ -1361,7 +1244,6 @@ package.</p>
 <td align="right">0.5800</td>
 <td align="right">0.092800</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Aanderaa RDCP</td>
 </tr>
@@ -1371,7 +1253,6 @@ package.</p>
 <td align="right">0.7600</td>
 <td align="right">0.091000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">WHADCP Sentinel (orange) 500 meter with inline
 frame</td>
@@ -1382,7 +1263,6 @@ frame</td>
 <td align="right">0.7900</td>
 <td align="right">0.111000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">WHADCP Sentinel (yellow) 6000 meter with inline
 frame</td>
@@ -1393,7 +1273,6 @@ frame</td>
 <td align="right">0.5740</td>
 <td align="right">0.036736</td>
 <td align="right">1.30</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">aquaMeasure CHLA</td>
 </tr>
@@ -1403,7 +1282,6 @@ frame</td>
 <td align="right">0.2740</td>
 <td align="right">0.013700</td>
 <td align="right">1.30</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">aquaMeasure DOT</td>
 </tr>
@@ -1413,7 +1291,6 @@ frame</td>
 <td align="right">0.3860</td>
 <td align="right">0.024704</td>
 <td align="right">1.30</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">aquaMeasure SAL</td>
 </tr>
@@ -1423,7 +1300,6 @@ frame</td>
 <td align="right">2.0000</td>
 <td align="right">0.400000</td>
 <td align="right">1.20</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">CDMS CM</td>
 </tr>
@@ -1433,7 +1309,6 @@ frame</td>
 <td align="right">0.7000</td>
 <td align="right">0.243000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">DVS CURRENT METER</td>
 </tr>
@@ -1443,7 +1318,6 @@ frame</td>
 <td align="right">1.9800</td>
 <td align="right">0.495000</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">EG&amp;G VACM</td>
 </tr>
@@ -1453,7 +1327,6 @@ frame</td>
 <td align="right">1.7000</td>
 <td align="right">0.425000</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">EG&amp;G VMCM</td>
 </tr>
@@ -1463,7 +1336,6 @@ frame</td>
 <td align="right">0.3800</td>
 <td align="right">0.049400</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">FSI-3DACM coast</td>
 </tr>
@@ -1473,7 +1345,6 @@ frame</td>
 <td align="right">0.2670</td>
 <td align="right">0.010561</td>
 <td align="right">1.30</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">Hobo DO U26</td>
 </tr>
@@ -1483,7 +1354,6 @@ frame</td>
 <td align="right">0.1140</td>
 <td align="right">0.003420</td>
 <td align="right">1.30</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">Hobo Temp U22</td>
 </tr>
@@ -1493,7 +1363,6 @@ frame</td>
 <td align="right">0.8000</td>
 <td align="right">0.000000</td>
 <td align="right">0.60</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">InterOcn S4 CM</td>
 </tr>
@@ -1503,7 +1372,6 @@ frame</td>
 <td align="right">1.2000</td>
 <td align="right">0.240000</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">NBIS ACM-2</td>
 </tr>
@@ -1513,7 +1381,6 @@ frame</td>
 <td align="right">0.6600</td>
 <td align="right">0.084480</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">OEI Expend. CM</td>
 </tr>
@@ -1523,7 +1390,6 @@ frame</td>
 <td align="right">0.8000</td>
 <td align="right">0.078000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">RCM-11 IN FRAME</td>
 </tr>
@@ -1533,7 +1399,6 @@ frame</td>
 <td align="right">0.7400</td>
 <td align="right">0.060000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">RCM-8 WITH FIN</td>
 </tr>
@@ -1543,7 +1408,6 @@ frame</td>
 <td align="right">1.4100</td>
 <td align="right">0.310200</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">RD ADCP</td>
 </tr>
@@ -1553,7 +1417,6 @@ frame</td>
 <td align="right">2.1800</td>
 <td align="right">0.270000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">RDI WITH BAR</td>
 </tr>
@@ -1563,7 +1426,6 @@ frame</td>
 <td align="right">0.5590</td>
 <td align="right">0.117000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SBE37 MICROCAT CLAMP-ON STYLE</td>
 </tr>
@@ -1573,7 +1435,6 @@ frame</td>
 <td align="right">1.2000</td>
 <td align="right">0.060000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SBE37 MICROCAT ON A SS BAR</td>
 </tr>
@@ -1583,7 +1444,6 @@ frame</td>
 <td align="right">1.2700</td>
 <td align="right">0.094000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SEABIRD CTD (IOS OXYGEN WITH BAR)</td>
 </tr>
@@ -1593,7 +1453,6 @@ frame</td>
 <td align="right">0.8400</td>
 <td align="right">0.122000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SEACAT 16-03 (BAR, PLASTIC CASE)</td>
 </tr>
@@ -1603,7 +1462,6 @@ frame</td>
 <td align="right">0.8763</td>
 <td align="right">0.062000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SEACAT 16-04 (BAR,TITANIUM NO PRESS.)</td>
 </tr>
@@ -1613,7 +1471,6 @@ frame</td>
 <td align="right">1.0668</td>
 <td align="right">0.077000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SEACAT 16-04 (BAR,TITANIUM WITH PRESS.)</td>
 </tr>
@@ -1623,7 +1480,6 @@ frame</td>
 <td align="right">0.8600</td>
 <td align="right">0.083000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SEAGUARD (2000 &amp; 6000 M)</td>
 </tr>
@@ -1633,7 +1489,6 @@ frame</td>
 <td align="right">1.8290</td>
 <td align="right">1.061000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">SEDIMENT TRAP (#1349)</td>
 </tr>
@@ -1643,7 +1498,6 @@ frame</td>
 <td align="right">1.2000</td>
 <td align="right">0.052000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">VEMCO ON A SS BAR</td>
 </tr>
@@ -1653,7 +1507,6 @@ frame</td>
 <td align="right">0.4010</td>
 <td align="right">0.032481</td>
 <td align="right">1.30</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">VR2AR reciever</td>
 </tr>
@@ -1663,7 +1516,6 @@ frame</td>
 <td align="right">0.5000</td>
 <td align="right">0.100000</td>
 <td align="right">1.20</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">WH ADCP + Frame</td>
 </tr>
@@ -1673,7 +1525,6 @@ frame</td>
 <td align="right">1.6800</td>
 <td align="right">0.176000</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">WOTAN (BAR)</td>
 </tr>
@@ -1684,19 +1535,17 @@ frame</td>
 <h2 id="misc-characteristics">Misc characteristics<a class="anchor" aria-label="anchor" href="#misc-characteristics"></a>
 </h2>
 <p>The <code>buoyancy</code> values are in kg, while <code>height</code>
-is in m, <code>area</code> is in m^2, and <code>CD</code> is unitless.
-The <code>code</code> values are listed for data from Dewey only, and
-they are not used in this package.</p>
+is in m, <code>area</code> is in m^2, and <code>CD</code> is
+unitless.</p>
 <table class="table">
 <colgroup>
-<col width="22%">
-<col width="12%">
-<col width="9%">
-<col width="9%">
-<col width="6%">
-<col width="6%">
-<col width="9%">
-<col width="22%">
+<col width="24%">
+<col width="13%">
+<col width="10%">
+<col width="10%">
+<col width="7%">
+<col width="10%">
+<col width="24%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -1704,7 +1553,6 @@ they are not used in this package.</p>
 <th align="right">height</th>
 <th align="right">area</th>
 <th align="right">CD</th>
-<th align="right">code</th>
 <th align="left">source</th>
 <th align="left">originalName</th>
 </tr></thead>
@@ -1715,7 +1563,6 @@ they are not used in this package.</p>
 <td align="right">0.550</td>
 <td align="right">0.0704</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">A. tide gauge</td>
 </tr>
@@ -1725,7 +1572,6 @@ they are not used in this package.</p>
 <td align="right">0.550</td>
 <td align="right">0.0704</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">AanderaaT.chain</td>
 </tr>
@@ -1735,7 +1581,6 @@ they are not used in this package.</p>
 <td align="right">0.000</td>
 <td align="right">0.0707</td>
 <td align="right">1.00</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Benthos Xpdr</td>
 </tr>
@@ -1745,7 +1590,6 @@ they are not used in this package.</p>
 <td align="right">1.600</td>
 <td align="right">1.9200</td>
 <td align="right">1.60</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">BPS Package</td>
 </tr>
@@ -1755,7 +1599,6 @@ they are not used in this package.</p>
 <td align="right">0.270</td>
 <td align="right">0.0138</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Brancker TR1000</td>
 </tr>
@@ -1765,7 +1608,6 @@ they are not used in this package.</p>
 <td align="right">0.540</td>
 <td align="right">0.0324</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Brancker XL-200</td>
 </tr>
@@ -1775,7 +1617,6 @@ they are not used in this package.</p>
 <td align="right">0.840</td>
 <td align="right">0.0638</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Brancker XL-210</td>
 </tr>
@@ -1785,7 +1626,6 @@ they are not used in this package.</p>
 <td align="right">1.087</td>
 <td align="right">0.9280</td>
 <td align="right">1.00</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">CDMS 10sqft Tow</td>
 </tr>
@@ -1795,7 +1635,6 @@ they are not used in this package.</p>
 <td align="right">1.880</td>
 <td align="right">2.7759</td>
 <td align="right">1.20</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">CDMS 30sqft Tow</td>
 </tr>
@@ -1805,7 +1644,6 @@ they are not used in this package.</p>
 <td align="right">0.700</td>
 <td align="right">0.0910</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">DataSonics Xpdr</td>
 </tr>
@@ -1815,7 +1653,6 @@ they are not used in this package.</p>
 <td align="right">0.300</td>
 <td align="right">0.0707</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Heavy Sphere</td>
 </tr>
@@ -1825,7 +1662,6 @@ they are not used in this package.</p>
 <td align="right">0.400</td>
 <td align="right">0.1257</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Heavy Sphere 2</td>
 </tr>
@@ -1835,7 +1671,6 @@ they are not used in this package.</p>
 <td align="right">1.300</td>
 <td align="right">0.1257</td>
 <td align="right">0.80</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">IceProfiler4+Flt</td>
 </tr>
@@ -1845,7 +1680,6 @@ they are not used in this package.</p>
 <td align="right">2.500</td>
 <td align="right">2.4975</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Keil sedmt trap</td>
 </tr>
@@ -1855,7 +1689,6 @@ they are not used in this package.</p>
 <td align="right">1.640</td>
 <td align="right">0.6724</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">McLane Mk78 SdTr</td>
 </tr>
@@ -1865,7 +1698,6 @@ they are not used in this package.</p>
 <td align="right">1.200</td>
 <td align="right">0.3600</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">McLane Mk8 SedTr</td>
 </tr>
@@ -1875,7 +1707,6 @@ they are not used in this package.</p>
 <td align="right">0.600</td>
 <td align="right">0.0300</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Oceanetic Pinger</td>
 </tr>
@@ -1885,7 +1716,6 @@ they are not used in this package.</p>
 <td align="right">0.900</td>
 <td align="right">0.1350</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">ONC-uCatADop</td>
 </tr>
@@ -1895,7 +1725,6 @@ they are not used in this package.</p>
 <td align="right">0.450</td>
 <td align="right">0.0900</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">SBE 19+ cage</td>
 </tr>
@@ -1905,7 +1734,6 @@ they are not used in this package.</p>
 <td align="right">0.450</td>
 <td align="right">0.0360</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">SBE-16</td>
 </tr>
@@ -1915,7 +1743,6 @@ they are not used in this package.</p>
 <td align="right">1.680</td>
 <td align="right">0.4704</td>
 <td align="right">2.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">SubOcean2d</td>
 </tr>
@@ -1925,7 +1752,6 @@ they are not used in this package.</p>
 <td align="right">1.680</td>
 <td align="right">2.2167</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">SubOcean2d2</td>
 </tr>
@@ -1935,7 +1761,6 @@ they are not used in this package.</p>
 <td align="right">1.000</td>
 <td align="right">0.2000</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">TowedCylinder</td>
 </tr>
@@ -1945,7 +1770,6 @@ they are not used in this package.</p>
 <td align="right">0.500</td>
 <td align="right">0.1963</td>
 <td align="right">0.65</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">TowedSphere</td>
 </tr>
@@ -1955,7 +1779,6 @@ they are not used in this package.</p>
 <td align="right">0.000</td>
 <td align="right">0.3318</td>
 <td align="right">1.00</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">ULS#2/APL</td>
 </tr>
@@ -1966,19 +1789,16 @@ they are not used in this package.</p>
 <h2 id="release-characteristics">Release characteristics<a class="anchor" aria-label="anchor" href="#release-characteristics"></a>
 </h2>
 <p>The <code>buoyancy</code> values are in kg, while <code>height</code>
-and <code>width</code> are in m, and <code>CD</code> is unitless. The
-<code>code</code> values are listed for data from Dewey only, and they
-are not used in this package.</p>
+and <code>width</code> are in m, and <code>CD</code> is unitless.</p>
 <table class="table">
 <colgroup>
-<col width="27%">
+<col width="28%">
 <col width="9%">
 <col width="7%">
 <col width="8%">
 <col width="5%">
-<col width="5%">
 <col width="7%">
-<col width="31%">
+<col width="32%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -1986,7 +1806,6 @@ are not used in this package.</p>
 <th align="right">height</th>
 <th align="right">area</th>
 <th align="right">CD</th>
-<th align="right">code</th>
 <th align="left">source</th>
 <th align="left">originalName</th>
 </tr></thead>
@@ -1997,7 +1816,6 @@ are not used in this package.</p>
 <td align="right">1.000</td>
 <td align="right">0.19900</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">BENTHOS 865A RELEASE</td>
 </tr>
@@ -2007,7 +1825,6 @@ are not used in this package.</p>
 <td align="right">1.230</td>
 <td align="right">0.15620</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">BENTHOS 965A RELEASE</td>
 </tr>
@@ -2017,7 +1834,6 @@ are not used in this package.</p>
 <td align="right">0.680</td>
 <td align="right">0.07620</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">BENTHOS 966A and 866A RELEASE</td>
 </tr>
@@ -2027,7 +1843,6 @@ are not used in this package.</p>
 <td align="right">2.000</td>
 <td align="right">0.40000</td>
 <td align="right">1.20</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">CDMS AR</td>
 </tr>
@@ -2037,7 +1852,6 @@ are not used in this package.</p>
 <td align="right">1.420</td>
 <td align="right">0.42600</td>
 <td align="right">1.20</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Dble Mesotech501</td>
 </tr>
@@ -2047,7 +1861,6 @@ are not used in this package.</p>
 <td align="right">0.950</td>
 <td align="right">0.24700</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">double 8242</td>
 </tr>
@@ -2057,7 +1870,6 @@ are not used in this package.</p>
 <td align="right">0.850</td>
 <td align="right">0.19550</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">double AR-191</td>
 </tr>
@@ -2067,7 +1879,6 @@ are not used in this package.</p>
 <td align="right">0.950</td>
 <td align="right">0.23750</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">double AR/EG&amp;G</td>
 </tr>
@@ -2077,7 +1888,6 @@ are not used in this package.</p>
 <td align="right">0.890</td>
 <td align="right">0.22250</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">double RT-161</td>
 </tr>
@@ -2087,7 +1897,6 @@ are not used in this package.</p>
 <td align="right">1.194</td>
 <td align="right">0.11730</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">EG&amp;G 723A</td>
 </tr>
@@ -2097,7 +1906,6 @@ are not used in this package.</p>
 <td align="right">1.320</td>
 <td align="right">0.18480</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">EG&amp;G 723A WITH TENSION BAR</td>
 </tr>
@@ -2107,7 +1915,6 @@ are not used in this package.</p>
 <td align="right">0.940</td>
 <td align="right">0.12220</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">EG&amp;G 8242</td>
 </tr>
@@ -2117,7 +1924,6 @@ are not used in this package.</p>
 <td align="right">0.800</td>
 <td align="right">0.14400</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">InterOcean1090ED</td>
 </tr>
@@ -2127,7 +1933,6 @@ are not used in this package.</p>
 <td align="right">1.000</td>
 <td align="right">0.15000</td>
 <td align="right">1.30</td>
-<td align="right">7</td>
 <td align="left">Dewey</td>
 <td align="left">Mesotech AR</td>
 </tr>
@@ -2137,7 +1942,6 @@ are not used in this package.</p>
 <td align="right">0.850</td>
 <td align="right">0.09520</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Oceano AR191</td>
 </tr>
@@ -2147,7 +1951,6 @@ are not used in this package.</p>
 <td align="right">0.830</td>
 <td align="right">0.10790</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Oceano AR2500</td>
 </tr>
@@ -2157,7 +1960,6 @@ are not used in this package.</p>
 <td align="right">0.820</td>
 <td align="right">0.10168</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Oceano AR261</td>
 </tr>
@@ -2167,7 +1969,6 @@ are not used in this package.</p>
 <td align="right">0.890</td>
 <td align="right">0.11036</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Oceano RT-121</td>
 </tr>
@@ -2177,7 +1978,6 @@ are not used in this package.</p>
 <td align="right">0.890</td>
 <td align="right">0.11036</td>
 <td align="right">1.30</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">Oceano RT-161</td>
 </tr>
@@ -2187,7 +1987,6 @@ are not used in this package.</p>
 <td align="right">0.400</td>
 <td align="right">0.09480</td>
 <td align="right">0.65</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">VR2W RELEASE with float collar</td>
 </tr>
@@ -2199,25 +1998,21 @@ are not used in this package.</p>
 </h2>
 <p>The <code>buoyancyPerMeter</code> values are in kg/m, while
 <code>areaPerMeter</code> is in m, and <code>CD</code> is unitless. For
-the Dewey data, area is computed from stated wire width. The
-<code>code</code> values are listed for data from Dewey only, and they
-are not used in this package.</p>
+the Dewey data, area is computed from stated wire width.</p>
 <table class="table">
 <colgroup>
-<col width="32%">
+<col width="33%">
 <col width="14%">
-<col width="10%">
+<col width="11%">
 <col width="3%">
-<col width="4%">
-<col width="5%">
-<col width="29%">
+<col width="6%">
+<col width="31%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">name</th>
 <th align="right">buoyancyPerMeter</th>
 <th align="right">areaPerMeter</th>
 <th align="right">CD</th>
-<th align="right">code</th>
 <th align="left">source</th>
 <th align="left">originalName</th>
 </tr></thead>
@@ -2227,7 +2022,6 @@ are not used in this package.</p>
 <td align="right">-0.0500</td>
 <td align="right">0.0250000</td>
 <td align="right">1.3</td>
-<td align="right">2</td>
 <td align="left">Dewey</td>
 <td align="left">1 Nylon</td>
 </tr>
@@ -2236,7 +2030,6 @@ are not used in this package.</p>
 <td align="right">0.0200</td>
 <td align="right">0.0120000</td>
 <td align="right">1.3</td>
-<td align="right">8</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 Dyneema</td>
 </tr>
@@ -2245,7 +2038,6 @@ are not used in this package.</p>
 <td align="right">0.0060</td>
 <td align="right">0.0120000</td>
 <td align="right">1.3</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 AmSteel-Blue</td>
 </tr>
@@ -2254,7 +2046,6 @@ are not used in this package.</p>
 <td align="right">-0.0410</td>
 <td align="right">0.0130000</td>
 <td align="right">1.3</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 Dacron</td>
 </tr>
@@ -2263,7 +2054,6 @@ are not used in this package.</p>
 <td align="right">-0.0320</td>
 <td align="right">0.0130000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 Kevlar</td>
 </tr>
@@ -2272,7 +2062,6 @@ are not used in this package.</p>
 <td align="right">0.0000</td>
 <td align="right">0.0130000</td>
 <td align="right">1.5</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 Neutral Wire</td>
 </tr>
@@ -2281,7 +2070,6 @@ are not used in this package.</p>
 <td align="right">-0.0410</td>
 <td align="right">0.0130000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 VLS</td>
 </tr>
@@ -2290,7 +2078,6 @@ are not used in this package.</p>
 <td align="right">-0.5470</td>
 <td align="right">0.0170000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/2 wire/jack</td>
 </tr>
@@ -2299,7 +2086,6 @@ are not used in this package.</p>
 <td align="right">-0.0090</td>
 <td align="right">0.0090000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">1/4-1/2 WarpSpd</td>
 </tr>
@@ -2308,7 +2094,6 @@ are not used in this package.</p>
 <td align="right">0.0020</td>
 <td align="right">0.0070000</td>
 <td align="right">1.3</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">1/4 AmSteel-Blue</td>
 </tr>
@@ -2317,7 +2102,6 @@ are not used in this package.</p>
 <td align="right">-0.1380</td>
 <td align="right">0.0079375</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">1/4” GALVANIZED WIRE COATED TO 5/16</td>
 </tr>
@@ -2326,7 +2110,6 @@ are not used in this package.</p>
 <td align="right">-0.0090</td>
 <td align="right">0.0070000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">1/4 Kevlar</td>
 </tr>
@@ -2335,7 +2118,6 @@ are not used in this package.</p>
 <td align="right">-0.1400</td>
 <td align="right">0.0070000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/4 wire rope</td>
 </tr>
@@ -2344,7 +2126,6 @@ are not used in this package.</p>
 <td align="right">-0.1300</td>
 <td align="right">0.0080000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">1/4 wire/jack</td>
 </tr>
@@ -2353,7 +2134,6 @@ are not used in this package.</p>
 <td align="right">-0.0050</td>
 <td align="right">0.0110000</td>
 <td align="right">1.3</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">11mm Perlon</td>
 </tr>
@@ -2362,7 +2142,6 @@ are not used in this package.</p>
 <td align="right">0.0000</td>
 <td align="right">0.0250000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">1in Neutral Wire</td>
 </tr>
@@ -2371,7 +2150,6 @@ are not used in this package.</p>
 <td align="right">-0.0775</td>
 <td align="right">0.0063500</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">BIO</td>
 <td align="left">3/16” GALVANIZED WIRE COATED TO 1/4</td>
 </tr>
@@ -2380,7 +2158,6 @@ are not used in this package.</p>
 <td align="right">-0.1200</td>
 <td align="right">0.0070000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3/16 wire rope</td>
 </tr>
@@ -2389,7 +2166,6 @@ are not used in this package.</p>
 <td align="right">-0.0990</td>
 <td align="right">0.0190000</td>
 <td align="right">1.3</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">3/4 Dacron</td>
 </tr>
@@ -2398,7 +2174,6 @@ are not used in this package.</p>
 <td align="right">-0.0300</td>
 <td align="right">0.0190000</td>
 <td align="right">1.3</td>
-<td align="right">2</td>
 <td align="left">Dewey</td>
 <td align="left">3/4 Nylon</td>
 </tr>
@@ -2407,7 +2182,6 @@ are not used in this package.</p>
 <td align="right">0.0160</td>
 <td align="right">0.0190000</td>
 <td align="right">1.3</td>
-<td align="right">4</td>
 <td align="left">Dewey</td>
 <td align="left">3/4 Polyprop</td>
 </tr>
@@ -2416,7 +2190,6 @@ are not used in this package.</p>
 <td align="right">0.0030</td>
 <td align="right">0.0090000</td>
 <td align="right">1.3</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">3/8 AmSteel-Blue</td>
 </tr>
@@ -2425,7 +2198,6 @@ are not used in this package.</p>
 <td align="right">-0.0230</td>
 <td align="right">0.0090000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">3/8 Kevlar</td>
 </tr>
@@ -2434,7 +2206,6 @@ are not used in this package.</p>
 <td align="right">-0.0177</td>
 <td align="right">0.0095250</td>
 <td align="right">1.3</td>
-<td align="right">NA</td>
 <td align="left">CMAR</td>
 <td align="left">3/8in leaded polypropylene</td>
 </tr>
@@ -2443,7 +2214,6 @@ are not used in this package.</p>
 <td align="right">-0.3300</td>
 <td align="right">0.0090000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3/8 wire rope</td>
 </tr>
@@ -2452,7 +2222,6 @@ are not used in this package.</p>
 <td align="right">-0.3180</td>
 <td align="right">0.0130000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">3/8 wire/jack</td>
 </tr>
@@ -2461,7 +2230,6 @@ are not used in this package.</p>
 <td align="right">-0.0140</td>
 <td align="right">0.0080000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">5/16 Kevlar</td>
 </tr>
@@ -2470,7 +2238,6 @@ are not used in this package.</p>
 <td align="right">-0.1900</td>
 <td align="right">0.0080000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">5/16 wire rope</td>
 </tr>
@@ -2479,7 +2246,6 @@ are not used in this package.</p>
 <td align="right">-0.1860</td>
 <td align="right">0.0110000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">5/16 wire/jack</td>
 </tr>
@@ -2488,7 +2254,6 @@ are not used in this package.</p>
 <td align="right">0.0090</td>
 <td align="right">0.0160000</td>
 <td align="right">1.3</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">5/8 AmSteel-Blue</td>
 </tr>
@@ -2497,7 +2262,6 @@ are not used in this package.</p>
 <td align="right">-0.0540</td>
 <td align="right">0.0160000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">5/8 Kevlar</td>
 </tr>
@@ -2506,7 +2270,6 @@ are not used in this package.</p>
 <td align="right">-0.0220</td>
 <td align="right">0.0160000</td>
 <td align="right">1.3</td>
-<td align="right">2</td>
 <td align="left">Dewey</td>
 <td align="left">5/8 Nylon</td>
 </tr>
@@ -2515,7 +2278,6 @@ are not used in this package.</p>
 <td align="right">-0.0320</td>
 <td align="right">0.0110000</td>
 <td align="right">1.3</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">7/16 Dacron</td>
 </tr>
@@ -2524,7 +2286,6 @@ are not used in this package.</p>
 <td align="right">-0.0260</td>
 <td align="right">0.0110000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">7/16 Kevlar</td>
 </tr>
@@ -2533,7 +2294,6 @@ are not used in this package.</p>
 <td align="right">-0.0230</td>
 <td align="right">0.0110000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">7/16 VLS</td>
 </tr>
@@ -2542,7 +2302,6 @@ are not used in this package.</p>
 <td align="right">-0.0580</td>
 <td align="right">0.0140000</td>
 <td align="right">1.3</td>
-<td align="right">3</td>
 <td align="left">Dewey</td>
 <td align="left">9/16 Dacron</td>
 </tr>
@@ -2551,7 +2310,6 @@ are not used in this package.</p>
 <td align="right">-0.0430</td>
 <td align="right">0.0140000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">9/16 Kevlar</td>
 </tr>
@@ -2560,7 +2318,6 @@ are not used in this package.</p>
 <td align="right">-0.1240</td>
 <td align="right">0.0070000</td>
 <td align="right">1.3</td>
-<td align="right">1</td>
 <td align="left">Dewey</td>
 <td align="left">BPS Cable</td>
 </tr>
@@ -2569,7 +2326,6 @@ are not used in this package.</p>
 <td align="right">-0.3840</td>
 <td align="right">0.0280000</td>
 <td align="right">1.3</td>
-<td align="right">6</td>
 <td align="left">Dewey</td>
 <td align="left">BPS Power/Coms</td>
 </tr>
