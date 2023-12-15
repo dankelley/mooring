@@ -24,14 +24,17 @@ below, are based on the following sources.  Each entry has a column named
 the package, and another column named `OriginalName` that indicates the name
 used in the original source.
 
-1. A Matlab file named `mdcodes.mat`, contained within Dewey's Matlab-based
-   mooring package (which was the inspiration for the present package). These
-   entries have "Dewey" in the source column in the tables. The details of data
-   provenance were not pursued, in creating the present R package.
-2. Information obtained from Bedford Institute of Oceanography ("BIO" in the
-   source column), based in Darmouth, Nova Scotia.
-3. Information obtained from the Centre for Marine Applied Research ("CMAR" in
-   the tables), based in Dartmouth, Nova Scotia.
+1. A Matlab file named `mdcodes.mat`, contained within Dewey's [Matlab-based
+   mooring package](http://web.uvic.ca/~rdewey/mooring/moordyn.php) (which was
+   the inspiration for the present package). These entries have "Dewey" in the
+   source column in the tables. The details of data provenance were not
+   pursued, in creating the present R package.
+2. Information obtained from [Bedford Institute of
+   Oceanography](https://www.bio.gc.ca/index-en.php) ("BIO" in the source
+   column), based in Dartmouth, Nova Scotia, Canada.
+3. Information obtained from the [Centre for Marine Applied
+   Research](https://cmar.ca) ("CMAR" in the tables), based in Dartmouth, Nova
+   Scotia, Canada.
 
 ## Anchor characteristics
 

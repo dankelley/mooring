@@ -1,5 +1,5 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd, so please edit the latter. -->
 
 # mooring
 
@@ -9,13 +9,24 @@
 
 <!-- badges: end -->
 
-The goal of mooring is to facilitate computations of the extent of
-knockdown of oceanographic moorings caused by ocean currents.
+The goal of the `mooring` package is to facilitate computations of the
+extent of ‘knockdown’ of oceanographic moorings caused by ocean currents
+that exert drag on mooring elements.
+
+In addition to a fairly broad suite of functions, the package also
+provides crude interactive tools for exploring simple moorings.
+
+Conventional R help is provided, in addition to several vignettes.
+
+At the moment, `mooring` only handles bottom-anchored moorings in which
+the top buoyancy element is below the sub-surface.
 
 ## Installation
 
-You can install the development version from
-[GitHub](https://github.com/) with:
+You can install the development version of `mooring` from
+[GitHub](https://github.com/) by typing the following in an R console.
+(Uncomment the first line, if the `devtools` package is not already
+installed on your computer.)
 
 ``` r
 # install.packages("devtools")
