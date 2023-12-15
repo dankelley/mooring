@@ -18,54 +18,60 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The data stored in `data(mooringElements)` were extracted from Dewey's Matlab
-matlab file named `mdcodes.mat`, which were apparently extracted from more
-primary sources. Neither the provenance and accuracy of individual items was
-checked before inclusion here.
+The data stored in `data(mooringElements)`, key features of which are presented
+below, are based on the following sources.  Each entry has a column named
+`name` that indicates how the item is designated in calls to functions within
+the package, and another column named `OriginalName` that indicates the name
+used in the original source.
 
-Dewey reports dimensions in centimetres, but these are converted to metres
-here.
-
-The column names are not the same as Dewey uses.  The meaning of the final
-column is unknown, so it is just called `code` here, and its values are not are
-used in this package.
+1. A Matlab file named `mdcodes.mat`, contained within Dewey's Matlab-based
+   mooring package (which was the inspiration for the present package). These
+   entries have "Dewey" in the source column in the tables. The details of data
+   provenance were not pursued, in creating the present R package.
+2. Information obtained from Bedford Institute of Oceanography ("BIO" in the
+   source column), based in Darmouth, Nova Scotia.
+3. Information obtained from the Centre for Marine Applied Research ("CMAR" in
+   the tables), based in Dartmouth, Nova Scotia.
 
 ## Anchor characteristics
 
-The `buoyancy` values are in kg and the `height` values are in m.  Note that
-the values shown below have no affect on the computation of mooring knockdown.
+The `buoyancy` values are in kg and the `height` values are in m.
 
 ```{r echo=FALSE}
-data(mooringElements, package="mooring")
+data(mooringElements, package = "mooring")
+for (name in names(mooringElements)) {
+    mooringElements[[name]]$code <- NULL
+}
+```
+```{r echo=FALSE}
 o <- order(mooringElements$anchors$name)
-knitr::kable(mooringElements$anchors[o,], row.names=FALSE)
+knitr::kable(mooringElements$anchors[o, ], row.names = FALSE)
 ```
 
 ## Chain characteristics
 
 The `buoyancyPerMeter` values are in kg/m, while `areaPerMeter` is in m, and
 `CD` is unitless.  For the Dewey data, area is computed from stated chain
-width.  The `code` values are listed for data from Dewey only, and they are not
-used in this package.
-
+width.
 
 ```{r echo=FALSE}
-data(mooringElements, package="mooring")
 o <- order(mooringElements$chains$name)
-knitr::kable(mooringElements$chains[o,], row.names=FALSE)
+knitr::kable(mooringElements$chains[o, ], row.names = FALSE)
 ```
 
 
 ## Connector characteristics
 
 The `buoyancy` values are in kg, while `height` and `width` are in m, and `CD`
-is unitless.  Not all data sources list `height` and `width` (or comparable values) and so zeros are used in such instances.  Since the only use of these values in the package are to compute area, for a drag calculation, and since the drag on floats and wires is likely to exceed that on small elements, this zeroing-out may not pose a large problem. The `code` values are listed for data from Dewey only, and they
-are not used in this package.
+is unitless.  Not all data sources list `height` and `width` (or comparable
+values) and so zeros are used in such instances.  Since the only use of these
+values in the package are to compute area, for a drag calculation, and since
+the drag on floats and wires is likely to exceed that on small elements, this
+zeroing-out may not pose a large problem.
 
 ```{r echo=FALSE}
-data(mooringElements, package="mooring")
 o <- order(mooringElements$connectors$name)
-knitr::kable(mooringElements$connectors[o,], row.names=FALSE)
+knitr::kable(mooringElements$connectors[o, ], row.names = FALSE)
 ```
 
 
@@ -73,62 +79,51 @@ knitr::kable(mooringElements$connectors[o,], row.names=FALSE)
 
 The `buoyancy` values are in kg, while `height` and `diameter` are in m, and
 `CD` is unitless.  For the Dewey data, area is computed from stated float
-diameter.  The `code` values are listed for data from Dewey only, and they are
-not used in this package.
+diameter.
 
 ```{r echo=FALSE}
-data(mooringElements, package="mooring")
 o <- order(mooringElements$floats$name)
-knitr::kable(mooringElements$floats[o,], row.names=FALSE)
+knitr::kable(mooringElements$floats[o, ], row.names = FALSE)
 ```
 
 
 ## Instrument characteristics
 
 The `buoyancy` values are in kg, while `area` is in \eqn{m^2}{m^2}, and `CD` is
-unitless.  The `code` values are listed for data from Dewey only, and they are
-not used in this package.
+unitless.
 
 ```{r echo=FALSE}
-data(mooringElements, package="mooring")
 o <- order(mooringElements$instruments$name)
-knitr::kable(mooringElements$instruments[o,], row.names=FALSE)
+knitr::kable(mooringElements$instruments[o, ], row.names = FALSE)
 ```
 
 ## Misc characteristics
 
 The `buoyancy` values are in kg, while `height` is in m, `area` is in m^2, and
-`CD` is unitless.  The `code` values are listed for data from Dewey only, and
-they are not used in this package.
+`CD` is unitless.
 
 ```{r echo=FALSE}
-data(mooringElements, package="mooring")
 o <- order(mooringElements$miscs$name)
-knitr::kable(mooringElements$miscs[o,], row.names=FALSE)
+knitr::kable(mooringElements$miscs[o, ], row.names = FALSE)
 ```
 
 
 ## Release characteristics
 
 The `buoyancy` values are in kg, while `height` and `width` are in m, and `CD`
-is unitless.  The `code` values are listed for data from Dewey only, and they
-are not used in this package.
+is unitless.
 
 ```{r echo=FALSE}
-data(mooringElements, package="mooring")
 o <- order(mooringElements$releases$name)
-knitr::kable(mooringElements$releases[o,], row.names=FALSE)
+knitr::kable(mooringElements$releases[o, ], row.names = FALSE)
 ```
 
 ## Wire characteristics
 
 The `buoyancyPerMeter` values are in kg/m, while `areaPerMeter` is in m, and
 `CD` is unitless.  For the Dewey data, area is computed from stated wire width.
-The `code` values are listed for data from Dewey only, and they are not used in
-this package.
 
 ```{r echo=FALSE}
-data(mooringElements, package="mooring")
 o <- order(mooringElements$wires$name)
-knitr::kable(mooringElements$wires[o,], row.names=FALSE)
+knitr::kable(mooringElements$wires[o, ], row.names = FALSE)
 ```
