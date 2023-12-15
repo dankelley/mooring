@@ -19,14 +19,14 @@ R <- 0.146 # Radius: 0.146 m
 H <- 0.0635 # Height (from the floor to the top of the rotor in rotor_xz.png): 0.0635 m
 n <- 10 # make this many items (although I think CMAR limits to 7)
 b <- buoyancyCalculation(8, rho = 7850) # -6.95 kg
-df <- data.frame(
+anchorsDF <- data.frame(
     name = paste(1:n, "rotor"),
     buoyancy = round(1:n * b, 3),
     height = H + (1:n-1) * 0.6*0.0254,
     area = round(2 * R * 1:n * H, 5),
     CD = 1.3, code = NA, source = "CMAR", originalName = "-"
 )
-write.csv(df, "anchors_cmar.csv", row.names = FALSE)
+write.csv(anchorsDF, "anchors_cmar.csv", row.names = FALSE)
 message("    ... done.")
 
 # 3. FLOATS
@@ -39,7 +39,7 @@ floatsDF <- data.frame(
     buoyancy = round(as.numeric(floats$buoyancySalt), 3),
     height = round(as.numeric(floats$height), 3),
     area = round(as.numeric(floats$area), 6),
-    CD = 1.3,
+    CD = 0.6, # a guess
     code = NA,
     source = "CMAR",
     originalName = floats$name
