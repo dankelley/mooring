@@ -2,15 +2,14 @@
 % Please edit documentation in R/app2.R
 \name{app2}
 \alias{app2}
-\title{Run a GUI app for interactive simulations}
+\title{Run a two-element GUI app for interactive simulations}
 \usage{
 app2()
 }
 \description{
 This makes a simple mooring with an anchor, an instrument, and
-a float. It differs from \code{app()} in having the instrument,
-and also by having a pared-down interface. It permits
-a depth-uniform current, along with a few other current profiles.
+a float, in a variety of current profiles. It differs from \code{\link[=app1]{app1()}}
+in having the instrument, and in having some interface changes.
 }
 \author{
 Dan Kelley

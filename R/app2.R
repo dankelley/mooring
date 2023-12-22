@@ -1,13 +1,10 @@
 # vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
-#' Run a GUI app for interactive simulations
+#' Run a two-element GUI app for interactive simulations
 #'
 #' This makes a simple mooring with an anchor, an instrument, and
-#' a float. It differs from `app()` in having the instrument,
-#' and also by having a pared-down interface. It permits
-#' a depth-uniform current, along with a few other current profiles.
-#'
-#' @importFrom shiny shinyApp
+#' a float, in a variety of current profiles. It differs from [app1()]
+#' in having the instrument, and in having some interface changes.
 #'
 #' @export
 #'
@@ -36,6 +33,7 @@ app2 <- function() {
     indent <- paste0(rep("&nbsp;", 8), collapse = "")
     help <- paste0(
         "Use sliders and pulldown menus to adjust conditions. ",
+        "Type 'n' for a nearshore example, 's' for a shelf example, or 'd' for a deep example.",
         "Click the <b>Code</b> button to see code to reproduce the simulation. ",
         "To learn more about the properties of a given float or wire, open an R ",
         "console and type e.g. <br>",
@@ -48,13 +46,13 @@ app2 <- function() {
         "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Dewey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>",
         dewey1999, "</li><li>", dewey2021, "</li></ul>"
     )
-    ui <- fluidPage(
-        tags$script('$(document).on("keypress", function (e) { Shiny.onInputChange("keypress", e.which); Shiny.onInputChange("keypressTrigger", Math.random()); });'),
+    ui <- shiny::fluidPage(
+        shiny::tags$script('$(document).on("keypress", function (e) { Shiny.onInputChange("keypress", e.which); Shiny.onInputChange("keypressTrigger", Math.random()); });'),
         shiny::tags$style(shiny::HTML("body {font-family: 'Arial'; font-size: 10px; margin-left:1ex}")),
         shiny::fluidRow(
             shiny::column(1, shiny::actionButton("help", "Help")),
             shiny::column(1, shiny::actionButton("code", "Code")),
-            shiny::column(6, shiny::radioButtons("orderBy", "Order Components By", choices = c("name", "buoyancy"), selected = "name", inline = TRUE, width = "100%"))
+            # shiny::column(6, shiny::radioButtons("orderBy", "Order Components By", choices = c("name", "buoyancy"), selected = "name", inline = TRUE, width = "100%"))
         ),
         shiny::fluidRow(
             shiny::column(4, shiny::sliderInput("waterDepth",
@@ -92,7 +90,7 @@ app2 <- function() {
         shiny::fluidRow(shiny::column(6, shiny::checkboxGroupInput(
             inputId = "plotChoices", label = NULL,
             choices = c("tension", "shape", "knockdown", "velocity"),
-            selected = c("shape"),
+            selected = c("shape", "velocity"),
             inline = TRUE, width = "100%"
         ))),
         shiny::fluidRow(shiny::plotOutput("plot"))
@@ -114,15 +112,42 @@ app2 <- function() {
             shiny::showModal(shiny::modalDialog(shiny::HTML(help), title = "Using this application", size = "l"))
         })
 
-        observeEvent(input$keypressTrigger, {
+        shiny::observeEvent(input$keypressTrigger, {
             key <- intToUtf8(input$keypress)
             ## dmsg("key='",key, "'\n", sep="")
-            if (key == "c") {
-                message("'c' (coastal) pressed")
+            if (key == "n") {
+                message("'n' (nearshore) pressed")
+                # print(floatChoices)
+                shiny::updateSliderInput(session, inputId = "waterDepth", value = 2, min = 1, max = 5, step = 0.1)
+                shiny::updateSliderInput(session, inputId = "wireLength", value = 1.5, min = 1, max = 1.8, step = 0.1)
+                shiny::updateSliderInput(session, inputId = "instrumentDepth", value = 1.5)
+                shiny::updateSliderInput(session, inputId = "instrumentDepth", value = 1.5)
+                shiny::updateSliderInput(session, inputId = "u",
+                    min = 0.0, max = 2.0, value = 1, step = 0.01)
+                shiny::updateSelectInput(session,
+                    inputId = "wireModel",
+                    choices = paste0(wireChoices, " [", wireBuoyancy, "kg/m]"),
+                    selected = "3/8in leaded polypropylene [-0.0177kg/m]"
+                )
+                shiny::updateSelectInput(session,
+                    inputId = "anchorModel",
+                    choices = paste0(anchorChoices, " [", anchorBuoyancy, "kg]"),
+                    selected = "2 rotor [-13.907kg]"
+                )
+                shiny::updateSelectInput(session,
+                    inputId = "instrumentModel",
+                    choices = paste0(instrumentChoices, " [", instrumentBuoyancy, "kg]"),
+                    selected = "Hobo Temp U22 [0.0133kg]"
+                )
+                shiny::updateSelectInput(session,
+                    inputId = "floatModel",
+                    choices = paste0(floatChoices, " [", floatBuoyancy, "kg]"),
+                    selected = "11in centre hole tfloat [7.77kg]"
+                )
             } else if (key == "s") {
                 message("'s' (shelf) pressed")
-            } else if (key == "o") {
-                message("'o' (ocean) pressed")
+            } else if (key == "d") {
+                message("'d' (deep) pressed")
             } else if (key == "?") {
                 shiny::showModal(shiny::modalDialog(
                     title = "Key-stroke commands",
@@ -197,14 +222,20 @@ app2 <- function() {
         })
 
         output$wireLength <- shiny::renderUI({
-            value <- if (input$waterDepth > 10) input$waterDepth - 10 else input$waterDepth
-            shiny::sliderInput("wireLength", "Wire Length [m]",
-                min = 0.5, max = input$waterDepth, value = value, step = 0.1, width = "100%"
-            )
+            waterDepth <- input$waterDepth
+            if (!is.null(waterDepth)) {
+                value <- if (waterDepth > 10) waterDepth - 10 else 0.5 * waterDepth
+                shiny::sliderInput("wireLength", "Wire Length [m]",
+                    min = 0.5, max = waterDepth,
+                    value = value,
+                    step = 0.1, width = "100%"
+                )
+            }
         })
 
         output$anchorType <- shiny::renderUI({
-            o <- if (input$orderBy == "name") seq_along(anchorChoices) else order(anchorBuoyancy)
+            # o <- if (input$orderBy == "name") seq_along(anchorChoices) else order(anchorBuoyancy)
+            o <- seq_along(anchorChoices)
             shiny::selectInput("anchorModel", "Anchor Type",
                 choices = paste0(anchorChoices[o], " [", anchorBuoyancy[o], "kg]"),
                 selected = anchorChoices[o[1]],
@@ -213,7 +244,8 @@ app2 <- function() {
         })
 
         output$wireType <- shiny::renderUI({
-            o <- if (input$orderBy == "name") seq_along(wireChoices) else order(wireBuoyancy)
+            # o <- if (input$orderBy == "name") seq_along(wireChoices) else order(wireBuoyancy)
+            o <- seq_along(wireChoices)
             shiny::selectInput("wireModel", "Wire Type",
                 choices = paste0(wireChoices[o], " [", wireBuoyancy[o], "kg/m]"),
                 selected = wireChoices[o[1]],
@@ -222,7 +254,8 @@ app2 <- function() {
         })
 
         output$instrumentType <- shiny::renderUI({
-            o <- if (input$orderBy == "name") seq_along(instrumentChoices) else order(instrumentBuoyancy)
+            # o <- if (input$orderBy == "name") seq_along(instrumentChoices) else order(instrumentBuoyancy)
+            o <- seq_along(instrumentChoices)
             shiny::selectInput("instrumentModel", "instrument Type",
                 choices = paste0(instrumentChoices[o], " [", instrumentBuoyancy[o], "kg]"),
                 selected = instrumentChoices[o[1]],
@@ -231,7 +264,8 @@ app2 <- function() {
         })
 
         output$floatType <- shiny::renderUI({
-            o <- if (input$orderBy == "name") seq_along(floatChoices) else order(floatBuoyancy)
+            # o <- if (input$orderBy == "name") seq_along(floatChoices) else order(floatBuoyancy)
+            o <- seq_along(floatChoices)
             shiny::selectInput("floatModel", "Float Type",
                 choices = paste0(floatChoices[o], " [", floatBuoyancy[o], "kg]"),
                 selected = floatChoices[o[1]],
@@ -245,7 +279,9 @@ app2 <- function() {
                 wireLength <- input$wireLength
                 if (!is.null(wireLength)) { # undefined at the start, since it depends on another slider
                     u <- input$u
+                    message("DAN input$anchorModel='", input$anchorModel, "'")
                     anchorModel <- gsub("[ ]+\\[.*kg\\]$", "", input$anchorModel)
+                    message("  -> anchorModel='", anchorModel, "'")
                     wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
                     floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
                     instrumentModel <- gsub("[ ]+\\[.*kg\\]$", "", input$instrumentModel)

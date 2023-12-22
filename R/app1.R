@@ -3,16 +3,13 @@
 #' Run a GUI app for interactive simulations
 #'
 #' This makes a simple mooring with an anchor, a line, and a float, in
-#' a depth-uniform current, or one of a few other current profiles.
-#' Sliders are provided for the adjustment of line length and current speed,
-#' and pulldown menus are provided to adjust wire and float types.
-#'
-#' @importFrom shiny shinyApp
+#' a variety of current profiles. It differs from [app2()] in having
+#' an instrument as well as a float.
 #'
 #' @export
 #'
 #' @author Dan Kelley
-app <- function() {
+app1 <- function() {
     if (!requireNamespace("shiny")) {
         stop("must install.packages(\"shiny\") for app() to work")
     }
