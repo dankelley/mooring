@@ -48,20 +48,21 @@ app2 <- function() {
         "<tt>wire(\"?\")</tt><br>produces a list of wire types. See Dewey (1999, 2021) for more on these types.<br><b>References</b><br><ul><li>",
         dewey1999, "</li><li>", dewey2021, "</li></ul>"
     )
-    ui <- shiny::fluidPage(
+    ui <- fluidPage(
+        tags$script('$(document).on("keypress", function (e) { Shiny.onInputChange("keypress", e.which); Shiny.onInputChange("keypressTrigger", Math.random()); });'),
         shiny::tags$style(shiny::HTML("body {font-family: 'Arial'; font-size: 10px; margin-left:1ex}")),
         shiny::fluidRow(
             shiny::column(1, shiny::actionButton("help", "Help")),
             shiny::column(1, shiny::actionButton("code", "Code")),
-            shiny::column(6, shiny::radioButtons("orderBy", "", choices = c("name", "buoyancy"), selected = "name", inline = TRUE, width = "100%"))
+            shiny::column(6, shiny::radioButtons("orderBy", "Order Components By", choices = c("name", "buoyancy"), selected = "name", inline = TRUE, width = "100%"))
         ),
         shiny::fluidRow(
             shiny::column(4, shiny::sliderInput("waterDepth",
                 "Water Depth [m]",
                 min = 2.0, max = 300.0, value = 100.0, width = "100%"
             )),
-            shiny::column(4, shiny::uiOutput("instrumentDepth")),
-            shiny::column(4, shiny::uiOutput("wireLength"))
+            shiny::column(4, shiny::uiOutput("wireLength")),
+            shiny::column(4, shiny::uiOutput("instrumentDepth"))
         ),
         shiny::fluidRow(
             shiny::column(3, shiny::uiOutput("anchorType")),
@@ -85,13 +86,13 @@ app2 <- function() {
             ),
             shiny::column(6, shiny::sliderInput("u",
                 "Current [m/s]",
-                min = 0.0, max = 5.0, value = 1.0, step = 0.01, width = "100%"
+                min = 0.0, max = 2.0, value = 0.5, step = 0.01, width = "100%"
             ))
         ),
         shiny::fluidRow(shiny::column(6, shiny::checkboxGroupInput(
             inputId = "plotChoices", label = NULL,
             choices = c("tension", "shape", "knockdown", "velocity"),
-            selected = c("shape", "tension"),
+            selected = c("shape"),
             inline = TRUE, width = "100%"
         ))),
         shiny::fluidRow(shiny::plotOutput("plot"))
@@ -113,44 +114,85 @@ app2 <- function() {
             shiny::showModal(shiny::modalDialog(shiny::HTML(help), title = "Using this application", size = "l"))
         })
 
+        observeEvent(input$keypressTrigger, {
+            key <- intToUtf8(input$keypress)
+            ## dmsg("key='",key, "'\n", sep="")
+            if (key == "c") {
+                message("'c' (coastal) pressed")
+            } else if (key == "s") {
+                message("'s' (shelf) pressed")
+            } else if (key == "o") {
+                message("'o' (ocean) pressed")
+            } else if (key == "?") {
+                shiny::showModal(shiny::modalDialog(
+                    title = "Key-stroke commands",
+                    shiny::HTML("<ul>
+                        <li> '<b>c</b>': <b>c</b>oastal mooring</li>
+                        <li> '<b>s</b>': <b>s</b>helf mooring</li>
+                        <li> '<b>o</b>': <b>d</b>eep mooring</li>
+                        <li> '<b>?</b>': display this message</li>
+                        </ul>"),
+                    easyClose = TRUE
+                ))
+            }
+        })
+
         shiny::observeEvent(input$code, {
-            waterDepth <- input$waterDepth
-            wireLength <- input$wireLength
-            u <- input$u
             wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
+            waterDepth <- input$waterDepth
+            wireBelow <- input$waterDepth - input$instrumentDepth
+            instrumentModel <- gsub("[ ]+\\[.*kg\\]$", "", input$instrumentModel)
+            wireAbove <- input$wireLength - wireBelow
             floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
+            u <- input$u
             msg <- "<pre>library(mooring)<br>"
+            msg <- paste0(msg, "# See help pages and vignettes for more details<br>")
+            msg <- paste0(msg, sprintf("m <- mooring(<br>    anchor(depth = %g),<br>", input$waterDepth))
+            msg <- paste0(msg, sprintf("    wire(model = \"%s\", length = %g),<br>", wireModel, wireBelow))
+            msg <- paste0(msg, sprintf("    instrument(model = \"%s\"),<br>", instrumentModel))
+            msg <- paste0(msg, sprintf("    wire(model = \"%s\", length = %g),<br>", wireModel, wireAbove))
+            msg <- paste0(msg, sprintf("    float(model = \"%s\")<br>", floatModel))
+            msg <- paste0(msg, ")<br>")
+            msg <- paste0(msg, "md <- discretise(m, by = 1)<br>")
             msg <- paste0(
                 msg,
-                sprintf(
-                    "m <- mooring(<br>    anchor(depth=%g),<br>    wire(model=\"%s\", length=%g),<br>    float(model=\"%s\"))<br>",
-                    waterDepth, wireModel, wireLength, floatModel
-                )
-            )
-            msg <- paste0(msg, "md <- discretise(m, by=1)<br>")
-            msg <- paste0(
-                msg,
-                "mdk <- knockdown(md, u=",
+                "mdk <- knockdown(md, u = ",
                 switch(input$currentModel,
                     "Constant" = sprintf("%g", input$u),
-                    "Linear" = sprintf("function(depth) %g*(1-depth/%g)", input$u, input$waterDepth),
-                    "exp(z/30)" = sprintf("function(depth) %g*exp(-depth/30)"),
-                    "exp(z/100)" = sprintf("function(depth) %g*exp(-depth/100)"),
-                    "exp(z/300)" = sprintf("function(depth) %g*exp(-depth/300)")
+                    "Linear" = sprintf("function(depth) %g * (1 - depth / %g)", input$u, input$waterDepth),
+                    "exp(z/30)" = sprintf("function(depth) %g * exp(-depth / 30)"),
+                    "exp(z/100)" = sprintf("function(depth) %g * exp(-depth / 100)"),
+                    "exp(z/300)" = sprintf("function(depth) %g * exp(-depth / 300)")
                 ),
                 ")<br>"
             )
-            msg <- paste0(msg, "par(mfrow=c(1, 2))<br>")
-            msg <- paste0(msg, "plot(mdk, which=\"tension\", fancy=TRUE, showDepths=FALSE)<br>")
-            msg <- paste0(msg, "plot(mdk, which=\"shape\", fancy=TRUE)<br>")
+            msg <- paste0(msg, "# Demonstrate all 4 plot types (unlike the app)<br>")
+            msg <- paste0(msg, "par(mfrow = c(2, 2))<br>")
+            msg <- paste0(msg, "plot(mdk, which = \"tension\", fancy = TRUE, showDepths = FALSE)<br>")
+            msg <- paste0(msg, "plot(mdk, which = \"shape\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "plot(mdk, which = \"knockdown\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "plot(mdk, which = \"velocity\", fancy = TRUE)<br>")
             msg <- paste0(msg, "</pre>")
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
 
         output$instrumentDepth <- shiny::renderUI({
-            value <- if (input$waterDepth > 10) input$waterDepth - 10 else input$waterDepth / 2
+            # instrumentDepth must be between waterDepth and (waterDepth-wireLength); make
+            # the default be the midpoint. If neither defined yet (that's how shiny works
+            # just use some values that will get replaced a fraction of a second later)
+            if (is.null(input$waterDepth) || is.null(input$wireLength)) {
+                depthMax <- 100
+                depthMin <- 0
+            } else {
+                depthMax <- input$waterDepth
+                depthMin <- input$waterDepth - input$wireLength
+            }
+            value <- 0.5 * (depthMin + depthMax)
+            message("waterDepth=", input$waterDepth, ", wireLength=", input$wireLength)
+            message("value=", value, ", depthMin=", depthMin, ", depthMax=", depthMax)
+            # value <- if (input$waterDepth > 10) input$waterDepth - 10 else input$waterDepth / 2
             shiny::sliderInput("instrumentDepth", "Instrument Depth [m]",
-                min = 0.5, max = input$waterDepth, value = value, step = 0.1, width = "100%"
+                min = depthMin, max = depthMax, value = value, step = 0.1, width = "100%"
             )
         })
 
@@ -207,6 +249,8 @@ app2 <- function() {
                     wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
                     floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
                     instrumentModel <- gsub("[ ]+\\[.*kg\\]$", "", input$instrumentModel)
+                    message("L219 input$instrumentModel='", input$instrumentModel, "'")
+                    message("L219 instrumentModel='", instrumentModel, "'")
                     #> message("currentModel='", input$currentModel, "'")
                     #> message("waterDepth=", waterDepth)
                     #> message("  wireLength=", wireLength)
@@ -214,9 +258,14 @@ app2 <- function() {
                     #> message("  wireModel=", wireModel)
                     #> message("  floatModel=", floatModel)
                     # FIXME: add instrument here
+                    wireBelow <- waterDepth - input$instrumentDepth
+                    wireAbove <- input$wireLength - wireBelow
+                    message("wireBelow=", wireBelow, "; wireAbove=", wireAbove)
                     m <- mooring(
                         anchor(anchorModel, depth = waterDepth),
-                        wire(model = wireModel, length = wireLength),
+                        wire(model = wireModel, length = wireBelow),
+                        clamped(instrument(instrumentModel)),
+                        wire(model = wireModel, length = wireAbove),
                         float(model = floatModel)
                     )
                     md <- discretise(m, 1)
@@ -250,5 +299,6 @@ app2 <- function() {
             height = 500
         ) # , height=500)
     }
+
     shiny::shinyApp(ui = ui, server = server)
 }
