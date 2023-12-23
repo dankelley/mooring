@@ -57,19 +57,13 @@ app2 <- function(debug = FALSE) {
         shiny::tags$script('$(document).on("keypress", function (e) { Shiny.onInputChange("keypress", e.which); Shiny.onInputChange("keypressTrigger", Math.random()); });'),
         shiny::tags$style(shiny::HTML("body {font-family: 'Arial'; font-size: 10px; margin-left:1ex}")),
         shiny::fluidRow(
-            shiny::column(2, shiny::selectInput("preset", "Preset",
-                choices = c("Nearshore", "Shelf", "Deep"),
-                selected = "Shelf"
-            )),
+            shiny::column(2, shiny::selectInput("preset", "Preset", choices = c("Nearshore", "Shelf", "Deep"), selected = "Shelf")),
             shiny::column(1, shiny::actionButton("code", "Code")),
             shiny::column(1, shiny::actionButton("help", "Help"))
             # shiny::column(6, shiny::radioButtons("orderBy", "Order Components By", choices = c("name", "buoyancy"), selected = "name", inline = TRUE, width = "100%"))
         ),
         shiny::fluidRow(
-            shiny::column(4, shiny::sliderInput("waterDepth",
-                "Water Depth [m]",
-                min = 2.0, max = 200.0, value = 100.0, width = "100%"
-            )),
+            shiny::column(4, shiny::uiOutput("waterDepth")),
             shiny::column(4, shiny::uiOutput("wireLength")),
             shiny::column(4, shiny::uiOutput("instrumentDepth"))
         ),
@@ -93,14 +87,13 @@ app2 <- function(debug = FALSE) {
                     selected = "Linear"
                 )
             ),
-            shiny::column(6, shiny::sliderInput("u",
-                "Current [m/s]",
+            shiny::column(6, shiny::sliderInput("u", "Current [m/s]",
                 min = 0.0, max = 1.0, value = 0.5, step = 0.01, width = "100%"
             ))
         ),
         shiny::fluidRow(shiny::column(6, shiny::checkboxGroupInput(
             inputId = "plotChoices", label = NULL,
-            choices = c("tension", "shape", "knockdown", "velocity"),
+            choices = c("shape", "velocity", "knockdown", "tension"),
             selected = c("shape", "velocity"),
             inline = TRUE, width = "100%"
         ))),
@@ -142,101 +135,81 @@ app2 <- function(debug = FALSE) {
         })
 
         shiny::observeEvent(input$preset, {
-            dmsg("input$preset='", input$preset, "'")
             if (identical(input$preset, "Nearshore")) {
-                message("Preset: 'Nearshore'")
-                shiny::updateSliderInput(session,
-                    inputId = "waterDepth",
-                    value = 2, min = 1, max = 5, step = 0.1
-                )
-                shiny::updateSliderInput(session,
-                    inputId = "wireLength",
-                    value = 1.0, min = 0.5, max = 1.6, step = 0.1 # FIXME: not obeyed
-                )
-                shiny::updateSliderInput(session,
-                    inputId = "instrumentDepth",
-                    value = 1.0
-                )
-                shiny::updateSliderInput(session,
-                    inputId = "u",
-                    min = 0.0, max = 2.0, value = 1, step = 0.01
-                )
-                shiny::updateSelectInput(session,
-                    inputId = "currentModel",
-                    selected = "Linear"
-                )
+                dmsg("Preset: 'Nearshore'")
+                shiny::updateSliderInput(session, inputId = "waterDepth", min = 1.0, max = 5.0, value = 2.0, step = 0.1)
+                shiny::updateSliderInput(session, inputId = "wireLength", min = 0.5, max = 1.6, value = 1.0, step = 0.1)
+                shiny::updateSliderInput(session, inputId = "instrumentDepth", min = 1.0, max = 5.0, value = 1.0)
+                shiny::updateSliderInput(session, inputId = "u", min = 0.0, max = 2.0, value = 1, step = 0.01)
+                shiny::updateSelectInput(session, inputId = "currentModel", selected = "Linear")
                 wire <- "3/8in leaded polypropylene"
                 shiny::updateSelectInput(session,
                     inputId = "wireModel",
                     selected = paste0(wire, " [", wire(wire, length = 1)$buoyancy, "kg/m]")
                 )
                 anchor <- "2 rotor"
-                shiny::updateSelectInput(session,
-                    inputId = "anchorModel",
-                    # choices = paste0(anchorChoices, " [", anchorBuoyancy, "kg]"),
+                shiny::updateSelectInput(session, inputId = "anchorModel",
                     selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]")
                 )
                 instrument <- "Hobo Temp U22"
-                shiny::updateSelectInput(session,
-                    inputId = "instrumentModel",
-                    # choices = paste0(instrumentChoices, " [", instrumentBuoyancy, "kg]"),
+                shiny::updateSelectInput(session, inputId = "instrumentModel",
                     selected = paste0(instrument, " [", instrument(instrument)$buoyancy, "kg]")
                 )
                 float <- "11in centre hole tfloat"
-                shiny::updateSelectInput(session,
-                    inputId = "floatModel",
-                    # choices = paste0(floatChoices, " [", floatBuoyancy, "kg]"),
+                shiny::updateSelectInput(session, inputId = "floatModel",
                     selected = paste0(float, " [", float(float)$buoyancy, "kg]")
                 )
             } else if (identical(input$preset, "Shelf")) {
                 dmsg("Preset: 'Shelf'")
-                shiny::updateSliderInput(session,
-                    inputId = "waterDepth",
-                    min = 2.0, max = 200.0, value = 100.0
-                )
-                shiny::updateSliderInput(session,
-                    inputId = "wireLength",
-                    value = 90.0, min = 0.5, max = 200.0, step = 0.1
-                )
-                shiny::updateSliderInput(session,
-                    inputId = "instrumentDepth",
-                    value = 150.0
-                )
-                shiny::updateSliderInput(session,
-                    inputId = "u",
-                    min = 0.0, max = 1.0, value = 0.5, step = 0.01
-                )
-                shiny::updateSliderInput(session,
-                    inputId = "u",
-                    min = 0.0, max = 2.0, value = 1, step = 0.01
-                )
+                shiny::updateSliderInput(session, inputId = "waterDepth", min = 2.0, max = 200.0, value = 100.0, step = 1.0)
+                shiny::updateSliderInput(session, inputId = "wireLength", min = 10.0, max = 180.0, value = 90.0, step = 1.0)
+                shiny::updateSliderInput(session, inputId = "instrumentDepth", min = 10.0, max = 160.0, value = 50.0, step = 1.0)
+                shiny::updateSliderInput(session, inputId = "u", min = 0.0, max = 1.0, value = 0.5)
+                shiny::updateSelectInput(session, inputId = "currentModel", selected = "Linear")
                 wire <- "1/4in wire/jack"
-                shiny::updateSelectInput(session,
-                    inputId = "wireModel",
+                shiny::updateSelectInput(session, inputId = "wireModel",
                     choices = paste0(wireChoices, " [", wireBuoyancy, "kg/m]"),
                     selected = paste0(wire, " [", wire(wire, length = 1)$buoyancy, "kg/m]")
                 )
                 anchor <- "1 Railway Wheel"
-                shiny::updateSelectInput(session,
-                    inputId = "anchorModel",
+                shiny::updateSelectInput(session, inputId = "anchorModel",
                     # choices = paste0(anchorChoices, " [", anchorBuoyancy, "kg]"),
                     selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]")
                 )
                 instrument <- "seabird CTD (ios oxygen with bar)"
-                shiny::updateSelectInput(session,
-                    inputId = "instrumentModel",
+                shiny::updateSelectInput(session, inputId = "instrumentModel",
                     # choices = paste0(instrumentChoices, " [", instrumentBuoyancy, "kg]"),
                     # selected = "Hobo Temp U22 [0.0133kg]"
                     selected = paste0(instrument, " [", instrument(instrument)$buoyancy, "kg]")
                 )
-                float <- "Trpl 16in Viny"
-                shiny::updateSelectInput(session,
-                    inputId = "floatModel",
-                    # choices = paste0(floatChoices, " [", floatBuoyancy, "kg]"),
+                float <- "BUB 2x17in glass"
+                shiny::updateSelectInput(session, inputId = "floatModel",
                     selected = paste0(float, " [", float(float)$buoyancy, "kg]")
                 )
             } else if (identical(input$preset, "Deep")) {
-                message("FIXME: handle 'Deep'")
+                dmsg("Preset: 'Deep'")
+                shiny::updateSliderInput(session, inputId = "waterDepth", min = 100.0, max = 1500.0, value = 1000.0, step = 10.0)
+                shiny::updateSliderInput(session, inputId = "wireLength", min = 100.0, max = 1480.0, value = 980.0, step = 1.0)
+                shiny::updateSliderInput(session, inputId = "instrumentDepth", min = 100.0, max = 1470.0, value = 500.0, step = 10.0)
+                shiny::updateSliderInput(session, inputId = "u", min = 0.0, max = 1.0, value = 0.5)
+                shiny::updateSelectInput(session, inputId = "currentModel", selected = "Linear")
+                wire <- "1/4in wire/jack"
+                shiny::updateSelectInput(session, inputId = "wireModel",
+                    choices = paste0(wireChoices, " [", wireBuoyancy, "kg/m]"),
+                    selected = paste0(wire, " [", wire(wire, length = 1)$buoyancy, "kg/m]")
+                )
+                anchor <- "1 Railway Wheel"
+                shiny::updateSelectInput(session, inputId = "anchorModel",
+                    selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]")
+                )
+                instrument <- "seabird CTD (ios oxygen with bar)"
+                shiny::updateSelectInput(session, inputId = "instrumentModel",
+                    selected = paste0(instrument, " [", instrument(instrument)$buoyancy, "kg]")
+                )
+                float <- "30in float"
+                shiny::updateSelectInput(session, inputId = "floatModel",
+                    selected = paste0(float, " [", float(float)$buoyancy, "kg]")
+                )
             } else {
                 stop("How can we get here? (Programming error.)")
             }
@@ -252,9 +225,9 @@ app2 <- function(debug = FALSE) {
             u <- input$u
             msg <- "<pre>library(mooring)<br>"
             msg <- paste0(msg, "# See help pages and vignettes for more details<br>")
-            msg <- paste0(msg, sprintf("m <- mooring(<br>    anchor(depth = %g),<br>", input$waterDepth))
+            msg <- paste0(msg, sprintf("m <- mooring(<br>    anchor(model = \"%s\", depth = %g),<br>", gsub(" \\[.*$", "", input$anchorModel), input$waterDepth))
             msg <- paste0(msg, sprintf("    wire(model = \"%s\", length = %g),<br>", wireModel, wireBelow))
-            msg <- paste0(msg, sprintf("    instrument(model = \"%s\"),<br>", instrumentModel))
+            msg <- paste0(msg, sprintf("    clamped(instrument(model = \"%s\")),<br>", instrumentModel))
             msg <- paste0(msg, sprintf("    wire(model = \"%s\", length = %g),<br>", wireModel, wireAbove))
             msg <- paste0(msg, sprintf("    float(model = \"%s\")<br>", floatModel))
             msg <- paste0(msg, ")<br>")
@@ -281,36 +254,43 @@ app2 <- function(debug = FALSE) {
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
 
-        output$instrumentDepth <- shiny::renderUI({
-            # instrumentDepth must be between waterDepth and (waterDepth-wireLength); make
-            # the default be the midpoint. If neither defined yet (that's how shiny works
-            # just use some values that will get replaced a fraction of a second later)
-            if (is.null(input$waterDepth) || is.null(input$wireLength)) {
-                depthMax <- 100
-                depthMin <- 0
-            } else {
-                depthMax <- input$waterDepth
-                depthMin <- input$waterDepth - input$wireLength
-            }
-            value <- 0.5 * (depthMin + depthMax)
-            message("waterDepth=", input$waterDepth, ", wireLength=", input$wireLength)
-            message("value=", value, ", depthMin=", depthMin, ", depthMax=", depthMax)
-            # value <- if (input$waterDepth > 10) input$waterDepth - 10 else input$waterDepth / 2
-            shiny::sliderInput("instrumentDepth", "Instrument Depth [m]",
-                min = depthMin, max = depthMax, value = value, step = 0.1, width = "100%"
+
+        output$waterDepth <- shiny::renderUI({
+            shiny::sliderInput("waterDepth", "Water Depth [m]",
+                min = 2.0, max = 200.0, value = 100, step = 1.0, width = "100%"
             )
         })
 
+        # FIXME: observe waterDepth and alter wireLength to fit
+        # FIXME: observe wireDepth and alter instrumentDepth to fit
+
         output$wireLength <- shiny::renderUI({
-            if (!is.null(input$waterDepth)) {
-                waterDepth <- input$waterDepth
-                #value <- if (waterDepth > 50) waterDepth - 10 else 0.9 * waterDepth
-                shiny::sliderInput("wireLength", "Wire Length [m]",
-                    min = 0.5, max = waterDepth,
-                    value = 0.8 * waterDepth,
-                    step = 0.1, width = "100%"
-                )
-            }
+            shiny::sliderInput("wireLength", "Wire Length [m]",
+                min = 10.0, max = 180.0, value = 90.0, step = 1.0, width = "100%"
+            )
+        })
+
+        output$instrumentDepth <- shiny::renderUI({
+            #. # instrumentDepth must be between waterDepth and (waterDepth-wireLength); make
+            #. # the default be the midpoint. If neither defined yet (that's how shiny works
+            #. # just use some values that will get replaced a fraction of a second later)
+            #. if (is.null(input$waterDepth) || is.null(input$wireLength)) {
+            #.     depthMax <- 100
+            #.     depthMin <- 0
+            #. } else {
+            #.     depthMax <- input$waterDepth
+            #.     depthMin <- input$waterDepth - input$wireLength
+            #. }
+            #. value <- 0.5 * (depthMin + depthMax)
+            #. message("waterDepth=", input$waterDepth, ", wireLength=", input$wireLength)
+            #. message("value=", value, ", depthMin=", depthMin, ", depthMax=", depthMax)
+            #. # value <- if (input$waterDepth > 10) input$waterDepth - 10 else input$waterDepth / 2
+            #. shiny::sliderInput("instrumentDepth", "Instrument Depth [m]",
+            #.     min = depthMin, max = depthMax, value = value, step = 0.1, width = "100%"
+            #. )
+            shiny::sliderInput("instrumentDepth", "Instrument Depth [m]",
+                min = 10.0, max = 160.0, value = 50.0, step = 1.0, width = "100%"
+            )
         })
 
         output$anchorType <- shiny::renderUI({
@@ -341,7 +321,7 @@ app2 <- function(debug = FALSE) {
         })
 
         output$floatType <- shiny::renderUI({
-            float <- "Trpl 16in Viny"
+            float <- "BUB 2x17in glass"
             shiny::selectInput("floatModel", "Float Type",
                 choices = paste0(floatChoices, " [", floatBuoyancy, "kg]"),
                 selected = paste0(float, " [", float(float)$buoyancy, "kg]"),
@@ -377,7 +357,7 @@ app2 <- function(debug = FALSE) {
                         wire(model = wireModel, length = wireAbove),
                         float(model = floatModel)
                     )
-                    message(str(m))
+                    #message(str(m))
                     md <- discretise(m, 1)
                     u <- switch(input$currentModel,
                         "Constant" = input$u,
