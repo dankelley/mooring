@@ -120,14 +120,19 @@ plot(mdk, which="tension", fancy=TRUE)
 plot(mdk, which="shape", fancy=TRUE)
 ```
 
-# Interactive App
+# Interactive Apps
 
-The package supplies `app()` as a convenient way to learn about the package.
-By design, it does not offer a way to make complex moorings.  For example, it
-only provides an anchor-wire-float mooring, with no way (yet) to add a bottom
-release, instruments, floats, etc.
+The package supplies interactive (shiny) apps way to become familiar with the
+package. The first of these, [app1()], works with moorings consisting of an
+anchor, a wire, and a float.  The second, [app2()], adds an instrument, which
+can be placed between anchor and float. Both have sliders and pulldown menus to
+adjust all the elements of the mooring, as well as a button labelled 'Code',
+which opens a pop-up window showing R code that can reproduce the plots. This
+can be useful for building intuition about how knockdown depends on the choice
+of float, wire and instrument, and also how the positions of the elements
+affects the deformation of the mooring in current.
 
-The following is a screenshot of the case studied so far, but with a weaker
+The following is a screenshot of a case studied so far, but with a weaker
 surface mooring (a 20-inch diameter Hydro-float Mooring
 Buoy^[https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf]).
 The knockdown is much higher than seen in the plots above, because the float
