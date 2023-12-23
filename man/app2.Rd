@@ -4,7 +4,11 @@
 \alias{app2}
 \title{Run a two-element GUI app for interactive simulations}
 \usage{
-app2()
+app2(debug = FALSE)
+}
+\arguments{
+\item{debug}{logical value indicating whether to print debugging
+output.  This can be toggled with the keystroke 'd'.}
 }
 \description{
 This makes a simple mooring with an anchor, an instrument, and
