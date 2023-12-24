@@ -4,7 +4,7 @@
 \alias{drag}
 \title{Drag on mooring elements}
 \usage{
-drag(m, u, rho = 1027, g = 9.8)
+drag(m, u, rho = 1027, g = 9.8, phi = 0)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
@@ -25,6 +25,9 @@ section of the documentation for \code{\link[=buoyancy]{buoyancy()}}.}
 
 \item{g}{numeric value of the acceleration due to gravity, with default
 being 9.8 m/s^2.}
+
+\item{phi}{angle (in degrees) of element compared with a vertical line. This
+is passed to \code{\link[=area]{area()}}.}
 }
 \value{
 \code{drag} returns a numeric vector of horizontal drag "force" (really, force

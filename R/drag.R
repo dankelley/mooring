@@ -23,16 +23,19 @@
 #' @param g numeric value of the acceleration due to gravity, with default
 #' being 9.8 m/s^2.
 #'
+#' @param phi angle (in degrees) of element compared with a vertical line. This
+#' is passed to [area()].
+#'
 #' @return `drag` returns a numeric vector of horizontal drag "force" (really, force
 #' divided by gravitational acceleration), expressed in kg.
 #'
 #' @export
 #'
 #' @author Dan Kelley
-drag <- function(m, u, rho = 1027, g = 9.8) {
+drag <- function(m, u, rho = 1027, g = 9.8, phi = 0.0) {
     if (length(rho) > 1L && length(rho) != length(m)) {
         stop("length of rho, ", length(rho), " must match length of m, ", length(m))
     }
     uSquared <- if (is.function(u)) sapply(depth(m), u)^2 else u^2
-    0.5 * area(m) * rho * CD(m) * uSquared / g
+    0.5 * area(m, phi = phi) * rho * CD(m) * uSquared / g
 }

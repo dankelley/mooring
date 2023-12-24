@@ -4,14 +4,18 @@
 \alias{area}
 \title{Horizontally-projected area of mooring elements}
 \usage{
-area(m)
+area(m, phi = 0)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
 mooring-element object, created with}
+
+\item{phi}{angle (in degrees) of element compared with a vertical line. For
+is used for wire, chain, and intrument elements, but not for floats, which
+are assumed to be spherical.}
 }
 \value{
-\code{area} returns a numeric value of the area viewed from a horizontal, in m^2.
+\code{area} returns a numeric value of the side-view area, in m^2.
 }
 \description{
 The areas are not computed by this function, but rather looked up
@@ -33,18 +37,7 @@ see the vignette named "Default Values for Mooring Elements".
 library(mooring)
 area(float())
 
-}
-\references{
-Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
-Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
-(December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
 
-Dewey, Richard. "Mooring Design and Dynamics:
-A Matlab Package for Designing and Testing
-Oceanographic Moorings And Towed Bodies."
-Accessed May 15, 2021.
-http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
-http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
 }
 \author{
 Dan Kelley
