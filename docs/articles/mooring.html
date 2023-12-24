@@ -96,7 +96,7 @@
       <h1 data-toc-skip>The mooring package</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2023-12-15</h4>
+            <h4 data-toc-skip class="date">2023-12-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring.Rmd" class="external-link"><code>vignettes/mooring.Rmd</code></a></small>
       <div class="hidden name"><code>mooring.Rmd</code></div>
@@ -262,20 +262,30 @@ brown.</strong>
 </div>
 </div>
 <div class="section level2">
-<h2 id="interactive-app">Interactive App<a class="anchor" aria-label="anchor" href="#interactive-app"></a>
+<h2 id="interactive-apps">Interactive Apps<a class="anchor" aria-label="anchor" href="#interactive-apps"></a>
 </h2>
-<p>The package supplies <code><a href="../reference/app.html">app()</a></code> as a convenient way to learn
-about the package. By design, it does not offer a way to make complex
-moorings. For example, it only provides an anchor-wire-float mooring,
-with no way (yet) to add a bottom release, instruments, floats, etc.</p>
-<p>The following is a screenshot of the case studied so far, but with a
-weaker surface mooring (a 20-inch diameter Hydro-float Mooring Buoy<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>). The
-knockdown is much higher than seen in the plots above, because the float
-buoyancy is less than for that of the default float. (As a guide, the
-menus of app display the buoyancies of wire and float elements.)</p>
+<p>The package supplies interactive (shiny) apps way to become familiar
+with the package. The first of these, <code><a href="../reference/app1.html">app1()</a></code>, works with
+moorings consisting of an anchor, a wire, and a float. The second,
+<code><a href="../reference/app2.html">app2()</a></code>, adds an instrument, which can be placed between
+anchor and float. Both have sliders and pulldown menus to adjust all the
+elements of the mooring, as well as a button labelled ‘Code’, which
+opens a pop-up window showing R code that can reproduce the plots. This
+can be useful for building intuition about how knockdown depends on the
+choice of float, wire and instrument, and also how the positions of the
+elements affects the deformation of the mooring in current.</p>
+<p>The following is a screenshot of a preset case of the
+<code><a href="../reference/app2.html">app2()</a></code>.</p>
 <div class="figure" style="text-align: center">
-<img src="mooring_app_snapshot.png" alt="**Snapshot of the app() GUI application.**" width="100%"><p class="caption">
-<strong>Snapshot of the app() GUI application.</strong>
+<img src="app2_top.png" alt="**Top portion of the app2() view, showing the GUI controls.**" width="100%"><p class="caption">
+<strong>Top portion of the app2() view, showing the GUI
+controls.</strong>
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<img src="app2_bot.png" alt="**Bottom portion of the app2() view, showing the plot region.**" width="100%"><p class="caption">
+<strong>Bottom portion of the app2() view, showing the plot
+region.</strong>
 </p>
 </div>
 </div>
@@ -358,7 +368,7 @@ follows.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/grid.html" class="external-link">grid</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">1.1</span><span class="op">*</span><span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="mooring_files/figure-html/unnamed-chunk-13-1.png" alt="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**" width="700.0000032"><p class="caption">
+<img src="mooring_files/figure-html/unnamed-chunk-14-1.png" alt="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**" width="700.0000032"><p class="caption">
 <strong>Dependence of knockdown on current. Solid: depth of top mooring
 element (a float). Dashed: 10% increase in that depth.</strong>
 </p>
@@ -423,7 +433,7 @@ a line of slope 2/3.</li>
 <span><span class="va">buoyancy</span> <span class="op">&lt;-</span> <span class="fl">10</span><span class="op">*</span><span class="va">drag</span><span class="op">^</span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="co"># the factor is just for illustration</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">drag</span>, <span class="va">buoyancy</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="mooring_files/figure-html/unnamed-chunk-16-1.png" alt="**Float drag-buoyancy relationship, in log-log scaling. Circles: data for the built-in float types, assuming a 1m/s current. Line: a scaling line of slope 3/2, with an arbitrary vertical shift for comparison with the data cloud.**" width="700.0000032"><p class="caption">
+<img src="mooring_files/figure-html/unnamed-chunk-17-1.png" alt="**Float drag-buoyancy relationship, in log-log scaling. Circles: data for the built-in float types, assuming a 1m/s current. Line: a scaling line of slope 3/2, with an arbitrary vertical shift for comparison with the data cloud.**" width="700.0000032"><p class="caption">
 <strong>Float drag-buoyancy relationship, in log-log scaling. Circles:
 data for the built-in float types, assuming a 1m/s current. Line: a
 scaling line of slope 3/2, with an arbitrary vertical shift for
@@ -444,7 +454,7 @@ lower drag coefficients, but that is another matter!</p>
 <h3 id="exercise-3">Exercise 3<a class="anchor" aria-label="anchor" href="#exercise-3"></a>
 </h3>
 <p>To find a float that will hold this mooring reasonably taut in 2m/s
-current, one approach is to use <code><a href="../reference/app.html">app()</a></code>, which has a pulldown
+current, one approach is to use <code>app()</code>, which has a pulldown
 menu for the float type. Another approach is to start with the table
 produced in Exercise 1, and try different float models in the code given
 in the “Mooring Design” section. Of course, a criterion on tautness must
@@ -475,12 +485,6 @@ Hamilton, James M., George A. Fowler, and Donald J. Belliveau. 1997.
 Atmospheric and Oceanic Technology</em> 14 (3): 644–55.
 </div>
 </div>
-</div>
-<div class="footnotes footnotes-end-of-document">
-<hr>
-<ol>
-<li id="fn1"><p><a href="https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf" class="external-link uri">https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
   </div>
 
