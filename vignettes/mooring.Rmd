@@ -8,10 +8,10 @@ output:
     toc: true
     number_sections: true
     fig_caption: yes
-    fig.width: 5
-    fig.height: 4
+    fig_width: 6
+    fig_height: 4
     dpi: 72
-    dev.args: list(pointsize=10)
+    dev.args: list(pointsize=8)
 vignette: >
   %\VignetteIndexEntry{The mooring package}
   %\VignetteEngine{knitr::rmarkdown}
@@ -123,8 +123,8 @@ plot(mdk, which="shape", fancy=TRUE)
 # Interactive Apps
 
 The package supplies interactive (shiny) apps way to become familiar with the
-package. The first of these, [app1()], works with moorings consisting of an
-anchor, a wire, and a float.  The second, [app2()], adds an instrument, which
+package. The first of these, `app1()`, works with moorings consisting of an
+anchor, a wire, and a float.  The second, `app2()`, adds an instrument, which
 can be placed between anchor and float. Both have sliders and pulldown menus to
 adjust all the elements of the mooring, as well as a button labelled 'Code',
 which opens a pop-up window showing R code that can reproduce the plots. This
@@ -132,15 +132,13 @@ can be useful for building intuition about how knockdown depends on the choice
 of float, wire and instrument, and also how the positions of the elements
 affects the deformation of the mooring in current.
 
-The following is a screenshot of a case studied so far, but with a weaker
-surface mooring (a 20-inch diameter Hydro-float Mooring
-Buoy^[https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf]).
-The knockdown is much higher than seen in the plots above, because the float
-buoyancy is less than for that of the default float.  (As a guide, the menus of
-app display the buoyancies of wire and float elements.)
+The following is a screenshot of a preset case of the `app2()`.
 
-```{r,fig.cap="**Snapshot of the app() GUI application.**", out.width="100%", fig.align="center", echo=FALSE}
-knitr::include_graphics("mooring_app_snapshot.png")
+```{r,fig.cap="**Top portion of the app2() view, showing the GUI controls.**", out.width="100%", fig.align="center", echo=FALSE}
+knitr::include_graphics("app2_top.png")
+```
+```{r,fig.cap="**Bottom portion of the app2() view, showing the plot region.**", out.width="100%", fig.align="center", echo=FALSE}
+knitr::include_graphics("app2_bot.png")
 ```
 
 # Advanced Usage
