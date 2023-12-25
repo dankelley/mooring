@@ -10,6 +10,7 @@
 #' output.  This can be toggled with the keystroke 'd'.
 #'
 #' @export
+#' @importFrom bslib accordion accordion_panel card sidebar
 #'
 #' @author Dan Kelley
 app2bs <- function(debug = FALSE) {
