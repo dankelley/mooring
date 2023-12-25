@@ -26,7 +26,7 @@ release()."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ setup, see the help page for
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">area</span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">area</span><span class="op">(</span><span class="va">m</span>, phi <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -105,29 +105,23 @@ setup, see the help page for
 <dd><p>either a mooring object, created by <code><a href="mooring.html">mooring()</a></code>, or a
 mooring-element object, created with</p></dd>
 
+
+<dt>phi</dt>
+<dd><p>angle (in degrees) of element compared with a vertical line. For
+is used for wire, chain, and intrument elements, but not for floats, which
+are assumed to be spherical.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p><code>area</code> returns a numeric value of the area viewed from a horizontal, in m^2.</p>
+<p><code>area</code> returns a numeric value of the side-view area, in m^2.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>For a summary of characteristics of the predefined models,
 see the vignette named "Default Values for Mooring Elements".</p>
-    </div>
-    <div id="references">
-    <h2>References</h2>
-    <p>Dewey, Richard K. "Mooring Design &amp; Dynamics-a Matlab® Package for
-Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
-(December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X</p>
-<p>Dewey, Richard. "Mooring Design and Dynamics:
-A Matlab Package for Designing and Testing
-Oceanographic Moorings And Towed Bodies."
-Accessed May 15, 2021.
-http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
-http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -139,6 +133,7 @@ http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">area</span><span class="op">(</span><span class="fu"><a href="float.html">float</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7853982</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
