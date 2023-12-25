@@ -7,9 +7,11 @@
 #' in having the instrument, and in having some interface changes.
 #'
 #' @param debug logical value indicating whether to print debugging
-#' output.  This can be toggled with the keystroke 'd'.
+#' output.
 #'
 #' @export
+#'
+#' @family interactive apps
 #'
 #' @author Dan Kelley
 app2 <- function(debug = FALSE) {

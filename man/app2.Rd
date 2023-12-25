@@ -8,13 +8,19 @@ app2(debug = FALSE)
 }
 \arguments{
 \item{debug}{logical value indicating whether to print debugging
-output.  This can be toggled with the keystroke 'd'.}
+output.}
 }
 \description{
 This makes a simple mooring with an anchor, an instrument, and
 a float, in a variety of current profiles. It differs from \code{\link[=app1]{app1()}}
 in having the instrument, and in having some interface changes.
 }
+\seealso{
+Other interactive apps: 
+\code{\link{app1}()},
+\code{\link{app2bs}()}
+}
 \author{
 Dan Kelley
 }
+\concept{interactive apps}
