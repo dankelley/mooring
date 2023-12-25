@@ -35,7 +35,7 @@ is.anchor <- function(m) {
 #'
 #' @author Dan Kelley
 is.float <- function(m) {
-    sapply(m, \(i) inherits(i, "float"))
+    sapply(m, \(mi) inherits(mi, "float"))
 }
 
 #' Determine which Mooring Elements are Instruments
@@ -47,8 +47,10 @@ is.float <- function(m) {
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth = 120), wire(length = 100), instrument("RD ADCP"),
-#'     wire(length = 100), float("HMB 20"))
+#' m <- mooring(
+#'     anchor(depth = 120), wire(length = 100), instrument("RD ADCP"),
+#'     wire(length = 100), float("HMB 20")
+#' )
 #' is.instrument(m)
 #'
 #' @export

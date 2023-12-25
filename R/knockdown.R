@@ -54,20 +54,20 @@ knockdown <- function(m, u = 1, debug = 0L) {
     debug <- max(0L, as.integer(debug))
     n <- length(m)
     # check for well-formed parameters
-    if (n < 3L) {
-        stop("mooring must have 2 or more elements")
-    }
     if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
-    if (!inherits(m[[length(m)]], "anchor")) {
+    if (n < 3L) {
+        stop("mooring must have 2 or more elements")
+    }
+    if (!inherits(m[[n]], "anchor")) {
         stop("the bottom element of a mooring must be created with anchor()")
     }
     if (!is.null(attr(m, "u"))) {
         stop("cannot apply knockdown() to the result of a previous call")
     }
     if (is.null(attr(m, "discretised"))) {
-        warning("accuracy is better if discretise() is used first\n")
+        warning("accuracy is higher if discretise() is used before knockdown()\n")
     }
     if (is.function(u) && debug > 0L) {
         warning("FIXME: u=function() case is not fully coded yet (no iteration is done)\n")
@@ -113,13 +113,18 @@ knockdown <- function(m, u = 1, debug = 0L) {
     } else {
         -waterDepth
     }
-    mooringDebug(debug, "  n=", n, ", z=", m[[n]]$z, "\n", sep="")
+    mooringDebug(debug, "Before knockdown, m[[1]]$z=", m[[1]]$z, ", m[[", n, "]]$z=", m[[n]]$z, "\n", sep="")
     m[[n]]$tau <- tau[n]
     for (i in seq(n - 1L, 1L, -1L)) {
         m[[i]]$phi <- phi[i]
         m[[i]]$tau <- tau[i]
         m[[i]]$x <- m[[i + 1]]$x + m[[i]]$height * sin(m[[i]]$phi)
         m[[i]]$z <- m[[i + 1]]$z + m[[i]]$height * cos(m[[i]]$phi)
+    }
+    mooringDebug(debug, "After knockdown, m[[1]]$z=", m[[1]]$z, ", m[[", n, "]]$z=", m[[n]]$z, "\n", sep="")
+    ztop <- m[[1]]$z
+    if (ztop > 0) {
+        warning(sprintf("mooring line too long for depth (top element %.2f m in air); expect odd results", ztop))
     }
     class(m) <- "mooring"
     attr(m, "u") <- u

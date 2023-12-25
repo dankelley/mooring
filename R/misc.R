@@ -33,17 +33,19 @@
 #' # List known misc types
 #' misc("?")
 #'
-#' @references
-#' Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
-#' Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
-#' (December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
-#'
-#' Dewey, Richard. "Mooring Design and Dynamics:
-#' A Matlab Package for Designing and Testing
-#' Oceanographic Moorings And Towed Bodies."
-#' Accessed May 15, 2021.
-#' http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
-#' http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
+## Remove these references, which belong only at the top level, where users
+## will expect to see them, and where they can be edited in a single spot.
+## @references
+## Dewey, Richard K. "Mooring Design & Dynamics-a Matlab® Package for
+## Designing and Analyzing Oceanographic Moorings." Marine Models, vol. 1, no. 1
+## (December 1, 1999): 103–57. https://doi.org/10.1016/S1369-9350(00)00002-X
+##
+## Dewey, Richard. "Mooring Design and Dynamics:
+## A Matlab Package for Designing and Testing
+## Oceanographic Moorings And Towed Bodies."
+## Accessed May 15, 2021.
+## http://canuck.seos.uvic.ca/rkd/mooring/mdd/mdd.php
+## http://canuck.seos.uvic.ca/rkd/mooring/moordyn.php
 #'
 #' @export
 #'
