@@ -122,23 +122,24 @@ plot(mdk, which="shape", fancy=TRUE)
 
 # Interactive Apps
 
-The package supplies interactive (shiny) apps way to become familiar with the
-package. The first of these, `app1()`, works with moorings consisting of an
-anchor, a wire, and a float.  The second, `app2()`, adds an instrument, which
-can be placed between anchor and float. Both have sliders and pulldown menus to
-adjust all the elements of the mooring, as well as a button labelled 'Code',
-which opens a pop-up window showing R code that can reproduce the plots. This
-can be useful for building intuition about how knockdown depends on the choice
-of float, wire and instrument, and also how the positions of the elements
-affects the deformation of the mooring in current.
+The package supplies interactive (shiny) apps, which are designed to help
+become familiar with the package.
 
-The following is a screenshot of a preset case of the `app2()`.
+1. `app1()`, works with moorings consisting of an anchor, a wire, and a float.
+2. `app2()`, adds an instrument, which can be placed between anchor and float.
+3. `app2bs()` is a trial version of a new aesthetic display of `app2()`.
 
-```{r,fig.cap="**Top portion of the app2() view, showing the GUI controls.**", out.width="100%", fig.align="center", echo=FALSE}
-knitr::include_graphics("app2_top.png")
-```
-```{r,fig.cap="**Bottom portion of the app2() view, showing the plot region.**", out.width="100%", fig.align="center", echo=FALSE}
-knitr::include_graphics("app2_bot.png")
+Each of these apps has controls for adjusting the simulation. Importantly, each
+also has a button labelled 'Code', which opens a pop-up window showing R code
+that can reproduce the plots. This can be useful for building intuition about
+how knockdown depends on the choice of float, wire and instrument, and also how
+the positions of the elements affects the deformation of the mooring in
+current.
+
+The following is a screenshot of `app2bs()` in action.
+
+```{r,fig.cap="**View of the app2bs() shiny application.**", out.width="100%", fig.align="center", echo=FALSE}
+knitr::include_graphics("app2bs.png")
 ```
 
 # Advanced Usage

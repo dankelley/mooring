@@ -8,6 +8,8 @@
 #'
 #' @export
 #'
+#' @family interactive apps
+#'
 #' @author Dan Kelley
 app1 <- function() {
     if (!requireNamespace("shiny")) {

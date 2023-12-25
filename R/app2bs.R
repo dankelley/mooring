@@ -5,11 +5,16 @@
 #' This makes a simple mooring with an anchor, an instrument, and
 #' a float, in a variety of current profiles. It differs from [app1()]
 #' in having the instrument, and in having some interface changes.
+#' It differs from [app2()] in using the 'bslib' GUI framework,
+#' which is cleaner than the framework used in [app1()] and [app2()].
 #'
 #' @param debug logical value indicating whether to print debugging
-#' output.  This can be toggled with the keystroke 'd'.
+#' output.
 #'
 #' @export
+#' @importFrom bslib accordion accordion_panel card sidebar
+#'
+#' @family interactive apps
 #'
 #' @author Dan Kelley
 app2bs <- function(debug = FALSE) {

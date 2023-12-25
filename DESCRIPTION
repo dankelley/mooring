@@ -12,6 +12,7 @@ Description: Calculates the response of oceanographic moorings to horizontal cur
 Depends:
     R (>= 3.5.0),
 Imports:
+    bslib, 
     shiny
 Suggests:
     knitr,

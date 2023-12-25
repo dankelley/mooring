@@ -11,6 +11,12 @@ This makes a simple mooring with an anchor, a line, and a float, in
 a variety of current profiles. It differs from \code{\link[=app2]{app2()}} in having
 an instrument as well as a float.
 }
+\seealso{
+Other interactive apps: 
+\code{\link{app2bs}()},
+\code{\link{app2}()}
+}
 \author{
 Dan Kelley
 }
+\concept{interactive apps}
