@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
       <h1 data-toc-skip>The mooring package</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2023-12-24</h4>
+            <h4 data-toc-skip class="date">2023-12-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring.Rmd" class="external-link"><code>vignettes/mooring.Rmd</code></a></small>
       <div class="hidden name"><code>mooring.Rmd</code></div>
@@ -264,28 +264,30 @@ brown.</strong>
 <div class="section level2">
 <h2 id="interactive-apps">Interactive Apps<a class="anchor" aria-label="anchor" href="#interactive-apps"></a>
 </h2>
-<p>The package supplies interactive (shiny) apps way to become familiar
-with the package. The first of these, <code><a href="../reference/app1.html">app1()</a></code>, works with
-moorings consisting of an anchor, a wire, and a float. The second,
+<p>The package supplies interactive (shiny) apps, which are designed to
+help become familiar with the package.</p>
+<ol style="list-style-type: decimal">
+<li>
+<code><a href="../reference/app1.html">app1()</a></code>, works with moorings consisting of an anchor, a
+wire, and a float.</li>
+<li>
 <code><a href="../reference/app2.html">app2()</a></code>, adds an instrument, which can be placed between
-anchor and float. Both have sliders and pulldown menus to adjust all the
-elements of the mooring, as well as a button labelled ‘Code’, which
-opens a pop-up window showing R code that can reproduce the plots. This
-can be useful for building intuition about how knockdown depends on the
-choice of float, wire and instrument, and also how the positions of the
+anchor and float.</li>
+<li>
+<code><a href="../reference/app2bs.html">app2bs()</a></code> is a trial version of a new aesthetic display
+of <code><a href="../reference/app2.html">app2()</a></code>.</li>
+</ol>
+<p>Each of these apps has controls for adjusting the simulation.
+Importantly, each also has a button labelled ‘Code’, which opens a
+pop-up window showing R code that can reproduce the plots. This can be
+useful for building intuition about how knockdown depends on the choice
+of float, wire and instrument, and also how the positions of the
 elements affects the deformation of the mooring in current.</p>
-<p>The following is a screenshot of a preset case of the
-<code><a href="../reference/app2.html">app2()</a></code>.</p>
+<p>The following is a screenshot of <code><a href="../reference/app2bs.html">app2bs()</a></code> in action.</p>
 <div class="figure" style="text-align: center">
-<img src="app2_top.png" alt="**Top portion of the app2() view, showing the GUI controls.**" width="100%"><p class="caption">
-<strong>Top portion of the app2() view, showing the GUI
-controls.</strong>
-</p>
-</div>
-<div class="figure" style="text-align: center">
-<img src="app2_bot.png" alt="**Bottom portion of the app2() view, showing the plot region.**" width="100%"><p class="caption">
-<strong>Bottom portion of the app2() view, showing the plot
-region.</strong>
+<img src="app2bs.png" alt="**View of the app2bs() shiny application, with the 'Current' controller open.**" width="100%"><p class="caption">
+<strong>View of the app2bs() shiny application, with the ‘Current’
+controller open.</strong>
 </p>
 </div>
 </div>
@@ -368,7 +370,7 @@ follows.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/grid.html" class="external-link">grid</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">1.1</span><span class="op">*</span><span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="mooring_files/figure-html/unnamed-chunk-14-1.png" alt="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**" width="700.0000032"><p class="caption">
+<img src="mooring_files/figure-html/unnamed-chunk-13-1.png" alt="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**" width="700.0000032"><p class="caption">
 <strong>Dependence of knockdown on current. Solid: depth of top mooring
 element (a float). Dashed: 10% increase in that depth.</strong>
 </p>
@@ -433,7 +435,7 @@ a line of slope 2/3.</li>
 <span><span class="va">buoyancy</span> <span class="op">&lt;-</span> <span class="fl">10</span><span class="op">*</span><span class="va">drag</span><span class="op">^</span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="co"># the factor is just for illustration</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">drag</span>, <span class="va">buoyancy</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="mooring_files/figure-html/unnamed-chunk-17-1.png" alt="**Float drag-buoyancy relationship, in log-log scaling. Circles: data for the built-in float types, assuming a 1m/s current. Line: a scaling line of slope 3/2, with an arbitrary vertical shift for comparison with the data cloud.**" width="700.0000032"><p class="caption">
+<img src="mooring_files/figure-html/unnamed-chunk-16-1.png" alt="**Float drag-buoyancy relationship, in log-log scaling. Circles: data for the built-in float types, assuming a 1m/s current. Line: a scaling line of slope 3/2, with an arbitrary vertical shift for comparison with the data cloud.**" width="700.0000032"><p class="caption">
 <strong>Float drag-buoyancy relationship, in log-log scaling. Circles:
 data for the built-in float types, assuming a 1m/s current. Line: a
 scaling line of slope 3/2, with an arbitrary vertical shift for

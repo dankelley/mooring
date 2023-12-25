@@ -22,7 +22,7 @@ is returned."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ is returned.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">drag</span><span class="op">(</span><span class="va">m</span>, <span class="va">u</span>, rho <span class="op">=</span> <span class="fl">1027</span>, g <span class="op">=</span> <span class="fl">9.8</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">drag</span><span class="op">(</span><span class="va">m</span>, <span class="va">u</span>, rho <span class="op">=</span> <span class="fl">1027</span>, g <span class="op">=</span> <span class="fl">9.8</span>, phi <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -118,6 +118,11 @@ section of the documentation for <code><a href="buoyancy.html">buoyancy()</a></c
 <dt>g</dt>
 <dd><p>numeric value of the acceleration due to gravity, with default
 being 9.8 m/s^2.</p></dd>
+
+
+<dt>phi</dt>
+<dd><p>angle (in degrees) of element compared with a vertical line. This
+is passed to <code><a href="area.html">area()</a></code>.</p></dd>
 
 </dl></div>
     <div id="value">
