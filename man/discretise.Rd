@@ -5,7 +5,7 @@
 \alias{discretize}
 \title{Discretise chain and wire portions of a mooring}
 \usage{
-discretise(m, by = 1)
+discretise(m, by = 1, debug = 0)
 }
 \arguments{
 \item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
@@ -15,6 +15,10 @@ which is 1m by default. This is considered in the context of
 the total length of the element, \code{L} say. If \code{L/by} exceeds
 20, then chunks of length \code{by} are used.  Otherwise,
 20 chunks, each of length \code{L/20}, are used.}
+
+\item{debug}{an integer value (or a numeric that can be converted to an
+integer) that controls debugging. If this is positive, then some debugging
+information may be printed by the function.}
 }
 \value{
 an object of the \code{"mooring"} class, identical

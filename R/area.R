@@ -46,17 +46,16 @@
 #'
 #' @author Dan Kelley
 area <- function(m, phi = 0.0) {
-    if (!inherits(m, "mooring")) {
-        stop("only works for objects created by mooring(), or by float(), etc")
-    }
-    areaFactor <- ifelse(is.float(m), 1.0, cos(phi * pi / 180))
     if (is.mooring(m)) {
-        #message("area case 1")
-        #print(areaFactor)
-        #print(sapply(m, \(mi) mi$area))
-        areaFactor * sapply(m, \(mi) mi$area)
+        # message("area case 1")
+        # print(areaFactor)
+        # print(sapply(m, \(mi) mi$area))
+        sapply(m, \(mi) area(mi))
+    } else if (is.mooringElement(m)) {
+        areaFactor <- ifelse(is.float(m), 1.0, cos(phi * pi / 180))
+        areaFactor * m$area
     } else {
-        #message("area case 1")
-        if (length(class(m)) != 1L) m$area else stop("area can only be computed for a mooring or an individual element")
+        # message("area case 1")
+        stop("area can only be computed for a mooring or an individual element")
     }
 }

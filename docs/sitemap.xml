@@ -112,13 +112,28 @@
     <loc>/reference/is.anchor.html</loc>
   </url>
   <url>
+    <loc>/reference/is.chain.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is.connector.html</loc>
+  </url>
+  <url>
     <loc>/reference/is.float.html</loc>
   </url>
   <url>
     <loc>/reference/is.instrument.html</loc>
   </url>
   <url>
+    <loc>/reference/is.misc.html</loc>
+  </url>
+  <url>
     <loc>/reference/is.mooring.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is.mooringElement.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is.release.html</loc>
   </url>
   <url>
     <loc>/reference/is.wire.html</loc>

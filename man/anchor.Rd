@@ -44,7 +44,7 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \item{depth}{numeric value giving water depth in m.}
 }
 \value{
-\code{anchor} returns an object of the \code{"mooring"} class and \code{"anchor"} subclass.
+\code{anchor} returns an object of the \code{"mooringElement"} class and \code{"anchor"} subclass.
 }
 \description{
 Create a anchor object,
@@ -74,9 +74,8 @@ anchor("?")
 
 }
 \seealso{
-Other functions that create mooring objects: 
+Other functions that create mooring elements: 
 \code{\link{chain}()},
-\code{\link{clamped}()},
 \code{\link{connector}()},
 \code{\link{float}()},
 \code{\link{instrument}()},
@@ -87,4 +86,4 @@ Other functions that create mooring objects:
 \author{
 Dan Kelley
 }
-\concept{functions that create mooring objects}
+\concept{functions that create mooring elements}

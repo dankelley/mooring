@@ -65,7 +65,7 @@ NULL
 # 2. setup        #
 ###################
 
-#g <- 9.81
+# g <- 9.81
 
 
 #' Create a mooring
@@ -78,6 +78,9 @@ NULL
 #' @param ... two or more elementary objects, as created by
 #' [anchor()], [release()], [chain()],
 #' [wire()], [connector()], [instrument()], [misc()] or [float()].
+#'
+#' @return `mooring` returns a list that inherits from the `"mooring"`
+#' class. The elements of the list are of '"mooringElement"` class.
 #'
 #' @examples
 #' # Example 1: most basic case: anchor, line, float.
@@ -126,19 +129,20 @@ mooring <- function(...) {
     if (n < 3L) {
         stop("need 3 or more arguments")
     }
-    if (!inherits(dots[[1]], "anchor")) {
+    if (!is.anchor(dots[[1]])) {
         stop("first argument must be created with anchor()")
     }
-    w <- which(sapply(dots, function(x) !inherits(x, "mooring")))
+    w <- which(sapply(dots, function(x) !is.mooringElement(x)))
     if (length(w)) {
-        stop("these are the indices of elements that are not of class \"mooring\": ", paste(w, collapse = " "))
+        stop("parameters at the following indices are not of \"mooringElement\" class: ", paste(w, collapse = " "))
     }
-    w <- which(2 != sapply(dots, function(x) length(class(x))))
-    if (length(w)) {
-        stop("these are the indices of elements that are not elementary: ", paste(w, collapse = " "))
-    }
+    # w <- which(2 != sapply(dots, function(x) length(class(x))))
+    # if (length(w)) {
+    #    stop("these are the indices of elements that are not elementary: ", paste(w, collapse = " "))
+    # }
     # All checks seem OK, so reverse parameters and create the return value.
     rval <- rev(dots)
+    class(rval) <- "mooring"
     depth <- rval[[n]]$depth # NOTE: only anchor() objects have this, but we know we have one
     height <- rev(cumsum(sapply(rev(rval), function(x) x$height)))
     # bookmark B1a: same as B1b and analogous t0 B1c {{{
@@ -163,7 +167,6 @@ mooring <- function(...) {
     if (alongBottom) {
         warning("insufficient mooring buoyancy; placed ", alongBottom, " elements on the bottom")
     }
-    class(rval) <- "mooring"
     attr(rval, "waterDepth") <- depth
     rval
 } # mooring()

@@ -14,6 +14,8 @@
 #' 20, then chunks of length `by` are used.  Otherwise,
 #' 20 chunks, each of length `L/20`, are used.
 #'
+#' @template debugTemplate
+#'
 #' @return an object of the `"mooring"` class, identical
 #' to `m` except that wire portions are chopped up into shorter
 #' pieces.
@@ -22,8 +24,10 @@
 #' @aliases discretize
 #'
 #' @author Dan Kelley
-discretise <- function(m, by = 1) {
+discretise <- function(m, by = 1, debug = 0) {
+    mooringDebug(debug, "discretise() {\n")
     if (!is.mooring(m)) {
+        print(class(m))
         stop("only works for objects created by mooring()")
     }
     if (by <= 0) {
@@ -31,17 +35,19 @@ discretise <- function(m, by = 1) {
     }
     n <- length(m)
     rval <- list()
+    class(rval) <- "mooring" # FIXME: this is tedious; perhaps switch to S4 system
     group <- 1L
     for (item in m) {
+        mooringDebug(debug, "  handling item of class c(\"", paste(class(item), collapse = "\", \""), "\")\n", sep = "")
         if (inherits(item, "wire") || inherits(item, "chain")) {
             height <- item$height
             n <- as.integer(1 + floor(height / by))
-            #message(    "INITIAL: height=", height, ", by=", by, ", n=", n)
+            # message(    "INITIAL: height=", height, ", by=", by, ", n=", n)
             # Ensure at least 20 chunks
             if (n < 20L) {
                 n <- 20L
                 by <- height / n
-                #message("  LATER:", height, ", by=", by, ", n=", n)
+                # message("  LATER:", height, ", by=", by, ", n=", n)
             }
             portion <- item
             portion$height <- height / n
@@ -70,5 +76,6 @@ discretise <- function(m, by = 1) {
     class(rval) <- "mooring"
     attr(rval, "discretised") <- TRUE
     attr(rval, "waterDepth") <- attr(m, "waterDepth")
+    mooringDebug(debug, "} # discretise()\n")
     rval
 } # discretise

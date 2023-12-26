@@ -48,8 +48,8 @@
 #'
 #' @author Dan Kelley
 clamped <- function(instrument) {
-    if (!inherits(instrument, "mooring") || !inherits(instrument, "instrument")) {
-        stop("instrument must be a 'mooring' class object, with subclass 'instrument'")
+    if (!is.mooringElement(instrument) || !inherits(instrument, "instrument")) {
+        stop("instrument must be an object created with instrument()")
     }
     instrument$height <- 0
     instrument

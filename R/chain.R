@@ -17,9 +17,9 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `chain` returns an object of the `"mooring"` class and `"chain"` subclass.
+#' @return `chain` returns an object of the `"mooringElement"` class and `"chain"` subclass.
 #'
-#' @family functions that create mooring objects
+#' @family functions that create mooring elements
 #'
 #' @export
 #'
@@ -65,6 +65,6 @@ chain <- function(model = "1in buoy chain", buoyancyPerMeter = NULL, areaPerMete
         source <- ""
     }
     rval <- list(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source)
-    class(rval) <- c("mooring", "chain")
+    class(rval) <- c("mooringElement", "chain")
     rval
 } # chain()

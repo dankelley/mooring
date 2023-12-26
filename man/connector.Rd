@@ -45,7 +45,7 @@ in \eqn{m^2}{m^2}.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \value{
-\code{connector} returns an object of the \code{"mooring"} class and \code{"connector"} subclass.
+\code{connector} returns an object of the \code{"mooringElement"} class and \code{"connector"} subclass.
 }
 \description{
 Create an object that describes mooring connector such as shackles,
@@ -75,10 +75,9 @@ connector("?")
 
 }
 \seealso{
-Other functions that create mooring objects: 
+Other functions that create mooring elements: 
 \code{\link{anchor}()},
 \code{\link{chain}()},
-\code{\link{clamped}()},
 \code{\link{float}()},
 \code{\link{instrument}()},
 \code{\link{misc}()},
@@ -88,4 +87,4 @@ Other functions that create mooring objects:
 \author{
 Dan Kelley
 }
-\concept{functions that create mooring objects}
+\concept{functions that create mooring elements}

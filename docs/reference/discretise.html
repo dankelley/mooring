@@ -82,7 +82,7 @@ accurately by <code><a href="knockdown.html">knockdown()</a></code>.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">discretise</span><span class="op">(</span><span class="va">m</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">discretise</span><span class="op">(</span><span class="va">m</span>, by <span class="op">=</span> <span class="fl">1</span>, debug <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -97,6 +97,12 @@ which is 1m by default. This is considered in the context of
 the total length of the element, <code>L</code> say. If <code>L/by</code> exceeds
 20, then chunks of length <code>by</code> are used.  Otherwise,
 20 chunks, each of length <code>L/20</code>, are used.</p></dd>
+
+
+<dt>debug</dt>
+<dd><p>an integer value (or a numeric that can be converted to an
+integer) that controls debugging. If this is positive, then some debugging
+information may be printed by the function.</p></dd>
 
 </dl></div>
     <div id="value">

@@ -11,6 +11,10 @@ mooring(...)
 \code{\link[=anchor]{anchor()}}, \code{\link[=release]{release()}}, \code{\link[=chain]{chain()}},
 \code{\link[=wire]{wire()}}, \code{\link[=connector]{connector()}}, \code{\link[=instrument]{instrument()}}, \code{\link[=misc]{misc()}} or \code{\link[=float]{float()}}.}
 }
+\value{
+\code{mooring} returns a list that inherits from the \code{"mooring"}
+class. The elements of the list are of '"mooringElement"` class.
+}
 \description{
 Assemble elementary components into a mooring string.
 The first argument must be an anchor, created

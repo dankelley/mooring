@@ -24,9 +24,9 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `anchor` returns an object of the `"mooring"` class and `"anchor"` subclass.
+#' @return `anchor` returns an object of the `"mooringElement"` class and `"anchor"` subclass.
 #'
-#' @family functions that create mooring objects
+#' @family functions that create mooring elements
 #'
 #' @examples
 #' library(mooring)
@@ -64,7 +64,7 @@ anchor <- function(model = "3 trainwheels", buoyancy = NULL, height = NULL, CD =
         source <- ""
     }
     rval <- list(model = model, buoyancy = buoyancy, height = height, area = 0, CD = CD, depth = depth, source = source)
-    class(rval) <- c("mooring", "anchor")
+    class(rval) <- c("mooringElement", "anchor")
     rval
 } # anchor()
 
