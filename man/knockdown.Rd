@@ -4,7 +4,7 @@
 \alias{knockdown}
 \title{Compute mooring knockdown by a horizontal current}
 \usage{
-knockdown(m, u = 1, debug = 0L)
+knockdown(m, u = 1, convergenceCriterion = 0.001, debug = 0L)
 }
 \arguments{
 \item{m}{an object of the \code{"mooring"} class, usually created with
@@ -13,6 +13,12 @@ knockdown(m, u = 1, debug = 0L)
 \item{u}{either a non-negative number indicating depth-independent velocity,
 or a function that returns that velocity as a function of depth (m)
 below the ocean surface.}
+
+\item{convergenceCriterion}{numeric value giving a convergence criterion
+to stop iterating the solution.  If the RMS difference in z values between
+iterations falls below this number, then the iteration loop is stopped early.
+Otherwise, at most 10 iterations are permitted, and a warning is issued
+giving that RMS value.}
 
 \item{debug}{an integer value (or a numeric that can be converted to an
 integer) that controls debugging. If this is positive, then some debugging
@@ -24,7 +30,10 @@ a new \code{mooring} object representing the deformed mooring, with
 }
 \description{
 The current may be a depth-independent or depth-dependent,
-as specified by the \code{u} argument.  The returned result has
+as specified by the \code{u} argument.  The computation is iterated
+at most 10 times until the RMS deviation between computed z values
+falls below \code{convergenceCriterion} (by default, 1 millimetre).
+The returned result has
 an attribute named \code{u} that holds the value of that
 argument, and this is how a later call to \code{\link[=plot.mooring]{plot.mooring()}}
 is able to display a velocity profile; see

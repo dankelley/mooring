@@ -1,3 +1,7 @@
+# mooring 0.1.3
+
+* `knockdown()` uses iterations, to handle depth-varying currents better.
+
 # mooring 0.1.2
 
 * Add `app2bs()`, which has a cleaner interface than `app2()`.
