@@ -1,9 +1,14 @@
 # vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
+RMS <- function(x) sqrt(mean(x^2))
+
 #' Compute mooring knockdown by a horizontal current
 #'
 #' The current may be a depth-independent or depth-dependent,
-#' as specified by the `u` argument.  The returned result has
+#' as specified by the `u` argument.  The computation is iterated
+#' at most 10 times until the RMS deviation between computed z values
+#' falls below `convergenceCriterion` (by default, 1 millimetre).
+#' The returned result has
 #' an attribute named `u` that holds the value of that
 #' argument, and this is how a later call to [plot.mooring()]
 #' is able to display a velocity profile; see
@@ -13,6 +18,12 @@
 #' [discretise()].
 #'
 #' @template uTemplate
+#'
+#' @param convergenceCriterion numeric value giving a convergence criterion
+#' to stop iterating the solution.  If the RMS difference in z values between
+#' iterations falls below this number, then the iteration loop is stopped early.
+#' Otherwise, at most 10 iterations are permitted, and a warning is issued
+#' giving that RMS value.
 #'
 #' @template debugTemplate
 #'
@@ -50,7 +61,7 @@
 #' @importFrom utils tail
 #' @export
 #' @author Dan Kelley
-knockdown <- function(m, u = 1, debug = 0L) {
+knockdown <- function(m, u = 1, convergenceCriterion = 0.001, debug = 0L) {
     debug <- max(0L, as.integer(debug))
     n <- length(m)
     # check for well-formed parameters
@@ -69,9 +80,6 @@ knockdown <- function(m, u = 1, debug = 0L) {
     if (is.null(attr(m, "discretised"))) {
         warning("accuracy is higher if discretise() is used before knockdown()\n")
     }
-    if (is.function(u) && debug > 0L) {
-        warning("FIXME: u=function() case is not fully coded yet (no iteration is done)\n")
-    }
     # rename x,z into x0,z0 for the stagnant (u=0) case
     for (i in seq_len(n)) {
         m[[i]]$x0 <- m[[i]]$x
@@ -79,52 +87,74 @@ knockdown <- function(m, u = 1, debug = 0L) {
     }
     # start actual calculation, which relies on buoyancy B and drag, D.
     waterDepth <- m[[length(m)]]$depth
-    B <- buoyancy(m)
-    D <- drag(m, u)
     tau <- vector("numeric", n)
     phi <- vector("numeric", n)
-    # Next two are Equation 5 in the Mooring Model vignette.
-    tau[1] <- sqrt(D[1]^2 + B[1]^2)
-    phi[1] <- atan2(D[1], B[1])
-    if (debug) {
-        cat("tau[1]=", tau[1], ", phi[1]=", phi[1], "\n")
-    }
-    # Next block, run only if more than 2 elements, computes rest of tau and phi
-    # values, using Equation 8 in the Mooring Model vignette.
-    # For tension at bookmark B1c, see bookmarks B1a and B1b.
-    if (n > 2L) {
-        for (i in seq(2L, n - 1L)) {
-            tau[i] <- sqrt((D[i] + tau[i - 1] * sin(phi[i - 1]))^2 + (B[i] + tau[i - 1] * cos(phi[i - 1]))^2) # bookmark B1c
-            phi[i] <- atan2(D[i] + tau[i - 1] * sin(phi[i - 1]), B[i] + tau[i - 1] * cos(phi[i - 1]))
+    zold <- z(m)
+    for (iteration in 1:10) {
+        B <- buoyancy(m)
+        D <- drag(m, u)
+        # Next two are Equation 5 in the Mooring Model vignette.
+        tau[1] <- sqrt(D[1]^2 + B[1]^2)
+        phi[1] <- atan2(D[1], B[1])
+        if (debug) {
+            cat("tau[1]=", tau[1], ", phi[1]=", phi[1], "\n")
         }
+        # Next block, run only if more than 2 elements, computes rest of tau and phi
+        # values, using Equation 8 in the Mooring Model vignette.
+        # For tension at bookmark B1c, see bookmarks B1a and B1b.
+        if (n > 2L) {
+            for (i in seq(2L, n - 1L)) {
+                tau[i] <- sqrt((D[i] + tau[i - 1] * sin(phi[i - 1]))^2 + (B[i] + tau[i - 1] * cos(phi[i - 1]))^2) # bookmark B1c
+                phi[i] <- atan2(D[i] + tau[i - 1] * sin(phi[i - 1]), B[i] + tau[i - 1] * cos(phi[i - 1]))
+            }
+        }
+        # carry tension and angle through mooring (just for plotting; not used in calculations)
+        tau[n] <- tau[n - 1L]
+        phi[n] <- phi[n - 1L]
+        # Clip the angle (do not allow it to run "inside" the sediment)
+        phi <- ifelse(phi > pi / 2, pi / 2, phi)
+
+        # Compute position from bottom up, starting at x=0 and z=-waterDepth
+        # FIXME: save tension in object
+        m[[n]]$phi <- phi[n - 1] # does this matter? Is it ever used?
+        m[[n]]$x <- 0
+        nm <- length(m)
+        m[[n]]$z <- if (inherits(m[[nm]], "anchor")) {
+            -waterDepth + m[[nm]]$height
+        } else {
+            -waterDepth
+        }
+        mooringDebug(debug, "Before knockdown, m[[1]]$z=", m[[1]]$z, ", m[[", n, "]]$z=", m[[n]]$z, "\n", sep = "")
+        m[[n]]$tau <- tau[n]
+        for (i in seq(n - 1L, 1L, -1L)) {
+            m[[i]]$phi <- phi[i]
+            m[[i]]$tau <- tau[i]
+            m[[i]]$x <- m[[i + 1]]$x + m[[i]]$height * sin(m[[i]]$phi)
+            m[[i]]$z <- m[[i + 1]]$z + m[[i]]$height * cos(m[[i]]$phi)
+        }
+        if (debug) {
+            cat("iteration", iteration, "\n")
+            print(head(data.frame(D = D, PHI = phi, tau = tau, x = x(m), z = z(m)), 4), digits = 4)
+        }
+        mooringDebug(
+            debug,
+            sprintf("After knockdown, m[[1]]$z=%.5g m, and m[[%d]]$z=%.5g\n", m[[1]]$z, n, m[[n]]$z)
+        )
+        ztop <- m[[1]]$z
+        if (ztop > 0) {
+            warning(sprintf("mooring line too long for depth (top element %.2f m in air); expect odd results", ztop))
+        }
+        if (debug) {
+            cat(sprintf("RMS z change: %.4gm\n", RMS(z(m) - zold)))
+        }
+        change <- RMS(z(m) - zold)
+        if (change < convergenceCriterion) {
+            break
+        }
+        zold <- z(m)
     }
-    # carry tension and angle through mooring (just for plotting; not used in calculations)
-    tau[n] <- tau[n - 1L]
-    phi[n] <- phi[n - 1L]
-    # Clip the angle (do not allow it to run "inside" the sediment)
-    phi <- ifelse(phi > pi / 2, pi / 2, phi)
-    # Compute position from bottom up, starting at x=0 and z=-waterDepth
-    # FIXME: save tension in object
-    m[[n]]$phi <- phi[n - 1] # does this matter? Is it ever used?
-    m[[n]]$x <- 0
-    nm <- length(m)
-    m[[n]]$z <- if (inherits(m[[nm]], "anchor")) {
-        -waterDepth + m[[nm]]$height
-    } else {
-        -waterDepth
-    }
-    mooringDebug(debug, "Before knockdown, m[[1]]$z=", m[[1]]$z, ", m[[", n, "]]$z=", m[[n]]$z, "\n", sep="")
-    m[[n]]$tau <- tau[n]
-    for (i in seq(n - 1L, 1L, -1L)) {
-        m[[i]]$phi <- phi[i]
-        m[[i]]$tau <- tau[i]
-        m[[i]]$x <- m[[i + 1]]$x + m[[i]]$height * sin(m[[i]]$phi)
-        m[[i]]$z <- m[[i + 1]]$z + m[[i]]$height * cos(m[[i]]$phi)
-    }
-    mooringDebug(debug, "After knockdown, m[[1]]$z=", m[[1]]$z, ", m[[", n, "]]$z=", m[[n]]$z, "\n", sep="")
-    ztop <- m[[1]]$z
-    if (ztop > 0) {
-        warning(sprintf("mooring line too long for depth (top element %.2f m in air); expect odd results", ztop))
+    if (change >= convergenceCriterion) {
+        warning(sprintf("convergence not achieved; RMS z difference was %.4gm\n", change))
     }
     class(m) <- "mooring"
     attr(m, "u") <- u
