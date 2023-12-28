@@ -111,19 +111,18 @@ below the ocean surface.</p></dd>
 
 
 <dt>niteration</dt>
-<dd><p>integer value setting maximum number of iterations
-that will be taken in order to achieve convergence (see also
+<dd><p>integer value setting maximum number of iterations that
+will be taken in order to achieve convergence (see also
 <code>convergenceCriterion</code>).</p></dd>
 
 
 <dt>convergenceCriterion</dt>
-<dd><p>numeric value giving a convergence criterion
-to stop iterating the solution.  If the RMS difference in z values
-between iterations falls below the product of <code>convergenceCriterion</code> and the water
-depth, then the iteration loop is stopped early. Otherwise, once
-<code>niteration</code> iterations are permitted, a warning is issued.  (Setting
-<code>debug</code> to a positive value will cause information about each
-iteration to be printd.)</p></dd>
+<dd><p>numeric value giving a convergence criterion to
+stop iterating the solution.  If the RMS difference in z values between
+iterations falls below the product of <code>convergenceCriterion</code> and the water
+depth, then the iteration loop is stopped early. Otherwise, once <code>niteration</code>
+iterations are permitted, a warning is issued.  (Setting <code>debug</code> to a
+positive value will cause information about each iteration to be printd.)</p></dd>
 
 
 <dt>debug</dt>
@@ -136,8 +135,14 @@ information may be printed by the function.</p></dd>
     <h2>Value</h2>
     
 
-<p>a new <code>mooring</code> object representing the deformed mooring, with
-<code>x</code> and <code>z</code> values updated (and original values saved as <code>x0</code> and <code>z0</code>).</p>
+<p>a new <code>mooring</code> object representing the deformed mooring, with <code>x</code></p>
+
+
+<p>and <code>z</code> values updated (and original values saved as <code>x0</code> and <code>z0</code>). In
+addition, the stress and angle of each element is stored in fields named
+<code>tau</code> and <code>phi</code>, the latter in radians.  Attributes are added to the object
+to describe the solution in more detail.  The <code>u</code> attribute stores the value
+supplied to <code>knockdown()</code>, and <code>waterDepth' stores the water depth that was supplied to the [anchor()] call.  An overview of the iterative solution is provided in the </code>iterationCount<code>and</code>iterationChange<code>attributes, which store the number of iterations used in the computation, and the RMS change in</code>z` over the final iteration.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

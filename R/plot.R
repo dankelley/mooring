@@ -123,9 +123,9 @@ plot.mooring <- function(
             usr <- par("usr")
             rect(usr[1], usr[3], usr[2], waterDepth, col = colBottom, border = NA)
             rect(usr[1], waterDepth, usr[2], 0, col = colWater, border = NA)
-            grid(col = "white")
+            grid(col = "white", lwd = 1.4)
         }
-        if (showInterfaces) {
+        if (showInterfaces && !fancy) {
             abline(h = 0, col = colWater, lwd = 2)
             abline(h = waterDepth, col = colBottom, lwd = 2)
         }

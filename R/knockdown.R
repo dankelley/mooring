@@ -19,22 +19,29 @@ RMS <- function(x) sqrt(mean(x^2))
 #'
 #' @template uTemplate
 #'
-#' @param niteration integer value setting maximum number of iterations
-#' that will be taken in order to achieve convergence (see also
+#' @param niteration integer value setting maximum number of iterations that
+#' will be taken in order to achieve convergence (see also
 #' `convergenceCriterion`).
 #'
-#' @param convergenceCriterion numeric value giving a convergence criterion
-#' to stop iterating the solution.  If the RMS difference in z values
-#' between iterations falls below the product of `convergenceCriterion` and the water
-#' depth, then the iteration loop is stopped early. Otherwise, once
-#' `niteration` iterations are permitted, a warning is issued.  (Setting
-#' `debug` to a positive value will cause information about each
-#' iteration to be printd.)
+#' @param convergenceCriterion numeric value giving a convergence criterion to
+#' stop iterating the solution.  If the RMS difference in z values between
+#' iterations falls below the product of `convergenceCriterion` and the water
+#' depth, then the iteration loop is stopped early. Otherwise, once `niteration`
+#' iterations are permitted, a warning is issued.  (Setting `debug` to a
+#' positive value will cause information about each iteration to be printd.)
 #'
 #' @template debugTemplate
 #'
-#' @return a new `mooring` object representing the deformed mooring, with
-#' `x` and `z` values updated (and original values saved as `x0` and `z0`).
+#' @return a new `mooring` object representing the deformed mooring, with `x`
+#' and `z` values updated (and original values saved as `x0` and `z0`). In
+#' addition, the stress and angle of each element is stored in fields named
+#' `tau` and `phi`, the latter in radians.  Attributes are added to the object
+#' to describe the solution in more detail.  The `u` attribute stores the value
+#' supplied to `knockdown()`, and `waterDepth' stores the water depth that was
+#' supplied to the [anchor()] call.  An overview of the iterative solution is
+#' provided in the `iterationCount` and `iterationChange` attributes, which
+#' store the number of iterations used in the computation, and the RMS change in
+#' `z` over the final iteration.
 #'
 #' @examples
 #' # Illustrate importance of drag on the wire.
@@ -96,7 +103,9 @@ knockdown <- function(m, u = 1, niteration = 50, convergenceCriterion = 0.001, d
     tau <- vector("numeric", n)
     phi <- vector("numeric", n)
     zold <- z(m)
+    iterationChange <- NA
     for (iteration in seq_len(niteration)) {
+        iterationCount <- iteration
         B <- buoyancy(m)
         D <- drag(m, u)
         # Next two are Equation 5 in the Mooring Model vignette.
@@ -153,17 +162,19 @@ knockdown <- function(m, u = 1, niteration = 50, convergenceCriterion = 0.001, d
         if (debug) {
             cat(sprintf("RMS z change: %.4gm\n", RMS(z(m) - zold)))
         }
-        change <- RMS(z(m) - zold)
-        if (change < convergenceCriterion * waterDepth) {
+        iterationChange <- RMS(z(m) - zold)
+        if (iterationChange < convergenceCriterion * waterDepth) {
             break
         }
         zold <- z(m)
     }
-    if (change >= convergenceCriterion * waterDepth) {
+    if (iterationChange >= convergenceCriterion * waterDepth) {
         warning(sprintf("convergence not achieved in %d iterations (RMS z difference was %.4gm, so exceeding convergenceCriterion*waterDepth value of %.4gm)\n",
-            niteration, change, convergenceCriterion * waterDepth))
+            niteration, iterationChange, convergenceCriterion * waterDepth))
     }
     class(m) <- "mooring"
     attr(m, "u") <- u
+    attr(m, "iterationCount") <- iterationCount
+    attr(m, "iterationChange") <- iterationChange
     m
 } # knockdown()

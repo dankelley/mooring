@@ -14,25 +14,28 @@ knockdown(m, u = 1, niteration = 50, convergenceCriterion = 0.001, debug = 0L)
 or a function that returns that velocity as a function of depth (m)
 below the ocean surface.}
 
-\item{niteration}{integer value setting maximum number of iterations
-that will be taken in order to achieve convergence (see also
+\item{niteration}{integer value setting maximum number of iterations that
+will be taken in order to achieve convergence (see also
 \code{convergenceCriterion}).}
 
-\item{convergenceCriterion}{numeric value giving a convergence criterion
-to stop iterating the solution.  If the RMS difference in z values
-between iterations falls below the product of \code{convergenceCriterion} and the water
-depth, then the iteration loop is stopped early. Otherwise, once
-\code{niteration} iterations are permitted, a warning is issued.  (Setting
-\code{debug} to a positive value will cause information about each
-iteration to be printd.)}
+\item{convergenceCriterion}{numeric value giving a convergence criterion to
+stop iterating the solution.  If the RMS difference in z values between
+iterations falls below the product of \code{convergenceCriterion} and the water
+depth, then the iteration loop is stopped early. Otherwise, once \code{niteration}
+iterations are permitted, a warning is issued.  (Setting \code{debug} to a
+positive value will cause information about each iteration to be printd.)}
 
 \item{debug}{an integer value (or a numeric that can be converted to an
 integer) that controls debugging. If this is positive, then some debugging
 information may be printed by the function.}
 }
 \value{
-a new \code{mooring} object representing the deformed mooring, with
-\code{x} and \code{z} values updated (and original values saved as \code{x0} and \code{z0}).
+a new \code{mooring} object representing the deformed mooring, with \code{x}
+and \code{z} values updated (and original values saved as \code{x0} and \code{z0}). In
+addition, the stress and angle of each element is stored in fields named
+\code{tau} and \code{phi}, the latter in radians.  Attributes are added to the object
+to describe the solution in more detail.  The \code{u} attribute stores the value
+supplied to \code{knockdown()}, and \verb{waterDepth' stores the water depth that was supplied to the [anchor()] call.  An overview of the iterative solution is provided in the }iterationCount\code{and}iterationChange\verb{attributes, which store the number of iterations used in the computation, and the RMS change in}z` over the final iteration.
 }
 \description{
 The current may be a depth-independent or depth-dependent,

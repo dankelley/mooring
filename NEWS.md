@@ -1,6 +1,6 @@
 # mooring 0.1.3
 
-* `knockdown()` uses iterations, to handle depth-varying currents better.
+* `knockdown()` uses an iteration method to improve accuracy.
 
 # mooring 0.1.2
 

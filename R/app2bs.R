@@ -406,28 +406,43 @@ app2bs <- function(debug = FALSE) {
                         "exp(z/300)" = function(depth) input$u * exp(-depth / 300)
                     )
                     mdk <- knockdown(md, u, debug = debug)
-                    mar <- c(2.5, 2.5, 0.5, 0.5)
-                    mpg <- c(1.5, 0.5, 0)
+                    attr <- attributes(mdk)
+                    mar <- c(0.5, 2.5, 3.75, 0.5)
+                    mgp <- c(1.5, 0.5, 0)
                     cex <- 1.2
                     nchoices <- length(input$plotChoices)
                     if (nchoices == 1) {
-                        par(mfrow = c(1, 1), mar = mar, mgp = mpg, cex = cex)
+                        par(mfrow = c(1, 1), cex = cex)
                     } else if (nchoices == 2) {
-                        par(mfrow = c(1, 2), mar = mar, mgp = mpg, cex = cex)
+                        par(mfrow = c(1, 2), cex = cex)
                     } else if (nchoices == 3) {
-                        par(mfrow = c(1, 3), mar = mar, mgp = mpg, cex = cex)
+                        par(mfrow = c(1, 3), cex = cex)
                     } else if (nchoices == 4) {
-                        par(mfrow = c(2, 2), mar = mar, mgp = mpg, cex = cex)
+                        par(mfrow = c(2, 2), cex = cex)
                     }
                     ylim <- NULL
+                    titleShown <- FALSE
                     for (choice in input$plotChoices) {
                         if (is.null(ylim)) {
-                            plot(mdk, which = choice, fancy = TRUE, showDepths = FALSE)
+                            plot(mdk, which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE)
                             if (choice == "shape") {
                                 ylim <- par("usr")[3:4]
                             }
                         } else {
-                            plot(mdk, which = choice, fancy = TRUE, showDepths = FALSE, ylim = ylim, yaxs = "i")
+                            plot(mdk, which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE, ylim = ylim, yaxs = "i")
+                        }
+                        if (!titleShown) {
+                            mtext(
+                                sprintf(
+                                    "Depth converged to %.03fm in %d iterations",
+                                    attr$iterationChange, attr$iterationCount
+                                ),
+                                cex = par("cex"),
+                                col = 2,
+                                font = 2,
+                                line = 2.75
+                            )
+                            titleShown <- TRUE
                         }
                     }
                 } else {
