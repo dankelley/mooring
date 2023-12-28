@@ -294,6 +294,10 @@ app2bs <- function(debug = FALSE) {
             shiny::sliderInput("waterDepth", "Water Depth [m]",
                 min = 2.0, max = 200.0, value = 100, step = 1.0, width = "100%"
             )
+            #<> # next is cleaner, but it lets you enter *any* value, even e.g. negatives
+            #<>shiny::numericInput("waterDepth", "Water Depth [m]",
+            #<>    min = 2.0, max = 200.0, value = 100, step = 1.0
+            #<>)
             # dmsg("    ... done")
         })
 
@@ -310,7 +314,7 @@ app2bs <- function(debug = FALSE) {
             shiny::sliderInput("instrumentDepth", "Instrument Depth [m]",
                 min = 10.0, max = 160.0, value = 50.0, step = 1.0, width = "100%"
             )
-            #dmsg("    ...")
+            # dmsg("    ...")
         })
 
         output$anchorType <- shiny::renderUI({
@@ -321,7 +325,7 @@ app2bs <- function(debug = FALSE) {
                 selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]"),
                 width = "100%"
             )
-            #dmsg("    ...")
+            # dmsg("    ...")
         })
 
         output$wireType <- shiny::renderUI({
@@ -415,15 +419,23 @@ app2bs <- function(debug = FALSE) {
                     } else if (nchoices == 4) {
                         par(mfrow = c(2, 2), mar = mar, mgp = mpg, cex = cex)
                     }
+                    ylim <- NULL
                     for (choice in input$plotChoices) {
-                        plot(mdk, which = choice, fancy = TRUE, showDepths = FALSE)
+                        if (is.null(ylim)) {
+                            plot(mdk, which = choice, fancy = TRUE, showDepths = FALSE)
+                            if (choice == "shape") {
+                                ylim <- par("usr")[3:4]
+                            }
+                        } else {
+                            plot(mdk, which = choice, fancy = TRUE, showDepths = FALSE, ylim = ylim, yaxs = "i")
+                        }
                     }
                 } else {
                     dmsg("cannot plut until more GUI elements are defined")
                 }
             },
-            pointsize = 14#,
-            #height = 500
+            pointsize = 14 # ,
+            # height = 500
         )
     }
 
