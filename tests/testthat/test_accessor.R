@@ -1,4 +1,3 @@
-library(testthat)
 library(mooring)
 
 fl <- float()
@@ -21,5 +20,5 @@ test_that("[ height", {
 })
 
 test_that("[ on elements", {
-    expect_equal(0.65, fl["CD"])
+    expect_equal(0.65, fl[["CD"]])
 })

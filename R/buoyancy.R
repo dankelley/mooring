@@ -30,23 +30,22 @@
 #'
 #' @export
 #'
-#' @references
-#' Hamilton, J. M. "The Validation and Practical Applications of a Sub-Surface
-#' Mooring Model." Canadian Technical Report of Hydrography and Ocean
-#' Sciences. Bedford Institute of Oceanography, 1989.
+## @references
+## Hamilton, J. M. "The Validation and Practical Applications of a Sub-Surface
+## Mooring Model." Canadian Technical Report of Hydrography and Ocean
+## Sciences. Bedford Institute of Oceanography, 1989.
 #'
 #' @author Dan Kelley
 buoyancy <- function(m, debug = 0L) {
-    mooringDebug(debug, "buoyancy() {\n  class(m): ", paste(class(m), collapse = " "), "\n")
-    rval <- if (is.mooring(m)) {
-        mooringDebug(
-            debug, "  object is a mooring with",
-            length(m), "elements, so will analyse them individually\n"
-        )
-        sapply(m, function(mi) buoyancy(mi, debug = debug))
+    if (is.mooring(m)) {
+        mooringDebug(debug, "buoyancy(", length(m), "-element mooring):\n", sep = "")
+        rval <- sapply(m, function(mi) buoyancy(mi, debug = debug))
+    } else if (is.mooringElement(m)) {
+        mooringDebug(debug, "    buoyancy(", class(m)[2], "): ", sep = "")
+        rval <- if ("buoyancy" %in% names(m)) m$buoyancy else stop("no buoyancy in m")
     } else {
-        if ("buoyancy" %in% names(m)) m$buoyancy else stop("no buoyancy in m")
+        rval <- NA
     }
-    mooringDebug(debug, "} # buoyancy()\n")
+    mooringDebug(debug, paste(rval, collapse = " "), " kg\n")
     rval
 }

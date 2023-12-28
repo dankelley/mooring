@@ -40,11 +40,6 @@ m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 buoyancy(m)
 
 }
-\references{
-Hamilton, J. M. "The Validation and Practical Applications of a Sub-Surface
-Mooring Model." Canadian Technical Report of Hydrography and Ocean
-Sciences. Bedford Institute of Oceanography, 1989.
-}
 \author{
 Dan Kelley
 }

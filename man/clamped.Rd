@@ -50,17 +50,6 @@ plot(M)
 plot(M, which = "tension")
 
 }
-\seealso{
-Other functions that create mooring objects: 
-\code{\link{anchor}()},
-\code{\link{chain}()},
-\code{\link{connector}()},
-\code{\link{float}()},
-\code{\link{instrument}()},
-\code{\link{misc}()},
-\code{\link{release}()},
-\code{\link{wire}()}
-}
 \author{
 Dan Kelley
 }

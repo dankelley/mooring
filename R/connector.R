@@ -22,9 +22,9 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `connector` returns an object of the `"mooring"` class and `"connector"` subclass.
+#' @return `connector` returns an object of the `"mooringElement"` class and `"connector"` subclass.
 #'
-#' @family functions that create mooring objects
+#' @family functions that create mooring elements
 #'
 #' @export
 #'
@@ -72,6 +72,6 @@ connector <- function(model = "swivel", buoyancy = NULL, height = NULL, area = N
         source <- ""
     }
     rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
-    class(rval) <- c("mooring", "connector")
+    class(rval) <- c("mooringElement", "connector")
     rval
 } # connector()

@@ -18,9 +18,9 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `instrument` returns an object of the `"mooring"` class and `"instrument"` subclass.
+#' @return `instrument` returns an object of the `"mooringElement"` class and `"instrument"` subclass.
 #'
-#' @family functions that create mooring objects
+#' @family functions that create mooring elements
 #'
 #' @examples
 #' library(mooring)
@@ -66,6 +66,6 @@ instrument <- function(model = "SBE37 microcat clamp-on style", buoyancy = NULL,
         source <- ""
     }
     rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
-    class(rval) <- c("mooring", "instrument")
+    class(rval) <- c("mooringElement", "instrument")
     rval
 } # instrument()

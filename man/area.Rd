@@ -2,40 +2,44 @@
 % Please edit documentation in R/area.R
 \name{area}
 \alias{area}
-\title{Horizontally-projected area of mooring elements}
+\title{Side-view Area of Mooring Element}
 \usage{
-area(m, phi = 0)
+area(m, phi = TRUE)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
 mooring-element object, created with}
 
-\item{phi}{angle (in degrees) of element compared with a vertical line. For
-is used for wire, chain, and intrument elements, but not for floats, which
-are assumed to be spherical.}
+\item{phi}{a numeric or logical value that controls how the angle
+is computed.  If this is FALSE, no angle is used.  If it is TRUE,
+then a value of \code{phi} is sought within \code{me}, and that is used,
+or else 0 is used. Finally, if \code{phi} is numeric, then it is taken
+to be the angle the element makes to the vertical, in radians.}
 }
 \value{
 \code{area} returns a numeric value of the side-view area, in m^2.
 }
 \description{
-The areas are not computed by this function, but rather looked up
-for each element.  To learn how areas are computed during
-setup, see the help page for
-\code{\link[=anchor]{anchor()}},
-\code{\link[=chain]{chain()}},
-\code{\link[=connector]{connector()}},
-\code{\link[=float]{float()}},
-\code{\link[=instrument]{instrument()}},
-\code{\link[=misc]{misc()}}, or
-\code{\link[=release]{release()}}.
+Returns the area of the mooring element, projected onto a vertical plane.
+This is computed using the \code{area} item stored within the element,
+adjusted for the angle, depending on the value of \code{phi}. Note that
+elements created by \code{\link[=float]{float()}} are assumed to be spherical, and so
+their orientiation is not taken into account.
 }
 \details{
-For a summary of characteristics of the predefined models,
-see the vignette named "Default Values for Mooring Elements".
+When initially created, objects do not contain an angle value, but
+such values are inserted by \code{\link[=knockdown]{knockdown()}}. Moorings that are
+significantly tilted will have reduced side-view area, which
+will reduce the current-induced drag, as computed with \code{\link[=drag]{drag()}}.
 }
 \examples{
 library(mooring)
+# Floats are unaffected by rotation
 area(float())
+area(float(), pi / 4)
+# Other elements, e.g. instruments, are affected by rotation
+area(instrument())
+area(instrument(), pi / 4.0) * sqrt(2.0)
 
 
 }

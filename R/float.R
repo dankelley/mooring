@@ -24,12 +24,12 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `float` returns an object of the `"mooring"` class and `"float"` subclass.
+#' @return `float` returns an object of the `"mooringElement"` class and `"float"` subclass.
 #'
 #' @references
 #' 1. \url{https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf}
 #'
-#' @family functions that create mooring objects
+#' @family functions that create mooring elements
 #'
 #' @examples
 #' library(mooring)
@@ -77,6 +77,6 @@ float <- function(model = "Kiel SFS40in", buoyancy = NULL, height = NULL, area =
     # Floats are assumed to be circular in the flow direction, following
     # Dewey's convention, so the area is pi*radius^2.
     rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
-    class(rval) <- c("mooring", "float")
+    class(rval) <- c("mooringElement", "float")
     rval
 } # float()

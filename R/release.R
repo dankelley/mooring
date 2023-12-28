@@ -17,14 +17,14 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `release` returns an object of the `"mooring"` class and `"release"` subclass.
+#' @return `release` returns an object of the `"mooringElement"` class and `"release"` subclass.
 #'
 #' @examples
 #' library(mooring)
 #' # List known wire types
 #' release("?")
 #'
-#' @family functions that create mooring objects
+#' @family functions that create mooring elements
 #'
 #' @export
 #'
@@ -65,6 +65,6 @@ release <- function(model = "EG&G 723a", buoyancy = NULL, height = NULL, area = 
         source <- ""
     }
     rval <- list(model = model, source = source, buoyancy = buoyancy, height = height, area = area, CD = CD)
-    class(rval) <- c("mooring", "release")
+    class(rval) <- c("mooringElement", "release")
     rval
 } # release()

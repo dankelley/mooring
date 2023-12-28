@@ -45,7 +45,7 @@ in \eqn{m^2}{m^2}.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \value{
-\code{misc} returns an object of the \code{"mooring"} class and \code{"misc"} subclass.
+\code{misc} returns an object of the \code{"mooringElement"} class and \code{"misc"} subclass.
 }
 \description{
 Create a miscellaneous object,
@@ -77,10 +77,9 @@ misc("?")
 
 }
 \seealso{
-Other functions that create mooring objects: 
+Other functions that create mooring elements: 
 \code{\link{anchor}()},
 \code{\link{chain}()},
-\code{\link{clamped}()},
 \code{\link{connector}()},
 \code{\link{float}()},
 \code{\link{instrument}()},
@@ -90,4 +89,4 @@ Other functions that create mooring objects:
 \author{
 Dan Kelley
 }
-\concept{functions that create mooring objects}
+\concept{functions that create mooring elements}

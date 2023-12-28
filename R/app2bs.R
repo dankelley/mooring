@@ -294,6 +294,10 @@ app2bs <- function(debug = FALSE) {
             shiny::sliderInput("waterDepth", "Water Depth [m]",
                 min = 2.0, max = 200.0, value = 100, step = 1.0, width = "100%"
             )
+            #<> # next is cleaner, but it lets you enter *any* value, even e.g. negatives
+            #<>shiny::numericInput("waterDepth", "Water Depth [m]",
+            #<>    min = 2.0, max = 200.0, value = 100, step = 1.0
+            #<>)
             # dmsg("    ... done")
         })
 
@@ -310,7 +314,7 @@ app2bs <- function(debug = FALSE) {
             shiny::sliderInput("instrumentDepth", "Instrument Depth [m]",
                 min = 10.0, max = 160.0, value = 50.0, step = 1.0, width = "100%"
             )
-            #dmsg("    ...")
+            # dmsg("    ...")
         })
 
         output$anchorType <- shiny::renderUI({
@@ -321,7 +325,7 @@ app2bs <- function(debug = FALSE) {
                 selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]"),
                 width = "100%"
             )
-            #dmsg("    ...")
+            # dmsg("    ...")
         })
 
         output$wireType <- shiny::renderUI({
@@ -401,29 +405,52 @@ app2bs <- function(debug = FALSE) {
                         "exp(z/100)" = function(depth) input$u * exp(-depth / 100),
                         "exp(z/300)" = function(depth) input$u * exp(-depth / 300)
                     )
-                    mdk <- knockdown(md, u)
-                    mar <- c(2.5, 2.5, 0.5, 0.5)
-                    mpg <- c(1.5, 0.5, 0)
+                    mdk <- knockdown(md, u, debug = debug)
+                    attr <- attributes(mdk)
+                    mar <- c(0.5, 2.5, 3.75, 0.5)
+                    mgp <- c(1.5, 0.5, 0)
                     cex <- 1.2
                     nchoices <- length(input$plotChoices)
                     if (nchoices == 1) {
-                        par(mfrow = c(1, 1), mar = mar, mgp = mpg, cex = cex)
+                        par(mfrow = c(1, 1), cex = cex)
                     } else if (nchoices == 2) {
-                        par(mfrow = c(1, 2), mar = mar, mgp = mpg, cex = cex)
+                        par(mfrow = c(1, 2), cex = cex)
                     } else if (nchoices == 3) {
-                        par(mfrow = c(1, 3), mar = mar, mgp = mpg, cex = cex)
+                        par(mfrow = c(1, 3), cex = cex)
                     } else if (nchoices == 4) {
-                        par(mfrow = c(2, 2), mar = mar, mgp = mpg, cex = cex)
+                        par(mfrow = c(2, 2), cex = cex)
                     }
+                    ylim <- NULL
+                    titleShown <- FALSE
                     for (choice in input$plotChoices) {
-                        plot(mdk, which = choice, fancy = TRUE, showDepths = FALSE)
+                        if (is.null(ylim)) {
+                            plot(mdk, which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE)
+                            if (choice == "shape") {
+                                ylim <- par("usr")[3:4]
+                            }
+                        } else {
+                            plot(mdk, which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE, ylim = ylim, yaxs = "i")
+                        }
+                        if (!titleShown) {
+                            mtext(
+                                sprintf(
+                                    "Depth converged to %.03fm in %d iterations",
+                                    attr$iterationChange, attr$iterationCount
+                                ),
+                                cex = par("cex"),
+                                col = 2,
+                                font = 2,
+                                line = 2.75
+                            )
+                            titleShown <- TRUE
+                        }
                     }
                 } else {
                     dmsg("cannot plut until more GUI elements are defined")
                 }
             },
-            pointsize = 14#,
-            #height = 500
+            pointsize = 14 # ,
+            # height = 500
         )
     }
 

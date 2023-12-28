@@ -24,9 +24,9 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `misc` returns an object of the `"mooring"` class and `"misc"` subclass.
+#' @return `misc` returns an object of the `"mooringElement"` class and `"misc"` subclass.
 #'
-#' @family functions that create mooring objects
+#' @family functions that create mooring elements
 #'
 #' @examples
 #' library(mooring)
@@ -86,6 +86,6 @@ misc <- function(model = "AanderaaT.chain", buoyancy = NULL, height = NULL, area
         source <- ""
     }
     rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
-    class(rval) <- c("mooring", "misc")
+    class(rval) <- c("mooringElement", "misc")
     rval
 } # misc()

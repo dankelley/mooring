@@ -18,9 +18,9 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `wire` returns an object of the `"mooring"` class and `"wire"` subclass.
+#' @return `wire` returns an object of the `"mooringElement"` class and `"wire"` subclass.
 #'
-#' @family functions that create mooring objects
+#' @family functions that create mooring elements
 #'
 #' @examples
 #' library(mooring)
@@ -66,6 +66,6 @@ wire <- function(model = "1/4in wire/jack", buoyancyPerMeter = NULL, areaPerMete
         source <- ""
     }
     rval <- list(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source)
-    class(rval) <- c("mooring", "wire")
+    class(rval) <- c("mooringElement", "wire")
     rval
 } # wire()

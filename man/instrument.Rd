@@ -45,7 +45,7 @@ in \eqn{m^2}{m^2}.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \value{
-\code{instrument} returns an object of the \code{"mooring"} class and \code{"instrument"} subclass.
+\code{instrument} returns an object of the \code{"mooringElement"} class and \code{"instrument"} subclass.
 }
 \description{
 Create an instrument object,
@@ -70,10 +70,9 @@ instrument("?")
 
 }
 \seealso{
-Other functions that create mooring objects: 
+Other functions that create mooring elements: 
 \code{\link{anchor}()},
 \code{\link{chain}()},
-\code{\link{clamped}()},
 \code{\link{connector}()},
 \code{\link{float}()},
 \code{\link{misc}()},
@@ -83,4 +82,4 @@ Other functions that create mooring objects:
 \author{
 Dan Kelley
 }
-\concept{functions that create mooring objects}
+\concept{functions that create mooring elements}

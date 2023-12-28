@@ -10,8 +10,10 @@ is.mooring(m = NULL)
 \item{m}{an object to be tested}
 }
 \description{
-An object is a mooring if it is a list that has more than one element, and
-if each element inherits from the \code{"mooring"} class.  For example, the
+An object is a mooring if it is an unnamed list and if each
+element in that list is a mooring element created by
+e.g. \code{\link[=anchor]{anchor()}}, \code{\link[=wire]{wire()}}, or a related function.
+For example, the
 output of \code{\link[=mooring]{mooring()}} is a mooring, but the output of \code{\link[=anchor]{anchor()}} is not.
 This function is mainly designed for use within the package that that, e.g.
 \code{\link[=knockdown]{knockdown()}} will produce an error if its first argument is not a mooring.

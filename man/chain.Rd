@@ -41,7 +41,7 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \item{length}{(mandatory) numeric value indicating the length (in m) of the wire.}
 }
 \value{
-\code{chain} returns an object of the \code{"mooring"} class and \code{"chain"} subclass.
+\code{chain} returns an object of the \code{"mooringElement"} class and \code{"chain"} subclass.
 }
 \description{
 Create an object that describes mooring chain elements such as shackles,
@@ -67,9 +67,8 @@ chain("?")
 
 }
 \seealso{
-Other functions that create mooring objects: 
+Other functions that create mooring elements: 
 \code{\link{anchor}()},
-\code{\link{clamped}()},
 \code{\link{connector}()},
 \code{\link{float}()},
 \code{\link{instrument}()},
@@ -80,4 +79,4 @@ Other functions that create mooring objects:
 \author{
 Dan Kelley
 }
-\concept{functions that create mooring objects}
+\concept{functions that create mooring elements}
