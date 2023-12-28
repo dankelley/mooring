@@ -57,3 +57,28 @@ plot(mdk, fancy=TRUE)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
+
+# Acknowledgements
+
+The properties of some mooring elements were extracted from Richard
+Dewey’s excellent mooring-analysis Matlab software (see Dewey (1999)),
+while others were extracted from information generously provided by Jay
+Barthelotte and Matthew Lawson of the Bedford Institute of Oceanography
+(BIO), and by Danielle Dempsey and Nicole Torrie at the Centre for
+Marine Research (CMAR); these three sources are identified in the
+element databases. The package development benefited from conversations
+with Clark Richards and Chantelle Layton, both of BIO.
+
+# References
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-dewey_mooring_1999" class="csl-entry">
+
+Dewey, Richard K. 1999. “Mooring Design & Dynamics—a Matlab® Package for
+Designing and Analyzing Oceanographic Moorings.” *Marine Models* 1 (1):
+103–57. <https://doi.org/10.1016/S1369-9350(00)00002-X>.
+
+</div>
+
+</div>
