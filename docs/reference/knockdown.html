@@ -94,7 +94,7 @@ is able to display a velocity profile; see
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">knockdown</span><span class="op">(</span><span class="va">m</span>, u <span class="op">=</span> <span class="fl">1</span>, convergenceCriterion <span class="op">=</span> <span class="fl">0.001</span>, debug <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">knockdown</span><span class="op">(</span><span class="va">m</span>, u <span class="op">=</span> <span class="fl">1</span>, niteration <span class="op">=</span> <span class="fl">50</span>, convergenceCriterion <span class="op">=</span> <span class="fl">0.001</span>, debug <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -110,12 +110,20 @@ or a function that returns that velocity as a function of depth (m)
 below the ocean surface.</p></dd>
 
 
+<dt>niteration</dt>
+<dd><p>integer value setting maximum number of iterations
+that will be taken in order to achieve convergence (see also
+<code>convergenceCriterion</code>).</p></dd>
+
+
 <dt>convergenceCriterion</dt>
 <dd><p>numeric value giving a convergence criterion
-to stop iterating the solution.  If the RMS difference in z values between
-iterations falls below this number, then the iteration loop is stopped early.
-Otherwise, at most 10 iterations are permitted, and a warning is issued
-giving that RMS value.</p></dd>
+to stop iterating the solution.  If the RMS difference in z values
+between iterations falls below the product of <code>convergenceCriterion</code> and the water
+depth, then the iteration loop is stopped early. Otherwise, once
+<code>niteration</code> iterations are permitted, a warning is issued.  (Setting
+<code>debug</code> to a positive value will cause information about each
+iteration to be printd.)</p></dd>
 
 
 <dt>debug</dt>

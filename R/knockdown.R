@@ -19,11 +19,17 @@ RMS <- function(x) sqrt(mean(x^2))
 #'
 #' @template uTemplate
 #'
+#' @param niteration integer value setting maximum number of iterations
+#' that will be taken in order to achieve convergence (see also
+#' `convergenceCriterion`).
+#'
 #' @param convergenceCriterion numeric value giving a convergence criterion
-#' to stop iterating the solution.  If the RMS difference in z values between
-#' iterations falls below this number, then the iteration loop is stopped early.
-#' Otherwise, at most 10 iterations are permitted, and a warning is issued
-#' giving that RMS value.
+#' to stop iterating the solution.  If the RMS difference in z values
+#' between iterations falls below the product of `convergenceCriterion` and the water
+#' depth, then the iteration loop is stopped early. Otherwise, once
+#' `niteration` iterations are permitted, a warning is issued.  (Setting
+#' `debug` to a positive value will cause information about each
+#' iteration to be printd.)
 #'
 #' @template debugTemplate
 #'
@@ -61,7 +67,7 @@ RMS <- function(x) sqrt(mean(x^2))
 #' @importFrom utils tail
 #' @export
 #' @author Dan Kelley
-knockdown <- function(m, u = 1, convergenceCriterion = 0.001, debug = 0L) {
+knockdown <- function(m, u = 1, niteration = 50, convergenceCriterion = 0.001, debug = 0L) {
     debug <- max(0L, as.integer(debug))
     n <- length(m)
     # check for well-formed parameters
@@ -90,7 +96,7 @@ knockdown <- function(m, u = 1, convergenceCriterion = 0.001, debug = 0L) {
     tau <- vector("numeric", n)
     phi <- vector("numeric", n)
     zold <- z(m)
-    for (iteration in 1:10) {
+    for (iteration in seq_len(niteration)) {
         B <- buoyancy(m)
         D <- drag(m, u)
         # Next two are Equation 5 in the Mooring Model vignette.
@@ -133,7 +139,7 @@ knockdown <- function(m, u = 1, convergenceCriterion = 0.001, debug = 0L) {
             m[[i]]$z <- m[[i + 1]]$z + m[[i]]$height * cos(m[[i]]$phi)
         }
         if (debug) {
-            cat("iteration", iteration, "\n")
+            cat("iteration", iteration, " had first few data as follows\n")
             print(head(data.frame(D = D, PHI = phi, tau = tau, x = x(m), z = z(m)), 4), digits = 4)
         }
         mooringDebug(
@@ -148,13 +154,14 @@ knockdown <- function(m, u = 1, convergenceCriterion = 0.001, debug = 0L) {
             cat(sprintf("RMS z change: %.4gm\n", RMS(z(m) - zold)))
         }
         change <- RMS(z(m) - zold)
-        if (change < convergenceCriterion) {
+        if (change < convergenceCriterion * waterDepth) {
             break
         }
         zold <- z(m)
     }
-    if (change >= convergenceCriterion) {
-        warning(sprintf("convergence not achieved; RMS z difference was %.4gm\n", change))
+    if (change >= convergenceCriterion * waterDepth) {
+        warning(sprintf("convergence not achieved in %d iterations (RMS z difference was %.4gm, so exceeding convergenceCriterion*waterDepth value of %.4gm)\n",
+            niteration, change, convergenceCriterion * waterDepth))
     }
     class(m) <- "mooring"
     attr(m, "u") <- u

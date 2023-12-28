@@ -4,7 +4,7 @@
 \alias{knockdown}
 \title{Compute mooring knockdown by a horizontal current}
 \usage{
-knockdown(m, u = 1, convergenceCriterion = 0.001, debug = 0L)
+knockdown(m, u = 1, niteration = 50, convergenceCriterion = 0.001, debug = 0L)
 }
 \arguments{
 \item{m}{an object of the \code{"mooring"} class, usually created with
@@ -14,11 +14,17 @@ knockdown(m, u = 1, convergenceCriterion = 0.001, debug = 0L)
 or a function that returns that velocity as a function of depth (m)
 below the ocean surface.}
 
+\item{niteration}{integer value setting maximum number of iterations
+that will be taken in order to achieve convergence (see also
+\code{convergenceCriterion}).}
+
 \item{convergenceCriterion}{numeric value giving a convergence criterion
-to stop iterating the solution.  If the RMS difference in z values between
-iterations falls below this number, then the iteration loop is stopped early.
-Otherwise, at most 10 iterations are permitted, and a warning is issued
-giving that RMS value.}
+to stop iterating the solution.  If the RMS difference in z values
+between iterations falls below the product of \code{convergenceCriterion} and the water
+depth, then the iteration loop is stopped early. Otherwise, once
+\code{niteration} iterations are permitted, a warning is issued.  (Setting
+\code{debug} to a positive value will cause information about each
+iteration to be printd.)}
 
 \item{debug}{an integer value (or a numeric that can be converted to an
 integer) that controls debugging. If this is positive, then some debugging

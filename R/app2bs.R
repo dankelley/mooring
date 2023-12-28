@@ -405,7 +405,7 @@ app2bs <- function(debug = FALSE) {
                         "exp(z/100)" = function(depth) input$u * exp(-depth / 100),
                         "exp(z/300)" = function(depth) input$u * exp(-depth / 300)
                     )
-                    mdk <- knockdown(md, u)
+                    mdk <- knockdown(md, u, debug = debug)
                     mar <- c(2.5, 2.5, 0.5, 0.5)
                     mpg <- c(1.5, 0.5, 0)
                     cex <- 1.2
