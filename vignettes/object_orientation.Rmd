@@ -18,14 +18,18 @@ vignette: >
 ---
 
 The S3 scheme is used for objects created by functions in the `mooring`
-package. These objects inherit from the `"mooring"` class.  The contents
-consist of a list that in turn contains one or more lists.
+package. There are two types of functions, and two classes of
+return value.
 
-The elementary functions, such as `anchor()`, `wire()`, `float()`, etc.,
-produce objects with main class `"mooring"` and sub-class with the function
-name.  The contents vary from subclass to subclass.  Allowances for these
-different aspects are made in `knockdown()`, as it computes drag and buoyancy
-forces on elements.
+The overall functions, `mooring()`, `discretise()` and `knockdown()` all
+produce return lists that have class `"mooring"`. The elements of those lists
+are produced with what are called "elementary" functions, which include
+`anchor()`, `wire()`, `float()`, etc., all of which return objects with main
+class `"mooringElement"` and sub-class patterned on the function name.  
+
+The return values from the elementary functions vary with type, and allowances
+for these different aspects are made in `knockdown()` and the functions
+it accesses, such as `area()`, etc.
 
 For example,
 ```{r}
@@ -34,4 +38,12 @@ m <- mooring(anchor(depth=100), wire(length=75), float())
 ```
 produces a list with 3 elements, one that holds information on the anchor, a
 second that holds information on the wire, and a third that holds information
-on the float.
+on the float.  
+
+To get a quick overview of a function, use e.g.
+```{r}
+m
+```
+and, for more details, try using `str()` or `dput()`.
+
+
