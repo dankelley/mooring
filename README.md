@@ -65,16 +65,17 @@ database stem from three main sources. The first was Richard Dewey’s
 excellent mooring-analysis Matlab software, described by Dewey (1999).
 The second was in spreadsheets and other documents provided by Jay
 Barthelotte and Matthew Lawson of the Bedford Institute of Oceanography
-(BIO). And the third was in spreadsheets and other documents provided by
-Danielle Dempsey and Nicole Torrie of the Centre for Marine Research
-(CMAR). These sources are designated `"Dewey"`, `"BIO"` and `"CMAR"`,
+([BIO](https://www.bio.gc.ca/index-en.php)). And the third was in
+spreadsheets and other documents provided by Danielle Dempsey and Nicole
+Torrie of the Centre for Marine Research ([CMAR](https://cmar.ca)).
+These sources are designated `"Dewey"`, `"BIO"` and `"CMAR"`,
 respectively, in `mooringElements`.
 
-Conversations with Clark Richards and Chantelle Layton were helpful in
-identifying data sources and in clarifying the nature of mooring
-systems. Documents by J. M. Hamilton (1989) and James M. Hamilton,
-Fowler, and Belliveau (1997) cast further light on important
-practicalities.
+Conversations with Clark Richards and Chantelle Layton (both of
+[BIO](https://www.bio.gc.ca/index-en.php)) were helpful in identifying
+data sources and in clarifying the nature of mooring systems. Documents
+by J. M. Hamilton (1989) and James M. Hamilton, Fowler, and Belliveau
+(1997) cast further light on important practicalities.
 
 # References
 

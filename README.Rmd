@@ -72,14 +72,16 @@ The mooring-element properties that are stored in the `mooringElements`
 database stem from three main sources. The first was Richard Dewey's excellent
 mooring-analysis Matlab software, described by @dewey_mooring_1999. The second
 was in spreadsheets and other documents provided by Jay Barthelotte and Matthew
-Lawson of the Bedford Institute of Oceanography (BIO). And the third was in
-spreadsheets and other documents provided by Danielle Dempsey and Nicole Torrie
-of the Centre for Marine Research (CMAR). These sources are designated
-`"Dewey"`, `"BIO"` and `"CMAR"`, respectively, in `mooringElements`.
+Lawson of the Bedford Institute of Oceanography
+([BIO](https://www.bio.gc.ca/index-en.php)). And the third was in spreadsheets
+and other documents provided by Danielle Dempsey and Nicole Torrie of the
+Centre for Marine Research ([CMAR](https://cmar.ca)). These sources are
+designated `"Dewey"`, `"BIO"` and `"CMAR"`, respectively, in `mooringElements`.
 
-Conversations with Clark Richards and Chantelle Layton were helpful in
-identifying data sources and in clarifying the nature of mooring systems.
-Documents by @hamilton_validation_1989 and @hamilton_mooring_1997 cast further
-light on important practicalities.
+Conversations with Clark Richards and Chantelle Layton (both of
+[BIO](https://www.bio.gc.ca/index-en.php)) were helpful in identifying data
+sources and in clarifying the nature of mooring systems. Documents by
+@hamilton_validation_1989 and @hamilton_mooring_1997 cast further light on
+important practicalities.
 
 # References
