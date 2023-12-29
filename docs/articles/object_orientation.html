@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Object-orientation Scheme</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2023-12-28</h4>
+            <h4 data-toc-skip class="date">2023-12-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/object_orientation.Rmd" class="external-link"><code>vignettes/object_orientation.Rmd</code></a></small>
       <div class="hidden name"><code>object_orientation.Rmd</code></div>
@@ -106,15 +106,20 @@
     
     
 <p>The S3 scheme is used for objects created by functions in the
-<code>mooring</code> package. These objects inherit from the
-<code>"mooring"</code> class. The contents consist of a list that in
-turn contains one or more lists.</p>
-<p>The elementary functions, such as <code><a href="../reference/anchor.html">anchor()</a></code>,
-<code><a href="../reference/wire.html">wire()</a></code>, <code><a href="../reference/float.html">float()</a></code>, etc., produce objects with
-main class <code>"mooring"</code> and sub-class with the function name.
-The contents vary from subclass to subclass. Allowances for these
-different aspects are made in <code><a href="../reference/knockdown.html">knockdown()</a></code>, as it computes
-drag and buoyancy forces on elements.</p>
+<code>mooring</code> package. There are two types of functions, and two
+classes of return value.</p>
+<p>The overall functions, <code><a href="../reference/mooring.html">mooring()</a></code>,
+<code><a href="../reference/discretise.html">discretise()</a></code> and <code><a href="../reference/knockdown.html">knockdown()</a></code> all produce
+return lists that have class <code>"mooring"</code>. The elements of
+those lists are produced with what are called “elementary” functions,
+which include <code><a href="../reference/anchor.html">anchor()</a></code>, <code><a href="../reference/wire.html">wire()</a></code>,
+<code><a href="../reference/float.html">float()</a></code>, etc., all of which return objects with main class
+<code>"mooringElement"</code> and sub-class patterned on the function
+name.</p>
+<p>The return values from the elementary functions vary with type, and
+allowances for these different aspects are made in
+<code><a href="../reference/knockdown.html">knockdown()</a></code> and the functions it accesses, such as
+<code><a href="../reference/area.html">area()</a></code>, etc.</p>
 <p>For example,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span>
@@ -122,6 +127,15 @@ drag and buoyancy forces on elements.</p>
 <p>produces a list with 3 elements, one that holds information on the
 anchor, a second that holds information on the wire, and a third that
 holds information on the float.</p>
+<p>To get a quick overview of a function, use e.g.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">m</span></span></code></pre></div>
+<pre><code><span><span class="co">## Mooring with 3 elements, listed from the top down:</span></span>
+<span><span class="co">##   1: "Kiel SFS40in" float, 320kg, height 1m, area 0.785398m^2</span></span>
+<span><span class="co">##   2: "1/4in wire/jack" wire, -9.75kg, length 75m, area 0.6m^2</span></span>
+<span><span class="co">##   3: "3 trainwheels" anchor, -1050kg, height 0.55m, in 100m water depth</span></span></code></pre>
+<p>and, for more details, try using <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> or
+<code><a href="https://rdrr.io/r/base/dput.html" class="external-link">dput()</a></code>.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
