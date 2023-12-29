@@ -60,14 +60,21 @@ plot(mdk, fancy=TRUE)
 
 # Acknowledgements
 
-The properties of some mooring elements were extracted from Richard
-Dewey’s excellent mooring-analysis Matlab software (see Dewey (1999)),
-while others were extracted from information generously provided by Jay
+The mooring-element properties that are stored in the `mooringElements`
+database stem from three main sources. The first was Richard Dewey’s
+excellent mooring-analysis Matlab software, described by Dewey (1999).
+The second was in spreadsheets and other documents provided by Jay
 Barthelotte and Matthew Lawson of the Bedford Institute of Oceanography
-(BIO), and by Danielle Dempsey and Nicole Torrie at the Centre for
-Marine Research (CMAR); these three sources are identified in the
-element databases. The package development benefited from conversations
-with Clark Richards and Chantelle Layton, both of BIO.
+(BIO). And the third was in spreadsheets and other documents provided by
+Danielle Dempsey and Nicole Torrie of the Centre for Marine Research
+(CMAR). These sources are designated `"Dewey"`, `"BIO"` and `"CMAR"`,
+respectively, in `mooringElements`.
+
+Conversations with Clark Richards and Chantelle Layton were helpful in
+identifying data sources and in clarifying the nature of mooring
+systems. Documents by J. M. Hamilton (1989) and James M. Hamilton,
+Fowler, and Belliveau (1997) cast further light on important
+practicalities.
 
 # References
 
@@ -78,6 +85,23 @@ with Clark Richards and Chantelle Layton, both of BIO.
 Dewey, Richard K. 1999. “Mooring Design & Dynamics—a Matlab® Package for
 Designing and Analyzing Oceanographic Moorings.” *Marine Models* 1 (1):
 103–57. <https://doi.org/10.1016/S1369-9350(00)00002-X>.
+
+</div>
+
+<div id="ref-hamilton_validation_1989" class="csl-entry">
+
+Hamilton, J. M. 1989. “The Validation and Practical Applications of a
+Sub-Surface Mooring Model.” 119. Bedford Institute of Oceanography.
+<https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf>.
+
+</div>
+
+<div id="ref-hamilton_mooring_1997" class="csl-entry">
+
+Hamilton, James M., George A. Fowler, and Donald J. Belliveau. 1997.
+“Mooring Vibration as a Source of Current Meter Error and Its
+Correction.” *Journal of Atmospheric and Oceanic Technology* 14 (3):
+644–55.
 
 </div>
 
