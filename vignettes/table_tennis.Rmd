@@ -112,7 +112,7 @@ T <- B / cos(phi)
 library(mooring)
 f <- float("pingpong", B/g, height=0, area=pi*R^2, CD=1)
 expect_equal(B/g, buoyancy(f))         # convert to kg to compare
-expect_equal(D/g, drag(f, u=u))        # convert to kg to compare
+expect_equal(D, drag(f, u=u))        # convert to kg to compare
 
 w <- wire("gossamer", length=L, buoyancyPerMeter=0, areaPerMeter=0, CD=0)
 a <- anchor("fake", buoyancy=-1000, height=0, depth=L, CD=0)

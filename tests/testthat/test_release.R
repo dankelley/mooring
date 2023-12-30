@@ -11,12 +11,11 @@ test_that("release creation", {
     A <- 3
     C_D <- 4
     u <- 1.23
-    g <- 9.8
     expect_equal(r$area, A)
     expect_equal(area(r), A)
     expect_equal(r$CD, C_D)
     expect_equal(CD(r), C_D)
-    expect_equal(drag(r, u), 0.5 * 1027 * A * C_D * u^2/g)
+    expect_equal(drag(r, u), 0.5 * 1027 * A * C_D * u^2)
 })
 
 test_that("release default", {

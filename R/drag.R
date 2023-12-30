@@ -5,14 +5,13 @@
 #' This looks up element areas with [area()] and drag
 #' coefficients with [CD()], then computes drag
 #' force (in Newtons) with
-#' \eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}
-#' and divides by `g` to get a mass equivalence, which
-#' is returned.
+#' \eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}.
 #'
-#' Although fluid density `rho` and `g` are parameters to this
-#' function, the default values are likely to be used in all
-#' practical oceanographic calculations, because drag coefficient
-#' is not known to three digits.
+#' Although fluid density `rho` is a parameter of this
+#' function, the default value is likely to be used in all
+#' practical oceanographic calculations, because neither
+#' the drag coefficient, `CD` nor the current is easily
+#' constrained to a corresponding tolerance.
 #'
 #' @template meTemplate
 #'
@@ -20,22 +19,19 @@
 #'
 #' @template rhoTemplate
 #'
-#' @param g numeric value of the acceleration due to gravity, with default
-#' being 9.8 m/s^2.
-#'
 #' @param phi angle (in degrees) of element compared with a vertical line. This
 #' is passed to [area()].
 #'
-#' @return `drag` returns a numeric vector of horizontal drag "force" (really, force
-#' divided by gravitational acceleration), expressed in kg.
+#' @return `drag` returns a numeric vector of horizontal drag force in
+#' Newtons.
 #'
 #' @export
 #'
 #' @author Dan Kelley
-drag <- function(m, u, rho = 1027, g = 9.8, phi = 0.0) {
+drag <- function(m, u, rho = 1027, phi = 0.0) {
     if (length(rho) > 1L && length(rho) != length(m)) {
         stop("length of rho, ", length(rho), " must match length of m, ", length(m))
     }
     uSquared <- if (is.function(u)) sapply(depth(m), u)^2 else u^2
-    0.5 * area(m, phi = phi) * rho * CD(m) * uSquared / g
+    0.5 * area(m, phi = phi) * rho * CD(m) * uSquared
 }

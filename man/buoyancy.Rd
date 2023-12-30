@@ -22,7 +22,7 @@ The nonphysical unit of kg reflects a common convention used
 by manufacturers of oceanographic mooring equipment. For calculations
 of buoyancy \emph{force}, the return value from this function
 must be multiplied by the acceleration due to gravity,
-g=9.8m/s^2.
+g=9.81 m/s^2.
 }
 \details{
 Note that the present version of this function

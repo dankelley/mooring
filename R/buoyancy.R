@@ -6,7 +6,7 @@
 #' by manufacturers of oceanographic mooring equipment. For calculations
 #' of buoyancy *force*, the return value from this function
 #' must be multiplied by the acceleration due to gravity,
-#' g=9.8m/s^2.
+#' g=9.81 m/s^2.
 #'
 #' Note that the present version of this function
 #' does not account for depth variations in seawater density,
