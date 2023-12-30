@@ -3,11 +3,11 @@ library(mooring)
 
 test_that("mooring construction", {
     m <- mooring(anchor(depth=200), wire(length=100), float())
-    b <- buoyancy(m)
-    expect_equal(b, c(320, -13, -1050))
+    b <- buoyancy(m) # kg
+    expect_equal(b, c(320, -13, -350))
     expect_equal(rep(0, 3), x(m))
-    expect_equal(c(-98.45, -99.45, -199.45), z(m))
-    expect_equal(c(98.45, 99.45, 199.45), depth(m))
+    expect_equal(c(-98.85, -99.85, -199.85), z(m))
+    expect_equal(c(98.85, 99.85, 199.85), depth(m))
 })
 
 test_that("plot with x-y superimposed", {

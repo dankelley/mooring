@@ -15,23 +15,23 @@ integer) that controls debugging. If this is positive, then some debugging
 information may be printed by the function.}
 }
 \value{
-\code{buoyancy} returns a numeric vector of buoyancy, expressed in kg.
+\code{buoyancy} returns a numeric vector of buoyancy, expressed
+in kg or N, depending on the value of \code{unit}.
 }
 \description{
-The nonphysical unit of kg reflects a common convention used
-by manufacturers of oceanographic mooring equipment. For calculations
-of buoyancy \emph{force}, the return value from this function
-must be multiplied by the acceleration due to gravity,
-g=9.81 m/s^2.
+This returns 'buoyancy' in kg, as is the convention of storage in
+this package (and is quite common in practical work).  It must be
+multiplied by the acceleration due to gravity, g=9.81m/s^2, to get
+an \emph{actual} buoyancy force, in Newtons. This multiplication is done
+in \code{\link[=knockdown]{knockdown()}} and \code{\link[=tension]{tension()}}.
 }
 \details{
-Note that the present version of this function
-does not account for depth variations in seawater density,
-for those tend to be well under 1 percent, and other
-forces involved in mooring dynamics are much more uncertain
-than that.  For example, Hamilton (1989) found that oscillations
-in mooring lines could lead to enhanced drag, in some cases
-necessitating an increase in CD for wire from 1.4 to 2.6
+Note that the present version of this function does not account for
+depth variations in seawater density, for those tend to be well
+under 1 percent, and other forces involved in mooring dynamics are
+much more uncertain than that.  For example, Hamilton (1989) found
+that oscillations in mooring lines could lead to enhanced drag, in
+some cases necessitating an increase in CD for wire from 1.4 to 2.6
 (see captions of his figures 12 and 13).
 }
 \examples{
@@ -39,6 +39,11 @@ library(mooring)
 m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 buoyancy(m)
 
+}
+\references{
+Hamilton, J. M. "The Validation and Practical Applications of a Sub-Surface
+Mooring Model." Canadian Technical Report of Hydrography and Ocean
+Sciences. Bedford Institute of Oceanography, 1989.
 }
 \author{
 Dan Kelley

@@ -159,7 +159,7 @@ plot.mooring <- function(
         xlim <- if (which == "shape") {
             extendrange(c(x, 0))
         } else if (which == "tension") {
-            extendrange(c(x, anchorWeight(m)))
+            extendrange(c(x, 9.81 * anchorWeight(m)))
         } else {
             extendrange(x)
         }
@@ -176,7 +176,7 @@ plot.mooring <- function(
     xlab <- switch(which,
         "shape" = "Horizontal Coordinate [m]",
         "knockdown" = "Depth Increase [m]",
-        "tension" = "Tension [kg]",
+        "tension" = "Tension [N]",
         "velocity" = "Velocity [m/s]"
     )
     ylab <- "Depth [m]"
@@ -232,7 +232,7 @@ plot.mooring <- function(
         lines(tension(m, stagnant = TRUE)[look], depth[look],
             col = colStagnant, lwd = 1.4 * par("lwd")
         )
-        abline(v = anchorWeight(m), col = colDragWarning, lwd = 3, lty = 2)
+        abline(v = 9.81 * anchorWeight(m), col = colDragWarning, lwd = 3, lty = 2)
     }
     cex <- if (showDetails) detailsControl$cex else 1
     pch <- if (showDetails) detailsControl$pch else 20

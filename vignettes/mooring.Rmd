@@ -102,10 +102,10 @@ Similarly, the tension between elements is found with `tension()`, and the angle
 
 The plot shown above is quite primitive, so the package offers a `plot()`
 function.  For example, this gives a view of tension and shape.
-```{r, fig.cap="**Tension and shape diagrams created with plot() from mooring package.**", fig.align="center"}
+```{r, fig.cap="**Mooring shape and tension profiles created with plot(). The red dashed line on the right-hand panel represents the anchor weight.**", fig.align="center"}
 par(mfrow=c(1, 2))
-plot(mdk, which="tension")
 plot(mdk, which="shape")
+plot(mdk, which="tension")
 ```
 
 In both instances, the gray line is the shape that would occur with no current.
@@ -114,10 +114,10 @@ understand the result.  Also, note that depth is plotted here, as opposed to
 the $z$ shown above.
 
 A fancier version is obtained with
-```{r, fig.cap="**Tension and shape, with water coloured blue and bottom coloured brown.**", fig.align="center"}
+```{r, fig.cap="**Mooring shape and tension, with water coloured blue and bottom coloured brown.**", fig.align="center"}
 par(mfrow=c(1, 2))
-plot(mdk, which="tension", fancy=TRUE)
 plot(mdk, which="shape", fancy=TRUE)
+plot(mdk, which="tension", fancy=TRUE)
 ```
 
 # Interactive Apps

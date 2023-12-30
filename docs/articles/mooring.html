@@ -236,12 +236,13 @@ is found with <code>angle()</code>.</p>
 and shape.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"tension"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"shape"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"shape"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"tension"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="mooring_files/figure-html/unnamed-chunk-6-1.png" alt="**Tension and shape diagrams created with plot() from mooring package.**" width="700.0000032"><p class="caption">
-<strong>Tension and shape diagrams created with plot() from mooring
-package.</strong>
+<img src="mooring_files/figure-html/unnamed-chunk-6-1.png" alt="**Mooring shape and tension profiles created with plot(). The red dashed line on the right-hand panel represents the anchor weight.**" width="700.0000032"><p class="caption">
+<strong>Mooring shape and tension profiles created with plot(). The red
+dashed line on the right-hand panel represents the anchor
+weight.</strong>
 </p>
 </div>
 <p>In both instances, the gray line is the shape that would occur with
@@ -252,12 +253,12 @@ above.</p>
 <p>A fancier version is obtained with</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"tension"</span>, fancy<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"shape"</span>, fancy<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"shape"</span>, fancy<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, which<span class="op">=</span><span class="st">"tension"</span>, fancy<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="mooring_files/figure-html/unnamed-chunk-7-1.png" alt="**Tension and shape, with water coloured blue and bottom coloured brown.**" width="700.0000032"><p class="caption">
-<strong>Tension and shape, with water coloured blue and bottom coloured
-brown.</strong>
+<img src="mooring_files/figure-html/unnamed-chunk-7-1.png" alt="**Mooring shape and tension, with water coloured blue and bottom coloured brown.**" width="700.0000032"><p class="caption">
+<strong>Mooring shape and tension, with water coloured blue and bottom
+coloured brown.</strong>
 </p>
 </div>
 </div>
