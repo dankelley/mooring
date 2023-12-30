@@ -44,7 +44,7 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \item{depth}{numeric value giving water depth in m.}
 }
 \value{
-\code{anchor} returns an object of the \code{"mooringElement"} class and \code{"anchor"} subclass.
+\code{anchor} returns a \code{"mooringElement"} object with \code{"anchor"} subclass.
 }
 \description{
 Create a anchor object,

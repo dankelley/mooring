@@ -6,7 +6,7 @@ values falls below the product of convergenceCriterion and wire
 length. The returned result has an attribute named u that holds
 the value of that argument, and this is how a later call to
 plot.mooring() is able to display a velocity profile; see
-&amp;#8220;Examples&amp;#8221; 2 and 3."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+Examples 2 and 3."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -88,7 +88,7 @@ values falls below the product of <code>convergenceCriterion</code> and wire
 length. The returned result has an attribute named <code>u</code> that holds
 the value of that argument, and this is how a later call to
 <code><a href="plot.mooring.html">plot.mooring()</a></code> is able to display a velocity profile; see
-“Examples” 2 and 3.</p>
+Examples 2 and 3.</p>
     </div>
 
     <div id="ref-usage">
@@ -134,15 +134,20 @@ information may be printed by the function.</p></dd>
     <h2>Value</h2>
     
 
-<p>a new <code>mooring</code> object representing the deformed mooring,
-with <code>x</code> and <code>z</code> values updated (and original values saved as <code>x0</code></p>
+<p><code>knockdown</code> returns a <code>mooring</code> object representing the
+deformed mooring, with <code>x</code> and <code>z</code> values updated, with the
+original values being saved as <code>x0</code> and <code>z0</code>. In addition, the
+stress and angle of each element is stored in fields named <code>tau</code></p>
 
 
-<p>and <code>z0</code>). In addition, the stress and angle of each element is
-stored in fields named <code>tau</code> and <code>phi</code>, the latter in radians.
-Attributes are added to the object to describe the solution in more
-detail.  The <code>u</code> attribute stores the value supplied to
-<code>knockdown()</code>, and <code>waterDepth' stores the water depth that was supplied to the [anchor()] call.  An overview of the iterative solution is provided in the </code>iterationCount<code>and</code>iterationChange<code>attributes, which store the number of iterations used in the computation, and the RMS change in</code>z` over the final iteration.</p>
+<p>and <code>phi</code>, the latter in radians. Attributes are added to the
+object to describe the solution in more detail.  The <code>u</code> attribute
+stores the value supplied to <code>knockdown()</code>, and <code>waterDepth</code> stores
+the water depth that was supplied to the <code><a href="anchor.html">anchor()</a></code> call.  An
+overview of the iterative solution is provided in the
+<code>iterationCount</code> and <code>iterationChange</code> attributes, which store the
+number of iterations used in the computation, and the RMS change in
+<code>z</code> over the final iteration.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

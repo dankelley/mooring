@@ -18,7 +18,7 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `instrument` returns an object of the `"mooringElement"` class and `"instrument"` subclass.
+#' @return `instrument` returns a `"mooringElement"` object with `"instrument"` subclass.
 #'
 #' @family functions that create mooring elements
 #'

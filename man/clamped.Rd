@@ -12,7 +12,7 @@ as created with \code{\link[=instrument]{instrument()}}.}
 }
 \value{
 \code{clamped} returns a copy of its input, but with
-its \code{height} value set to 0.
+the \code{height} value set to 0.
 }
 \description{
 This changes the \code{height} field of an \code{instrument} object to 0,

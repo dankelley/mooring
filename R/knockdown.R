@@ -20,7 +20,7 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' length. The returned result has an attribute named `u` that holds
 #' the value of that argument, and this is how a later call to
 #' [plot.mooring()] is able to display a velocity profile; see
-#' \dQuote{Examples} 2 and 3.
+#' Examples 2 and 3.
 #'
 #' @param m an object of the `"mooring"` class, usually created with
 #' [discretise()].
@@ -41,17 +41,18 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #'
 #' @template debugTemplate
 #'
-#' @return a new `mooring` object representing the deformed mooring,
-#' with `x` and `z` values updated (and original values saved as `x0`
-#' and `z0`). In addition, the stress and angle of each element is
-#' stored in fields named `tau` and `phi`, the latter in radians.
-#' Attributes are added to the object to describe the solution in more
-#' detail.  The `u` attribute stores the value supplied to
-#' `knockdown()`, and `waterDepth' stores the water depth that was
-#' supplied to the [anchor()] call.  An overview of the iterative
-#' solution is provided in the `iterationCount` and `iterationChange`
-#' attributes, which store the number of iterations used in the
-#' computation, and the RMS change in `z` over the final iteration.
+#' @return `knockdown` returns a `mooring` object representing the
+#' deformed mooring, with `x` and `z` values updated, with the
+#' original values being saved as `x0` and `z0`. In addition, the
+#' stress and angle of each element is stored in fields named `tau`
+#' and `phi`, the latter in radians. Attributes are added to the
+#' object to describe the solution in more detail.  The `u` attribute
+#' stores the value supplied to `knockdown()`, and `waterDepth` stores
+#' the water depth that was supplied to the [anchor()] call.  An
+#' overview of the iterative solution is provided in the
+#' `iterationCount` and `iterationChange` attributes, which store the
+#' number of iterations used in the computation, and the RMS change in
+#' `z` over the final iteration.
 #'
 #' @examples
 #' # Illustrate importance of drag on the wire.

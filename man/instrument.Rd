@@ -45,7 +45,7 @@ in \eqn{m^2}{m^2}.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \value{
-\code{instrument} returns an object of the \code{"mooringElement"} class and \code{"instrument"} subclass.
+\code{instrument} returns a \code{"mooringElement"} object with \code{"instrument"} subclass.
 }
 \description{
 Create an instrument object,

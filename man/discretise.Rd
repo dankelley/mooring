@@ -21,8 +21,8 @@ integer) that controls debugging. If this is positive, then some debugging
 information may be printed by the function.}
 }
 \value{
-an object of the \code{"mooring"} class, identical
-to \code{m} except that wire portions are chopped up into shorter
+\code{discretise} returns a \code{"mooring"} object, based
+on \code{m} except that wire portions are chopped up into shorter
 pieces.
 }
 \description{

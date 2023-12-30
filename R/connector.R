@@ -22,7 +22,7 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `connector` returns an object of the `"mooringElement"` class and `"connector"` subclass.
+#' @return `connector` returns a `"mooringElement"` object with `"connector"` subclass.
 #'
 #' @family functions that create mooring elements
 #'

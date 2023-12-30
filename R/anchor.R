@@ -24,7 +24,7 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `anchor` returns an object of the `"mooringElement"` class and `"anchor"` subclass.
+#' @return `anchor` returns a `"mooringElement"` object with `"anchor"` subclass.
 #'
 #' @family functions that create mooring elements
 #'

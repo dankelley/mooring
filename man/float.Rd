@@ -43,7 +43,7 @@ in \eqn{m^2}{m^2}.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \value{
-\code{float} returns an object of the \code{"mooringElement"} class and \code{"float"} subclass.
+\code{float} returns a \code{"mooringElement"} object with \code{"float"} subclass.
 }
 \description{
 Create a float object
