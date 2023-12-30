@@ -119,7 +119,7 @@ knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1e-4, de
     iterationChange <- NA
     for (iteration in seq_len(niteration)) {
         iterationCount <- iteration
-        B <- 9.8 * buoyancy(m) # note conversion from kg to N
+        B <- 9.81 * buoyancy(m) # note conversion from kg to N
         D <- drag(m, u)
         # Next two are Equation 5 in the Mooring Model vignette.
         tau[1] <- sqrt(D[1]^2 + B[1]^2)

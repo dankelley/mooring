@@ -4,7 +4,7 @@
 \alias{drag}
 \title{Drag on mooring elements}
 \usage{
-drag(m, u, rho = 1027, g = 9.8, phi = 0)
+drag(m, u, rho = 1027, phi = 0)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
@@ -23,29 +23,25 @@ in lake applications.  Note that the overall force balance
 is more sensitive to other things, as discussed in the \dQuote{Details}
 section of the documentation for \code{\link[=buoyancy]{buoyancy()}}.}
 
-\item{g}{numeric value of the acceleration due to gravity, with default
-being 9.8 m/s^2.}
-
 \item{phi}{angle (in degrees) of element compared with a vertical line. This
 is passed to \code{\link[=area]{area()}}.}
 }
 \value{
-\code{drag} returns a numeric vector of horizontal drag "force" (really, force
-divided by gravitational acceleration), expressed in kg.
+\code{drag} returns a numeric vector of horizontal drag force in
+Newtons.
 }
 \description{
 This looks up element areas with \code{\link[=area]{area()}} and drag
 coefficients with \code{\link[=CD]{CD()}}, then computes drag
 force (in Newtons) with
-\eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}
-and divides by \code{g} to get a mass equivalence, which
-is returned.
+\eqn{(1/2)*area*rho*CD*u^2}{(1/2)*area*rho*CD*u^2}.
 }
 \details{
-Although fluid density \code{rho} and \code{g} are parameters to this
-function, the default values are likely to be used in all
-practical oceanographic calculations, because drag coefficient
-is not known to three digits.
+Although fluid density \code{rho} is a parameter of this
+function, the default value is likely to be used in all
+practical oceanographic calculations, because neither
+the drag coefficient, \code{CD} nor the current is easily
+constrained to a corresponding tolerance.
 }
 \author{
 Dan Kelley
