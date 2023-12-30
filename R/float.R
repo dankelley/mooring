@@ -24,7 +24,7 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `float` returns an object of the `"mooringElement"` class and `"float"` subclass.
+#' @return `float` returns a `"mooringElement"` object with `"float"` subclass.
 #'
 #' @references
 #' 1. \url{https://deepwaterbuoyancy.com/wp-content/uploads/hydro-float-mooring-buoys-deepwater-buoyancy.pdf}

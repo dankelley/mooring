@@ -31,13 +31,18 @@ integer) that controls debugging. If this is positive, then some debugging
 information may be printed by the function.}
 }
 \value{
-a new \code{mooring} object representing the deformed mooring,
-with \code{x} and \code{z} values updated (and original values saved as \code{x0}
-and \code{z0}). In addition, the stress and angle of each element is
-stored in fields named \code{tau} and \code{phi}, the latter in radians.
-Attributes are added to the object to describe the solution in more
-detail.  The \code{u} attribute stores the value supplied to
-\code{knockdown()}, and \verb{waterDepth' stores the water depth that was supplied to the [anchor()] call.  An overview of the iterative solution is provided in the }iterationCount\code{and}iterationChange\verb{attributes, which store the number of iterations used in the computation, and the RMS change in}z` over the final iteration.
+\code{knockdown} returns a \code{mooring} object representing the
+deformed mooring, with \code{x} and \code{z} values updated, with the
+original values being saved as \code{x0} and \code{z0}. In addition, the
+stress and angle of each element is stored in fields named \code{tau}
+and \code{phi}, the latter in radians. Attributes are added to the
+object to describe the solution in more detail.  The \code{u} attribute
+stores the value supplied to \code{knockdown()}, and \code{waterDepth} stores
+the water depth that was supplied to the \code{\link[=anchor]{anchor()}} call.  An
+overview of the iterative solution is provided in the
+\code{iterationCount} and \code{iterationChange} attributes, which store the
+number of iterations used in the computation, and the RMS change in
+\code{z} over the final iteration.
 }
 \description{
 The current may be a depth-independent or depth-dependent, as
@@ -47,7 +52,7 @@ values falls below the product of \code{convergenceCriterion} and wire
 length. The returned result has an attribute named \code{u} that holds
 the value of that argument, and this is how a later call to
 \code{\link[=plot.mooring]{plot.mooring()}} is able to display a velocity profile; see
-\dQuote{Examples} 2 and 3.
+Examples 2 and 3.
 }
 \examples{
 # Illustrate importance of drag on the wire.

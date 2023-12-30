@@ -41,7 +41,7 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \item{length}{(mandatory) numeric value indicating the length (in m) of the wire.}
 }
 \value{
-\code{wire} returns an object of the \code{"mooringElement"} class and \code{"wire"} subclass.
+\code{wire} returns a \code{"mooringElement"} object with \code{"wire"} subclass.
 }
 \description{
 Creates a wire (or rope, chain, etc.) object,

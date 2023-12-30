@@ -16,8 +16,8 @@
 #'
 #' @template debugTemplate
 #'
-#' @return an object of the `"mooring"` class, identical
-#' to `m` except that wire portions are chopped up into shorter
+#' @return `discretise` returns a `"mooring"` object, based
+#' on `m` except that wire portions are chopped up into shorter
 #' pieces.
 #'
 #' @export

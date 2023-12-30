@@ -45,7 +45,7 @@ in \eqn{m^2}{m^2}.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 }
 \value{
-\code{connector} returns an object of the \code{"mooringElement"} class and \code{"connector"} subclass.
+\code{connector} returns a \code{"mooringElement"} object with \code{"connector"} subclass.
 }
 \description{
 Create an object that describes mooring connector such as shackles,

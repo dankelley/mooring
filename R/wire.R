@@ -18,7 +18,7 @@
 #'
 #' @template sourceTemplate
 #'
-#' @return `wire` returns an object of the `"mooringElement"` class and `"wire"` subclass.
+#' @return `wire` returns a `"mooringElement"` object with `"wire"` subclass.
 #'
 #' @family functions that create mooring elements
 #'

@@ -14,7 +14,7 @@
 #' as created with [instrument()].
 #'
 #' @return `clamped` returns a copy of its input, but with
-#' its `height` value set to 0.
+#' the `height` value set to 0.
 #'
 #' @family functions that create mooring objects
 #'
