@@ -1,3 +1,8 @@
+# mooring 0.1.4
+
+* Fix major error in buoyancy calculation. See
+  https://github.com/dankelley/mooring/issues/58 for details.
+
 # mooring 0.1.3
 
 * `knockdown()` uses an iteration method to improve accuracy.
