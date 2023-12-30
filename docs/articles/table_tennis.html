@@ -130,29 +130,37 @@ and <span class="math inline">\(R\)</span> the radius of the ball. Let
 the water density be <span class="math inline">\(\rho\)</span>. Assuming
 that the density of the ball (and air inside) is much less than water
 density, we may approximate the ball buoyancy force as <span class="math display">\[\begin{equation}
+\tag{1}
 B = \frac{4}{3}\pi \rho g R^3
 \end{equation}\]</span> where <span class="math inline">\(g\)</span> is
 the acceleration due to gravity. The drag on the ball may be
 approximated as <span class="math display">\[\begin{equation}
+\tag{2}
 D = \frac{1}{2} C_D \rho \pi R^2 u^2
 \end{equation}\]</span> where <span class="math inline">\(C_D\)</span>
 is a drag coefficient and <span class="math inline">\(u\)</span> is the
 water speed in the <span class="math inline">\(x\)</span> direction.</p>
-<p>We assume a steady state. If <span class="math inline">\(T\)</span>
-represents tension in the fishing line, and <span class="math inline">\(\phi\)</span> the angle the line makes to the
-vertical, then force balance in the horizontal and vertical directions
-requires that <span class="math display">\[\begin{equation}
-T\sin\phi = D
+<p>We assume a steady state. If <span class="math inline">\(\tau\)</span> represents tension in the fishing
+line, and <span class="math inline">\(\phi\)</span> the angle the line
+makes to the vertical, then force balance in the horizontal and vertical
+directions requires that <span class="math display">\[\begin{equation}
+\tag{3}
+\tau\sin\phi = D
 \end{equation}\]</span> and <span class="math display">\[\begin{equation}
-T\cos\phi = B
+\tag{4}
+\tau\cos\phi = B
 \end{equation}\]</span> respectively. Dividing these yields <span class="math display">\[\begin{equation}
+\tag{5}
 \phi = \tan^{-1}\frac{D}{B}
 \end{equation}\]</span></p>
 <p>From the above, it follows that tension in the line is <span class="math display">\[\begin{equation}
-T = \frac{B}{\cos\phi}
+\tag{6}
+\tau = \frac{B}{\cos\phi}
 \end{equation}\]</span> and that the ball is at position <span class="math display">\[\begin{equation}
+\tag{7}
 x' = L\sin\phi
 \end{equation}\]</span> and that it is at height <span class="math display">\[\begin{equation}
+\tag{8}
 z' = L - L\cos\phi
 \end{equation}\]</span> above the bottom.</p>
 <p>It is easy to imagine an experimental setup in which <span class="math inline">\(x'\)</span> might be measured (replace the
@@ -177,20 +185,20 @@ blue) of the formulae given above.</p>
 <span><span class="va">volume</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">/</span><span class="fl">3</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">R</span><span class="op">^</span><span class="fl">3</span></span>
 <span><span class="va">rho</span> <span class="op">&lt;-</span> <span class="fl">1027</span></span>
 <span><span class="va">deltaRho</span> <span class="op">&lt;-</span> <span class="va">rho</span>                        <span class="co"># water vs air (round numbers)</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fl">9.8</span></span>
-<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">*</span> <span class="va">deltaRho</span> <span class="op">*</span> <span class="va">volume</span>             <span class="co"># Newtons</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fl">9.81</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">*</span> <span class="va">deltaRho</span> <span class="op">*</span> <span class="va">volume</span>             <span class="co"># buoyancy force [N]</span></span>
 <span><span class="va">CD</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fl">0.5</span>                               <span class="co"># speed, m/s</span></span>
-<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">CD</span> <span class="op">*</span> <span class="va">area</span> <span class="op">*</span> <span class="va">rho</span> <span class="op">*</span> <span class="va">u</span><span class="op">^</span><span class="fl">2</span>       <span class="co"># Newtons</span></span>
+<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">CD</span> <span class="op">*</span> <span class="va">area</span> <span class="op">*</span> <span class="va">rho</span> <span class="op">*</span> <span class="va">u</span><span class="op">^</span><span class="fl">2</span>       <span class="co"># ddrag force [N]</span></span>
 <span><span class="va">phi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">atan2</a></span><span class="op">(</span><span class="va">D</span>, <span class="va">B</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">L</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span></span>
 <span><span class="va">l</span> <span class="op">&lt;-</span> <span class="va">L</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span></span>
-<span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="va">B</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span></span>
+<span><span class="va">tau</span> <span class="op">&lt;-</span> <span class="va">B</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"pingpong"</span>, <span class="va">B</span><span class="op">/</span><span class="va">g</span>, height<span class="op">=</span><span class="fl">0</span>, area<span class="op">=</span><span class="va">pi</span><span class="op">*</span><span class="va">R</span><span class="op">^</span><span class="fl">2</span>, CD<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_equal</a></span><span class="op">(</span><span class="va">B</span><span class="op">/</span><span class="va">g</span>, <span class="fu"><a href="../reference/buoyancy.html">buoyancy</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span>         <span class="co"># convert to kg to compare</span></span>
-<span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_equal</a></span><span class="op">(</span><span class="va">D</span>, <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">f</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span><span class="op">)</span>        <span class="co"># convert to kg to compare</span></span>
+<span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_equal</a></span><span class="op">(</span><span class="va">B</span> <span class="op">/</span> <span class="va">g</span>, <span class="fu"><a href="../reference/buoyancy.html">buoyancy</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_equal</a></span><span class="op">(</span><span class="va">D</span>, <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">f</span>, u<span class="op">=</span><span class="va">u</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span><span class="st">"gossamer"</span>, length<span class="op">=</span><span class="va">L</span>, buoyancyPerMeter<span class="op">=</span><span class="fl">0</span>, areaPerMeter<span class="op">=</span><span class="fl">0</span>, CD<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="st">"fake"</span>, buoyancy<span class="op">=</span><span class="op">-</span><span class="fl">1000</span>, height<span class="op">=</span><span class="fl">0</span>, depth<span class="op">=</span><span class="va">L</span>, CD<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
@@ -202,7 +210,13 @@ blue) of the formulae given above.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mdk</span>, fancy<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co"># Check against theory</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">L</span><span class="op">-</span><span class="va">l</span>, col<span class="op">=</span><span class="fl">2</span>, cex<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="table_tennis_files/figure-html/unnamed-chunk-1-1.png" width="700.0000032"></p>
+<div class="figure">
+<img src="table_tennis_files/figure-html/unnamed-chunk-1-1.png" alt="*Test of package against direct computation. The black dot is the float position computed in the package, whereas the red circle is the result of direct computation using equations 7 and 8.*" width="700.0000032"><p class="caption">
+<em>Test of package against direct computation. The black dot is the
+float position computed in the package, whereas the red circle is the
+result of direct computation using equations 7 and 8.</em>
+</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="results">Results<a class="anchor" aria-label="anchor" href="#results"></a>
@@ -214,11 +228,11 @@ experiment to test this in a natural environment.</p>
 <li>The horizontal shift of the float, <span class="math inline">\(x'\)</span>. Here, a <span class="math inline">\(0.5\)</span> m/s current is predicted to yield
 <span class="math inline">\(x'=21.6\)</span> cm.</li>
 <li>The vertical float displacement over the zero-velocity case, <span class="math inline">\(z'\)</span>. Here, the prediction is <span class="math inline">\(4.9\)</span> cm.</li>
-<li>The tension in the line, <span class="math inline">\(T\)</span>, is
-predicted to be <span class="math inline">\(0.374\)</span> Newtons, so
-that an anchor would need to have mass exceeding 38.1 g to avoid lifting
-by the drag. This mass rises to 74.3 g in a 1 m/s current, which is
-slightly less than the mass of a 3/4-inch bolt, 136 g, and well under
+<li>The tension in the line, <span class="math inline">\(\tau\)</span>,
+is predicted to be <span class="math inline">\(0.374\)</span> Newtons,
+so that an anchor would need to have mass exceeding 38.1 g to avoid
+lifting by the drag. This mass rises to 74.3 g in a 1 m/s current, which
+is slightly less than the mass of a 3/4-inch bolt, 136 g, and well under
 the weight of a 1-inch bolt, 195 g. This suggests that a 1-inch bolt
 might be a good anchor for a demonstration of this effect in a flume.
 (See <a href="https://www.portlandbolt.com/products/nuts/hex-nuts/" class="external-link uri">https://www.portlandbolt.com/products/nuts/hex-nuts/</a> for
@@ -228,9 +242,9 @@ a table of bolt properties.)</li>
 <div class="section level2">
 <h2 id="measuring-currents">Measuring currents<a class="anchor" aria-label="anchor" href="#measuring-currents"></a>
 </h2>
-<p>Any of <span class="math inline">\(x'\)</span>, <span class="math inline">\(z'\)</span> and <span class="math inline">\(T\)</span> could be measured in a classroom or
-laboratory setting, although it might be harder to measure the tension
-force in the field, so a field apparatus should focus on measuring <span class="math inline">\(x'\)</span> and <span class="math inline">\(x'\)</span>. This would not be difficult, for
+<p>Any of <span class="math inline">\(x'\)</span>, <span class="math inline">\(z'\)</span> and <span class="math inline">\(\tau\)</span> could be measured in a classroom or
+laboratory setting, but measuring tension might be harder in a field
+test, and so a field apparatus should focus on measuring <span class="math inline">\(x'\)</span> and <span class="math inline">\(x'\)</span>. This would not be difficult, for
 this range of current, using a metre-stick, to which is attached a
 table-tennis ball with 1 m of thin mono-filament fishing line. A value
 of <span class="math inline">\(z'\)</span> could be obtained by

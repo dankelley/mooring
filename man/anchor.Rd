@@ -5,7 +5,7 @@
 \title{Create an anchor object}
 \usage{
 anchor(
-  model = "3 trainwheels",
+  model = "1 Railway Wheel",
   buoyancy = NULL,
   height = NULL,
   CD = NULL,
@@ -47,13 +47,11 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \code{anchor} returns a \code{"mooringElement"} object with \code{"anchor"} subclass.
 }
 \description{
-Create a anchor object,
-either by looking up a known object from the database, or by defining a new type.
-This must be the first element of a mooring constructed with
-\code{\link[=mooring]{mooring()}}.  The default is 3 trainwheels with zero height (to simplify
-test cases).
-Note that \code{depth} is not a characteristic of the anchor, but rather of
-the domain into which it is placed.
+Create a anchor object, either by looking up a known object from
+the database, or by defining a new type. This must be the first
+element of a mooring constructed with \code{\link[=mooring]{mooring()}}.  Note that
+\code{depth} is not a characteristic of the anchor, but rather of the
+domain into which it is placed.
 }
 \section{Data sources}{
 

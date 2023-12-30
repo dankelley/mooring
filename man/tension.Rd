@@ -27,8 +27,10 @@ m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
 md <- discretise(m)
 mdk <- knockdown(md, u = 0.5)
 depth <- depth(mdk)
-# Next is handled better by plot.mooring(mdk,which="tension")
+# The right-hand panel indicates the anchor limit in red.
+par(mfrow = c(1, 2))
 plot(tension(mdk), depth, ylim = rev(range(depth)), type = "l")
+plot(mdk, which = "tension")
 
 }
 \author{
