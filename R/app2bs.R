@@ -182,16 +182,11 @@ app2bs <- function(debug = FALSE) {
                 )
             } else if (identical(input$preset, "Shelf")) {
                 dmsg("Preset: 'Shelf'")
-                shiny::updateSliderInput(session, inputId = "waterDepth", min = 2.0, max = 200.0, value = 100.0, step = 1.0)
-                dmsg("  1")
-                shiny::updateSliderInput(session, inputId = "wireLength", min = 10.0, max = 180.0, value = 90.0, step = 1.0)
-                dmsg("  2")
-                shiny::updateSliderInput(session, inputId = "instrumentDepth", min = 10.0, max = 160.0, value = 50.0, step = 1.0)
-                dmsg("  3")
+                shiny::updateSliderInput(session, inputId = "waterDepth", min = 2.0, max = 200.0, value = 150.0, step = 1.0)
+                shiny::updateSliderInput(session, inputId = "wireLength", min = 10.0, max = 180.0, value = 130.0, step = 1.0)
+                shiny::updateSliderInput(session, inputId = "instrumentDepth", min = 10.0, max = 160.0, value = 75.0, step = 1.0)
                 shiny::updateSliderInput(session, inputId = "u", min = 0.0, max = 1.0, value = 0.5)
-                dmsg("  4")
                 shiny::updateSelectInput(session, inputId = "currentModel", selected = "Linear")
-                dmsg("  5")
                 wire <- "1/4in wire/jack"
                 shiny::updateSelectInput(session,
                     inputId = "wireType",
@@ -204,19 +199,16 @@ app2bs <- function(debug = FALSE) {
                     inputId = "anchorType",
                     selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]")
                 )
-                dmsg("  7")
                 instrument <- "seabird CTD (ios oxygen with bar)"
                 shiny::updateSelectInput(session,
                     inputId = "instrumentType",
                     selected = paste0(instrument, " [", instrument(instrument)$buoyancy, "kg]")
                 )
-                dmsg("  8")
                 float <- "BUB 2x17in glass"
                 shiny::updateSelectInput(session,
                     inputId = "floatType",
                     selected = paste0(float, " [", float(float)$buoyancy, "kg]")
                 )
-                dmsg("  9 (float='", float, "') END OF 'Shelf' preset code block")
             } else if (identical(input$preset, "Deep")) {
                 dmsg("Preset: 'Deep'")
                 shiny::updateSliderInput(session, inputId = "waterDepth", min = 100.0, max = 1500.0, value = 1000.0, step = 10.0)
@@ -434,8 +426,8 @@ app2bs <- function(debug = FALSE) {
                         if (!titleShown) {
                             mtext(
                                 sprintf(
-                                    "Depth converged to %.03fm in %d iterations",
-                                    attr$iterationChange, attr$iterationCount
+                                    "Depth converged to %.03fm in %s",
+                                    attr$iterationChange, pluralize("iteration", n = attr$iterationCount)
                                 ),
                                 cex = par("cex"),
                                 col = 2,

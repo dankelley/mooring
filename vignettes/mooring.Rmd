@@ -138,7 +138,7 @@ current.
 
 The following is a screenshot of `app2bs()` in action.
 
-```{r,fig.cap="**View of the app2bs() shiny application, with the 'Current' controller open.**", out.width="100%", fig.align="center", echo=FALSE}
+```{r,fig.cap="**View of the app2bs() shiny application, with the 'Current' controller open, after increasing the value from its default of 0.5 m/s to 1 m/s.**", out.width="100%", fig.align="center", echo=FALSE}
 knitr::include_graphics("app2bs.png")
 ```
 
