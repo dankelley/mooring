@@ -31,14 +31,18 @@ mooringElement <- new_class("mooringElement",
         originalName = class_character
     )
 )
-float <- new_class("float",
-    parent = mooringElement,
-    package = "mooring"
-)
 anchor <- new_class("anchor",
     parent = mooringElement,
     package = "mooring",
     properties = list(waterDepth = class_numeric)
+)
+float <- new_class("float",
+    parent = mooringElement,
+    package = "mooring"
+)
+wire <- new_class("wire",
+    parent = mooringElement,
+    package = "mooring"
 )
 #f <- float()
 #m <- mooring()

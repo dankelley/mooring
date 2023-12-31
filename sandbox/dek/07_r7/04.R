@@ -1,6 +1,7 @@
 source("03.R")
-source("float_test.R")
 source("anchor_test.R")
+source("float_test.R")
+source("wire_test.R")
 testthat::expect_error(mooring(a = 1, b = 2), "element 1 is not an anchor")
 float_test()
 float_test("?")
@@ -15,8 +16,10 @@ anchor_test(depth = 100)
 # mooring::mooring
 
 a <- anchor_test(depth = 999)
+w <- wire_test(length = 100)
 f <- float_test()
-mooring(a, f)
+m <- mooring(a, w, f)
+m
 
 message("FIXME to do list:")
 message(" * add wire()")
