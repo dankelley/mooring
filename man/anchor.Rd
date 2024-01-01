@@ -36,6 +36,8 @@ Note that \code{height} is ignored if \code{model} is recognized.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 
 \item{depth}{numeric value giving water depth in m.}
+
+\item{source}{character value indicating the source of the data.}
 }
 \value{
 \code{anchor} returns a \code{"mooringElement"} object with \code{"anchor"} subclass.
@@ -47,18 +49,6 @@ element of a mooring constructed with \code{\link[=mooring]{mooring()}}.  Note t
 \code{depth} is not a characteristic of the anchor, but rather of the
 domain into which it is placed.
 }
-\section{Data sources}{
-
-
-To learn more about the data used for the built-in
-anchor
-objects, use e.g.
-\preformatted{
-data(mooringElements)
-mooringElements$anchors
-}
-}
-
 \examples{
 library(mooring)
 # List known anchor types

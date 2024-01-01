@@ -67,7 +67,4 @@ instrument <- function(model = "SBE37 microcat clamp-on style", buoyancy = NULL,
         source <- ""
     }
     instrumentS7(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source, originalName = originalName)
-    #rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
-    #class(rval) <- c("mooringElement", "instrument")
-    #rval
 } # instrument()

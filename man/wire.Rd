@@ -39,6 +39,8 @@ Note that \code{areaPerMeter} is ignored if \code{model} is recognized.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 
 \item{length}{(mandatory) numeric value indicating the length (in m) of the wire.}
+
+\item{source}{character value indicating the source of the data.}
 }
 \value{
 \code{wire} returns a \code{"mooringElement"} object with \code{"wire"} subclass.
@@ -47,18 +49,6 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 Creates a wire (or rope, chain, etc.) object,
 either by looking up a known object from the database, or by defining a new type.
 }
-\section{Data sources}{
-
-
-To learn more about the data used for the built-in
-wire
-objects, use e.g.
-\preformatted{
-data(mooringElements)
-mooringElements$wires
-}
-}
-
 \examples{
 library(mooring)
 # List known wire types

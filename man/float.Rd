@@ -41,6 +41,8 @@ in \eqn{m^2}{m^2}.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
+
+\item{source}{character value indicating the source of the data.}
 }
 \value{
 \code{float} returns a \code{"mooringElement"} object with \code{"float"} subclass.
@@ -48,18 +50,6 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \description{
 Create a float object
 }
-\section{Data sources}{
-
-
-To learn more about the data used for the built-in
-float
-objects, use e.g.
-\preformatted{
-data(mooringElements)
-mooringElements$float
-}
-}
-
 \examples{
 library(mooring)
 # List known float types

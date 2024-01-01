@@ -43,6 +43,8 @@ in \eqn{m^2}{m^2}.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
+
+\item{source}{character value indicating the source of the data.}
 }
 \value{
 \code{connector} returns a \code{"mooringElement"} object with \code{"connector"} subclass.
@@ -56,18 +58,6 @@ Area is formulated as height*width, for consistency with Dewey's Matlab code.
 Also, it is worth noting that there are built-in connector objects that might not
 be thought of as connectors, e.g. \code{"ballast weight"}.
 }
-\section{Data sources}{
-
-
-To learn more about the data used for the built-in
-connector
-objects, use e.g.
-\preformatted{
-data(mooringElements)
-mooringElements$connectors
-}
-}
-
 \examples{
 library(mooring)
 # List known chain types

@@ -66,9 +66,6 @@ anchor <- function(model = "1 Railway Wheel", buoyancy = NULL, height = NULL, CD
         if (is.null(CD)) stop("must supply CD, if creating a new anchor model")
         source <- ""
     }
-    #rval <- list(model = model, buoyancy = buoyancy, height = height, area = 0, CD = CD, depth = depth, source = source)
-    #class(rval) <- c("mooringElement", "anchor")
-    #rval
     anchorS7(model = model, buoyancy = buoyancy, height = height, area = 0, CD = CD, source = source, originalName = originalName)
 } # anchor()
 

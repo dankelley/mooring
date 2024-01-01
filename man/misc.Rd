@@ -9,7 +9,9 @@ misc(
   buoyancy = NULL,
   height = NULL,
   area = NULL,
-  CD = NULL
+  CD = NULL,
+  source = NULL,
+  originalName = originalName
 )
 }
 \arguments{
@@ -43,6 +45,10 @@ in \eqn{m^2}{m^2}.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
+
+\item{source}{character value indicating the source of the data.}
+
+\item{originalName}{character value indicating the original model name.}
 }
 \value{
 \code{misc} returns an object of the \code{"mooringElement"} class and \code{"misc"} subclass.
@@ -57,18 +63,6 @@ area is computed as in Dewey's Matlab code: if tabulated diameter is zero,
 then the product of tabulated height and width is used; otherwise,
 pi*(diameter/2)^2 is used.
 }
-\section{Data sources}{
-
-
-To learn more about the data used for the built-in
-misc
-objects, use e.g.
-\preformatted{
-data(mooringElements)
-mooringElements$miscs
-}
-}
-
 \examples{
 library(mooring)
 # List known misc types

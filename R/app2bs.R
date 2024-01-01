@@ -382,11 +382,12 @@ app2bs <- function(debug = FALSE) {
                     if (wireAbove < 0.1) wireAbove <- 0.1
                     dmsg("    wireAbove=", wireAbove)
                     m <- mooring(
-                        anchor(anchorType, depth = waterDepth),
+                        anchor(anchorType),
                         wire(model = wireType, length = wireBelow),
                         clamped(instrument(instrumentType)),
                         wire(model = wireType, length = wireAbove),
-                        float(model = floatType)
+                        float(model = floatType),
+                        waterDepth = waterDepth
                     )
                     # message(str(m))
                     md <- discretise(m, 1)

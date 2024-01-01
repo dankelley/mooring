@@ -185,7 +185,7 @@ app1 <- function() {
                     #> message("  u=", u)
                     #> message("  wireModel=", wireModel)
                     #> message("  floatModel=", floatModel)
-                    m <- mooring(anchor(depth = waterDepth), wire(model = wireModel, length = wireLength), float(model = floatModel))
+                    m <- mooring(anchor(), wire(model = wireModel, length = wireLength), float(model = floatModel), waterDepth = waterDepth)
                     md <- discretise(m, 1)
                     u <- switch(input$currentModel,
                         "Constant" = input$u,
