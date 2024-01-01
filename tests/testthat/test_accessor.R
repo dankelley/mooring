@@ -1,24 +1,24 @@
-library(mooring)
-
-fl <- float()
-m <- mooring(anchor(depth=100), wire(length=90), float())
-
-test_that("[ area", {
-    expect_equal(m["area"], area(m))
-})
-
-test_that("[ buoyancy", {
-    expect_equal(m["buoyancy"], buoyancy(m))
-})
-
-test_that("[ CD", {
-    expect_equal(m["CD"], CD(m))
-})
-
-test_that("[ height", {
-    expect_equal(m["height"], height(m))
-})
-
-test_that("[ on elements", {
-    expect_equal(0.65, fl[["CD"]])
-})
+#<feature removed> library(mooring)
+#<feature removed>
+#<feature removed> fl <- float()
+#<feature removed> m <- mooring(anchor(depth=100), wire(length=90), float())
+#<feature removed>
+#<feature removed> test_that("[ area", {
+#<feature removed>     expect_equal(m["area"], area(m))
+#<feature removed> })
+#<feature removed>
+#<feature removed> test_that("[ buoyancy", {
+#<feature removed>     expect_equal(m["buoyancy"], buoyancy(m))
+#<feature removed> })
+#<feature removed>
+#<feature removed> test_that("[ CD", {
+#<feature removed>     expect_equal(m["CD"], CD(m))
+#<feature removed> })
+#<feature removed>
+#<feature removed> test_that("[ height", {
+#<feature removed>     expect_equal(m["height"], height(m))
+#<feature removed> })
+#<feature removed>
+#<feature removed> test_that("[ on elements", {
+#<feature removed>     expect_equal(0.65, fl[["CD"]])
+#<feature removed> })

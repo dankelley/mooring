@@ -18,36 +18,42 @@
 #'
 #' @export
 #'
+#' @aliases summary.mooring
+#'
 #' @author Dan Kelley
-summary.mooring <- function(object, ...) {
-    m <- object # use a more useful name
-    if (!is.mooring(m)) {
+`summary.mooring::mooring` <- function(object, ...) {
+    if (!is.mooring(object)) {
         stop("only works for objects created by mooring()")
     }
-    n <- length(m)
-    lastWasWire <- FALSE
-    wireLength <- 0
-    iWireStart <- 0
-    for (i in seq_len(n)) {
-        mi <- m[[i]]
-        if (inherits(mi, "wire")) {
-            if (!lastWasWire) {
-                iWireStart <- i
+    print(m)
+    if (FALSE) {
+        e <- object@elements
+        lastWasWire <- FALSE
+        wireLength <- 0
+        iWireStart <- 0
+        for (i in seq_along(e)) {
+            message("summary i=", i)
+            ee <- e[[i]]
+            if (is.wire(ee)) {
+                if (!lastWasWire) {
+                    iWireStart <- i
+                }
+                lastWasWire <- TRUE
+                wireLength <- wireLength + ee@height
+            } else {
+                if (lastWasWire) {
+                    # fake an element (and blank out the location)
+                    W <- e[[iWireStart]]
+                    W@height <- wireLength
+                    # cat("iWireStart=", iWireStart, "\n")
+                    # cat("DAN...\n");print(W)
+                    cat(sprintf("AA %s at z=%.2fm to %.2fm\n", W@model, W@z, W@z - wireLength))
+                }
+                lastWasWire <- FALSE
+                wireLength <- 0
+                # cat("BOY..\n")
+                cat(sprintf("BB %s at z=%.2fm\n", ee@model, ee@z))
             }
-            lastWasWire <- TRUE
-            wireLength <- wireLength + mi$height
-        } else {
-            if (lastWasWire) {
-                # fake an element (and blank out the location)
-                W <- m[[iWireStart]]
-                W$height <- wireLength
-                # cat("iWireStart=", iWireStart, "\n")
-                print(W)
-            }
-            lastWasWire <- FALSE
-            wireLength <- 0
-            print(mi)
         }
     }
 }
-

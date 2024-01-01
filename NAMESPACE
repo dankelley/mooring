@@ -2,8 +2,8 @@
 
 S3method("[",mooring)
 S3method(plot,"mooring::mooring")
-S3method(print,mooring)
-S3method(summary,mooring)
+S3method(print,"mooring::mooring")
+S3method(summary,"mooring::mooring")
 export(CD)
 export(anchor)
 export(anchorWeight)

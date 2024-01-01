@@ -139,6 +139,7 @@ mooring <- function(..., waterDepth = NA) {
     # All checks seem OK, so reverse parameters and create the return value.
     message("DAN 1 mooring.R L140")
     rval <- mooringS7(dots, waterDepth = waterDepth)
+    rval@elements <- rev(rval@elements)
     message("DAN 2 mooring.R L142")
     #class(rval) <- "mooring"
     depth <- waterDepth # rval[[n]]@depth # NOTE: only anchor() objects have this, but we know we have one
