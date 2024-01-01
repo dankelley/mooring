@@ -40,6 +40,8 @@
 #' @param type character value indicating type of plot. The default, `"l"`,
 #' means to draw lines, while e.g. `"p"` means to draw points.
 #'
+#' @template debugTemplate
+#'
 #' @param ... optional arguments.
 #'
 #' @examples
@@ -59,14 +61,17 @@
 #'
 #' @export
 #'
+#' @aliases plot.mooring
+#'
 #' @author Dan Kelley
-plot.mooring <- function(
+`plot.mooring::mooring` <- function(
     x, which = "shape",
     showInterfaces = TRUE, showDepths = FALSE, showLabels = TRUE, showDetails = FALSE,
     fancy = FALSE, title = "",
     mar = c(1.5, 3.5, 3.5, 1), mgp = c(2, 0.7, 0),
     xlim = NULL,
     type = "l",
+    debug = 0,
     ...) {
     m <- x # we only use x above to obey the R rules on generics.
     if (!is.mooring(m)) {
@@ -74,10 +79,6 @@ plot.mooring <- function(
     }
     # Set up debugging
     dots <- list(...)
-    debug <- 0L
-    if ("debug" %in% names(dots)) {
-        debug <- as.integer(max(0L, dots$debug))
-    }
     mooringDebug(debug, "plot.mooring(..., which=\"", which, "\") {\n", sep = "")
     # Handle showDetails, converting it to a logical if not, creating a list if required
     if (is.list(showDetails)) {
@@ -89,33 +90,35 @@ plot.mooring <- function(
     } else if (is.logical(showDetails)) {
         detailsControl <- list(cex = 0.8, col = "darkblue")
     }
+    message("plot 4")
     colWater <- "#ccdcff"
     colDragWarning <- "2"
     colBottom <- "#e6bb98"
     colStagnant <- "darkgray"
-    nm <- length(m)
+    nm <- length(m@elements)
+    message("plot 5 (nm=", nm, ")")
     # xshape <- x(m)
     # xtension <- tension(m)
     depth <- depth(m)
-    waterDepth <- if (inherits(m[[nm]], "anchor")) {
-        mooringDebug(debug, "    set waterDepth=", m[[nm]]$depth, " for anchor case\n", sep = "")
-        m[[nm]]$depth
-    } else {
-        mooringDebug(debug, "    set waterDepth=", max(abs(depth)), " for non-anchor case\n", sep = "")
-        max(abs(depth))
-    }
+    message("plot 6; depth=", paste(depth, collapse = " "))
+    waterDepth <- m@waterDepth
     par(mar = mar, mgp = mgp)
     # Determine depth scale by doing a sort of dry run of a shape plot
     xlimOrig <- xlim
+    message("plot 7 (xlimOrig = ", paste(xlimOrig), collapse = " ", ")")
     if (is.null(xlim)) xlim <- extendrange(c(x(m), 0))
+    message("plot 8 (xlim = ", paste(xlim, collapse = " "), ")")
     plot.window(0, 0, xlim = xlim, ylim = c(waterDepth, 0), asp = 1, log = "")
+    message("plot 9: did plot.window())")
     xlim <- xlimOrig
     usrShape <- par("usr")
     # Handle velocity, which does not involve mooring elements and is a special case
+    message("plot 10: getting ready to plot with which=\"", which, "\"")
     if (which == "velocity") {
-        uattr <- attr(m, "u")
-        d <- seq(attr(m, "waterDepth"), 0, length.out = 200)
-        velocityProfile <- if (is.function(uattr)) uattr(d) else rep(uattr, length(d))
+        u <- m@u # FIXME: ought to be in the object
+        if (length(u) == 0L) stop("no velocity has been defined yet; use knockdown()")
+        d <- seq(waterDepth, 0, length.out = 200)
+        velocityProfile <- if (is.function(u)) u(d) else rep(u, length(d))
         plot(velocityProfile, d, ylim = usrShape[3:4], yaxs = "i", ylab = "", xlab = "", type = type, axes = FALSE)
         box()
         grid()
@@ -164,15 +167,19 @@ plot.mooring <- function(
             extendrange(x)
         }
     }
+    message("plot 11: xlim=", paste(xlim, collapse=" "))
     plot.window(xlim, ylim, xlim = xlim, ylim = ylim, asp = if (which == "shape") 1, log = "")
     usrShape <- par("usr")
+    message("plot 12: usrShape=", paste(usrShape, collapse=" "))
     # message(oce::vectorShow(xlim))
     # message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
     look <- if (which == "tension") seq(2L, length(m) - 1L) else seq_along(m)
+    message("plot 13: look=", paste(look, collapse=" "))
     plot(x[look], depth[look],
         xlim = xlim, ylim = usrShape[3:4], yaxs = "i", asp = if (which == "shape") 1,
         type = type, xlab = "", ylab = "", axes = FALSE
     )
+    message("plot 14")
     xlab <- switch(which,
         "shape" = "Horizontal Coordinate [m]",
         "knockdown" = "Depth Increase [m]",
@@ -198,6 +205,7 @@ plot.mooring <- function(
             abline(h = waterDepth, col = colBottom, lwd = 2)
         }
     }
+    message("plot 15")
     # draw anchor (only makes sense for shape diagrams)
     if (which == "shape") {
         waterDepth <- attr(m, "waterDepth")
@@ -205,28 +213,38 @@ plot.mooring <- function(
         anchorSymbol <- list(x = sqrt(3.0 / 4.0) * c(-A, 0, A), y = waterDepth - c(0, A, 0))
         polygon(anchorSymbol, col = colStagnant)
     }
+    message("plot 16")
     # Redraw to cover grid
     if (type == "l") {
         lines(x[look], depth[look], lwd = 1.4 * par("lwd"), col = "magenta")
     } else {
         points(x[look], depth[look], lwd = 1.4 * par("lwd"))
     }
+    message("plot 17")
     # Draw conditions for u=0 case
     if (fancy) {
         rect(usr[1], usr[3], usr[2], waterDepth, col = colBottom, border = NA)
     }
+    message("plot 18")
     # Redraw in case line runs along bottom
     lines(x[look], depth[look], lwd = 1.4 * par("lwd"))
+    message("plot 19")
     if (which == "shape") {
         # mooringLength <- sum(sapply(m, function(x) x$height))
         # lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=1.4*par("lwd"))
         # points(0, waterDepth - mooringLength, pch=20, col=colStagnant)
         # browser()
+        message("plot 20")
         xx <- x(m, stagnant = TRUE)
+        message("plot 21")
         yy <- depth(m, stagnant = TRUE)
+        message("plot 22")
         lines(xx, yy, col = colStagnant)
+        message("plot 23")
         notWire <- !is.wire(m)
+        message("plot 24")
         points(xx[notWire], yy[notWire], pch = 20, col = colStagnant)
+        message("plot 25")
     } else if (which == "tension") {
         look <- seq(2L, length(m) - 1L)
         lines(tension(m, stagnant = TRUE)[look], depth[look],
@@ -237,10 +255,11 @@ plot.mooring <- function(
     cex <- if (showDetails) detailsControl$cex else 1
     pch <- if (showDetails) detailsControl$pch else 20
     col <- if (showDetails) detailsControl$col else 1
-    for (i in seq_along(m)) {
-        type <- class(m[[i]])[2]
-        xi <- x[i]
-        zi <- m[[i]]$z
+    for (i in seq_along(m@elements)) {
+        type <- gsub("^mooring::", "", class(m@elements[[i]])[1])
+        message("plot element ", i, " has type \"", type, "\"")
+        xi <- x[i] # FIXME: has this been defined? If so, why not z also?
+        zi <- m@elements[[i]]@z
         if (type == "anchor" && which != "tension") {
             if (debug) {
                 cat("i=", i, " (anchor at xi=", xi, ", zi=", zi, ")\n")

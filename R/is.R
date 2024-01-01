@@ -1,24 +1,23 @@
 # vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
-# Internal function used by is.float(), etc.  If object is
-# created by mooring(), this returns a vector of logicals. Otherwise,
-# it returns a single logical.
-is.mooringInternal <- function(object, class)
-{
+# Internal function used by is.float(), etc.
+# FIXME: does this get used to pinpoint elements?
+is.mooringInternal <- function(object, class) {
     # mooring() returns an unnamed list
-    if (!is.list(object)) {
-        #message("case 1: not a list")
+    if (inherits(object, "mooring::mooring")) {
+        message("Case 0: a mooring::mooring")
+        return(sapply(object@elements, \(o) is.mooringInternal(o, class)))
+    }
+    #message("not a mooring::mooring")
+    if (!inherits(object, "S7_object")) {
+        warning("This is not an S7 object. Please do not use this function in your code.")
         rval <- FALSE
-    } else if (is.null(names(object))) {
-        # a whole mooring
-        #message("Case 2: possibly a whole mooring")
-        rval <- sapply(object, function(mi) inherits(mi, class))
     } else {
         # mooring element
-        #message("Case 3: possibly a mooring element")
-        rval <- inherits(object, class)
+        #message("Case 2: check if a ", class, " object")
+        rval <- inherits(object, paste0("mooring::", class))
     }
-    #message("   returning: ", paste(rval, collapse = " ")
+    #message("   returning: ", paste(rval, collapse = " "))
     rval
 }
 
@@ -90,7 +89,7 @@ is.connector <- function(m) {
 #'
 #' @author Dan Kelley
 is.float <- function(m) {
-    #sapply(m, \(mi) inherits(mi, "float"))
+    # sapply(m, \(mi) inherits(mi, "float"))
     is.mooringInternal(m, "float")
 }
 
@@ -113,7 +112,7 @@ is.float <- function(m) {
 #'
 #' @author Dan Kelley
 is.instrument <- function(m) {
-    #sapply(m, \(i) inherits(i, "instrument"))
+    # sapply(m, \(i) inherits(i, "instrument"))
     is.mooringInternal(m, "instrument")
 }
 
@@ -145,7 +144,7 @@ is.misc <- function(m) {
 #'
 #' @export
 is.mooring <- function(m = NULL) {
-    inherits(m, "mooring")
+    inherits(m, "mooring::mooring")
 }
 
 #' Determine Whether an Object is a Mooring Element
@@ -158,7 +157,7 @@ is.mooring <- function(m = NULL) {
 #'
 #' @export
 is.mooringElement <- function(m = NULL) {
-    inherits(m, "mooringElement")
+    inherits(m, "mooring::mooringElementS7")
 }
 
 #' Determine which Mooring Elements are Release
@@ -191,6 +190,6 @@ is.release <- function(m) {
 #'
 #' @author Dan Kelley
 is.wire <- function(m) {
-    #sapply(m, \(i) inherits(i, "wire"))
+    # sapply(m, \(i) inherits(i, "wire"))
     is.mooringInternal(m, "wire")
 }

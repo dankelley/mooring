@@ -57,6 +57,7 @@ release <- function(model = "EG&G 723a", buoyancy = NULL, height = NULL, area = 
         area <- me$area
         CD <- me$CD
         source <- me$source
+        originalName <- me$originalName
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new release model")
         if (is.null(height)) stop("must supply height, if creating a new release model")
@@ -64,7 +65,8 @@ release <- function(model = "EG&G 723a", buoyancy = NULL, height = NULL, area = 
         if (is.null(CD)) stop("must supply CD, if creating a new release model")
         source <- ""
     }
-    rval <- list(model = model, source = source, buoyancy = buoyancy, height = height, area = area, CD = CD)
-    class(rval) <- c("mooringElement", "release")
-    rval
+    release(model = model, source = source, buoyancy = buoyancy, height = height, area = area, CD = CD, originalName = originalName)
+    #rval <- list(model = model, source = source, buoyancy = buoyancy, height = height, area = area, CD = CD)
+    #class(rval) <- c("mooringElement", "release")
+    #rval
 } # release()

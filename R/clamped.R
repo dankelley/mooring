@@ -48,9 +48,9 @@
 #'
 #' @author Dan Kelley
 clamped <- function(instrument) {
-    if (!is.mooringElement(instrument) || !inherits(instrument, "instrument")) {
-        stop("instrument must be an object created with instrument()")
+    if (!is.instrument(instrument)) {
+        stop("parameter was not created by instrument()")
     }
-    instrument$height <- 0
+    instrument@height <- 0
     instrument
 } # clamped()

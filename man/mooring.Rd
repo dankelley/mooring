@@ -4,7 +4,7 @@
 \alias{mooring}
 \title{Create a mooring}
 \usage{
-mooring(...)
+mooring(..., waterDepth = NA)
 }
 \arguments{
 \item{...}{two or more elementary objects, as created by

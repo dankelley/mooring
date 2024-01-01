@@ -4,13 +4,7 @@
 \alias{anchor}
 \title{Create an anchor object}
 \usage{
-anchor(
-  model = "1 Railway Wheel",
-  buoyancy = NULL,
-  height = NULL,
-  CD = NULL,
-  depth = 0
-)
+anchor(model = "1 Railway Wheel", buoyancy = NULL, height = NULL, CD = NULL)
 }
 \arguments{
 \item{model}{character value indicating the type of anchor.

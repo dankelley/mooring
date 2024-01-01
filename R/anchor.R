@@ -35,7 +35,10 @@
 #' @export
 #'
 #' @author Dan Kelley
-anchor <- function(model = "1 Railway Wheel", buoyancy = NULL, height = NULL, CD = NULL, depth = 0) {
+anchor <- function(model = "1 Railway Wheel", buoyancy = NULL, height = NULL, CD = NULL) {
+    #message("about to try anchorS7...")
+    #print(anchorS7())
+    #message("... did it work?")
     data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
     if (model == "?") {
@@ -56,15 +59,17 @@ anchor <- function(model = "1 Railway Wheel", buoyancy = NULL, height = NULL, CD
         height <- me$height
         CD <- me$CD
         source <- me$source
+        originalName <- me$originalName
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new anchor model")
         if (is.null(height)) stop("must supply height, if creating a new anchor model")
         if (is.null(CD)) stop("must supply CD, if creating a new anchor model")
         source <- ""
     }
-    rval <- list(model = model, buoyancy = buoyancy, height = height, area = 0, CD = CD, depth = depth, source = source)
-    class(rval) <- c("mooringElement", "anchor")
-    rval
+    #rval <- list(model = model, buoyancy = buoyancy, height = height, area = 0, CD = CD, depth = depth, source = source)
+    #class(rval) <- c("mooringElement", "anchor")
+    #rval
+    anchorS7(model = model, buoyancy = buoyancy, height = height, area = 0, CD = CD, source = source, originalName = originalName)
 } # anchor()
 
 #' Find Anchor Weight of a Mooring

@@ -59,13 +59,15 @@ wire <- function(model = "1/4in wire/jack", buoyancyPerMeter = NULL, areaPerMete
         areaPerMeter <- me$areaPerMeter
         CD <- me$CD
         source <- me$source
+        originalName <- me$originalName
     } else {
         if (is.null(buoyancyPerMeter)) stop("must supply buoyancyPerMeter, if creating a new wire model")
         if (is.null(areaPerMeter)) stop("must supply areaPerMeter, if creating a new wire model")
         if (is.null(CD)) stop("must supply CD, if creating a new wire model")
         source <- ""
     }
-    rval <- list(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source)
-    class(rval) <- c("mooringElement", "wire")
-    rval
+    #rval <- list(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source)
+    wireS7(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source, originalName = originalName)
+    #class(rval) <- c("mooringElement", "wire")
+    #rval
 } # wire()

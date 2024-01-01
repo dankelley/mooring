@@ -1,9 +1,5 @@
 # vim:spell:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
-###################
-# 1. overall docs #
-###################
-
 #' mooring: A Package for Analysing Oceanographic Moorings
 #'
 #' The mooring package provides functions for working with
@@ -123,7 +119,7 @@ NULL
 #' @export
 #'
 #' @author Dan Kelley
-mooring <- function(...) {
+mooring <- function(..., waterDepth = NA) {
     dots <- list(...)
     n <- length(dots)
     if (n < 3L) {
@@ -141,18 +137,27 @@ mooring <- function(...) {
     #    stop("these are the indices of elements that are not elementary: ", paste(w, collapse = " "))
     # }
     # All checks seem OK, so reverse parameters and create the return value.
-    rval <- rev(dots)
-    class(rval) <- "mooring"
-    depth <- rval[[n]]$depth # NOTE: only anchor() objects have this, but we know we have one
-    height <- rev(cumsum(sapply(rev(rval), function(x) x$height)))
+    message("DAN 1 mooring.R L140")
+    rval <- mooringS7(dots, waterDepth = waterDepth)
+    message("DAN 2 mooring.R L142")
+    #class(rval) <- "mooring"
+    depth <- waterDepth # rval[[n]]@depth # NOTE: only anchor() objects have this, but we know we have one
+    message("AA 1")
+    height <- rev(cumsum(sapply(rev(rval@elements), function(x) x@height)))
+    cat("next is height\n");print(height)
+    message("AA 2")
     # bookmark B1a: same as B1b and analogous t0 B1c {{{
-    b <- buoyancy(rval)[-n]
+    b <- buoyancy(rval)[-n] # the -n removes the anchor
+    message("AA 3")
     tau <- cumsum(b)
+    message("AA 4")
     tau <- c(tau, tau[n - 1]) # repeat tension across anchor (for plot labelling; not used for calculations)
+    message("AA 5")
     # }}}
     x0 <- 0
     alongBottom <- 0L
-    for (i in seq_along(rval)) {
+    for (i in seq_along(rval@elements)) {
+        message("AA 6 i=", i)
         z <- height[i] - depth
         # If the mooring outweighs the flotation, run some of it along the bottom.
         if (z < (-depth)) {
@@ -160,13 +165,16 @@ mooring <- function(...) {
             z <- -depth
             x0 <- x0 + height[i]
         }
-        rval[[i]]$x <- x0
-        rval[[i]]$z <- z # z is at the *top* of the element
-        rval[[i]]$tau <- tau[i]
+        rval@elements[[i]]@x <- x0
+        rval@elements[[i]]@x0 <- x0
+        rval@elements[[i]]@z <- z # z is at the *top* of the element
+        rval@elements[[i]]@z0 <- z # z is at the *top* of the element
+        rval@elements[[i]]@tau <- tau[i]
+        rval@elements[[i]]@phi <- 0.0
     }
     if (alongBottom) {
         warning("insufficient mooring buoyancy; placed ", alongBottom, " elements on the bottom")
     }
-    attr(rval, "waterDepth") <- depth
+    rval@waterDepth <- depth
     rval
 } # mooring()

@@ -58,6 +58,7 @@ instrument <- function(model = "SBE37 microcat clamp-on style", buoyancy = NULL,
         area <- me$area
         CD <- me$CD
         source <- me$source
+        originalName <- me$originalName
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new instrument model")
         if (is.null(height)) stop("must supply height, if creating a new instrument model")
@@ -65,7 +66,8 @@ instrument <- function(model = "SBE37 microcat clamp-on style", buoyancy = NULL,
         if (is.null(CD)) stop("must supply CD, if creating a new instrument model")
         source <- ""
     }
-    rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
-    class(rval) <- c("mooringElement", "instrument")
-    rval
+    instrumentS7(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source, originalName = originalName)
+    #rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
+    #class(rval) <- c("mooringElement", "instrument")
+    #rval
 } # instrument()

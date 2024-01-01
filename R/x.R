@@ -19,14 +19,16 @@
 #'
 #' @author Dan Kelley
 x <- function(m, stagnant = FALSE, skipWire = FALSE) {
+    message("in x")
+    e <- m@elements
     rval <- if (stagnant) {
-        if ("x0" %in% names(m[[1]])) {
-            sapply(m, function(mi) mi$x0)
+        if (length(e[[1]]@x0)) {
+            sapply(e, \(ee) ee@x0)
         } else {
-            sapply(m, function(mi) mi$x)
+            sapply(e, \(ee) ee@x)
         }
     } else {
-        sapply(m, function(mi) mi$x)
+        sapply(e, \(ee) ee@x)
     }
-    if (skipWire) rval[!is.wire(m)] else rval
+    if (skipWire) rval[!is.wire(m)] else rval # FIXME: this is likely wrong
 }

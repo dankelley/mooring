@@ -58,13 +58,15 @@ chain <- function(model = "1in buoy chain", buoyancyPerMeter = NULL, areaPerMete
         areaPerMeter <- me$areaPerMeter
         CD <- me$CD
         source <- me$source
+        originalName <- me$originalName
     } else {
         if (is.null(buoyancyPerMeter)) stop("must supply buoyancyPerMeter, if creating a new chain model")
         if (is.null(areaPerMeter)) stop("must supply areaPerMeter, if creating a new chain model")
         if (is.null(CD)) stop("must supply CD, if creating a new chain model")
         source <- ""
     }
-    rval <- list(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source)
-    class(rval) <- c("mooringElement", "chain")
-    rval
+    chain(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source, originalName = originalName)
+    #rval <- list(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source)
+    #class(rval) <- c("mooringElement", "chain")
+    #rval
 } # chain()

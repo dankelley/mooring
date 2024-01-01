@@ -64,6 +64,7 @@ connector <- function(model = "swivel", buoyancy = NULL, height = NULL, area = N
         area <- me$area
         CD <- me$CD
         source <- me$source
+        originalName <- me$originalName
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new connectors model")
         if (is.null(height)) stop("must supply height, if creating a new connectors model")
@@ -71,7 +72,8 @@ connector <- function(model = "swivel", buoyancy = NULL, height = NULL, area = N
         if (is.null(CD)) stop("must supply CD, if creating a new connectors model")
         source <- ""
     }
-    rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
-    class(rval) <- c("mooringElement", "connector")
-    rval
+    connector(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source, originalName = originalName)
+    #rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
+    #class(rval) <- c("mooringElement", "connector")
+    #rval
 } # connector()

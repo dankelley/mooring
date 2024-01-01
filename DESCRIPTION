@@ -10,7 +10,7 @@ Authors@R:
 BugReports: https://github.com/dankelley/mooring/issues
 Description: Calculates the response of oceanographic moorings to horizontal currents.
 Depends:
-    R (>= 3.5.0),
+    R (>= 3.5.0), S7
 Imports:
     bslib, 
     shiny
