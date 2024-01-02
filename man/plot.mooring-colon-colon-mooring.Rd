@@ -17,6 +17,8 @@
   mar = c(1.5, 3.5, 3.5, 1),
   mgp = c(2, 0.7, 0),
   xlim = NULL,
+  xaxs = "r",
+  yaxs = "r",
   type = "l",
   debug = 0,
   ...
@@ -47,16 +49,18 @@ is a simpler plot.}
 \item{title}{character value indicating a title to put above
 the plot.}
 
-\item{mar}{numeric vector of length 4, used to set margins.
-The default value makes allowance for the axis along the top,
-and tightens the margins on bottom and right.}
+\item{mar}{numeric vector of length 4, used to set margins
+outside axes. The default values reduce whitespace.
+See \code{\link[=par]{par()}}.}
 
-\item{mgp}{numeric vector of length 3, used to set axis
-geometry.  The default value moves numbers and labels closer
-to the axes than the usual R default.}
+\item{mgp}{numeric vector of length 3, with a default that
+reduces axis whitespace. See \code{\link[=par]{par()}}.}
 
 \item{xlim}{optional numeric vector of length 2 that can
 be used to specify the limits of the horizontal axis.}
+
+\item{xaxs, yaxs}{character values that control axis ranges.
+See \code{\link[=par]{par()}}.}
 
 \item{type}{character value indicating type of plot. The default, \code{"l"},
 means to draw lines, while e.g. \code{"p"} means to draw points.}

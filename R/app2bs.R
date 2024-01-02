@@ -136,7 +136,7 @@ app2bs <- function(debug = FALSE) {
 
         shiny::observeEvent(input$keypressTrigger, {
             key <- intToUtf8(input$keypress)
-            ## dmsg("key='",key, "'\n", sep="")
+            # dmsg("key='",key, "'\n", sep="")
             if (key == "d") {
                 debugMode <<- !debugMode
                 message("'d' pressed, setting new debug mode to ", debugMode)
@@ -193,7 +193,6 @@ app2bs <- function(debug = FALSE) {
                     choices = paste0(wireChoices, " [", wireBuoyancy, "kg/m]"),
                     selected = paste0(wire, " [", wire(wire, length = 1)@buoyancy, "kg/m]")
                 )
-                dmsg("  6")
                 anchor <- "1 Railway Wheel"
                 shiny::updateSelectInput(session,
                     inputId = "anchorType",
@@ -257,7 +256,7 @@ app2bs <- function(debug = FALSE) {
             msg <- paste0(msg, sprintf("    clamped(instrument(model = \"%s\")),<br>", instrumentType))
             msg <- paste0(msg, sprintf("    wire(model = \"%s\", length = %g),<br>", wireType, wireAbove))
             msg <- paste0(msg, sprintf("    float(model = \"%s\"),<br>", floatType))
-            msg <- paste0(msg, sprintf("    waterDepth = %g)<br>", input$waterDepth))
+            msg <- paste0(msg, sprintf("    waterDepth = %g<br>", input$waterDepth))
             msg <- paste0(msg, ")<br>")
             msg <- paste0(msg, "md <- discretise(m, by = 1)<br>")
             msg <- paste0(
@@ -399,7 +398,7 @@ app2bs <- function(debug = FALSE) {
                         "exp(z/100)" = function(depth) input$u * exp(-depth / 100),
                         "exp(z/300)" = function(depth) input$u * exp(-depth / 300)
                     )
-                    mdk <- knockdown(md, u, debug = debug)
+                    mdk <- knockdown(md, u, convergenceCriterion = 1e-3, debug = debug)
                     attr <- attributes(mdk)
                     mar <- c(0.5, 2.5, 3.75, 0.5)
                     mgp <- c(1.5, 0.5, 0)
@@ -414,16 +413,29 @@ app2bs <- function(debug = FALSE) {
                     } else if (nchoices == 4) {
                         par(mfrow = c(2, 2), cex = cex)
                     }
-                    ylim <- NULL
+                    ylim <- NULL # c(waterDepth * 0.95, 0.05 * waterDepth)
                     titleShown <- FALSE
                     for (choice in input$plotChoices) {
                         if (is.null(ylim)) {
-                            plot(mdk, which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE)
-                            if (choice == "shape") {
-                                ylim <- par("usr")[3:4]
-                            }
+                            plot(mdk,
+                                which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE,
+                                xaxs = "r", yaxs = "r"
+                            )
+                            ylim <- par("usr")[3:4]
+                            message(
+                                "choice=\"", choice, "\": set ylim=",
+                                paste(round(ylim, 2), collapse = " ")
+                            )
                         } else {
-                            plot(mdk, which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE, ylim = ylim, yaxs = "i")
+                            plot(mdk,
+                                which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE,
+                                ylim = ylim, xaxs = "r", yaxs = "r"
+                                # ylim = ylim, yaxs = "r"
+                            )
+                            message(
+                                "choice=\"", choice, "\": using existing ylim=",
+                                paste(round(ylim, 2), collapse = " ")
+                            )
                         }
                         if (!titleShown) {
                             mtext(
@@ -447,6 +459,5 @@ app2bs <- function(debug = FALSE) {
             # height = 500
         )
     }
-
     shiny::shinyApp(ui = ui, server = server)
 }

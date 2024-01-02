@@ -87,7 +87,7 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' @importFrom utils tail
 #' @export
 #' @author Dan Kelley
-knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1e-4, debug = 0L) {
+knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1/500, debug = 0L) {
     debug <- max(0L, as.integer(debug))
     # check for well-formed parameters
     if (!is.mooring(m)) {

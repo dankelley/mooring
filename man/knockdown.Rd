@@ -4,7 +4,7 @@
 \alias{knockdown}
 \title{Compute mooring knockdown by a horizontal current}
 \usage{
-knockdown(m, u = 1, niteration = 30, convergenceCriterion = 1e-04, debug = 0L)
+knockdown(m, u = 1, niteration = 30, convergenceCriterion = 1/500, debug = 0L)
 }
 \arguments{
 \item{m}{an object of the \code{"mooring"} class, usually created with
