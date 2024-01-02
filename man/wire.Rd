@@ -39,8 +39,6 @@ Note that \code{areaPerMeter} is ignored if \code{model} is recognized.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 
 \item{length}{(mandatory) numeric value indicating the length (in m) of the wire.}
-
-\item{source}{character value indicating the source of the data.}
 }
 \value{
 \code{wire} returns a \code{"mooringElement"} object with \code{"wire"} subclass.

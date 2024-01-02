@@ -43,8 +43,6 @@ in \eqn{m^2}{m^2}.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
-
-\item{source}{character value indicating the source of the data.}
 }
 \value{
 \code{connector} returns a \code{"mooringElement"} object with \code{"connector"} subclass.

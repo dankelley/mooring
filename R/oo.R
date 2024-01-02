@@ -31,7 +31,8 @@ mooringElementS7 <- new_class("mooringElementS7",
         z = class_numeric,
         z0 = class_numeric,
         phi = class_numeric,
-        tau = class_numeric
+        tau = class_numeric,
+        group = class_integer
     ) # ,
     # constructor = function(...) {
     #    # cat("in mooringElement constructor\n")
@@ -51,20 +52,8 @@ mooringElementS7 <- new_class("mooringElementS7",
 anchorS7 <- new_class("anchor", parent = mooringElementS7, package = "mooring")
 chainS7 <- new_class("chain", parent = mooringElementS7, package = "mooring")
 connectorS7 <- new_class("connector", parent = mooringElementS7, package = "mooring")
-instrumentS7 <- new_class("instrument", parent = mooringElementS7, package = "mooring")
 floatS7 <- new_class("float", parent = mooringElementS7, package = "mooring")
-XS7 <- new_class("X", parent = mooringElementS7, package = "mooring")
+instrumentS7 <- new_class("instrument", parent = mooringElementS7, package = "mooring")
+miscS7 <- new_class("misc", parent = mooringElementS7, package = "mooring")
 releaseS7 <- new_class("release", parent = mooringElementS7, package = "mooring")
 wireS7 <- new_class("wire", parent = mooringElementS7, package = "mooring")
-
-# PLOT
-
-# tests
-# mooring:::anchorS7(model='dan',buoyancy=1,height=2,area=3,CD=4,source="five",originalName="boy")
-if (FALSE) {
-    a <- mooring:::anchorS7(model = "dan", buoyancy = 1, height = 2, area = 3, CD = 4, source = "five", originalName = "boyA")
-    f <- mooring:::floatS7(model = "dan", buoyancy = 1, height = 2, area = 3, CD = 4, source = "five", originalName = "boyF")
-    w <- mooring:::wireS7(model = "dan", buoyancy = 1, height = 2, area = 3, CD = 4, source = "five", originalName = "boyW")
-    m <- mooring:::mooringS7(a, f, w, waterDepth = 100)
-    str(m)
-}

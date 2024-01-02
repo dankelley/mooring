@@ -23,13 +23,13 @@ app2 <- function(debug = FALSE) {
     }
     debugMode <- debug
     anchorChoices <- anchor("?")
-    anchorBuoyancy <- lapply(anchorChoices, \(w) anchor(w)$buoyancy) |> unlist()
+    anchorBuoyancy <- lapply(anchorChoices, \(w) anchor(w)@buoyancy) |> unlist()
     wireChoices <- wire("?")
-    wireBuoyancy <- lapply(wireChoices, \(w) wire(w, length = 1)$buoyancy) |> unlist()
+    wireBuoyancy <- lapply(wireChoices, \(w) wire(w, length = 1)@buoyancy) |> unlist()
     instrumentChoices <- instrument("?")
-    instrumentBuoyancy <- lapply(instrumentChoices, \(f) instrument(f)$buoyancy) |> unlist()
+    instrumentBuoyancy <- lapply(instrumentChoices, \(f) instrument(f)@buoyancy) |> unlist()
     floatChoices <- float("?")
-    floatBuoyancy <- lapply(floatChoices, \(f) float(f)$buoyancy) |> unlist()
+    floatBuoyancy <- lapply(floatChoices, \(f) float(f)@buoyancy) |> unlist()
     dewey1999 <- paste(
         "Dewey, Richard K.",
         "\"Mooring Design & Dynamics-a Matlab",
@@ -147,19 +147,19 @@ app2 <- function(debug = FALSE) {
                 wire <- "3/8in leaded polypropylene"
                 shiny::updateSelectInput(session,
                     inputId = "wireModel",
-                    selected = paste0(wire, " [", wire(wire, length = 1)$buoyancy, "kg/m]")
+                    selected = paste0(wire, " [", wire(wire, length = 1)@buoyancy, "kg/m]")
                 )
                 anchor <- "2 rotor"
                 shiny::updateSelectInput(session, inputId = "anchorModel",
-                    selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]")
+                    selected = paste0(anchor, " [", anchor(anchor)@buoyancy, "kg]")
                 )
                 instrument <- "Hobo Temp U22"
                 shiny::updateSelectInput(session, inputId = "instrumentModel",
-                    selected = paste0(instrument, " [", instrument(instrument)$buoyancy, "kg]")
+                    selected = paste0(instrument, " [", instrument(instrument)@buoyancy, "kg]")
                 )
                 float <- "11in centre hole tfloat"
                 shiny::updateSelectInput(session, inputId = "floatModel",
-                    selected = paste0(float, " [", float(float)$buoyancy, "kg]")
+                    selected = paste0(float, " [", float(float)@buoyancy, "kg]")
                 )
             } else if (identical(input$preset, "Shelf")) {
                 dmsg("Preset: 'Shelf'")
@@ -171,22 +171,22 @@ app2 <- function(debug = FALSE) {
                 wire <- "1/4in wire/jack"
                 shiny::updateSelectInput(session, inputId = "wireModel",
                     choices = paste0(wireChoices, " [", wireBuoyancy, "kg/m]"),
-                    selected = paste0(wire, " [", wire(wire, length = 1)$buoyancy, "kg/m]")
+                    selected = paste0(wire, " [", wire(wire, length = 1)@buoyancy, "kg/m]")
                 )
                 anchor <- "1 Railway Wheel"
                 shiny::updateSelectInput(session, inputId = "anchorModel",
                     # choices = paste0(anchorChoices, " [", anchorBuoyancy, "kg]"),
-                    selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]")
+                    selected = paste0(anchor, " [", anchor(anchor)@buoyancy, "kg]")
                 )
                 instrument <- "seabird CTD (ios oxygen with bar)"
                 shiny::updateSelectInput(session, inputId = "instrumentModel",
                     # choices = paste0(instrumentChoices, " [", instrumentBuoyancy, "kg]"),
                     # selected = "Hobo Temp U22 [0.0133kg]"
-                    selected = paste0(instrument, " [", instrument(instrument)$buoyancy, "kg]")
+                    selected = paste0(instrument, " [", instrument(instrument)@buoyancy, "kg]")
                 )
                 float <- "BUB 2x17in glass"
                 shiny::updateSelectInput(session, inputId = "floatModel",
-                    selected = paste0(float, " [", float(float)$buoyancy, "kg]")
+                    selected = paste0(float, " [", float(float)@buoyancy, "kg]")
                 )
             } else if (identical(input$preset, "Deep")) {
                 dmsg("Preset: 'Deep'")
@@ -198,19 +198,19 @@ app2 <- function(debug = FALSE) {
                 wire <- "1/4in wire/jack"
                 shiny::updateSelectInput(session, inputId = "wireModel",
                     choices = paste0(wireChoices, " [", wireBuoyancy, "kg/m]"),
-                    selected = paste0(wire, " [", wire(wire, length = 1)$buoyancy, "kg/m]")
+                    selected = paste0(wire, " [", wire(wire, length = 1)@buoyancy, "kg/m]")
                 )
                 anchor <- "1 Railway Wheel"
                 shiny::updateSelectInput(session, inputId = "anchorModel",
-                    selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]")
+                    selected = paste0(anchor, " [", anchor(anchor)@buoyancy, "kg]")
                 )
                 instrument <- "seabird CTD (ios oxygen with bar)"
                 shiny::updateSelectInput(session, inputId = "instrumentModel",
-                    selected = paste0(instrument, " [", instrument(instrument)$buoyancy, "kg]")
+                    selected = paste0(instrument, " [", instrument(instrument)@buoyancy, "kg]")
                 )
                 float <- "30in float"
                 shiny::updateSelectInput(session, inputId = "floatModel",
-                    selected = paste0(float, " [", float(float)$buoyancy, "kg]")
+                    selected = paste0(float, " [", float(float)@buoyancy, "kg]")
                 )
             } else {
                 stop("How can we get here? (Programming error.)")
@@ -227,11 +227,12 @@ app2 <- function(debug = FALSE) {
             u <- input$u
             msg <- "<pre>library(mooring)<br>"
             msg <- paste0(msg, "# See help pages and vignettes for more details<br>")
-            msg <- paste0(msg, sprintf("m <- mooring(<br>    anchor(model = \"%s\", depth = %g),<br>", gsub(" \\[.*$", "", input$anchorModel), input$waterDepth))
+            msg <- paste0(msg, sprintf("m <- mooring(<br>    anchor(model = \"%s\"),<br>", gsub(" \\[.*$", "", input$anchorModel)))
             msg <- paste0(msg, sprintf("    wire(model = \"%s\", length = %g),<br>", wireModel, wireBelow))
             msg <- paste0(msg, sprintf("    clamped(instrument(model = \"%s\")),<br>", instrumentModel))
             msg <- paste0(msg, sprintf("    wire(model = \"%s\", length = %g),<br>", wireModel, wireAbove))
-            msg <- paste0(msg, sprintf("    float(model = \"%s\")<br>", floatModel))
+            msg <- paste0(msg, sprintf("    float(model = \"%s\"),<br>", floatModel))
+            msg <- paste0(msg, sprintf("    waterDepth = \"%g\")<br>", input$waterDepth))
             msg <- paste0(msg, ")<br>")
             msg <- paste0(msg, "md <- discretise(m, by = 1)<br>")
             msg <- paste0(
@@ -299,7 +300,7 @@ app2 <- function(debug = FALSE) {
             anchor <- "1 Railway Wheel"
             shiny::selectInput("anchorModel", "Anchor Type",
                 choices = paste0(anchorChoices, " [", anchorBuoyancy, "kg]"),
-                selected = paste0(anchor, " [", anchor(anchor)$buoyancy, "kg]"),
+                selected = paste0(anchor, " [", anchor(anchor)@buoyancy, "kg]"),
                 width = "100%"
             )
         })
@@ -308,7 +309,7 @@ app2 <- function(debug = FALSE) {
             wire <- "1/4in wire/jack"
             shiny::selectInput("wireModel", "Wire Type",
                 choices = paste0(wireChoices, " [", wireBuoyancy, "kg/m]"),
-                selected = paste0(wire, " [", wire(wire, length = 1)$buoyancy, "kg/m]"),
+                selected = paste0(wire, " [", wire(wire, length = 1)@buoyancy, "kg/m]"),
                 width = "100%"
             )
         })
@@ -317,7 +318,7 @@ app2 <- function(debug = FALSE) {
             instrument <- "seabird CTD (ios oxygen with bar)"
             shiny::selectInput("instrumentModel", "instrument Type",
                 choices = paste0(instrumentChoices, " [", instrumentBuoyancy, "kg]"),
-                selected = paste0(instrument, " [", instrument(instrument)$buoyancy, "kg]"),
+                selected = paste0(instrument, " [", instrument(instrument)@buoyancy, "kg]"),
                 width = "100%"
             )
         })
@@ -326,7 +327,7 @@ app2 <- function(debug = FALSE) {
             float <- "BUB 2x17in glass"
             shiny::selectInput("floatModel", "Float Type",
                 choices = paste0(floatChoices, " [", floatBuoyancy, "kg]"),
-                selected = paste0(float, " [", float(float)$buoyancy, "kg]"),
+                selected = paste0(float, " [", float(float)@buoyancy, "kg]"),
                 width = "100%"
             )
         })
@@ -338,11 +339,11 @@ app2 <- function(debug = FALSE) {
                 if (!is.null(wireLength)) { # undefined at the start, since it depends on another slider
                     u <- input$u
                     anchorModel <- gsub("[ ]+\\[.*kg\\]$", "", input$anchorModel)
-                    dmsg("    anchorModel='", anchorModel, "' (height=", anchor(anchorModel)$height, "m)")
+                    dmsg("    anchorModel='", anchorModel, "' (height=", anchor(anchorModel)@height, "m)")
                     wireModel <- gsub("[ ]+\\[.*kg/m\\]$", "", input$wireModel)
                     dmsg("    wireModel='", wireModel, "'")
                     floatModel <- gsub("[ ]+\\[.*kg\\]$", "", input$floatModel)
-                    dmsg("    floatModel='", floatModel, "' (height=", float(floatModel)$height, "m)")
+                    dmsg("    floatModel='", floatModel, "' (height=", float(floatModel)@height, "m)")
                     instrumentModel <- gsub("[ ]+\\[.*kg\\]$", "", input$instrumentModel)
                     dmsg("    instrumentModel='", instrumentModel, "'")
                     wireBelow <- waterDepth - input$instrumentDepth

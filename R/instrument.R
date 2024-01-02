@@ -16,8 +16,6 @@
 #'
 #' @template CDTemplate
 #'
-#' @template sourceTemplate
-#'
 #' @return `instrument` returns a `"mooringElement"` object with `"instrument"` subclass.
 #'
 #' @family functions that create mooring elements
@@ -65,6 +63,7 @@ instrument <- function(model = "SBE37 microcat clamp-on style", buoyancy = NULL,
         if (is.null(area)) stop("must supply area, if creating a new instrument model")
         if (is.null(CD)) stop("must supply CD, if creating a new instrument model")
         source <- ""
+        originalName <- ""
     }
     instrumentS7(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source, originalName = originalName)
 } # instrument()

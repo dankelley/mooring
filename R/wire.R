@@ -16,8 +16,6 @@
 #'
 #' @param length (mandatory) numeric value indicating the length (in m) of the wire.
 #'
-#' @template sourceTemplate
-#'
 #' @return `wire` returns a `"mooringElement"` object with `"wire"` subclass.
 #'
 #' @family functions that create mooring elements
@@ -65,6 +63,7 @@ wire <- function(model = "1/4in wire/jack", buoyancyPerMeter = NULL, areaPerMete
         if (is.null(areaPerMeter)) stop("must supply areaPerMeter, if creating a new wire model")
         if (is.null(CD)) stop("must supply CD, if creating a new wire model")
         source <- ""
+        originalName <- ""
     }
     wireS7(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source, originalName = originalName)
 } # wire()

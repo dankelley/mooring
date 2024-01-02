@@ -18,7 +18,7 @@
 #<old feature, no longer needed> #' library(mooring)
 #<old feature, no longer needed> #' F <- float("HMB 20")
 #<old feature, no longer needed> #' F["buoyancy"]
-#<old feature, no longer needed> #' m <- mooring(anchor(depth = 120), wire(length = 100), F)
+#<old feature, no longer needed> #' m <- mooring(anchor(), wire(length = 100), F, waterDepth = 120)
 #<old feature, no longer needed> #' m["buoyancy"]
 #<old feature, no longer needed> #'
 #<old feature, no longer needed> #' @export
@@ -32,13 +32,13 @@
 #<old feature, no longer needed>             i <- subset(i, 0L < i & i <= length(m))
 #<old feature, no longer needed>             # message(" >> i=",paste(i, collapse=" "))
 #<old feature, no longer needed>             um <- unclass(m)
-#<old feature, no longer needed>             rval <- lapply(i, function(mi) um[[mi]])
+#<old feature, no longer needed>             rval <- lapply(i, \(mi) um[[mi]])
 #<old feature, no longer needed>             class(rval) <- class(m)
 #<old feature, no longer needed>             rval
 #<old feature, no longer needed>         } else {
 #<old feature, no longer needed>             # message("m char")
 #<old feature, no longer needed>             if (i %in% known) {
-#<old feature, no longer needed>                 sapply(m, function(mi) mi[[i]])
+#<old feature, no longer needed>                 sapply(m, \(mi) mi[[i]])
 #<old feature, no longer needed>             } else {
 #<old feature, no longer needed>                 stop("\"", i, "\" not handled; try one of: \"", paste(known, collapse = "\", \""), "\"")
 #<old feature, no longer needed>             }

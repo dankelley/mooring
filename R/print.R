@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth = 100), wire(length = 80), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 80), float("HMB 20"), waterDepth = 100)
 #'
 #' @export
 #'
@@ -101,8 +101,8 @@
             i <- i + 1L
         } else if (is.instrument(xi)) {
             cat(sprintf(
-                "%s%d: \"%s\" instrument, buoyancy %gkg, area %gm^2\n",
-                prefix, i, xi@model, xi@buoyancy, xi@area
+                "%s%d: \"%s\" instrument, buoyancy %gkg, height %gm, area %gm^2\n",
+                prefix, i, xi@model, xi@buoyancy, xi@height, xi@area
             ), sep = "")
             # lastWasChain <- lastWasWire <- FALSE
             i <- i + 1L

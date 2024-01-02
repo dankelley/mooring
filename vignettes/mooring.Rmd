@@ -34,7 +34,7 @@ top.  For example, consider a mooring in water of depth 200m, with a 150-m long 
 connecting a bottom anchor to a float.  This could be created with
 ```{r}
 library(mooring)
-m <- mooring(anchor(depth=200), wire(length=150), float())
+m <- mooring(anchor(), wire(length = 150), float(), waterDepth = 200)
 ```
 where each of the function calls that construct the arguments has taken on a
 default value.  To learn the possible values for any of these, supply a first
@@ -82,7 +82,7 @@ md <- discretise(m) # breaks wire portions into approx. 1-m segments
 ```
 and the knocked-down mooring is found with e.g.
 ```{r}
-mdk <- knockdown(md, u=1)
+mdk <- knockdown(md, u = 1)
 ```
 for a 1 m/s current.
 
@@ -93,7 +93,7 @@ elements.  Note that $z=0$ at the surface and negative in the water column; use
 For example, the shape of the knocked-over mooring from the previous code
 block could be plotted with
 ```{r, fig.cap="**Mooring shape (not to scale).**", fig.align="center"}
-plot(x(mdk), z(mdk), type="l")
+plot(x(mdk), z(mdk), type = "l")
 ```
 
 Similarly, the tension between elements is found with `tension()`, and the angle that elements make to the vertical is found with `angle()`.
@@ -103,9 +103,9 @@ Similarly, the tension between elements is found with `tension()`, and the angle
 The plot shown above is quite primitive, so the package offers a `plot()`
 function.  For example, this gives a view of tension and shape.
 ```{r, fig.cap="**Mooring shape and tension profiles created with plot(). The red dashed line on the right-hand panel represents the anchor weight.**", fig.align="center"}
-par(mfrow=c(1, 2))
-plot(mdk, which="shape")
-plot(mdk, which="tension")
+par(mfrow = c(1, 2))
+plot(mdk, which = "shape")
+plot(mdk, which = "tension")
 ```
 
 In both instances, the gray line is the shape that would occur with no current.
@@ -115,9 +115,9 @@ the $z$ shown above.
 
 A fancier version is obtained with
 ```{r, fig.cap="**Mooring shape and tension, with water coloured blue and bottom coloured brown.**", fig.align="center"}
-par(mfrow=c(1, 2))
-plot(mdk, which="shape", fancy=TRUE)
-plot(mdk, which="tension", fancy=TRUE)
+par(mfrow = c(1, 2))
+plot(mdk, which = "shape", fancy = TRUE)
+plot(mdk, which = "tension", fancy = TRUE)
 ```
 
 # Interactive Apps
@@ -153,7 +153,7 @@ types, then a new object is created.  In this situation, all of the other
 arguments to the function must be supplied, and it should be born in mind that
 those arguments vary from type to type. For example,
 ```{r}
-i <- instrument("myNewInstrument", buoyancy=-5, height=1, area=0.1, CD=1)
+i <- instrument("myNewInstrument", buoyancy = -5, height = 1, area = 0.1, CD = 1)
 ```
 creates a new instrument object for something that has buoyancy -5kg (meaning it
 weighs 5kg in seawater), height 1m, area 0.1 square metre, and drag coefficient
@@ -165,9 +165,9 @@ Strumming of wires in currents can increase wire drag coefficient $C_D$ by
 perhaps a factor of 2 [@hamilton_mooring_1997;@hamilton_validation_1989], and
 simple way to account for that might be to use
 ```{r}
-w <- wire(length=100) # default wire type
+w <- wire(length = 100) # default wire type
 w2 <- w
-w2$CD <- 2 * w2$CD
+w2@CD <- 2 * w2@CD
 ```
 As a check, we may confirm that this doubles the drag for, say, a 1m/s current:
 ```{r}
@@ -188,29 +188,30 @@ be required to maintain an essentially upright position, despite the tendency
 of currents to knock it over.  The `mooring` package can offer guidance in this
 task.
 
-As a simplified example, imagine that a mooring is to be placed in 1 km of
+As a simplified example, imagine that a mooring is to be placed in 100 m of
 water, with a 1/4-inch jacketed wire cable connecting a subsurface float to a
 bottom anchor. How much buoyancy will be required to hold this mooring
 acceptably upright?  To answer this, we may do as follows.
 
 ```{r fig.cap="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**", fig.align="center"}
 library(mooring)
-a <- anchor(depth=1000)
-w <- wire(length=900)
+a <- anchor()
+w <- wire(length = 90)
 f <- float()
-m <- mooring(a, w, f)
-us <- seq(0, 1.0, length.out=25)
+m <- mooring(a, w, f, waterDepth = 100)
+us <- seq(0, 1.0, length.out = 10)
 md <- discretise(m)
-depths <- sapply(us, function(u)
-                 {
-                     mdk <- knockdown(md, u)
-                     depth(mdk)[1]
-                 })
-par(mar=c(3,3,1,1), mgp=c(2,0.7,0))
-plot(us, depths, xaxs="i", ylim=rev(range(depths)), type="l", lwd=2,
-     xlab="Horiz. velo. [m/s]", ylab="Float depth [m]")
+depths <- sapply(us, \(u) {
+    mdk <- knockdown(md, u)
+    depth(mdk)[1]
+})
+par(mar = c(3, 3, 1, 1), mgp = c(2, 0.7, 0))
+plot(us, depths,
+    xaxs = "i", ylim = rev(range(depths)), type = "l", lwd = 2,
+    xlab = "Horiz. velo. [m/s]", ylab = "Float depth [m]"
+)
 grid()
-abline(h=1.1*depth(md)[1], lty=2)
+abline(h = 1.1 * depth(md)[1], lty = 2)
 ```
 
 This analysis suggests that a $0.3$m/s current could yield a 10 percent
@@ -228,8 +229,8 @@ value.
 A table of float name and buoyancy is produced with
 ```{r}
 f <- float("?") # get list of floats
-b <- unlist(lapply(f, function(x) buoyancy(float(x))))
-df <- data.frame(float=f, buoyancy=b)
+b <- unlist(lapply(f, \(x) buoyancy(float(x))))
+df <- data.frame(float = f, buoyancy = b)
 ```
 and the 4 least-buoyancy entries are
 ```{r}
@@ -252,21 +253,20 @@ We do this in three steps (see comments in the code).
    radius.  On this log-log plot, therefore, the data ought to lie along a line
    of slope 2/3.
 
-```{r, fig.cap="**Float drag-buoyancy relationship, in log-log scaling. Circles: data for the built-in float types, assuming a 1m/s current. Line: a scaling line of slope 3/2, with an arbitrary vertical shift for comparison with the data cloud.**", fig.align="center"}
+```{r, fig.cap="**Float drag-buoyancy relationship, in log-log scaling. Circles: data for the built-in float types, assuming a 1m/s current. Line: a scaling line of slope 3/2, with an arbitrary vertical shift for comparison with the slope of the data cloud.**", fig.align="center"}
 # 1
 library(mooring)
 f <- float("?")
-b <- 9.8*unlist(lapply(f, function(x) buoyancy(float(x)))) # mult. by g to get Newtons
-d <- unlist(lapply(f, function(x) drag(float(x), 1)))
-ok <- b>0 & d>0
-df <- data.frame(float=f[ok], drag=d[ok], buoyancy=b[ok])
+b <- 9.8 * unlist(lapply(f, \(x) buoyancy(float(x)))) # mult. by g to get Newtons
+d <- unlist(lapply(f, \(x) drag(float(x), 1)))
+ok <- b > 0 & d > 0
+df <- data.frame(float = f[ok], drag = d[ok], buoyancy = b[ok])
 # 2
-plot(df$drag, df$buoyancy, xlab="Drag Force [N]", ylab="Buoyancy Force [N]", log="xy")
+plot(df$drag, df$buoyancy, xlab = "Drag Force [N]", ylab = "Buoyancy Force [N]", log = "xy")
 # 3
-drag <- seq(min(df$drag), max(df$drag), length.out=100)
-buoyancy <- 10*drag^(3/2) # the factor is just for illustration
+drag <- seq(min(df$drag), max(df$drag), length.out = 100)
+buoyancy <- drag^(3 / 2) # the factor is just for illustration
 lines(drag, buoyancy)
-
 ```
 
 The data cloud slope is similar to that of the indicated scaling line, created
@@ -294,8 +294,8 @@ Exploration along these lines reveals that
 ```{r}
 f <- float("CDMS 2m sphere")
 ```
-will suffice, as its buoyancy, `r float("CDMS 2m sphere")$buoyancy` kg,
-sufficiently exceeds the `r float()$buoyancy` kg of the default float.
+will suffice, as its buoyancy, `r float("CDMS 2m sphere")@buoyancy` kg,
+sufficiently exceeds the `r float()@buoyancy` kg of the default float.
 
 # References
 

@@ -49,7 +49,7 @@
 #' # a bottom anchor, a 100-metre wire, and a float, in
 #' # a current of 1 m/s.
 #' library(mooring)
-#' m <- mooring(anchor(depth = 100), wire(length = 80), float("HMB 20")) |>
+#' m <- mooring(anchor(), wire(length = 80), float("HMB 20"), waterDepth = 100) |>
 #'     discretise() |>
 #'     knockdown(u = 1)
 #' par(mfrow = c(1, 2))
@@ -90,30 +90,30 @@
     } else if (is.logical(showDetails)) {
         detailsControl <- list(cex = 0.8, col = "darkblue")
     }
-    message("plot 4")
+    #message("plot 4")
     colWater <- "#ccdcff"
     colDragWarning <- "2"
     colBottom <- "#e6bb98"
     colStagnant <- "darkgray"
     nm <- length(m@elements)
-    message("plot 5 (nm=", nm, ")")
+    #message("plot 5 (nm=", nm, ")")
     # xshape <- x(m)
     # xtension <- tension(m)
     depth <- depth(m)
-    message("plot 6; depth=", paste(depth, collapse = " "))
+    #message("plot 6; depth=", paste(depth, collapse = " "))
     waterDepth <- m@waterDepth
     par(mar = mar, mgp = mgp)
     # Determine depth scale by doing a sort of dry run of a shape plot
     xlimOrig <- xlim
-    message("plot 7 (xlimOrig = ", paste(xlimOrig), collapse = " ", ")")
+    #message("plot 7 (xlimOrig = ", paste(xlimOrig), collapse = " ", ")")
     if (is.null(xlim)) xlim <- extendrange(c(x(m), 0))
-    message("plot 8 (xlim = ", paste(xlim, collapse = " "), ")")
+    #message("plot 8 (xlim = ", paste(xlim, collapse = " "), ")")
     plot.window(0, 0, xlim = xlim, ylim = c(waterDepth, 0), asp = 1, log = "")
-    message("plot 9: did plot.window())")
+    #message("plot 9: did plot.window())")
     xlim <- xlimOrig
     usrShape <- par("usr")
     # Handle velocity, which does not involve mooring elements and is a special case
-    message("plot 10: getting ready to plot with which=\"", which, "\"")
+    #message("plot 10: getting ready to plot with which=\"", which, "\"")
     if (which == "velocity") {
         u <- m@u # FIXME: ought to be in the object
         if (length(u) == 0L) stop("no velocity has been defined yet; use knockdown()")
@@ -167,19 +167,19 @@
             extendrange(x)
         }
     }
-    message("plot 11: xlim=", paste(xlim, collapse=" "))
+    #message("plot 11: xlim=", paste(xlim, collapse=" "))
     plot.window(xlim, ylim, xlim = xlim, ylim = ylim, asp = if (which == "shape") 1, log = "")
     usrShape <- par("usr")
-    message("plot 12: usrShape=", paste(usrShape, collapse=" "))
+    #message("plot 12: usrShape=", paste(usrShape, collapse=" "))
     # message(oce::vectorShow(xlim))
     # message("usrShape[3:4] is ", usrShape[3], " ", usrShape[4])
-    look <- if (which == "tension") seq(2L, length(m) - 1L) else seq_along(m)
-    message("plot 13: look=", paste(look, collapse=" "))
+    look <- if (which == "tension") seq(2L, length(m@elements) - 1L) else seq_along(m@elements)
+    # message("plot 13: head(look)=", paste(head(look), collapse=" "))
     plot(x[look], depth[look],
         xlim = xlim, ylim = usrShape[3:4], yaxs = "i", asp = if (which == "shape") 1,
         type = type, xlab = "", ylab = "", axes = FALSE
     )
-    message("plot 14")
+    #message("plot 14")
     xlab <- switch(which,
         "shape" = "Horizontal Coordinate [m]",
         "knockdown" = "Depth Increase [m]",
@@ -205,7 +205,7 @@
             abline(h = waterDepth, col = colBottom, lwd = 2)
         }
     }
-    message("plot 15")
+    #message("plot 15")
     # draw anchor (only makes sense for shape diagrams)
     if (which == "shape") {
         waterDepth <- attr(m, "waterDepth")
@@ -213,38 +213,38 @@
         anchorSymbol <- list(x = sqrt(3.0 / 4.0) * c(-A, 0, A), y = waterDepth - c(0, A, 0))
         polygon(anchorSymbol, col = colStagnant)
     }
-    message("plot 16")
+    #message("plot 16")
     # Redraw to cover grid
     if (type == "l") {
         lines(x[look], depth[look], lwd = 1.4 * par("lwd"), col = "magenta")
     } else {
         points(x[look], depth[look], lwd = 1.4 * par("lwd"))
     }
-    message("plot 17")
+    #message("plot 17")
     # Draw conditions for u=0 case
     if (fancy) {
         rect(usr[1], usr[3], usr[2], waterDepth, col = colBottom, border = NA)
     }
-    message("plot 18")
+    #message("plot 18")
     # Redraw in case line runs along bottom
     lines(x[look], depth[look], lwd = 1.4 * par("lwd"))
-    message("plot 19")
+    #message("plot 19")
     if (which == "shape") {
-        # mooringLength <- sum(sapply(m, function(x) x$height))
+        # mooringLength <- sum(sapply(m, \(x) x@height))
         # lines(rep(0, 2), waterDepth - c(mooringLength, 0), col=colStagnant, lwd=1.4*par("lwd"))
         # points(0, waterDepth - mooringLength, pch=20, col=colStagnant)
         # browser()
-        message("plot 20")
+        #message("plot 20")
         xx <- x(m, stagnant = TRUE)
-        message("plot 21")
+        #message("plot 21")
         yy <- depth(m, stagnant = TRUE)
-        message("plot 22")
+        #message("plot 22")
         lines(xx, yy, col = colStagnant)
-        message("plot 23")
+        #message("plot 23")
         notWire <- !is.wire(m)
-        message("plot 24")
+        #message("plot 24")
         points(xx[notWire], yy[notWire], pch = 20, col = colStagnant)
-        message("plot 25")
+        #message("plot 25")
     } else if (which == "tension") {
         look <- seq(2L, length(m) - 1L)
         lines(tension(m, stagnant = TRUE)[look], depth[look],
@@ -257,7 +257,7 @@
     col <- if (showDetails) detailsControl$col else 1
     for (i in seq_along(m@elements)) {
         type <- gsub("^mooring::", "", class(m@elements[[i]])[1])
-        message("plot element ", i, " has type \"", type, "\"")
+        #message("plot element ", i, " has type \"", type, "\"")
         xi <- x[i] # FIXME: has this been defined? If so, why not z also?
         zi <- m@elements[[i]]@z
         if (type == "anchor" && which != "tension") {
@@ -298,9 +298,7 @@
                     text(xi, -zi, sprintf("%.1fm", -zi), pos = 2)
                 }
             }
-        } else if (type == "wire") {
-            #> message("draw wire??")
-        }
+        } # note that other types are skipped
     }
     if (showDetails) {
         labels <- NULL
@@ -308,14 +306,14 @@
         depths <- NULL
         xs <- xsStagnant <- NULL
         #> message(oce::vectorShow(which))
-        for (i in seq_along(m)) {
-            mi <- m[[i]]
-            if (inherits(mi, "anchor") || inherits(mi, "connector") || inherits(mi, "float") || inherits(mi, "instrument") || inherits(mi, "release")) {
+        for (i in seq_along(m@elements)) {
+            e <- m@elements[[i]]
+            if (is.anchor(e) || is.connector(e) || is.float(e) || is.instrument(e) || is.release(e)) {
                 #> message("anchor, release or float at i=", i)
-                depths <- c(depths, -mi$z)
-                xs <- c(xs, if (which == "shape") mi$x else mi$z0 - mi$z)
+                depths <- c(depths, -e@z)
+                xs <- c(xs, if (which == "shape") e@x else e@z0 - e@z)
                 xsStagnant <- c(xsStagnant, 0)
-                labels <- c(labels, mi$model)
+                labels <- c(labels, e@model)
             }
         }
         #> message(oce::vectorShow(xs))

@@ -26,7 +26,7 @@
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
 #' buoyancy(m)
 #'
 #' @export
@@ -40,7 +40,7 @@
 buoyancy <- function(m, debug = 0L) {
     if (is.mooring(m)) {
         mooringDebug(debug, "computing buoyancy for ", length(m@elements), "-element mooring\n", sep = "")
-        rval <- sapply(m@elements, function(mi) buoyancy(mi, debug = debug))
+        rval <- sapply(m@elements, \(mi) buoyancy(mi, debug = debug))
     } else if (is.mooringElement(m)) {
         mooringDebug(debug, "computing buoyancy for a ", class(m)[1], " element\n", sep = "")
         rval <- m@buoyancy # FIXME: what about chopped-up wire/chain?

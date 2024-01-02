@@ -18,13 +18,12 @@ l <- L * cos(phi)
 T <- B / cos(phi)
 
 library(mooring)
+a <- anchor("fake", buoyancy=-1000, height=0, CD=1)
+w <- wire("gossamer", length=L, buoyancyPerMeter=0, CD=0, areaPerMeter=0)
 f <- float("pingpong", Bkg, height=0, area=area, CD=1)
 expect_equal(Bkg, buoyancy(f))
-expect_equal(D/g, drag(f, u=u))
-
-w <- wire("gossamer", length=L, buoyancyPerMeter=0, CD=0, areaPerMeter=0)
-a <- anchor("fake", buoyancy=-1000, height=0, CD=1, depth=L)
-m <- mooring(a, w, f)
+expect_equal(D, drag(f, u=u))
+m <- mooring(a, w, f, waterDepth = L)
 
 n <- 500 # number of sub-segments to use
 md <- discretise(m, L/n)
@@ -43,8 +42,8 @@ cex <- 1.4*par("cex")
 tweak <- 0.01*cex
 
 # Buoyancy
-arrows(x, L-l, x, L-l-scale*f$buoyancy*9.8, length=length, col=col, lwd=lwd)
-text(x, L-l-scale*f$buoyancy*9.8, expression(B[i]), font=2, col=col, cex=cex, pos=3)
+arrows(x, L-l, x, L-l-scale*f@buoyancy*9.8, length=length, col=col, lwd=lwd)
+text(x, L-l-scale*f@buoyancy*9.8, expression(B[i]), font=2, col=col, cex=cex, pos=3)
 
 # Drag
 arrows(x, L-l, x+scale*D, L-l, length=length, col=col, lwd=lwd)

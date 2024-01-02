@@ -17,13 +17,8 @@ Summarize a mooring
 }
 \examples{
 library(mooring)
-# Simple case
-m <- mooring(anchor(depth = 100), wire(length = 80), float("HMB 20"))
+m <- mooring(anchor(), wire(length = 80), float(), waterDepth = 100)
 summary(m)
-# Illustrate how it collects wire subintervals
-md <- discretise(m)
-mdk <- knockdown(md, 0.5)
-summary(mdk)
 
 }
 \author{

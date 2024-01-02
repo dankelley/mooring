@@ -58,7 +58,7 @@ depth-dependent currents in the `knockdown()` call.
 library(mooring)
 # Design a mooring with a 16-inch Viny float attached to a bottom
 # anchor with 100m of wire cable.
-m <- mooring(anchor(depth = 120), wire(length = 100), float("16in Viny"))
+m <- mooring(anchor(), wire(length = 100), float("16in Viny"), waterDepth = 120)
 # Discretise wire portion (to 1m spacing).
 md <- discretise(m)
 # Apply a 1 m/s current.

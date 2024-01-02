@@ -10,10 +10,16 @@ mooring(..., waterDepth = NA)
 \item{...}{two or more elementary objects, as created by
 \code{\link[=anchor]{anchor()}}, \code{\link[=release]{release()}}, \code{\link[=chain]{chain()}},
 \code{\link[=wire]{wire()}}, \code{\link[=connector]{connector()}}, \code{\link[=instrument]{instrument()}}, \code{\link[=misc]{misc()}} or \code{\link[=float]{float()}}.}
+
+\item{waterDepth}{numerical value giving the full depth of
+the water column.  For a sub-surface mooring, this must exceed
+the sum of the heights of all the mooring elements.}
 }
 \value{
-\code{mooring} returns a list that inherits from the \code{"mooring"}
-class. The elements of the list are of '"mooringElement"` class.
+\code{mooring} returns an object in the \code{mooring} class that
+contains an item named \code{elements}, which holds the items provided
+in the \code{...} argument.  Each of those items is of the
+\code{mooringElement} class.
 }
 \description{
 Assemble elementary components into a mooring string.
@@ -24,40 +30,10 @@ in the return value (see Example 1).
 \examples{
 # Example 1: most basic case: anchor, line, float.
 library(mooring)
-m <- mooring(anchor(depth = 100), wire(length = 80), float())
+m <- mooring(anchor(), wire(length = 80), float(), waterDepth = 100)
 m # whole-mooring overview
-head(m, 1) # float overview
+m@elements[[1]] # float details
 
-# Example 2: compare a simple mooring (with inadequate
-# buoyancy) with a stiffer one that has extra buoyancy
-# near an instrument.  Note that the stiffness is
-# concentrated in the depth region that is being sampled
-# with the instrument (a "microcat").
-A <- anchor(depth = 150)
-W <- function(l) wire("3/8in wire/jack", length = l)
-MC <- instrument("SBE37 microcat clamp-on style")
-BUB <- float("BUB 2x17in glass")
-top <- float("Trpl 16in Viny")
-m1 <- mooring(A, W(45), W(5), MC, W(5), W(80), top)
-m2 <- mooring(A, W(45), BUB, W(5), MC, W(5), BUB, W(80), top)
-m1k <- m1 |>
-    discretise() |>
-    knockdown(u = 0.5)
-m2k <- m2 |>
-    discretise() |>
-    knockdown(u = 0.5)
-plot(m1k)
-# Show stiffened mooring in red
-lines(x(m2k), depth(m2k), col = 2, lwd = 2)
-points(x(m2k, skipWire = TRUE), depth(m2k, skipWire = TRUE), col = 2, pch = 20)
-type <- sapply(m2k, \(i) class(i)[2])[!is.wire(m2k)]
-typeAbbrev <- unname(sapply(type, \(t)
-switch(t,
-    float = "F",
-    instrument = "I",
-    anchor = "A"
-)))
-text(x(m2k, skipWire = TRUE), depth(m2k, skipWire = TRUE), typeAbbrev, col = 2, pos = 2)
 
 }
 \author{

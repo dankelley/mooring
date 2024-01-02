@@ -22,8 +22,6 @@
 #'
 #' @template CDTemplate
 #'
-#' @template sourceTemplate
-#'
 #' @return `float` returns a `"mooringElement"` object with `"float"` subclass.
 #'
 #' @references

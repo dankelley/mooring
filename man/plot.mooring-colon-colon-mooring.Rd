@@ -75,7 +75,7 @@ Plot a mooring
 # a bottom anchor, a 100-metre wire, and a float, in
 # a current of 1 m/s.
 library(mooring)
-m <- mooring(anchor(depth = 100), wire(length = 80), float("HMB 20")) |>
+m <- mooring(anchor(), wire(length = 80), float("HMB 20"), waterDepth = 100) |>
     discretise() |>
     knockdown(u = 1)
 par(mfrow = c(1, 2))

@@ -34,10 +34,6 @@ Note that \code{height} is ignored if \code{model} is recognized.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
-
-\item{depth}{numeric value giving water depth in m.}
-
-\item{source}{character value indicating the source of the data.}
 }
 \value{
 \code{anchor} returns a \code{"mooringElement"} object with \code{"anchor"} subclass.
@@ -45,9 +41,7 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \description{
 Create a anchor object, either by looking up a known object from
 the database, or by defining a new type. This must be the first
-element of a mooring constructed with \code{\link[=mooring]{mooring()}}.  Note that
-\code{depth} is not a characteristic of the anchor, but rather of the
-domain into which it is placed.
+element of a mooring constructed with \code{\link[=mooring]{mooring()}}.
 }
 \examples{
 library(mooring)

@@ -1,3 +1,9 @@
+# mooring 0.1.5
+
+* Switch to S7 object scheme.
+* `anchor()` no longer has a `depth` parameter.
+* `mooring()` gains a `waterDepth` parameter.
+
 # mooring 0.1.4
 
 * Fix major error in buoyancy calculation. See

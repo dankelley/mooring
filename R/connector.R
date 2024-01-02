@@ -20,8 +20,6 @@
 #'
 #' @template CDTemplate
 #'
-#' @template sourceTemplate
-#'
 #' @return `connector` returns a `"mooringElement"` object with `"connector"` subclass.
 #'
 #' @family functions that create mooring elements
@@ -71,6 +69,7 @@ connector <- function(model = "swivel", buoyancy = NULL, height = NULL, area = N
         if (is.null(area)) stop("must supply area, if creating a new connectors model")
         if (is.null(CD)) stop("must supply CD, if creating a new connectors model")
         source <- ""
+        originalName <- ""
     }
     connectorS7(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source, originalName = originalName)
 } # connector()

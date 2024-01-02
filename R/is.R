@@ -5,7 +5,7 @@
 is.mooringInternal <- function(object, class) {
     # mooring() returns an unnamed list
     if (inherits(object, "mooring::mooring")) {
-        message("Case 0: a mooring::mooring")
+        # message("Case 0: a mooring::mooring")
         return(sapply(object@elements, \(o) is.mooringInternal(o, class)))
     }
     #message("not a mooring::mooring")
@@ -30,7 +30,7 @@ is.mooringInternal <- function(object, class) {
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
 #' is.anchor(m)
 #'
 #' @export
@@ -49,7 +49,7 @@ is.anchor <- function(m) {
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
 #' is.chain(m)
 #'
 #' @export
@@ -82,7 +82,7 @@ is.connector <- function(m) {
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
 #' is.float(m)
 #'
 #' @export
@@ -103,8 +103,8 @@ is.float <- function(m) {
 #' @examples
 #' library(mooring)
 #' m <- mooring(
-#'     anchor(depth = 120), wire(length = 100), instrument("RD ADCP"),
-#'     wire(length = 100), float("HMB 20")
+#'     anchor(), wire(length = 100), instrument("RD ADCP"),
+#'     wire(length = 100), float("HMB 20"), waterDepth = 120
 #' )
 #' is.instrument(m)
 #'
@@ -183,7 +183,7 @@ is.release <- function(m) {
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
 #' is.wire(m)
 #'
 #' @export

@@ -16,9 +16,9 @@ app1 <- function() {
         stop("must install.packages(\"shiny\") for app() to work")
     }
     floatChoices <- float("?")
-    floatBuoyancy <- lapply(floatChoices, \(f) float(f)$buoyancy) |> unlist()
+    floatBuoyancy <- lapply(floatChoices, \(f) float(f)@buoyancy) |> unlist()
     wireChoices <- wire("?")
-    wireBuoyancy <- lapply(wireChoices, \(w) wire(w, length = 1)$buoyancy) |> unlist()
+    wireBuoyancy <- lapply(wireChoices, \(w) wire(w, length = 1)@buoyancy) |> unlist()
     dewey1999 <- paste(
         "Dewey, Richard K.",
         "\"Mooring Design & Dynamics-a Matlab",
@@ -122,8 +122,8 @@ app1 <- function() {
             msg <- paste0(
                 msg,
                 sprintf(
-                    "m <- mooring(<br>    anchor(depth=%g),<br>    wire(model=\"%s\", length=%g),<br>    float(model=\"%s\"))<br>",
-                    waterDepth, wireModel, wireLength, floatModel
+                    "m <- mooring(<br>    anchor(),<br>    wire(model=\"%s\", length=%g),<br>    float(model=\"%s\"), waterDepth = %g)<br>",
+                    wireModel, wireLength, floatModel, waterDepth
                 )
             )
             msg <- paste0(msg, "md <- discretise(m, by=1)<br>")

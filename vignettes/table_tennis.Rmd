@@ -126,8 +126,8 @@ expect_equal(B / g, buoyancy(f))
 expect_equal(D, drag(f, u=u))
 
 w <- wire("gossamer", length=L, buoyancyPerMeter=0, areaPerMeter=0, CD=0)
-a <- anchor("fake", buoyancy=-1000, height=0, depth=L, CD=0)
-m <- mooring(a, w, f)
+a <- anchor("fake", buoyancy=-1000, height=0, CD=0)
+m <- mooring(a, w, f, waterDepth = L)
 
 n <- 500 # number of sub-segments to use
 md <- discretise(m, L/n)

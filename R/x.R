@@ -12,14 +12,14 @@
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 200)
 #' x(m)
 #'
 #' @export
 #'
 #' @author Dan Kelley
 x <- function(m, stagnant = FALSE, skipWire = FALSE) {
-    message("in x")
+    # message("in x")
     e <- m@elements
     rval <- if (stagnant) {
         if (length(e[[1]]@x0)) {

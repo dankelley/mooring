@@ -1,7 +1,7 @@
 #<feature removed> library(mooring)
 #<feature removed>
 #<feature removed> fl <- float()
-#<feature removed> m <- mooring(anchor(depth=100), wire(length=90), float())
+#<feature removed> m <- mooring(anchor(), wire(length=90), float(), waterDepth = 100)
 #<feature removed>
 #<feature removed> test_that("[ area", {
 #<feature removed>     expect_equal(m["area"], area(m))

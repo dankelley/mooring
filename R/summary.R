@@ -8,13 +8,8 @@
 #'
 #' @examples
 #' library(mooring)
-#' # Simple case
-#' m <- mooring(anchor(depth = 100), wire(length = 80), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 80), float(), waterDepth = 100)
 #' summary(m)
-#' # Illustrate how it collects wire subintervals
-#' md <- discretise(m)
-#' mdk <- knockdown(md, 0.5)
-#' summary(mdk)
 #'
 #' @export
 #'
@@ -25,35 +20,35 @@
     if (!is.mooring(object)) {
         stop("only works for objects created by mooring()")
     }
-    print(m)
-    if (FALSE) {
-        e <- object@elements
-        lastWasWire <- FALSE
-        wireLength <- 0
-        iWireStart <- 0
-        for (i in seq_along(e)) {
-            message("summary i=", i)
-            ee <- e[[i]]
-            if (is.wire(ee)) {
-                if (!lastWasWire) {
-                    iWireStart <- i
-                }
-                lastWasWire <- TRUE
-                wireLength <- wireLength + ee@height
-            } else {
-                if (lastWasWire) {
-                    # fake an element (and blank out the location)
-                    W <- e[[iWireStart]]
-                    W@height <- wireLength
-                    # cat("iWireStart=", iWireStart, "\n")
-                    # cat("DAN...\n");print(W)
-                    cat(sprintf("AA %s at z=%.2fm to %.2fm\n", W@model, W@z, W@z - wireLength))
-                }
-                lastWasWire <- FALSE
-                wireLength <- 0
-                # cat("BOY..\n")
-                cat(sprintf("BB %s at z=%.2fm\n", ee@model, ee@z))
-            }
-        }
-    }
+    print(object)
+    #<old> if (FALSE) {
+    #<old>     e <- object@elements
+    #<old>     lastWasWire <- FALSE
+    #<old>     wireLength <- 0
+    #<old>     iWireStart <- 0
+    #<old>     for (i in seq_along(e)) {
+    #<old>         message("summary i=", i)
+    #<old>         ee <- e[[i]]
+    #<old>         if (is.wire(ee)) {
+    #<old>             if (!lastWasWire) {
+    #<old>                 iWireStart <- i
+    #<old>             }
+    #<old>             lastWasWire <- TRUE
+    #<old>             wireLength <- wireLength + ee@height
+    #<old>         } else {
+    #<old>             if (lastWasWire) {
+    #<old>                 # fake an element (and blank out the location)
+    #<old>                 W <- e[[iWireStart]]
+    #<old>                 W@height <- wireLength
+    #<old>                 # cat("iWireStart=", iWireStart, "\n")
+    #<old>                 # cat("DAN...\n");print(W)
+    #<old>                 cat(sprintf("AA %s at z=%.2fm to %.2fm\n", W@model, W@z, W@z - wireLength))
+    #<old>             }
+    #<old>             lastWasWire <- FALSE
+    #<old>             wireLength <- 0
+    #<old>             # cat("BOY..\n")
+    #<old>             cat(sprintf("BB %s at z=%.2fm\n", ee@model, ee@z))
+    #<old>         }
+    #<old>     }
+    #<old> }
 }

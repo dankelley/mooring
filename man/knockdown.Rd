@@ -57,7 +57,7 @@ Examples 2 and 3.
 \examples{
 # Illustrate importance of drag on the wire.
 library(mooring)
-m <- mooring(anchor(depth = 100), wire(length = 80), float("16in Viny"))
+m <- mooring(anchor(), wire(length = 80), float("16in Viny"), waterDepth = 100)
 md <- discretise(m)
 
 # Example 1: no current
