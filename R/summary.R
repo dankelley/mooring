@@ -9,14 +9,15 @@
 #' @examples
 #' library(mooring)
 #' m <- mooring(anchor(), wire(length = 80), float(), waterDepth = 100)
-#' summary(m)
+#' summaryMooring(m)
 #'
 #' @export
 #'
-#' @aliases summary.mooring
+## @aliases summary.mooring
 #'
 #' @author Dan Kelley
-`summary.mooring::mooring` <- function(object, ...) {
+#`summary.mooring::mooring` <- function(object, ...) {
+summaryMooring <- function(object, ...) {
     if (!is.mooring(object)) {
         stop("only works for objects created by mooring()")
     }

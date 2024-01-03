@@ -10,13 +10,15 @@
 #' @examples
 #' library(mooring)
 #' m <- mooring(anchor(), wire(length = 80), float("HMB 20"), waterDepth = 100)
+#' printMooring(m)
 #'
 #' @export
 #'
-#' @aliases print.mooring
+## @aliases print.mooring
 #'
 #' @author Dan Kelley
-`print.mooring::mooring` <- function(x, ...) {
+#`print.mooring::mooring` <- function(x, ...) {
+printMooring <- function(x, ...) {
     debug <- 0
     mooringDebug(debug, "print.mooring() {\n", sep = "")
     elementary <- is.mooringElement(x)
