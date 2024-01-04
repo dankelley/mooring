@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Mooring Model</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2023-12-30</h4>
+            <h4 data-toc-skip class="date">2024-01-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring_model.Rmd" class="external-link"><code>vignettes/mooring_model.Rmd</code></a></small>
       <div class="hidden name"><code>mooring_model.Rmd</code></div>
@@ -157,9 +157,8 @@ about mooring components. Note that they refer to in-water buoyancy
 force, but the distinction between freshwater and seawater is seldom
 made clear.</li>
 <li>Drag coefficient, <span class="math inline">\(C_i\)</span>, defined
-as the ratio of drag force, <span class="math inline">\({\cal
-D}_i\)</span>, to <span class="math inline">\(\frac{1}{2}A_i\rho_i
-u_i|u_i|\)</span>.</li>
+as the ratio of drag force, <span class="math inline">\(D_i\)</span>, to
+<span class="math inline">\(\frac{1}{2}A_i\rho_i u_i|u_i|\)</span>.</li>
 </ul>
 <div class="float">
 <img src="../reference/figures/force_diagram.png" alt="Figure 1. Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a river that is 0.5m deep. Arrows show forces in the i-th element (with i=1 in this case), and the corresponding angle is indicated alongside the gray line that represents the stagnant case. The brown region is the sediment below the river, and the dot is an anchor (element i=2, for which there is no force calculation since it assumed to be immobile)."><div class="figcaption"><em>Figure 1. Force diagram, showing an
@@ -174,15 +173,15 @@ calculation since it assumed to be immobile).</em></div>
 </div>
 <p>A tension force exists between each interior mooring element. The
 tension below the <span class="math inline">\(i\)</span>-th interior
-element (thus pulling downward on it) is denoted <span class="math inline">\({\cal T}_i\)</span>. This is defined for all
-elements of a mooring except for the bottom one, which is labelled <span class="math inline">\(i=n\)</span>.</p>
+element (thus pulling downward on it) is denoted <span class="math inline">\(T_i\)</span>. This is defined for all elements of
+a mooring except for the bottom one, which is labelled <span class="math inline">\(i=n\)</span>.</p>
 <p>The tension force is directed vertically if there is no current, but
 acquires a horizontal component if there is a current, because drag from
 the current will distort the mooring shape. The angle made by the <span class="math inline">\(i\)</span>-th element to the vertical is
 represented with <span class="math inline">\(\phi_i\)</span>.
-Determining these two quantities, <span class="math inline">\({\cal
-T}\)</span> and <span class="math inline">\(\phi\)</span>, is the key to
-inferring the response of a mooring to currents.</p>
+Determining these two quantities, <span class="math inline">\(T\)</span>
+and <span class="math inline">\(\phi\)</span>, is the key to inferring
+the response of a mooring to currents.</p>
 <p>Quasi-steady dynamics are assumed, so that forces must balance in
 both the horizontal and vertical directions. The tension force has
 components in both the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> directions, but the buoyancy force
@@ -191,14 +190,14 @@ mooring) acts only in the vertical, upwards if <span class="math inline">\(m\)</
 <p>The buoyancy force for a solid object such as an anchor or a float is
 found with <span class="math display">\[\begin{equation}
 \tag{1}
-{\cal B}_i = -g m_i
+B_i = -g m_i
 \end{equation}\]</span> while it is represented with <span class="math display">\[\begin{equation}
 \tag{2}
-{\cal B}_i = -g \mu_i \Delta l_i
+B_i = -g \mu_i \Delta l_i
 \end{equation}\]</span> for a portion of a cable of length <span class="math inline">\(\Delta l_i\)</span>.</p>
 <p>The drag force is expressed with <span class="math display">\[\begin{equation}
 \tag{3}
-{\cal D}_i = \frac{1}{2} A_i C_i \rho_i u_i |u_i|
+D_i = \frac{1}{2} A_i C_i \rho_i u_i |u_i|
 \end{equation}\]</span> where <span class="math inline">\(A_i\)</span>
 is the area projected in the flow direction.</p>
 <p>With these definitions, a steady-state assumption dictates that
@@ -207,76 +206,69 @@ each element of the mooring.</p>
 <p>Consider the case of a mooring consisting of <span class="math inline">\(n\)</span> elements attached to an immovable
 bottom anchor, and let the index <span class="math inline">\(i=1\)</span> refer to the top element, with <span class="math inline">\(i\)</span> increasing to <span class="math inline">\(i=n\)</span> at the anchor.</p>
 <p>Three forces are involved in this situation: (a) a horizontal drag
-force, <span class="math inline">\({\cal D}\)</span>, associated with
-the current, (b) a vertical buoyancy force, <span class="math inline">\({\cal B}\)</span>, caused by a density mismatch
-between a component and the background water, and (c) a tension force,
-<span class="math inline">\({\cal T}\)</span>, along the connection
-between elements. The tension force has only a vertical component for an
-upright mooring, but horizontal components occur for a mooring that is
-tilted by a current.</p>
+force, <span class="math inline">\(D\)</span>, associated with the
+current, (b) a vertical buoyancy force, <span class="math inline">\(B\)</span>, caused by a density mismatch between a
+component and the background water, and (c) a tension force, <span class="math inline">\(\tau\)</span>, along the connection between
+elements. The tension force has only a vertical component for an upright
+mooring, but horizontal components occur for a mooring that is tilted by
+a current.</p>
 <p>By definition, the top element has no tension from above, and so a
 consideration of its force balance yields <span class="math display">\[\begin{equation}
 \tag{4}
-{\cal D}_1 = {\cal T}_1 \sin\phi_1
+D_1 = \tau_1 \sin\phi_1
 \end{equation}\]</span> and <span class="math display">\[\begin{equation}
 \tag{5}
-{\cal B}_1 = {\cal T}_1 \cos\phi_1
-\end{equation}\]</span> where <span class="math inline">\({\cal
-T}_1\)</span> is the tension between this element and the one below it,
-and <span class="math inline">\(\phi_1\)</span> is the angle that this
-tension force makes to the vertical.</p>
+B_1 = \tau_1 \cos\phi_1
+\end{equation}\]</span> where <span class="math inline">\(\tau_1\)</span> is the tension between this
+element and the one below it, and <span class="math inline">\(\phi_1\)</span> is the angle that this tension
+force makes to the vertical.</p>
 <p>Consider first the case of a depth-independent current, so that the
 drag <span class="math inline">\(D_i\)</span> on the <span class="math inline">\(i\)</span>-th element my be computed without
 consideration for the position of the element in the water column. In
 such a case, both <span class="math inline">\(D_1\)</span> and <span class="math inline">\(B_1\)</span> are known, these two equations may be
-solved for <span class="math inline">\({\cal T}_1\)</span> and <span class="math inline">\(\phi_1\)</span>, yielding <span class="math display">\[\begin{equation}
+solved for <span class="math inline">\(\tau_1\)</span> and <span class="math inline">\(\phi_1\)</span>, yielding <span class="math display">\[\begin{equation}
 \tag{6}
-{\cal T}_1 = \sqrt{{\cal D}_1^2 + {\cal B}_1^2}
+\tau_1 = \sqrt{D_1^2 + B_1^2}
 and
 \end{equation}\]</span> <span class="math display">\[\begin{equation}
 \tag{7}
-\phi_1 = \tan^{-1}\frac{{\cal D}_1}{{\cal B}_1}
+\phi_1 = \tan^{-1}\frac{D_1}{B_1}
 \end{equation}\]</span></p>
 <p>If there are more than 2 elements in the mooring, this same reasoning
 may be extended to the next element, although now there is a tension
 force pulling upward. This situation is described by <span class="math display">\[\begin{equation}
 \tag{8}
-{\cal D}_2 + {\cal T}_1 \sin\phi_1 = {\cal T}_2 \sin\phi_2
+D_2 + \tau_1 \sin\phi_1 = \tau_2 \sin\phi_2
 \end{equation}\]</span> and <span class="math display">\[\begin{equation}
 \tag{9}
-{\cal B}_2 + {\cal T}_1 \cos\phi_1 = {\cal T}_2 \cos\phi_2
+B_2 + \tau_1 \cos\phi_1 = \tau_2 \cos\phi_2
 \end{equation}\]</span></p>
-<p>Since <span class="math inline">\(\phi_1\)</span> and <span class="math inline">\({\cal T}_1\)</span> are known from Equation 5,
-Equation 6 may be solved for <span class="math inline">\({\cal
-T}_2\)</span> and <span class="math inline">\(\phi_2\)</span>, using
-<span class="math display">\[\begin{equation}
+<p>Since <span class="math inline">\(\phi_1\)</span> and <span class="math inline">\(\tau_1\)</span> are known from Equation 5,
+Equation 6 may be solved for <span class="math inline">\(\tau_2\)</span>
+and <span class="math inline">\(\phi_2\)</span>, using <span class="math display">\[\begin{equation}
 \tag{10}
-{\cal T}_2 = \sqrt{({\cal D}_2+{\cal T}_1\sin\phi_1)^2 + ({\cal
-B}_2+{\cal T}_1\cos\phi_1)^2}
+\tau_2 = \sqrt{(D_2+\tau_1\sin\phi_1)^2 + (B_2+\tau_1\cos\phi_1)^2}
 \end{equation}\]</span> and <span class="math display">\[\begin{equation}
 \tag{11}
-\phi_2 = \tan^{-1}\frac{{\cal D}_2+{\cal T}_1\sin\phi_1}{{\cal
-B}_2+{\cal T}_1\cos\phi_1}
+\phi_2 = \tan^{-1}\frac{D_2+\tau_1\sin\phi_1}{B_2+\tau_1\cos\phi_1}
 \end{equation}\]</span></p>
 <p>This may be generalized to larger moorings, with <span class="math display">\[\begin{equation}
 \tag{12}
-{\cal T}_i = \sqrt{({\cal D}_i+{\cal T}_{i-1}\sin\phi_{i-1})^2+({\cal
-B}_i+{\cal T}_{i-1}\cos\phi_{i-1})^2}
+\tau_i =
+\sqrt{(D_i+\tau_{i-1}\sin\phi_{i-1})^2+(B_i+\tau_{i-1}\cos\phi_{i-1})^2}
 \end{equation}\]</span> and <span class="math display">\[\begin{equation}
 \tag{13}
-\phi_i = \tan^{-1}\frac{{\cal D}_i+{\cal T}_{i-1}\sin\phi_{i-1}}{{\cal
-B}_i+{\cal T}_{i-1}\cos\phi_{i-1}}
+\phi_i =
+\tan^{-1}\frac{D_i+\tau_{i-1}\sin\phi_{i-1}}{B_i+\tau_{i-1}\cos\phi_{i-1}}
 \end{equation}\]</span> applying for elements <span class="math inline">\(i=2,\dots,n-1\)</span>. The limit ends at <span class="math inline">\(n-1\)</span> because is no tension below the
-bottom element, so neither <span class="math inline">\({\cal
-T}_n\)</span> nor <span class="math inline">\(\phi_n\)</span> can be
-defined.</p>
+bottom element, so neither <span class="math inline">\(\tau_n\)</span>
+nor <span class="math inline">\(\phi_n\)</span> can be defined.</p>
 <p>This leads to a simple way to describe mooring response to a
 depth-independent current, in which <span class="math inline">\(D_i\)</span> and <span class="math inline">\(B_i\)</span> are known quantities for each <span class="math inline">\(i\)</span> from 1 to <span class="math inline">\(n\)</span>:</p>
 <ol style="list-style-type: decimal">
-<li>First, use Equations 4 through 7 to compute <span class="math inline">\({\cal T}_1\)</span> and <span class="math inline">\(\phi_1\)</span>, the angle and tension below the
+<li>First, use Equations 4 through 7 to compute <span class="math inline">\(\tau_1\)</span> and <span class="math inline">\(\phi_1\)</span>, the angle and tension below the
 top (<span class="math inline">\(i=1)\)</span> element.</li>
-<li>Use Equations 12 and 13 to compute <span class="math inline">\({\cal
-T}_i\)</span> and <span class="math inline">\(\phi_i\)</span> for <span class="math inline">\(i=2\)</span>.</li>
+<li>Use Equations 12 and 13 to compute <span class="math inline">\(\tau_i\)</span> and <span class="math inline">\(\phi_i\)</span> for <span class="math inline">\(i=2\)</span>.</li>
 <li>Continue as in step 2, until reaching the bottom (<span class="math inline">\(i=n-1\)</span>) element.</li>
 </ol>
 <p>If the current varies with depth, then the drag of a given element
@@ -296,6 +288,7 @@ scales.</p>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
+<pre><code><span><span class="co">## Loading required package: S7</span></span></code></pre>
 <p>Figure 2 shows the result of simulating a 20-inch Hydro Float Mooring
 Buoy (with <span class="math inline">\(34.5\)</span>kg buoyancy)
 connected to a bottom anchor with 100 m of quarter-inch jacketed wire
@@ -321,17 +314,17 @@ all <span class="math inline">\(i\)</span>, then there will be no drag,
 and so (assuming adequate buoyancy), the mooring will be aligned in the
 vertical, and the vertical equation becomes <span class="math display">\[\begin{equation}
 \tag{14}
-{\cal T}_{i+1} = {\cal T}_i + {\cal B}_i
+\tau_{i+1} = \tau_i + B_i
 \end{equation}\]</span> which yields <span class="math display">\[\begin{equation}
 \tag{15}
-{\cal T}_i = \sum_{j=1}^{i-1} {\cal B}_j
+\tau_i = \sum_{j=1}^{i-1} B_j
 \end{equation}\]</span> for <span class="math inline">\(i&gt;1\)</span>.
 Physically, this means that the downward tension at any level balances
 the total upward buoyancy force of all the elements above it. The bottom
-tension, <span class="math inline">\({\cal T}_n\)</span>, may be
-interpreted as the minimum anchor weight that will hold the mooring in
-place in the absence of currents. However, it should be obvious that
-heavier weights will be required for practical situations.</p>
+tension, <span class="math inline">\(\tau_n\)</span>, may be interpreted
+as the minimum anchor weight that will hold the mooring in place in the
+absence of currents. However, it should be obvious that heavier weights
+will be required for practical situations.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -364,7 +357,7 @@ Analyzing Oceanographic Moorings.”</span> <em>Marine Models</em> 1 (1):
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer>

@@ -10,9 +10,6 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/knockdown_model.html</loc>
-  </url>
-  <url>
     <loc>/articles/mooring.html</loc>
   </url>
   <url>
@@ -23,9 +20,6 @@
   </url>
   <url>
     <loc>/articles/object_orientation.html</loc>
-  </url>
-  <url>
-    <loc>/articles/pingpong.html</loc>
   </url>
   <url>
     <loc>/articles/table_tennis.html</loc>
@@ -49,12 +43,6 @@
     <loc>/reference/anchorWeight.html</loc>
   </url>
   <url>
-    <loc>/reference/angle.html</loc>
-  </url>
-  <url>
-    <loc>/reference/app.html</loc>
-  </url>
-  <url>
     <loc>/reference/app1.html</loc>
   </url>
   <url>
@@ -71,9 +59,6 @@
   </url>
   <url>
     <loc>/reference/buoyancyCalculation.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cable.html</loc>
   </url>
   <url>
     <loc>/reference/chain.html</loc>
@@ -139,12 +124,6 @@
     <loc>/reference/is.wire.html</loc>
   </url>
   <url>
-    <loc>/reference/isMooring.html</loc>
-  </url>
-  <url>
-    <loc>/reference/isWire.html</loc>
-  </url>
-  <url>
     <loc>/reference/knockdown.html</loc>
   </url>
   <url>
@@ -163,25 +142,16 @@
     <loc>/reference/mooringElements.html</loc>
   </url>
   <url>
-    <loc>/reference/plot.mooring.html</loc>
+    <loc>/reference/plot.mooringS7.html</loc>
   </url>
   <url>
-    <loc>/reference/plus-.mooring.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.mooring.html</loc>
+    <loc>/reference/printMooring.html</loc>
   </url>
   <url>
     <loc>/reference/release.html</loc>
   </url>
   <url>
-    <loc>/reference/server.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sub-.mooring.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.mooring.html</loc>
+    <loc>/reference/summaryMooring.html</loc>
   </url>
   <url>
     <loc>/reference/tension.html</loc>

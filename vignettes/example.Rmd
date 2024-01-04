@@ -27,7 +27,7 @@ Fisheries and Oceans, Canada) containing a Notice to Mariners document.
 
 # Source Document
 
-```{r,fig.cap="**Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**", out.width="70%", fig.align="center", echo=FALSE}
+```{r,fig.cap="**Figure 1. Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**", out.width="70%", fig.align="center", echo=FALSE}
 knitr::include_graphics("mooring_1840_enhanced.png")
 ```
 
@@ -38,7 +38,7 @@ knitr::include_graphics("mooring_1840_enhanced.png")
 library(mooring)
 
 # Abbreviations for convenience
-W <- function(length) wire("3/16in galvanized wire coated to 1/4in", length=length)
+W <- function(length) wire("3/16in galvanized wire coated to 1/4in", length = length)
 BUB3 <- float("streamlined BUB 3 Viny balls")
 RCM11 <- instrument("RCM-11 in frame") # "AANDERAA RCM11"
 microcat <- instrument("SBE37 microcat clamp-on style") # "SBE MICROCAT"
@@ -47,13 +47,14 @@ microcat <- instrument("SBE37 microcat clamp-on style") # "SBE MICROCAT"
 # one as follows.  Note that this does not matter to the knockdown
 # calculation, but it might be useful in cases where an anchor was
 # not heavy enough to hold the mooring in place.
-buoyancy <- 5/3*anchor("3 trainwheels")$buoyancy
-height <- 5/3*anchor("3 trainwheels")$height
-CD <- anchor("3 trainwheels")$CD
-A <- anchor("5 trainwheels", buoyancy=buoyancy, height=height, CD=CD, depth=1400)
-m <- mooring(A,
-    chain("5/8in galvanized chain", length=10),
-    release("benthos 965a"),  # dual benthos 965-a
+buoyancy <- 5 / 3 * anchor("3 trainwheels")@buoyancy
+height <- 5 / 3 * anchor("3 trainwheels")@height
+CD <- anchor("3 trainwheels")@CD
+A <- anchor("5 trainwheels", buoyancy = buoyancy, height = height, CD = CD)
+m <- mooring(
+    A,
+    chain("5/8in galvanized chain", length = 10),
+    release("benthos 965a"), # dual benthos 965-a
     BUB3,
     W(34),
     microcat,
@@ -80,27 +81,29 @@ m <- mooring(A,
     W(146),
     microcat,
     connector("swivel"),
-    connector("ballast", -100/2.2, height=1, area=0.05, CD=1),
+    connector("ballast", -100 / 2.2, height = 1, area = 0.05, CD = 1),
     float("syn. float, bracket and 109lb ADCP"),
     W(149),
     microcat,
-    float('new glass streamlined float c2'))
-md <- discretise(m)
+    float("new glass streamlined float c2"),
+    waterDepth = 1400
+)
+md <- discretise(m, by = 10)
 ```
 
 # Knockdown Simulation
 
-For illustration, this simulation uses an entirely made-up velocity structure.
-```{r, fig.cap="**Simulation of knockdown with a depth-decaying current.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
-u <- function(depth) 0.5*exp(-depth/1000)
-depth <- seq(tail(depth(m), 1), 0, length.out=100)
-layout(matrix(1:2,nrow=1), widths=c(0.75,0.25))
-mdk <- knockdown(md, u=u)
-plot(mdk, "knockdown", xlim=c(0, 40), showDetails=TRUE)
-plot(mdk, "velocity")
+For illustration, the simulation below uses an entirely made-up velocity
+structure. Note the setting of `xlim` to provide space for the labels.
+
+```{r, fig.cap="**Figure 2. Simulation of knockdown with a depth-decaying current.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
+u <- function(depth) 0.3 * exp(-depth / 1400)
+#???depth <- seq(tail(depth(m), 1), 0, length.out = 100)
+layout(matrix(1:2, nrow = 1), widths = c(0.75, 0.25))
+mdk <- knockdown(md, u = u)
+draw(mdk, "knockdown", xlim = c(0, 4.0), showDetails = TRUE)
+draw(mdk, "velocity")
 ```
-Note that the limit set on the first plot sets aside enough space for the
-labels (and establishes a common scale used in a later exercise).
 
 # Knockdown-Speed Diagram
 
@@ -109,46 +112,36 @@ running simulations with a range of velocities.  Noting that the top of the
 mooring, from the surface to 200m, is knocked over much more than the rest,
 let's focus on the depth of the second microcat from the top, i.e. the one
 below the ADCP.  Typing `md` in a console gives an overview, from which one may
-see that the second microcat from the top, i.e. the one below the ADCP, is
-element 155, i.e.
+find the ADCP element using
 ```{r}
-md[[155]]
-```
-Similarly, the ADCP is
-```{r}
-md[[152]]
+names <- sapply(md@elements, \(e) e@model)
+iADCP <- grep("ADCP", names)
+iADCP
 ```
 
 We may use this to construct a diagnostic curve giving an overview of the
 mooring knockdown, as follows. Note that the $x$ axis of the resultant plot is
 showing velocity at the depth of the ADCP.
-```{r fig.cap="**Speed-knockdown summary diagram**", out.width="100%", fig.align="center", dev.args=list(pointsize=9)}
-par(mar=c(3,3,1,1), mgp=c(2,0.7,0), mfrow=c(1,1))
-iADCP <- 152
-imicrocat <- 155
-N <- 50
-u0 <- seq(0, 0.5, length.out=N)
+```{r fig.cap="**Figure 3. Speed-knockdown summary diagram**", out.width="100%", fig.align="center", dev.args=list(pointsize=9)}
+par(mar = c(3, 3, 1, 1), mgp = c(2, 0.7, 0), mfrow = c(1, 1))
+N <- 10
+u0 <- seq(0, 0.3, length.out = N)
 dz <- rep(NA, N)
 U <- rep(NA, N)
 for (i in seq_len(N)) {
-    u <- function(depth) u0[i] * exp(-depth/1000)
+    u <- function(depth) u0[i] * exp(-depth / 1400)
     k <- knockdown(md, u)
-    U[i] <- u(-k[[iADCP]]$z)
-    dz[i] <- k[[imicrocat]]$z - md[[imicrocat]]$z
+    U[i] <- u(-k@elements[[iADCP]]@z)
+    dz[i] <- k@elements[[iADCP]]@z - md@elements[[iADCP]]@z
 }
-plot(U, dz, lwd=2, type="l", xlab="Velocity [m/s]", ylab="Knockdown [m]")
+plot(U, dz, lwd = 2, type = "l", xlab = "Velocity [m/s]", ylab = "Knockdown [m]")
 grid()
-mtext(sprintf("Knockdown of microcat #2, near %.0f m depth", -md[[imicrocat]]$z))
+mtext(sprintf("Knockdown for ADCP nominally at %.0f m depth", -md@elements[[iADCP]]@z))
 ```
 ```{r eval=FALSE, echo=FALSE}
-curve <- list(U=U, dz=dz)
-save(curve=curve, file="velocity_knockdown_prediction.rda")
+curve <- list(U = U, dz = dz)
+save(curve = curve, file = "velocity_knockdown_prediction.rda")
 ```
-
-
-
-
-
 
 # Examining Moorings
 
@@ -162,11 +155,6 @@ or, in an interactive session, with
 ```{r eval=FALSE}
 m
 ```
-For the mooring constructed above, the results are as follows.
-```{r echo=FALSE}
-m
-```
-The number at the start is the component number (see next section).
 
 Note that the results for `md` will be similar, except there will be many more
 elements (for the segmented chain and wire components).  If `mdk` is examined
@@ -174,25 +162,18 @@ in this way, the $x$ and $z$ values will be different.
 
 ## Components
 
-To learn more about, say, the second element (the chain from anchor to acoustic
-release), use
+To learn more about, say, the top element, use
 
 ```{r}
-m[[2]]
-```
-and to see the full details, use
-```{r}
-dput(m[[2]])
-```
-or, with less detail but in a more digestible format,
-```{r}
-str(m[[2]])
+m@elements[[1]]
 ```
 
-You may go further with e.g.
+and, as shown previously, finer-grained access is achieved as, e.g.
+
 ```{r}
-m[[2]]$area
+m@elements[[1]]@buoyancy
 ```
+
 
 **Exercise 1.** Double the chain density, to see the effect on knock-down.
 
@@ -206,7 +187,7 @@ increases knockdown.
 
 A simple way to do this is to create `m` as before, but then to use
 ```{r}
-m[[2]]$buoyancyPerMeter <- 2 * m[[2]]$buoyancyPerMeter
+m@elements[[2]]@buoyancy <- 2 * m@elements[[2]]@buoyancy
 ```
 before using `digitise()`, `knockdown()` and then `plot.mooring()`.  Before
 doing that though, you should ask yourself whether you expect to see a large
@@ -217,57 +198,62 @@ effect.
 One way to do this is to replace the `W` definition with
 ```{r}
 W <- function(length) {
-    w0 <- wire("3/16in galvanized wire coated to 1/4in", length=1)
-    wire("draggy wire", buoyancyPerMeter=w0$buoyancy,
-         areaPerMeter=w0$area, CD=2*w0$CD, length=length)
+    w0 <- wire("3/16in galvanized wire coated to 1/4in", length = 1)
+    wire("draggy wire",
+        buoyancy = w0@buoyancy,
+        area = w0@area, CD = 2 * w0@CD, length = length
+    )
 }
 ```
 and then create `m`, `md` and `mdk` as before. The results are as follows. Note
-that knockdown is approximately doubled.  This makes determination of drag
-coefficient an especially important factor in mooring design; see e.g.
-@hamilton_validation_1989 and @hamilton_mooring_1997.
+that an axis change is required to capture the approximately-doubled knockdown.
+This illustrates the importance of getting drag coefficient right, a matter
+dealt with in detail by @hamilton_validation_1989 and @hamilton_mooring_1997.
 
-```{r, echo=FALSE, fig.cap="**Simulation with doubled wire drag.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
-u <- function(depth) 0.5*exp(-depth/1000)
-mDraggy <- mooring(anchor(depth=1400),
-                   chain("5/8in galvanized chain", length=10),
-                   release("benthos 965a"),  # dual benthos 965-a
-                   BUB3,
-                   W(34),
-                   microcat,
-                   RCM11,
-                   W(50),
-                   BUB3,
-                   W(144),
-                   microcat,
-                   RCM11,
-                   W(147),
-                   BUB3,
-                   W(46),
-                   microcat,
-                   RCM11,
-                   W(198),
-                   microcat,
-                   RCM11,
-                   W(198),
-                   microcat,
-                   RCM11,
-                   W(197),
-                   microcat,
-                   RCM11,
-                   W(146),
-                   microcat,
-                   connector("swivel"),
-                   connector("ballast", -100/2.2, height=1, area=0.05, CD=1),
-                   float("syn. float, bracket and 109lb ADCP"),
-                   W(149),
-                   microcat,
-                   float('new glass streamlined float c2'))
-mdDraggy <- discretise(mDraggy)
-layout(matrix(1:2,nrow=1), widths=c(0.75,0.25))
-mdkDraggy <- knockdown(mdDraggy, u=u)
-plot(mdkDraggy, "knockdown", xlim=c(0, 40), showDetails=TRUE)
-plot(mdkDraggy, "velocity")
+```{r, echo=FALSE, fig.cap="**Figure 4. As Figure 2, but doubled wire drag. Note the doubled range of the 'Depth Increase' axis, to accomodate the approximately doubled knockdown.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
+u <- function(depth) 0.3 * exp(-depth / 1400)
+mDraggy <- mooring(
+    anchor(),
+    chain("5/8in galvanized chain", length = 10),
+    release("benthos 965a"), # dual benthos 965-a
+    BUB3,
+    W(34),
+    microcat,
+    RCM11,
+    W(50),
+    BUB3,
+    W(144),
+    microcat,
+    RCM11,
+    W(147),
+    BUB3,
+    W(46),
+    microcat,
+    RCM11,
+    W(198),
+    microcat,
+    RCM11,
+    W(198),
+    microcat,
+    RCM11,
+    W(197),
+    microcat,
+    RCM11,
+    W(146),
+    microcat,
+    connector("swivel"),
+    connector("ballast", -100 / 2.2, height = 1, area = 0.05, CD = 1),
+    float("syn. float, bracket and 109lb ADCP"),
+    W(149),
+    microcat,
+    float("new glass streamlined float c2"),
+    waterDepth = 1400
+)
+mdDraggy <- discretise(mDraggy, by = 5)
+layout(matrix(1:2, nrow = 1), widths = c(0.75, 0.25))
+mdkDraggy <- knockdown(mdDraggy, u = u)
+draw(mdkDraggy, "knockdown", xlim = c(0, 8.0), showDetails = TRUE)
+draw(mdkDraggy, "velocity")
 ```
 
 # References

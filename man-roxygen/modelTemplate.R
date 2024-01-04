@@ -10,4 +10,3 @@
 #' (4) Otherwise, a new <%= subclass%> object is created, using
 #' values specified in the other arguments (all of which must
 #' be supplied).
-

@@ -53,29 +53,32 @@ area <- function(m, phi = TRUE) {
     if (is.mooring(m)) {
         # message("area case 1")
         # print(areaFactor)
-        # print(sapply(m, \(mi) mi$area))
-        sapply(m, \(mi) area(mi, phi))
+        # print(sapply(m, \(mi) mi@area))
+        sapply(m@elements, \(e) area(e, phi))
     } else if (is.mooringElement(m)) {
+        #message("DAN 1")
         if (is.float(m)) {
+            # message("DAN 2a")
             #message("Dan 1")
             areaFactor <- 1.0
         } else {
+            # message("DAN 2b")
             if (is.logical(phi)) {
-                #message("Dan 2")
+                #message("DAN 3a")
                 if (phi) {
-                    #message("Dan 2a")
-                    areaFactor <- if (is.null(m$phi)) 1.0 else cos(m$phi)
+                    #message("DAN 3a1")
+                    areaFactor <- if (length(m@phi)) cos(m@phi) else 1 # FIXME: is this a good assumption?
                 } else {
-                    #message("Dan 2b")
+                    # message("DAN 3a2")
                     areaFactor <- 1.0
                 }
             } else {
-                #message("Dan 3")
+                # message("DAN 4")
                 areaFactor <- cos(phi)
             }
         }
-        #message("areaFactor=", areaFactor)
-        areaFactor * m$area
+        # message("areaFactor=", areaFactor)
+        areaFactor * m@area
     } else {
         stop("area can only be computed for a mooring or an individual element")
     }

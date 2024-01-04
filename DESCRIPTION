@@ -1,6 +1,6 @@
 Package: mooring
 Title: Design and Model Oceanographic Moorings
-Version: 0.1.4
+Version: 0.1.5
 Authors@R:
     person(given = "Dan",
            family = "Kelley",
@@ -10,7 +10,7 @@ Authors@R:
 BugReports: https://github.com/dankelley/mooring/issues
 Description: Calculates the response of oceanographic moorings to horizontal currents.
 Depends:
-    R (>= 3.5.0),
+    R (>= 3.5.0), S7
 Imports:
     bslib, 
     shiny
@@ -23,7 +23,7 @@ Encoding: UTF-8
 URL: https://dankelley.github.io/mooring/
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.2.3.9000
 BuildVignettes: true
 VignetteBuilder: knitr
 Config/testthat/edition: 3

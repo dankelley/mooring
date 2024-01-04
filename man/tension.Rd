@@ -23,14 +23,14 @@ length of the returned result matches the length of \code{m}.
 }
 \examples{
 library(mooring)
-m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
+m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
 md <- discretise(m)
 mdk <- knockdown(md, u = 0.5)
 depth <- depth(mdk)
 # The right-hand panel indicates the anchor limit in red.
 par(mfrow = c(1, 2))
 plot(tension(mdk), depth, ylim = rev(range(depth)), type = "l")
-plot(mdk, which = "tension")
+draw(mdk, which = "tension")
 
 }
 \author{

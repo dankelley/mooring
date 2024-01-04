@@ -24,6 +24,8 @@
 #'
 #' @template sourceTemplate
 #'
+#' @template originalNameTemplate
+#'
 #' @return `misc` returns an object of the `"mooringElement"` class and `"misc"` subclass.
 #'
 #' @family functions that create mooring elements
@@ -50,7 +52,7 @@
 #' @export
 #'
 #' @author Dan Kelley
-misc <- function(model = "AanderaaT.chain", buoyancy = NULL, height = NULL, area = NULL, CD = NULL) {
+misc <- function(model = "AanderaaT.chain", buoyancy = NULL, height = NULL, area = NULL, CD = NULL, source = NULL, originalName = originalName) {
     data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
     if (model == "?") {
@@ -78,14 +80,14 @@ misc <- function(model = "AanderaaT.chain", buoyancy = NULL, height = NULL, area
         area <- me$area
         CD <- me$CD
         source <- me$source
+        originalName <- me$originalName
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new misc model")
         if (is.null(height)) stop("must supply height, if creating a new misc model")
         if (is.null(area)) stop("must supply area, if creating a new misc model")
         if (is.null(CD)) stop("must supply CD, if creating a new misc model")
         source <- ""
+        originalName <- ""
     }
-    rval <- list(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source)
-    class(rval) <- c("mooringElement", "misc")
-    rval
+    miscS7(model = model, buoyancy = buoyancy, height = height, area = area, CD = CD, source = source, originalName = originalName)
 } # misc()

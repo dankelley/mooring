@@ -2,11 +2,11 @@ library(testthat)
 library(mooring)
 
 test_that("specified anchor buoyancy is correct", {
-    expect_equal(-1050, buoyancy(anchor("3 Railway Wheels", depth=120)))
+    expect_equal(-1050, buoyancy(anchor("3 Railway Wheels")))
 })
 
 test_that("default anchor buoyancy is correct", {
-    expect_equal(-350, buoyancy(anchor(depth=120)))
+    expect_equal(-350, buoyancy(anchor()))
 })
 
 test_that("wire buoyancy proportional to length", {

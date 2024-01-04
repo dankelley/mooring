@@ -9,7 +9,9 @@ release(
   buoyancy = NULL,
   height = NULL,
   area = NULL,
-  CD = NULL
+  CD = NULL,
+  source = NULL,
+  originalName = NULL
 )
 }
 \arguments{
@@ -43,6 +45,10 @@ in \eqn{m^2}{m^2}.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
+
+\item{source}{character value indicating the source of the data.}
+
+\item{originalName}{character value indicating the original model name.}
 }
 \value{
 \code{release} returns an object of the \code{"mooringElement"} class and \code{"release"} subclass.
@@ -52,18 +58,6 @@ Create a mooring-release object,
 either by looking up a known object from the database, or by defining a new type.
 Area is formulated as length*width, for consistency with Dewey's Matlab code.
 }
-\section{Data sources}{
-
-
-To learn more about the data used for the built-in
-release
-objects, use e.g.
-\preformatted{
-data(mooringElements)
-mooringElements$releases
-}
-}
-
 \examples{
 library(mooring)
 # List known wire types

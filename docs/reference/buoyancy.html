@@ -21,7 +21,7 @@ in knockdown() and tension()."><!-- mathjax --><script src="https://cdnjs.cloudf
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -113,17 +113,7 @@ in kg or N, depending on the value of <code>unit</code>.</p>
     <h2>Details</h2>
     <p>Note that the present version of this function does not account for
 depth variations in seawater density, for those tend to be well
-under 1 percent, and other forces involved in mooring dynamics are
-much more uncertain than that.  For example, Hamilton (1989) found
-that oscillations in mooring lines could lead to enhanced drag, in
-some cases necessitating an increase in CD for wire from 1.4 to 2.6
-(see captions of his figures 12 and 13).</p>
-    </div>
-    <div id="references">
-    <h2>References</h2>
-    <p>Hamilton, J. M. "The Validation and Practical Applications of a Sub-Surface
-Mooring Model." Canadian Technical Report of Hydrography and Ocean
-Sciences. Bedford Institute of Oceanography, 1989.</p>
+under 1 percent.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -133,7 +123,7 @@ Sciences. Bedford Institute of Oceanography, 1989.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="anchor.html">anchor</a></span><span class="op">(</span>depth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span>, <span class="fu"><a href="wire.html">wire</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="float.html">float</a></span><span class="op">(</span><span class="st">"HMB 20"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="anchor.html">anchor</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="wire.html">wire</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="float.html">float</a></span><span class="op">(</span><span class="st">"HMB 20"</span><span class="op">)</span>, waterDepth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">buoyancy</span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]   34.5  -13.0 -350.0</span>
 <span class="r-in"><span></span></span>
@@ -151,7 +141,7 @@ Sciences. Bedford Institute of Oceanography, 1989.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer></div>

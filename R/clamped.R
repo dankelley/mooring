@@ -20,37 +20,21 @@
 #'
 #' @examples
 #' library(mooring)
-#' a <- function(depth) {
-#'     anchor("my anchor",
-#'         buoyancy = -50, height = 0.1, CD = 0,
-#'         depth = depth
-#'     )
-#' }
+#' a <- anchor("my anchor", buoyancy = -50, height = 0.1, CD = 0)
 #' w <- function(length) wire(length = length)
 #' i <- instrument("SBE37 microcat clamp-on style")
 #' f <- float("my float", buoyancy = 20, height = 0.2, area = 0.2^2, CD = 1.3)
 #' # Construct unclamped mooring (m) and clamped mooring (M).
-#' m <- mooring(a(2), w(1), i, w(0.2), f) |>
-#'     discretise(by = 0.1) |>
-#'     knockdown(u = 1)
-#' M <- mooring(a(2), w(1), clamped(i), w(0.2), f) |>
-#'     discretise(by = 0.1) |>
-#'     knockdown(u = 1)
-#' # Plot unclamped case (top row) and clamped case (bottom row).
-#' par(mfrow = c(2, 2))
-#' plot(m)
-#' plot(m, which = "tension")
-#' # Bottom row: clamped version
-#' plot(M)
-#' plot(M, which = "tension")
+#' mooring(a, w(20), i, w(20), f, waterDepth = 50)
+#' mooring(a, w(20), clamped(i), w(20), f, waterDepth = 50)
 #'
 #' @export
 #'
 #' @author Dan Kelley
 clamped <- function(instrument) {
-    if (!is.mooringElement(instrument) || !inherits(instrument, "instrument")) {
-        stop("instrument must be an object created with instrument()")
+    if (!is.instrument(instrument)) {
+        stop("parameter was not created by instrument()")
     }
-    instrument$height <- 0
+    instrument@height <- 0
     instrument
 } # clamped()

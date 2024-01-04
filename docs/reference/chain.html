@@ -19,7 +19,7 @@ Area is formulated as length*width, for consistency with Dewey's Matlab code."><
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -87,7 +87,9 @@ Area is formulated as length*width, for consistency with Dewey's Matlab code.</p
 <span>  buoyancyPerMeter <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  areaPerMeter <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  CD <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  length <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  length <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  originalName <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -129,24 +131,20 @@ Note that <code>CD</code> is ignored if <code>model</code> is recognized.</p></d
 <dt>length</dt>
 <dd><p>(mandatory) numeric value indicating the length (in m) of the wire.</p></dd>
 
+
+<dt>source</dt>
+<dd><p>character value indicating the source of the data.</p></dd>
+
+
+<dt>originalName</dt>
+<dd><p>character value indicating the original model name.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
 <p><code>chain</code> returns an object of the <code>"mooringElement"</code> class and <code>"chain"</code> subclass.</p>
-    </div>
-    <div id="data-sources">
-    <h2>Data sources</h2>
-    
-
-
-<p>To learn more about the data used for the built-in
-chain
-objects, use e.g.</p><div class="sourceCode"><pre><code><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mooringElements</span><span class="op">)</span></span>
-<span><span class="va">mooringElements</span><span class="op">$</span><span class="va">chains</span></span></code></pre></div>
-
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -188,7 +186,7 @@ objects, use e.g.</p><div class="sourceCode"><pre><code><span></span>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer></div>

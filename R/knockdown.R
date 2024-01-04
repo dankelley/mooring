@@ -19,7 +19,7 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' values falls below the product of `convergenceCriterion` and wire
 #' length. The returned result has an attribute named `u` that holds
 #' the value of that argument, and this is how a later call to
-#' [plot.mooring()] is able to display a velocity profile; see
+#' [draw()] is able to display a velocity profile; see
 #' Examples 2 and 3.
 #'
 #' @param m an object of the `"mooring"` class, usually created with
@@ -57,62 +57,56 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' @examples
 #' # Illustrate importance of drag on the wire.
 #' library(mooring)
-#' m <- mooring(anchor(depth = 100), wire(length = 80), float("16in Viny"))
+#' m <- mooring(anchor(), wire(length = 80), float("16in Viny"), waterDepth = 100)
 #' md <- discretise(m)
 #'
 #' # Example 1: no current
-#' plot(md)
+#' draw(md)
 #'
 #' # Example 2: uniform 1 m/s (approx. 2 knot) current
 #' par(mfrow = c(1, 2))
 #' k1 <- knockdown(md, u = 1)
-#' plot(k1, which = "velocity")
-#' plot(k1)
+#' draw(k1, which = "velocity")
+#' draw(k1)
 #'
 #' # Example 3: 1 m/s current at surface, decaying exponentially below
 #' k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
 #' par(mfrow = c(1, 2))
-#' plot(k2)
-#' plot(k2, which = "velocity")
+#' draw(k2)
+#' draw(k2, which = "velocity")
 #'
 #' # Example 4: as Example 3, but show knockdown and tension
 #' # The red dashed line in the tension plot indicates the
 #' # anchor weight.
 #' k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
 #' par(mfrow = c(1, 2))
-#' plot(k2, which = "knockdown")
-#' plot(k2, which = "tension")
+#' draw(k2, which = "knockdown")
+#' draw(k2, which = "tension")
 #'
 #' @importFrom graphics grid
 #' @importFrom utils tail
 #' @export
 #' @author Dan Kelley
-knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1e-4, debug = 0L) {
+knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1/500, debug = 0L) {
     debug <- max(0L, as.integer(debug))
-    n <- length(m)
     # check for well-formed parameters
     if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
+    n <- length(m@elements)
     if (n < 3L) {
         stop("mooring must have 2 or more elements")
     }
-    if (!inherits(m[[n]], "anchor")) {
+    if (!is.anchor(m@elements[[n]])) {
         stop("the bottom element of a mooring must be created with anchor()")
-    }
-    if (!is.null(attr(m, "u"))) {
-        stop("cannot apply knockdown() to the result of a previous call")
-    }
-    if (is.null(attr(m, "discretised"))) {
-        warning("accuracy is higher if discretise() is used before knockdown()\n")
     }
     # rename x,z into x0,z0 for the stagnant (u=0) case
     for (i in seq_len(n)) {
-        m[[i]]$x0 <- m[[i]]$x
-        m[[i]]$z0 <- m[[i]]$z
+        m@elements[[i]]@x0 <- m@elements[[i]]@x
+        m@elements[[i]]@z0 <- m@elements[[i]]@z
     }
     # start actual calculation, which relies on buoyancy B and drag, D.
-    waterDepth <- m[[length(m)]]$depth
+    waterDepth <- m@waterDepth
     tau <- vector("numeric", n)
     phi <- vector("numeric", n)
     zold <- z(m)
@@ -141,24 +135,18 @@ knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1e-4, de
         phi[n] <- phi[n - 1L]
         # Clip the angle (do not allow it to run "inside" the sediment)
         phi <- ifelse(phi > pi / 2, pi / 2, phi)
-
         # Compute position from bottom up, starting at x=0 and z=-waterDepth
         # FIXME: save tension in object
-        m[[n]]$phi <- phi[n - 1] # does this matter? Is it ever used?
-        m[[n]]$x <- 0
-        nm <- length(m)
-        m[[n]]$z <- if (inherits(m[[nm]], "anchor")) {
-            -waterDepth + m[[nm]]$height
-        } else {
-            -waterDepth
-        }
-        mooringDebug(debug, "Before knockdown, m[[1]]$z=", m[[1]]$z, ", m[[", n, "]]$z=", m[[n]]$z, "\n", sep = "")
-        m[[n]]$tau <- tau[n]
+        m@elements[[n]]@phi <- phi[n - 1] # does this matter? Is it ever used?
+        m@elements[[n]]@x <- 0
+        m@elements[[n]]@z <- -waterDepth + m@elements[[n]]@height
+        mooringDebug(debug, "Before knockdown, m[[1]]@z=", m@elements[[1]]@z, ", m[[", n, "]]@z=", m[[n]]@z, "\n", sep = "")
+        m@elements[[n]]@tau <- tau[n]
         for (i in seq(n - 1L, 1L, -1L)) {
-            m[[i]]$phi <- phi[i]
-            m[[i]]$tau <- tau[i]
-            m[[i]]$x <- m[[i + 1]]$x + m[[i]]$height * sin(m[[i]]$phi)
-            m[[i]]$z <- m[[i + 1]]$z + m[[i]]$height * cos(m[[i]]$phi)
+            m@elements[[i]]@phi <- phi[i]
+            m@elements[[i]]@tau <- tau[i]
+            m@elements[[i]]@x <- m@elements[[i + 1]]@x + m@elements[[i]]@height * sin(m@elements[[i]]@phi)
+            m@elements[[i]]@z <- m@elements[[i + 1]]@z + m@elements[[i]]@height * cos(m@elements[[i]]@phi)
         }
         if (debug) {
             cat("iteration", iteration, " had first few data as follows\n")
@@ -166,9 +154,10 @@ knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1e-4, de
         }
         mooringDebug(
             debug,
-            sprintf("After knockdown, m[[1]]$z=%.5g m, and m[[%d]]$z=%.5g\n", m[[1]]$z, n, m[[n]]$z)
+            sprintf("After knockdown, m@elements[[1]]@z=%.5g m, and m@elements[[%d]]@z=%.5g\n",
+                m@elements[[1]]@z, n, m@elements[[n]]@z)
         )
-        ztop <- m[[1]]$z
+        ztop <- m@elements[[1]]@z
         if (ztop > 0) {
             warning(sprintf("mooring line too long for depth (top element %.2f m in air); expect odd results", ztop))
         }
@@ -187,8 +176,7 @@ knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1e-4, de
             pluralize("iteration", n = niteration), iterationChange, convergenceCriterion * waterDepth
         ))
     }
-    class(m) <- "mooring"
-    attr(m, "u") <- u
+    m@u <- u
     attr(m, "iterationCount") <- iterationCount
     attr(m, "iterationChange") <- iterationChange
     m

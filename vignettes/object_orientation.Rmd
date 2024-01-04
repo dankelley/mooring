@@ -34,16 +34,21 @@ it accesses, such as `area()`, etc.
 For example,
 ```{r}
 library(mooring)
-m <- mooring(anchor(depth=100), wire(length=75), float())
+m <- mooring(anchor(), wire(length = 75), float(), waterDepth = 100)
 ```
-produces a list with 3 elements, one that holds information on the anchor, a
-second that holds information on the wire, and a third that holds information
-on the float.  
+produces a `mooring` object with 3 elements, one that holds information on the
+anchor, a second that holds information on the wire, and a third that holds
+information on the float.  
 
-To get a quick overview of a function, use e.g.
+The contents are revealed with
+
 ```{r}
 m
 ```
-and, for more details, try using `str()` or `dput()`.
 
+The contents of the uppermost object (i.e. the float) are revealed with
+
+```{r}
+m@elements[[1]]
+```
 

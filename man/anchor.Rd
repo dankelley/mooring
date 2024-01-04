@@ -4,13 +4,7 @@
 \alias{anchor}
 \title{Create an anchor object}
 \usage{
-anchor(
-  model = "1 Railway Wheel",
-  buoyancy = NULL,
-  height = NULL,
-  CD = NULL,
-  depth = 0
-)
+anchor(model = "1 Railway Wheel", buoyancy = NULL, height = NULL, CD = NULL)
 }
 \arguments{
 \item{model}{character value indicating the type of anchor.
@@ -40,8 +34,6 @@ Note that \code{height} is ignored if \code{model} is recognized.}
 
 \item{CD}{numeric value (unitless) for the drag coefficient.
 Note that \code{CD} is ignored if \code{model} is recognized.}
-
-\item{depth}{numeric value giving water depth in m.}
 }
 \value{
 \code{anchor} returns a \code{"mooringElement"} object with \code{"anchor"} subclass.
@@ -49,22 +41,8 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \description{
 Create a anchor object, either by looking up a known object from
 the database, or by defining a new type. This must be the first
-element of a mooring constructed with \code{\link[=mooring]{mooring()}}.  Note that
-\code{depth} is not a characteristic of the anchor, but rather of the
-domain into which it is placed.
+element of a mooring constructed with \code{\link[=mooring]{mooring()}}.
 }
-\section{Data sources}{
-
-
-To learn more about the data used for the built-in
-anchor
-objects, use e.g.
-\preformatted{
-data(mooringElements)
-mooringElements$anchors
-}
-}
-
 \examples{
 library(mooring)
 # List known anchor types

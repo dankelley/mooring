@@ -48,18 +48,6 @@ Note that \code{CD} is ignored if \code{model} is recognized.}
 \description{
 Create a float object
 }
-\section{Data sources}{
-
-
-To learn more about the data used for the built-in
-float
-objects, use e.g.
-\preformatted{
-data(mooringElements)
-mooringElements$float
-}
-}
-
 \examples{
 library(mooring)
 # List known float types
