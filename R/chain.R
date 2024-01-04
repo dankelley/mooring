@@ -13,6 +13,10 @@
 #'
 #' @template CDTemplate
 #'
+#' @template sourceTemplate
+#'
+#' @template originalNameTemplate
+#'
 #' @param length (mandatory) numeric value indicating the length (in m) of the wire.
 #'
 #' @template sourceTemplate
@@ -31,7 +35,7 @@
 #' chain("?")
 #'
 #' @author Dan Kelley
-chain <- function(model = "1in buoy chain", buoyancyPerMeter = NULL, areaPerMeter = NULL, CD = NULL, length = NULL) {
+chain <- function(model = "1in buoy chain", buoyancyPerMeter = NULL, areaPerMeter = NULL, CD = NULL, length = NULL, source = NULL, originalName = NULL) {
     data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
     if (model == "?") {
@@ -58,13 +62,13 @@ chain <- function(model = "1in buoy chain", buoyancyPerMeter = NULL, areaPerMete
         areaPerMeter <- me$areaPerMeter
         CD <- me$CD
         source <- me$source
+        originalName <- me$originalName
     } else {
         if (is.null(buoyancyPerMeter)) stop("must supply buoyancyPerMeter, if creating a new chain model")
         if (is.null(areaPerMeter)) stop("must supply areaPerMeter, if creating a new chain model")
         if (is.null(CD)) stop("must supply CD, if creating a new chain model")
         source <- ""
+        originalName <- ""
     }
-    rval <- list(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source)
-    class(rval) <- c("mooringElement", "chain")
-    rval
+    chainS7(model = model, buoyancy = length * buoyancyPerMeter, height = length, area = length * areaPerMeter, CD = CD, source = source, originalName = originalName)
 } # chain()

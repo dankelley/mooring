@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -73,6 +73,13 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.5" id="mooring-015">mooring 0.1.5<a class="anchor" aria-label="anchor" href="#mooring-015"></a></h2>
+<ul><li>Switch to S7 object scheme.</li>
+<li>Change <code><a href="../reference/anchor.html">anchor()</a></code>, dropping the <code>depth</code> parameter.</li>
+<li>Change <code><a href="../reference/mooring.html">mooring()</a></code>, gaining the <code>waterDepth</code> parameter.</li>
+<li>Rename <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> as <code><a href="../reference/plot.mooringS7.html">draw()</a></code>, as a hopefully temporary measure until the proper way of documenting S7 generics becomes clearer. (See <a href="https://stat.ethz.ch/pipermail/r-package-devel/2024q1/010266.html" class="external-link uri">https://stat.ethz.ch/pipermail/r-package-devel/2024q1/010266.html</a>, but note that my comment on Jan 3 20:38:17 CET 2024 was incorrect: I realized later that I could build but then not document, or document but then not build. But I was just trying different syntax options willy-nilly, with no real understanding. I gave up and renamed the function, on the assumption that somebody will document how this is meant to be done, at some time in the near future.)</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.4" id="mooring-014">mooring 0.1.4<a class="anchor" aria-label="anchor" href="#mooring-014"></a></h2>
 <ul><li>Fix major error in buoyancy calculation. See <a href="https://github.com/dankelley/mooring/issues/58" class="external-link uri">https://github.com/dankelley/mooring/issues/58</a> for details.</li>
 </ul></div>
@@ -112,7 +119,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer></div>

@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' library(mooring)
-#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
 #' depth(m)
 #'
 #' @export

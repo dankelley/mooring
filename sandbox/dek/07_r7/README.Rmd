@@ -1,0 +1,9 @@
+---
+title: files
+---
+
+* 01.R a preliminary example with mooring-like names
+* 02.R an example with oce-like names (contains constructor and [[ generic)
+* 03.R a preliminary example with mooring-like names (no constructor or generic)
+* 04.R uses 03.R and some *test*R files to start to piece together main functions
+

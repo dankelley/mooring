@@ -16,9 +16,9 @@ app1 <- function() {
         stop("must install.packages(\"shiny\") for app() to work")
     }
     floatChoices <- float("?")
-    floatBuoyancy <- lapply(floatChoices, \(f) float(f)$buoyancy) |> unlist()
+    floatBuoyancy <- lapply(floatChoices, \(f) float(f)@buoyancy) |> unlist()
     wireChoices <- wire("?")
-    wireBuoyancy <- lapply(wireChoices, \(w) wire(w, length = 1)$buoyancy) |> unlist()
+    wireBuoyancy <- lapply(wireChoices, \(w) wire(w, length = 1)@buoyancy) |> unlist()
     dewey1999 <- paste(
         "Dewey, Richard K.",
         "\"Mooring Design & Dynamics-a Matlab",
@@ -122,8 +122,8 @@ app1 <- function() {
             msg <- paste0(
                 msg,
                 sprintf(
-                    "m <- mooring(<br>    anchor(depth=%g),<br>    wire(model=\"%s\", length=%g),<br>    float(model=\"%s\"))<br>",
-                    waterDepth, wireModel, wireLength, floatModel
+                    "m <- mooring(<br>    anchor(),<br>    wire(model=\"%s\", length=%g),<br>    float(model=\"%s\"), waterDepth = %g)<br>",
+                    wireModel, wireLength, floatModel, waterDepth
                 )
             )
             msg <- paste0(msg, "md <- discretise(m, by=1)<br>")
@@ -140,8 +140,8 @@ app1 <- function() {
                 ")<br>"
             )
             msg <- paste0(msg, "par(mfrow=c(1, 2))<br>")
-            msg <- paste0(msg, "plot(mdk, which=\"tension\", fancy=TRUE, showDepths=FALSE)<br>")
-            msg <- paste0(msg, "plot(mdk, which=\"shape\", fancy=TRUE)<br>")
+            msg <- paste0(msg, "draw(mdk, which=\"tension\", fancy=TRUE, showDepths=FALSE)<br>")
+            msg <- paste0(msg, "draw(mdk, which=\"shape\", fancy=TRUE)<br>")
             msg <- paste0(msg, "</pre>")
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
@@ -185,7 +185,7 @@ app1 <- function() {
                     #> message("  u=", u)
                     #> message("  wireModel=", wireModel)
                     #> message("  floatModel=", floatModel)
-                    m <- mooring(anchor(depth = waterDepth), wire(model = wireModel, length = wireLength), float(model = floatModel))
+                    m <- mooring(anchor(), wire(model = wireModel, length = wireLength), float(model = floatModel), waterDepth = waterDepth)
                     md <- discretise(m, 1)
                     u <- switch(input$currentModel,
                         "Constant" = input$u,
@@ -196,8 +196,8 @@ app1 <- function() {
                     )
                     mdk <- knockdown(md, u)
                     par(mfrow = c(1, 2))
-                    plot(mdk, which = "tension", fancy = TRUE, showDepths = FALSE)
-                    plot(mdk, fancy = TRUE)
+                    draw(mdk, which = "tension", fancy = TRUE, showDepths = FALSE)
+                    draw(mdk, fancy = TRUE)
                 }
             },
             pointsize = 12

@@ -15,8 +15,10 @@
 #' @author Dan Kelley
 CD <- function(m) {
     if (is.mooring(m)) {
-        sapply(m, function(item) item$CD)
+        sapply(m@elements, \(e) e@CD)
+    } else if (is.mooringElement(m)) {
+        m@CD
     } else {
-        if (length(class(m)) == 2) m$CD else stop("area can only be computed for a mooring or an element")
+        stop("area can only be computed for a mooring or an element")
     }
 }

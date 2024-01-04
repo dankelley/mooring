@@ -17,6 +17,8 @@
 #'
 #' @template sourceTemplate
 #'
+#' @template originalNameTemplate
+#'
 #' @return `release` returns an object of the `"mooringElement"` class and `"release"` subclass.
 #'
 #' @examples
@@ -29,7 +31,7 @@
 #' @export
 #'
 #' @author Dan Kelley
-release <- function(model = "EG&G 723a", buoyancy = NULL, height = NULL, area = NULL, CD = NULL) {
+release <- function(model = "EG&G 723a", buoyancy = NULL, height = NULL, area = NULL, CD = NULL, source = NULL, originalName = NULL) {
     data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
     if (model == "?") {
@@ -57,14 +59,14 @@ release <- function(model = "EG&G 723a", buoyancy = NULL, height = NULL, area = 
         area <- me$area
         CD <- me$CD
         source <- me$source
+        originalName <- me$originalName
     } else {
         if (is.null(buoyancy)) stop("must supply buoyancy, if creating a new release model")
         if (is.null(height)) stop("must supply height, if creating a new release model")
         if (is.null(area)) stop("must supply area, if creating a new release model")
         if (is.null(CD)) stop("must supply CD, if creating a new release model")
         source <- ""
+        originalName <- ""
     }
-    rval <- list(model = model, source = source, buoyancy = buoyancy, height = height, area = area, CD = CD)
-    class(rval) <- c("mooringElement", "release")
-    rval
+    releaseS7(model = model, source = source, buoyancy = buoyancy, height = height, area = area, CD = CD, originalName = originalName)
 } # release()

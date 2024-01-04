@@ -11,7 +11,7 @@
 #' @examples
 #' library(mooring)
 #' height(float())
-#' m <- mooring(anchor(depth = 120), wire(length = 100), float("HMB 20"))
+#' m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
 #' height(m)
 #'
 #' @export
@@ -19,8 +19,9 @@
 #' @author Dan Kelley
 height <- function(m) {
     if (is.mooring(m)) {
-        sapply(m, function(item) item$height)
-    } else {
-        if (length(class(m)) == 2) m$height else stop("height can only be computed for a mooring or an element")
+        sapply(m@elements, \(e) e@height)
+    } else if (is.mooringElement(m)) {
+        m@height
+        #if (length(class(m)) == 2) m$height else stop("height can only be computed for a mooring or an element")
     }
 }

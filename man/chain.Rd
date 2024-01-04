@@ -9,7 +9,9 @@ chain(
   buoyancyPerMeter = NULL,
   areaPerMeter = NULL,
   CD = NULL,
-  length = NULL
+  length = NULL,
+  source = NULL,
+  originalName = NULL
 )
 }
 \arguments{
@@ -39,6 +41,10 @@ Note that \code{areaPerMeter} is ignored if \code{model} is recognized.}
 Note that \code{CD} is ignored if \code{model} is recognized.}
 
 \item{length}{(mandatory) numeric value indicating the length (in m) of the wire.}
+
+\item{source}{character value indicating the source of the data.}
+
+\item{originalName}{character value indicating the original model name.}
 }
 \value{
 \code{chain} returns an object of the \code{"mooringElement"} class and \code{"chain"} subclass.
@@ -48,18 +54,6 @@ Create an object that describes mooring chain elements such as shackles,
 either by looking up a known object from the database, or by defining a new type.
 Area is formulated as length*width, for consistency with Dewey's Matlab code.
 }
-\section{Data sources}{
-
-
-To learn more about the data used for the built-in
-chain
-objects, use e.g.
-\preformatted{
-data(mooringElements)
-mooringElements$chains
-}
-}
-
 \examples{
 library(mooring)
 # List known chain types
