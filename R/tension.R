@@ -20,7 +20,7 @@
 #' # The right-hand panel indicates the anchor limit in red.
 #' par(mfrow = c(1, 2))
 #' plot(tension(mdk), depth, ylim = rev(range(depth)), type = "l")
-#' plot(mdk, which = "tension")
+#' draw(mdk, which = "tension")
 #'
 #' @export
 #'

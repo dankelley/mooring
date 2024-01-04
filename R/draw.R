@@ -55,18 +55,22 @@
 #'     discretise() |>
 #'     knockdown(u = 1)
 #' par(mfrow = c(1, 2))
-#' plot(m)
-#' plot(m, which = "tension")
+#' draw(m)
+#' draw(m, which = "tension")
 #'
 #' @importFrom graphics abline axis box lines mtext par plot.window points polygon rect strwidth text
 #' @importFrom grDevices extendrange
 #'
 #' @export
 #'
-#' @aliases plot.mooring
-#'
-#' @author Dan Kelley
-`plot.mooring::mooring` <- function(
+## @name plot.mooring:::mooringS7
+## @name plot.mooring::mooringS7
+##`plot.mooring::mooring` <- function(
+##method(plot, mooring:::mooringS7) <- function(
+##' @name plot.mooringS7
+#method(plot, mooringS7) <- function(
+##' @author Dan Kelley
+draw <- function(
     x, which = "shape",
     showInterfaces = TRUE, showDepths = FALSE, showLabels = TRUE, showDetails = FALSE,
     fancy = FALSE, title = "",
@@ -80,7 +84,7 @@
     if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
-    mooringDebug(debug, "plot.mooring(..., which=\"", which, "\") {\n", sep = "")
+    mooringDebug(debug, "draw(..., which=\"", which, "\") {\n", sep = "")
     # Handle showDetails, converting it to a logical if not, creating a list if required
     if (is.list(showDetails)) {
         detailsControl <- list(
@@ -265,7 +269,8 @@
     pch <- if (showDetails) detailsControl$pch else 20
     col <- if (showDetails) detailsControl$col else 1
     for (i in seq_along(m@elements)) {
-        type <- gsub("^mooring::", "", class(m@elements[[i]])[1])
+        type <- gsub("^mooring::(.*)S7", "\\1", class(m@elements[[i]])[1])
+        mooringDebug(debug, "m@elements[[", i, "]] has type=\"", type, "\"\n", sep = "")
         # message("plot element ", i, " has type \"", type, "\"")
         xi <- x[i] # FIXME: has this been defined? If so, why not z also?
         zi <- m@elements[[i]]@z

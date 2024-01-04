@@ -100,12 +100,12 @@ Similarly, the tension between elements is found with `tension()`, and the angle
 
 # Plotting
 
-The plot shown above is quite primitive, so the package offers a `plot()`
+The plot shown above is quite primitive, so the package offers a `draw()`
 function.  For example, this gives a view of tension and shape.
-```{r, fig.cap="**Mooring shape and tension profiles created with plot(). The red dashed line on the right-hand panel represents the anchor weight.**", fig.align="center"}
+```{r, fig.cap="**Mooring shape and tension profiles created with draw(). The red dashed line on the right-hand panel represents the anchor weight.**", fig.align="center"}
 par(mfrow = c(1, 2))
-plot(mdk, which = "shape")
-plot(mdk, which = "tension")
+draw(mdk, which = "shape")
+draw(mdk, which = "tension")
 ```
 
 In both instances, the gray line is the shape that would occur with no current.
@@ -116,8 +116,8 @@ the $z$ shown above.
 A fancier version is obtained with
 ```{r, fig.cap="**Mooring shape and tension, with water coloured blue and bottom coloured brown.**", fig.align="center"}
 par(mfrow = c(1, 2))
-plot(mdk, which = "shape", fancy = TRUE)
-plot(mdk, which = "tension", fancy = TRUE)
+draw(mdk, which = "shape", fancy = TRUE)
+draw(mdk, which = "tension", fancy = TRUE)
 ```
 
 # Interactive Apps
@@ -190,8 +190,9 @@ task.
 
 As a simplified example, imagine that a mooring is to be placed in 100 m of
 water, with a 1/4-inch jacketed wire cable connecting a subsurface float to a
-bottom anchor. How much buoyancy will be required to hold this mooring
-acceptably upright?  To answer this, we may do as follows.
+bottom anchor. How will knockdown vary with current strenth?  To answer this,
+we might constract a graph as follows.  Similar graphs could be done with
+different float and wire types.
 
 ```{r fig.cap="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**", fig.align="center"}
 library(mooring)

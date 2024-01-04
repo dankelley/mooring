@@ -48,7 +48,7 @@ devtools::install_github("dankelley/mooring")
 
 The following shows how to assess the knockdown of a mooring consisting of a
 bottom anchor, 100 m of wire, and a 16-inch Viny float, in a region of
-water depth 120 m with a constant current of 1 m/s (roughly 2 knot).  To
+water depth 120 m with a constant current of 0.5 m/s (roughly 1 knot).  To
 learn more, (a) alter the current and observe changes in the
 mooring shape, (b) set the `which` argument of `plot.mooring()`, to focus more
 directly on the knockdown, then (c) explore the effects of specifying
@@ -62,8 +62,8 @@ m <- mooring(anchor(), wire(length = 100), float("16in Viny"), waterDepth = 120)
 # Discretise wire portion (to 1m spacing).
 md <- discretise(m)
 # Apply a 1 m/s current.
-mdk <- knockdown(md, u = 1)
-plot(mdk, fancy = TRUE)
+mdk <- knockdown(md, u = 0.5)
+draw(mdk, fancy = TRUE)
 ```
 
 # Acknowledgements 

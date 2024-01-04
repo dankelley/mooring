@@ -19,7 +19,7 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' values falls below the product of `convergenceCriterion` and wire
 #' length. The returned result has an attribute named `u` that holds
 #' the value of that argument, and this is how a later call to
-#' [plot.mooring()] is able to display a velocity profile; see
+#' [draw()] is able to display a velocity profile; see
 #' Examples 2 and 3.
 #'
 #' @param m an object of the `"mooring"` class, usually created with
@@ -61,27 +61,27 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' md <- discretise(m)
 #'
 #' # Example 1: no current
-#' plot(md)
+#' draw(md)
 #'
 #' # Example 2: uniform 1 m/s (approx. 2 knot) current
 #' par(mfrow = c(1, 2))
 #' k1 <- knockdown(md, u = 1)
-#' plot(k1, which = "velocity")
-#' plot(k1)
+#' draw(k1, which = "velocity")
+#' draw(k1)
 #'
 #' # Example 3: 1 m/s current at surface, decaying exponentially below
 #' k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
 #' par(mfrow = c(1, 2))
-#' plot(k2)
-#' plot(k2, which = "velocity")
+#' draw(k2)
+#' draw(k2, which = "velocity")
 #'
 #' # Example 4: as Example 3, but show knockdown and tension
 #' # The red dashed line in the tension plot indicates the
 #' # anchor weight.
 #' k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
 #' par(mfrow = c(1, 2))
-#' plot(k2, which = "knockdown")
-#' plot(k2, which = "tension")
+#' draw(k2, which = "knockdown")
+#' draw(k2, which = "tension")
 #'
 #' @importFrom graphics grid
 #' @importFrom utils tail
@@ -135,17 +135,11 @@ knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1/500, d
         phi[n] <- phi[n - 1L]
         # Clip the angle (do not allow it to run "inside" the sediment)
         phi <- ifelse(phi > pi / 2, pi / 2, phi)
-
         # Compute position from bottom up, starting at x=0 and z=-waterDepth
         # FIXME: save tension in object
         m@elements[[n]]@phi <- phi[n - 1] # does this matter? Is it ever used?
         m@elements[[n]]@x <- 0
-        nm <- length(m)
-        m@elements[[n]]@z <- if (inherits(m@elements[[nm]], "anchor")) {
-            -waterDepth + m[[nm]]@height
-        } else {
-            -waterDepth
-        }
+        m@elements[[n]]@z <- -waterDepth + m@elements[[n]]@height
         mooringDebug(debug, "Before knockdown, m[[1]]@z=", m@elements[[1]]@z, ", m[[", n, "]]@z=", m[[n]]@z, "\n", sep = "")
         m@elements[[n]]@tau <- tau[n]
         for (i in seq(n - 1L, 1L, -1L)) {

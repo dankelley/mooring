@@ -1,8 +1,17 @@
 # mooring 0.1.5
 
 * Switch to S7 object scheme.
-* `anchor()` no longer has a `depth` parameter.
-* `mooring()` gains a `waterDepth` parameter.
+* Change `anchor()`, dropping the `depth` parameter.
+* Change `mooring()`, gaining the `waterDepth` parameter.
+* Rename `plot()` as `draw()`, as a hopefully temporary measure until the
+  proper way of documenting S7 generics becomes clearer. (See
+  https://stat.ethz.ch/pipermail/r-package-devel/2024q1/010266.html, but note
+  that my comment on Jan 3 20:38:17 CET 2024 was incorrect: I realized later
+  that I could build but then not document, or document but then not build.
+  But I was just trying different syntax options willy-nilly, with no real
+  understanding. I gave up and renamed the function, on the assumption that
+  somebody will document how this is meant to be done, at some time in the near
+  future.)
 
 # mooring 0.1.4
 

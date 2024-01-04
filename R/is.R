@@ -4,7 +4,7 @@
 # FIXME: does this get used to pinpoint elements?
 is.mooringInternal <- function(object, class) {
     # mooring() returns an unnamed list
-    if (inherits(object, "mooring::mooring")) {
+    if (inherits(object, "mooring::mooringS7")) {
         # message("Case 0: a mooring::mooring")
         return(sapply(object@elements, \(o) is.mooringInternal(o, class)))
     }
@@ -15,7 +15,7 @@ is.mooringInternal <- function(object, class) {
     } else {
         # mooring element
         #message("Case 2: check if a ", class, " object")
-        rval <- inherits(object, paste0("mooring::", class))
+        rval <- inherits(object, paste0("mooring::", class, "S7"))
     }
     #message("   returning: ", paste(rval, collapse = " "))
     rval
@@ -144,7 +144,7 @@ is.misc <- function(m) {
 #'
 #' @export
 is.mooring <- function(m = NULL) {
-    inherits(m, "mooring::mooring")
+    inherits(m, "mooring::mooringS7")
 }
 
 #' Determine Whether an Object is a Mooring Element

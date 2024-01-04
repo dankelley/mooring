@@ -1,31 +1,31 @@
 # vim:spell:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
-#' mooring: A Package for Analysing Oceanographic Moorings
-#'
-#' The mooring package provides functions for working with
-#' oceanographic moorings.  The example provides a good
-#' starting point for learning, and the documentation
-#' for the key function, [mooring()], provides the
-#' next logical step in learning, after which the
-#' vignettes should be consulted.
-#'
-#' @examples
-#' library(mooring)
-#' # Illustrate the deformation of a 100-m mooring in a 0.5 m/s
-#' # (roughly 1 knot) current. Buoyancy is provided with a float
-#' # of diameter 20 inches.
-#' m <- mooring(anchor(), wire(length = 100), float("HMB 25"), waterDepth = 120)
-#' par(mfrow = c(1, 3))
-#' plot(m)
-#' # Must discretise the wire portion to resolve the shape.
-#' md <- discretise(m)
-#' mdk <- knockdown(md, u = 0.5)
-#' plot(mdk)
-#'
-#' @docType package
-#'
-#' @name mooring-package
-NULL
+#<OLD> #' mooring: A Package for Analysing Oceanographic Moorings
+#<OLD> #'
+#<OLD> #' The mooring package provides functions for working with
+#<OLD> #' oceanographic moorings.  The example provides a good
+#<OLD> #' starting point for learning, and the documentation
+#<OLD> #' for the key function, [mooring()], provides the
+#<OLD> #' next logical step in learning, after which the
+#<OLD> #' vignettes should be consulted.
+#<OLD> #'
+#<OLD> #' @examples
+#<OLD> #' library(mooring)
+#<OLD> #' # Illustrate the deformation of a 100-m mooring in a 0.5 m/s
+#<OLD> #' # (roughly 1 knot) current. Buoyancy is provided with a float
+#<OLD> #' # of diameter 20 inches.
+#<OLD> #' m <- mooring(anchor(), wire(length = 100), float("HMB 25"), waterDepth = 120)
+#<OLD> #' par(mfrow = c(1, 3))
+#<OLD> #' plot(m)
+#<OLD> #' # Must discretise the wire portion to resolve the shape.
+#<OLD> #' md <- discretise(m)
+#<OLD> #' mdk <- knockdown(md, u = 0.5)
+#<OLD> #' plot(mdk)
+#<OLD> #'
+#<OLD> #' @docType package
+#<OLD> #'
+#<OLD> #' @name mooring-package
+#<OLD> NULL
 
 #' Dataset of wire, chain, and float properties
 #'
@@ -137,6 +137,7 @@ mooring <- function(..., waterDepth = NA) {
     # All checks seem OK, so reverse parameters and create the return value.
     # message("DAN 1 mooring.R L140")
     rval <- mooringS7(dots, waterDepth = waterDepth)
+    # store with top at first, because knockdown() works in that order
     rval@elements <- rev(rval@elements)
     # message("DAN 2 mooring.R L142")
     #class(rval) <- "mooring"

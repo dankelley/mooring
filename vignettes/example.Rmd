@@ -27,7 +27,7 @@ Fisheries and Oceans, Canada) containing a Notice to Mariners document.
 
 # Source Document
 
-```{r,fig.cap="**Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**", out.width="70%", fig.align="center", echo=FALSE}
+```{r,fig.cap="**Figure 1. Diagram for Bedford Institute of Oceanograph mooring 1840 on Sackville Spur**", out.width="70%", fig.align="center", echo=FALSE}
 knitr::include_graphics("mooring_1840_enhanced.png")
 ```
 
@@ -93,17 +93,17 @@ md <- discretise(m, by = 10)
 
 # Knockdown Simulation
 
-For illustration, this simulation uses an entirely made-up velocity structure.
-```{r, fig.cap="**Simulation of knockdown with a depth-decaying current.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
-u <- function(depth) 0.3 * exp(-depth / 300)
-depth <- seq(tail(depth(m), 1), 0, length.out = 100)
+For illustration, the simulation below uses an entirely made-up velocity
+structure. Note the setting of `xlim` to provide space for the labels.
+
+```{r, fig.cap="**Figure 2. Simulation of knockdown with a depth-decaying current.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
+u <- function(depth) 0.3 * exp(-depth / 1400)
+#???depth <- seq(tail(depth(m), 1), 0, length.out = 100)
 layout(matrix(1:2, nrow = 1), widths = c(0.75, 0.25))
 mdk <- knockdown(md, u = u)
-plot(mdk, "knockdown", xlim = c(0, 40), showDetails = TRUE)
-plot(mdk, "velocity")
+draw(mdk, "knockdown", xlim = c(0, 4.0), showDetails = TRUE)
+draw(mdk, "velocity")
 ```
-Note that the limit set on the first plot sets aside enough space for the
-labels (and establishes a common scale used in a later exercise).
 
 # Knockdown-Speed Diagram
 
@@ -122,14 +122,14 @@ iADCP
 We may use this to construct a diagnostic curve giving an overview of the
 mooring knockdown, as follows. Note that the $x$ axis of the resultant plot is
 showing velocity at the depth of the ADCP.
-```{r fig.cap="**Speed-knockdown summary diagram**", out.width="100%", fig.align="center", dev.args=list(pointsize=9)}
+```{r fig.cap="**Figure 3. Speed-knockdown summary diagram**", out.width="100%", fig.align="center", dev.args=list(pointsize=9)}
 par(mar = c(3, 3, 1, 1), mgp = c(2, 0.7, 0), mfrow = c(1, 1))
 N <- 10
-u0 <- seq(0, 0.5, length.out = N)
+u0 <- seq(0, 0.3, length.out = N)
 dz <- rep(NA, N)
 U <- rep(NA, N)
 for (i in seq_len(N)) {
-    u <- function(depth) u0[i] * exp(-depth / 300)
+    u <- function(depth) u0[i] * exp(-depth / 1400)
     k <- knockdown(md, u)
     U[i] <- u(-k@elements[[iADCP]]@z)
     dz[i] <- k@elements[[iADCP]]@z - md@elements[[iADCP]]@z
@@ -206,12 +206,12 @@ W <- function(length) {
 }
 ```
 and then create `m`, `md` and `mdk` as before. The results are as follows. Note
-that knockdown is approximately doubled.  This makes determination of drag
-coefficient an especially important factor in mooring design; see e.g.
-@hamilton_validation_1989 and @hamilton_mooring_1997.
+that an axis change is required to capture the approximately-doubled knockdown.
+This illustrates the importance of getting drag coefficient right, a matter
+dealt with in detail by @hamilton_validation_1989 and @hamilton_mooring_1997.
 
-```{r, echo=FALSE, fig.cap="**Simulation with doubled wire drag.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
-u <- function(depth) 0.5 * exp(-depth / 1000)
+```{r, echo=FALSE, fig.cap="**Figure 4. As Figure 2, but doubled wire drag. Note the doubled range of the 'Depth Increase' axis, to accomodate the approximately doubled knockdown.**", fig.align="center", out.width="100%", dev.args=list(pointsize=9)}
+u <- function(depth) 0.3 * exp(-depth / 1400)
 mDraggy <- mooring(
     anchor(),
     chain("5/8in galvanized chain", length = 10),
@@ -252,8 +252,8 @@ mDraggy <- mooring(
 mdDraggy <- discretise(mDraggy, by = 5)
 layout(matrix(1:2, nrow = 1), widths = c(0.75, 0.25))
 mdkDraggy <- knockdown(mdDraggy, u = u)
-plot(mdkDraggy, "knockdown", xlim = c(0, 40), showDetails = TRUE)
-plot(mdkDraggy, "velocity")
+draw(mdkDraggy, "knockdown", xlim = c(0, 8.0), showDetails = TRUE)
+draw(mdkDraggy, "velocity")
 ```
 
 # References

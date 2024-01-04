@@ -51,7 +51,7 @@ specified by the \code{u} argument.  The computation is iterated at most
 values falls below the product of \code{convergenceCriterion} and wire
 length. The returned result has an attribute named \code{u} that holds
 the value of that argument, and this is how a later call to
-\code{\link[=plot.mooring]{plot.mooring()}} is able to display a velocity profile; see
+\code{\link[=draw]{draw()}} is able to display a velocity profile; see
 Examples 2 and 3.
 }
 \examples{
@@ -61,27 +61,27 @@ m <- mooring(anchor(), wire(length = 80), float("16in Viny"), waterDepth = 100)
 md <- discretise(m)
 
 # Example 1: no current
-plot(md)
+draw(md)
 
 # Example 2: uniform 1 m/s (approx. 2 knot) current
 par(mfrow = c(1, 2))
 k1 <- knockdown(md, u = 1)
-plot(k1, which = "velocity")
-plot(k1)
+draw(k1, which = "velocity")
+draw(k1)
 
 # Example 3: 1 m/s current at surface, decaying exponentially below
 k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
 par(mfrow = c(1, 2))
-plot(k2)
-plot(k2, which = "velocity")
+draw(k2)
+draw(k2, which = "velocity")
 
 # Example 4: as Example 3, but show knockdown and tension
 # The red dashed line in the tension plot indicates the
 # anchor weight.
 k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
 par(mfrow = c(1, 2))
-plot(k2, which = "knockdown")
-plot(k2, which = "tension")
+draw(k2, which = "knockdown")
+draw(k2, which = "tension")
 
 }
 \author{

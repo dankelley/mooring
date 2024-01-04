@@ -273,10 +273,10 @@ app2bs <- function(debug = FALSE) {
             )
             msg <- paste0(msg, "# Demonstrate all 4 plot types (unlike the app)<br>")
             msg <- paste0(msg, "par(mfrow = c(2, 2))<br>")
-            msg <- paste0(msg, "plot(mdk, which = \"tension\", fancy = TRUE, showDepths = FALSE)<br>")
-            msg <- paste0(msg, "plot(mdk, which = \"shape\", fancy = TRUE)<br>")
-            msg <- paste0(msg, "plot(mdk, which = \"knockdown\", fancy = TRUE)<br>")
-            msg <- paste0(msg, "plot(mdk, which = \"velocity\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "draw(mdk, which = \"tension\", fancy = TRUE, showDepths = FALSE)<br>")
+            msg <- paste0(msg, "draw(mdk, which = \"shape\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "draw(mdk, which = \"knockdown\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "draw(mdk, which = \"velocity\", fancy = TRUE)<br>")
             msg <- paste0(msg, "</pre>")
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
@@ -417,7 +417,7 @@ app2bs <- function(debug = FALSE) {
                     titleShown <- FALSE
                     for (choice in input$plotChoices) {
                         if (is.null(ylim)) {
-                            plot(mdk,
+                            draw(mdk,
                                 which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE,
                                 xaxs = "r", yaxs = "r"
                             )
@@ -427,7 +427,7 @@ app2bs <- function(debug = FALSE) {
                                 paste(round(ylim, 2), collapse = " ")
                             )
                         } else {
-                            plot(mdk,
+                            draw(mdk,
                                 which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE,
                                 ylim = ylim, xaxs = "r", yaxs = "r"
                                 # ylim = ylim, yaxs = "r"

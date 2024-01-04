@@ -1,5 +1,5 @@
 #' @importFrom S7 new_class new_object S7_object
-mooringS7 <- S7::new_class("mooring",
+mooringS7 <- S7::new_class("mooringS7",
     package = "mooring",
     properties = list(
         elements = class_list, # holds mooringElement items
@@ -16,7 +16,7 @@ mooringS7 <- S7::new_class("mooring",
     }
 )
 
-mooringElementS7 <- new_class("mooringElementS7",
+mooringElementS7 <- S7::new_class("mooringElementS7",
     package = "mooring",
     properties = list(
         model = class_character,
@@ -49,11 +49,11 @@ mooringElementS7 <- new_class("mooringElementS7",
     # }
 )
 # properties = list(waterDepth = class_numeric)
-anchorS7 <- new_class("anchor", parent = mooringElementS7, package = "mooring")
-chainS7 <- new_class("chain", parent = mooringElementS7, package = "mooring")
-connectorS7 <- new_class("connector", parent = mooringElementS7, package = "mooring")
-floatS7 <- new_class("float", parent = mooringElementS7, package = "mooring")
-instrumentS7 <- new_class("instrument", parent = mooringElementS7, package = "mooring")
-miscS7 <- new_class("misc", parent = mooringElementS7, package = "mooring")
-releaseS7 <- new_class("release", parent = mooringElementS7, package = "mooring")
-wireS7 <- new_class("wire", parent = mooringElementS7, package = "mooring")
+anchorS7 <- S7::new_class("anchorS7", parent = mooringElementS7, package = "mooring")
+chainS7 <- S7::new_class("chainS7", parent = mooringElementS7, package = "mooring")
+connectorS7 <- S7::new_class("connectorS7", parent = mooringElementS7, package = "mooring")
+floatS7 <- S7::new_class("floatS7", parent = mooringElementS7, package = "mooring")
+instrumentS7 <- S7::new_class("instrumentS7", parent = mooringElementS7, package = "mooring")
+miscS7 <- S7::new_class("miscS7", parent = mooringElementS7, package = "mooring")
+releaseS7 <- S7::new_class("releaseS7", parent = mooringElementS7, package = "mooring")
+wireS7 <- S7::new_class("wireS7", parent = mooringElementS7, package = "mooring")

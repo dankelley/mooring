@@ -132,7 +132,7 @@ m <- mooring(a, w, f, waterDepth = L)
 n <- 500 # number of sub-segments to use
 md <- discretise(m, L/n)
 mdk <- knockdown(md, u=u)
-plot(mdk, fancy=TRUE)
+draw(mdk, fancy=TRUE)
 # Check against theory
 points(x, L-l, col=2, cex=2)
 ```
