@@ -64,7 +64,7 @@ draw(mdk, fancy = TRUE)
 
 The mooring-element properties that are stored in the `mooringElements`
 database stem from three main sources. The first was Richard Dewey’s
-excellent mooring-analysis Matlab software, described by Dewey (1999).
+excellent mooring-analysis Matlab software, described by Dewey (2023).
 The second was in spreadsheets and other documents provided by Jay
 Barthelotte and Matthew Lawson of the Bedford Institute of Oceanography
 ([BIO](https://www.bio.gc.ca/index-en.php)). And the third was in
@@ -75,9 +75,12 @@ respectively, in `mooringElements`.
 
 Conversations with Clark Richards and Chantelle Layton (both of
 [BIO](https://www.bio.gc.ca/index-en.php)) were helpful in identifying
-data sources and in clarifying the nature of mooring systems. Documents
-by J. M. Hamilton (1989) and James M. Hamilton, Fowler, and Belliveau
-(1997) cast further light on important practicalities.
+data sources and in clarifying the nature of mooring systems.
+
+And, at the heart of the matter, it must be said that the present
+package is little more than an echo of foundational work by Moller
+(1976), James M. Hamilton, Fowler, and Belliveau (1997), J. M. Hamilton
+(1989), and Dewey (1999).
 
 # References
 
@@ -91,6 +94,13 @@ Designing and Analyzing Oceanographic Moorings.” *Marine Models* 1 (1):
 
 </div>
 
+<div id="ref-dewey_mooring_2023" class="csl-entry">
+
+———. 2023. “Mooring Design and Dynamics: Users Guide.”
+<http://web.uvic.ca/~rdewey/mooring/mdd/mdd.php>.
+
+</div>
+
 <div id="ref-hamilton_validation_1989" class="csl-entry">
 
 Hamilton, J. M. 1989. “The Validation and Practical Applications of a
@@ -101,10 +111,20 @@ Sub-Surface Mooring Model.” 119. Bedford Institute of Oceanography.
 
 <div id="ref-hamilton_mooring_1997" class="csl-entry">
 
-Hamilton, James M., George A. Fowler, and Donald J. Belliveau. 1997.
+Hamilton, James M., George A Fowler, and Donald J. Belliveau. 1997.
 “Mooring Vibration as a Source of Current Meter Error and Its
 Correction.” *Journal of Atmospheric and Oceanic Technology* 14 (3):
 644–55.
+[https://doi.org/10.1175/1520-0426(1997)014\<0644:MVAASO\>2.0.CO;2](https://doi.org/10.1175/1520-0426(1997)014<0644:MVAASO>2.0.CO;2).
+
+</div>
+
+<div id="ref-moller_computer_1976" class="csl-entry">
+
+Moller, Donald A. 1976. “A Computer Program for the Design and Static
+Analysis of Single-Point Subsurface Mooring Systems: NOYFB.” WHOI-76-59.
+Woods Hole, MA: Woods Hole Oceanographic Institution.
+<https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content>.
 
 </div>
 
