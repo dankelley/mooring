@@ -234,7 +234,7 @@ app2 <- function(debug = FALSE) {
             msg <- paste0(msg, sprintf("    float(model = \"%s\"),<br>", floatModel))
             msg <- paste0(msg, sprintf("    waterDepth = \"%g\")<br>", input$waterDepth))
             msg <- paste0(msg, ")<br>")
-            msg <- paste0(msg, "md <- discretise(m, by = 1)<br>")
+            msg <- paste0(msg, "md <- segmentize(m, by = 1)<br>")
             msg <- paste0(
                 msg,
                 "mdk <- knockdown(md, u = ",
@@ -362,7 +362,7 @@ app2 <- function(debug = FALSE) {
                         waterDepth = waterDepth
                     )
                     #message(str(m))
-                    md <- discretise(m, 1)
+                    md <- segmentize(m, 1)
                     u <- switch(input$currentModel,
                         "Constant" = input$u,
                         "Linear" = function(depth) input$u * (1 - depth / waterDepth),

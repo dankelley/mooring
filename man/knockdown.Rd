@@ -8,7 +8,7 @@ knockdown(m, u = 1, niteration = 30, convergenceCriterion = 1/500, debug = 0L)
 }
 \arguments{
 \item{m}{an object of the \code{"mooring"} class, usually created with
-\code{\link[=discretise]{discretise()}}.}
+\code{\link[=segmentize]{segmentize()}}.}
 
 \item{u}{either a non-negative number indicating depth-independent velocity,
 or a function that returns that velocity as a function of depth (m)
@@ -58,7 +58,7 @@ Examples 2 and 3.
 # Illustrate importance of drag on the wire.
 library(mooring)
 m <- mooring(anchor(), wire(length = 80), float("16in Viny"), waterDepth = 100)
-md <- discretise(m)
+md <- segmentize(m)
 
 # Example 1: no current
 draw(md)

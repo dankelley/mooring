@@ -126,7 +126,7 @@ app1 <- function() {
                     wireModel, wireLength, floatModel, waterDepth
                 )
             )
-            msg <- paste0(msg, "md <- discretise(m, by=1)<br>")
+            msg <- paste0(msg, "md <- segmentize(m, by=1)<br>")
             msg <- paste0(
                 msg,
                 "mdk <- knockdown(md, u=",
@@ -186,7 +186,7 @@ app1 <- function() {
                     #> message("  wireModel=", wireModel)
                     #> message("  floatModel=", floatModel)
                     m <- mooring(anchor(), wire(model = wireModel, length = wireLength), float(model = floatModel), waterDepth = waterDepth)
-                    md <- discretise(m, 1)
+                    md <- segmentize(m, 1)
                     u <- switch(input$currentModel,
                         "Constant" = input$u,
                         "Linear" = function(depth) input$u * (1 - depth / waterDepth),

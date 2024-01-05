@@ -1,9 +1,9 @@
 # vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
-#' Discretise chain and wire portions of a mooring
+#' Decompose chain and wire portions into shorter segments
 #'
-#' Break up `chain` and `wire` portions of a mooring into smaller chunks,
-#' so that the deformation by a current can be traced more
+#' Break up `chain` and `wire` portions of a mooring into smaller
+#' chunks, so that the deformation by a current can be traced more
 #' accurately by [knockdown()].
 #'
 #' @template mTemplate
@@ -16,16 +16,15 @@
 #'
 #' @template debugTemplate
 #'
-#' @return `discretise` returns a `"mooring"` object, based
+#' @return `segmentize` returns a `"mooring"` object, based
 #' on `m` except that wire portions are chopped up into shorter
 #' pieces.
 #'
 #' @export
-#' @aliases discretize
 #'
 #' @author Dan Kelley
-discretise <- function(m, by = 1, debug = 0) {
-    mooringDebug(debug, "discretise() {\n")
+segmentize <- function(m, by = 1, debug = 0) {
+    mooringDebug(debug, "segmentize() {\n")
     if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
     }
@@ -71,6 +70,6 @@ discretise <- function(m, by = 1, debug = 0) {
         rval@elements[[i]]@z <- zz # z is defined at TOP of item
         rval@elements[[i]]@tau <- tau[i]
     }
-    mooringDebug(debug, "} # discretise()\n")
+    mooringDebug(debug, "} # segmentize()\n")
     rval
-} # discretise
+} # segmentize

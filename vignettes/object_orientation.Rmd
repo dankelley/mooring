@@ -17,28 +17,31 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The S3 scheme is used for objects created by functions in the `mooring`
-package. There are two types of functions, and two classes of
-return value.
+The S3 scheme is used for objects created by functions in the
+`mooring` package. There are two types of functions, and two classes
+of return value.
 
-The overall functions, `mooring()`, `discretise()` and `knockdown()` all
-produce return lists that have class `"mooring"`. The elements of those lists
-are produced with what are called "elementary" functions, which include
-`anchor()`, `wire()`, `float()`, etc., all of which return objects with main
-class `"mooringElement"` and sub-class patterned on the function name.  
+The overall functions, `mooring()`, `segmentize()` and `knockdown()`
+all produce return lists that have class `"mooring"`. The elements of
+those lists are produced with what are called "elementary" functions,
+which include `anchor()`, `wire()`, `float()`, etc., all of which
+return objects with main class `"mooringElement"` and sub-class
+patterned on the function name.  
 
-The return values from the elementary functions vary with type, and allowances
-for these different aspects are made in `knockdown()` and the functions
-it accesses, such as `area()`, etc.
+The return values from the elementary functions vary with type, and
+allowances for these different aspects are made in `knockdown()` and
+the functions it accesses, such as `area()`, etc.
 
 For example,
+
 ```{r}
 library(mooring)
 m <- mooring(anchor(), wire(length = 75), float(), waterDepth = 100)
 ```
-produces a `mooring` object with 3 elements, one that holds information on the
-anchor, a second that holds information on the wire, and a third that holds
-information on the float.  
+
+produces a `mooring` object with 3 elements, one that holds
+information on the anchor, a second that holds information on the
+wire, and a third that holds information on the float.  
 
 The contents are revealed with
 

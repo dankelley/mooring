@@ -80,7 +80,7 @@ Plot a mooring
 # a current of 1 m/s.
 library(mooring)
 m <- mooring(anchor(), wire(length = 80), float("HMB 20"), waterDepth = 100) |>
-    discretise() |>
+    segmentize() |>
     knockdown(u = 1)
 par(mfrow = c(1, 2))
 draw(m)

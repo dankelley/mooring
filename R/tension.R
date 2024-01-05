@@ -14,7 +14,7 @@
 #' @examples
 #' library(mooring)
 #' m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
-#' md <- discretise(m)
+#' md <- segmentize(m)
 #' mdk <- knockdown(md, u = 0.5)
 #' depth <- depth(mdk)
 #' # The right-hand panel indicates the anchor limit in red.

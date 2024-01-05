@@ -17,8 +17,8 @@
 #<OLD> #' m <- mooring(anchor(), wire(length = 100), float("HMB 25"), waterDepth = 120)
 #<OLD> #' par(mfrow = c(1, 3))
 #<OLD> #' plot(m)
-#<OLD> #' # Must discretise the wire portion to resolve the shape.
-#<OLD> #' md <- discretise(m)
+#<OLD> #' # Must segmentize the wire portion to resolve the shape.
+#<OLD> #' md <- segmentize(m)
 #<OLD> #' mdk <- knockdown(md, u = 0.5)
 #<OLD> #' plot(mdk)
 #<OLD> #'
@@ -104,10 +104,10 @@ NULL
 ## m1 <- mooring(A, W(20), W(5), MC, W(5), W(20), top, waterDepth = 80)
 ## m2 <- mooring(A, W(20), BUB, W(5), MC, W(5), BUB, W(20), top, waterDepth = 80)
 ## m1k <- m1 |>
-##     discretise() |>
+##     segmentize() |>
 ##     knockdown(u = 0.3)
 ## m2k <- m2 |>
-##     discretise() |>
+##     segmentize() |>
 ##     knockdown(u = 0.3)
 ## plot(m1k)
 ## # Show stiffened mooring in red
