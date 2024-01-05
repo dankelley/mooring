@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6</span>
       </span>
     </div>
 
@@ -205,10 +205,10 @@ below the water surface.</p>
 <p>But, before applying <code><a href="../reference/knockdown.html">knockdown()</a></code>, it is important to
 first subdivide any <code>wire</code> elements into smaller lengths, so
 that <code><a href="../reference/knockdown.html">knockdown()</a></code> can compute the shape more precisely. This
-is done with the <code><a href="../reference/discretise.html">discretise()</a></code> function. The following shows
+is done with the <code><a href="../reference/segmentize.html">segmentize()</a></code> function. The following shows
 how to do this with the mooring just created.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discretise.html">discretise</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="co"># breaks wire portions into approx. 1-m segments</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="co"># breaks wire portions into approx. 1-m segments</span></span></code></pre></div>
 <p>and the knocked-down mooring is found with e.g.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -369,7 +369,7 @@ Similar graphs could be done with different float and wire types.</p>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">w</span>, <span class="va">f</span>, waterDepth <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">us</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.0</span>, length.out <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discretise.html">discretise</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
+<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
 <span><span class="va">depths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">us</span>, \<span class="op">(</span><span class="va">u</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, <span class="va">u</span><span class="op">)</span></span>
 <span>    <span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">mdk</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>

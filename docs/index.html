@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
 <!-- badges: start -->
 
 <!-- badges: end -->
-<p>The goal of the <code>mooring</code> package is to facilitate computations of the extent of ‘knockdown’ of oceanographic moorings caused by ocean currents that exert drag on mooring elements.</p>
+<p>The goal of the <code>mooring</code> package is to facilitate computations in the R language of the deformation of oceanographic moorings by ocean currents. It builds on Fortran code discussed by Moller (1976), which evolved into a new form as discussed by James M. Hamilton, Fowler, and Belliveau (1997) and J. M. Hamilton (1989), and then a Matlab form discussed by Dewey (1999). It is more limited than these earlier works, e.g. in considering only unidirectional currents, in ignoring the stretching of mooring components, and in ignoring the stresses involved during mooring descent.</p>
 <p>In addition to a fairly broad suite of functions, the package also provides crude interactive tools for exploring simple moorings.</p>
 <p>Conventional R help is provided, in addition to several vignettes, and a <a href="https://youtube.com/playlist?list=PLgOXS4jiqJftEEw-jS_V4edXWpaojcw-J&amp;si=xkM2cH3u_e1gdsWU" class="external-link">youtube playlist</a>.</p>
 <p>At the moment, <code>mooring</code> only handles bottom-anchored moorings in which the top buoyancy element is below the sub-surface.</p>
@@ -121,8 +121,8 @@
 <span><span class="co"># Design a mooring with a 16-inch Viny float attached to a bottom</span></span>
 <span><span class="co"># anchor with 100m of wire cable.</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="reference/anchor.html">anchor</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/wire.html">wire</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="reference/float.html">float</a></span><span class="op">(</span><span class="st">"16in Viny"</span><span class="op">)</span>, waterDepth <span class="op">=</span> <span class="fl">120</span><span class="op">)</span></span>
-<span><span class="co"># Discretise wire portion (to 1m spacing).</span></span>
-<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/discretise.html">discretise</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
+<span><span class="co"># Segmentize wire portion (to 1m spacing).</span></span>
+<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
 <span><span class="co"># Apply a 1 m/s current.</span></span>
 <span><span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">mdk</span>, fancy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -132,9 +132,8 @@
 <div class="section level1">
 <h1 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
 </h1>
-<p>The mooring-element properties that are stored in the <code>mooringElements</code> database stem from three main sources. The first was Richard Dewey’s excellent mooring-analysis Matlab software, described by Dewey (2023). The second was in spreadsheets and other documents provided by Jay Barthelotte and Matthew Lawson of the Bedford Institute of Oceanography (<a href="https://www.bio.gc.ca/index-en.php" class="external-link">BIO</a>). And the third was in spreadsheets and other documents provided by Danielle Dempsey and Nicole Torrie of the Centre for Marine Research (<a href="https://cmar.ca" class="external-link">CMAR</a>). These sources are designated <code>"Dewey"</code>, <code>"BIO"</code> and <code>"CMAR"</code>, respectively, in <code>mooringElements</code>.</p>
+<p>The mooring-element properties that are stored in the <code>mooringElements</code> database stem from three main sources. The first was Richard Dewey’s Matlab code (see Dewey (2023) for an updated version). The second was in spreadsheets and other documents provided by Jay Barthelotte and Matthew Lawson of the Bedford Institute of Oceanography (<a href="https://www.bio.gc.ca/index-en.php" class="external-link">BIO</a>). And the third was in spreadsheets and other documents provided by Danielle Dempsey and Nicole Torrie of the Centre for Marine Research (<a href="https://cmar.ca" class="external-link">CMAR</a>). These sources are designated <code>"Dewey"</code>, <code>"BIO"</code> and <code>"CMAR"</code>, respectively, in <code>mooringElements</code>.</p>
 <p>Conversations with Clark Richards and Chantelle Layton (both of <a href="https://www.bio.gc.ca/index-en.php" class="external-link">BIO</a>) were helpful in identifying data sources and in clarifying the nature of mooring systems.</p>
-<p>And, at the heart of the matter, it must be said that the present package is little more than an echo of foundational work by Moller (1976), James M. Hamilton, Fowler, and Belliveau (1997), J. M. Hamilton (1989), and Dewey (1999).</p>
 </div>
 <div class="section level1">
 <h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
