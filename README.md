@@ -16,7 +16,9 @@ that exert drag on mooring elements.
 In addition to a fairly broad suite of functions, the package also
 provides crude interactive tools for exploring simple moorings.
 
-Conventional R help is provided, in addition to several vignettes.
+Conventional R help is provided, in addition to several vignettes, and a
+[youtube
+playlist](https://youtube.com/playlist?list=PLgOXS4jiqJftEEw-jS_V4edXWpaojcw-J&si=xkM2cH3u_e1gdsWU).
 
 At the moment, `mooring` only handles bottom-anchored moorings in which
 the top buoyancy element is below the sub-surface.
