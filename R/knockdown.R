@@ -23,7 +23,7 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' Examples 2 and 3.
 #'
 #' @param m an object of the `"mooring"` class, usually created with
-#' [discretise()].
+#' [segmentize()].
 #'
 #' @template uTemplate
 #'
@@ -58,7 +58,7 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' # Illustrate importance of drag on the wire.
 #' library(mooring)
 #' m <- mooring(anchor(), wire(length = 80), float("16in Viny"), waterDepth = 100)
-#' md <- discretise(m)
+#' md <- segmentize(m)
 #'
 #' # Example 1: no current
 #' draw(md)

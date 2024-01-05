@@ -26,21 +26,21 @@ printMooring <- function(x, ...) {
     if (elementary || n == 1L) {
         prefix <- ""
     } else {
-        if (is.null(attr(x, "discretised"))) {
+        if (is.null(attr(x, "segmentized"))) {
             cat(sprintf(
                 "Mooring in %gm of water that has %d elements, listed from the top down:\n",
                 x@waterDepth, n
             ))
         } else {
             if (is.null(attr(x, "u"))) {
-                cat("Discretised mooring with", n, "elements, listed from the top down:\n")
+                cat("Segmentized mooring with", n, "elements, listed from the top down:\n")
             } else {
-                cat("Discretised, knocked-over mooring with", n, "elements, listed from the top down:\n")
+                cat("Segmentized a knocked-over mooring with", n, "elements, listed from the top down:\n")
             }
         }
         prefix <- "  "
     }
-    # The lastWas variables keep track of repeats, e.g. as created by discretise().
+    # The lastWas variables keep track of repeats, e.g. as created by segmentize().
     # This scheme will not work if a mooring is constructed with wire or chain elements
     # that are not joined by a connector, but that should not happen if the mooring
     # reflects reality.  If this poses a problem, we could also look at the group

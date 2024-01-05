@@ -75,10 +75,10 @@ gives velocity as a function of depth below the water surface.
 
 But, before applying `knockdown()`, it is important to first subdivide any
 `wire` elements into smaller lengths, so that `knockdown()` can compute the
-shape more precisely.  This is done with the `discretise()` function.  The
+shape more precisely.  This is done with the `segmentize()` function.  The
 following shows how to do this with the mooring just created.
 ```{r}
-md <- discretise(m) # breaks wire portions into approx. 1-m segments
+md <- segmentize(m) # breaks wire portions into approx. 1-m segments
 ```
 and the knocked-down mooring is found with e.g.
 ```{r}
@@ -201,7 +201,7 @@ w <- wire(length = 90)
 f <- float()
 m <- mooring(a, w, f, waterDepth = 100)
 us <- seq(0, 1.0, length.out = 10)
-md <- discretise(m)
+md <- segmentize(m)
 depths <- sapply(us, \(u) {
     mdk <- knockdown(md, u)
     depth(mdk)[1]

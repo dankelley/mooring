@@ -1,3 +1,8 @@
+# mooring 0.1.6
+
+* Rename `discretise()` as `segmentize()`. (See
+  https://github.com/dankelley/mooring/issues/61.)
+
 # mooring 0.1.5
 
 * Switch to S7 object scheme.

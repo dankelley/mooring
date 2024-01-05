@@ -88,7 +88,7 @@ m <- mooring(
     float("new glass streamlined float c2"),
     waterDepth = 1400
 )
-md <- discretise(m, by = 10)
+md <- segmentize(m, by = 10)
 ```
 
 # Knockdown Simulation
@@ -249,7 +249,7 @@ mDraggy <- mooring(
     float("new glass streamlined float c2"),
     waterDepth = 1400
 )
-mdDraggy <- discretise(mDraggy, by = 5)
+mdDraggy <- segmentize(mDraggy, by = 5)
 layout(matrix(1:2, nrow = 1), widths = c(0.75, 0.25))
 mdkDraggy <- knockdown(mdDraggy, u = u)
 draw(mdkDraggy, "knockdown", xlim = c(0, 8.0), showDetails = TRUE)

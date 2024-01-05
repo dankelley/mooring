@@ -9,9 +9,15 @@
 
 <!-- badges: end -->
 
-The goal of the `mooring` package is to facilitate computations of the
-extent of ‘knockdown’ of oceanographic moorings caused by ocean currents
-that exert drag on mooring elements.
+The goal of the `mooring` package is to facilitate computations in the R
+language of the deformation of oceanographic moorings by ocean currents.
+It builds on Fortran code discussed by Moller (1976), which evolved into
+a new form as discussed by James M. Hamilton, Fowler, and Belliveau
+(1997) and J. M. Hamilton (1989), and then a Matlab form discussed by
+Dewey (1999). It is more limited than these earlier works, e.g. in
+considering only unidirectional currents, in ignoring the stretching of
+mooring components, and in ignoring the stresses involved during mooring
+descent.
 
 In addition to a fairly broad suite of functions, the package also
 provides crude interactive tools for exploring simple moorings.
@@ -51,8 +57,8 @@ library(mooring)
 # Design a mooring with a 16-inch Viny float attached to a bottom
 # anchor with 100m of wire cable.
 m <- mooring(anchor(), wire(length = 100), float("16in Viny"), waterDepth = 120)
-# Discretise wire portion (to 1m spacing).
-md <- discretise(m)
+# Segmentize wire portion (to 1m spacing).
+md <- segmentize(m)
 # Apply a 1 m/s current.
 mdk <- knockdown(md, u = 0.5)
 draw(mdk, fancy = TRUE)
@@ -64,9 +70,9 @@ draw(mdk, fancy = TRUE)
 
 The mooring-element properties that are stored in the `mooringElements`
 database stem from three main sources. The first was Richard Dewey’s
-excellent mooring-analysis Matlab software, described by Dewey (2023).
-The second was in spreadsheets and other documents provided by Jay
-Barthelotte and Matthew Lawson of the Bedford Institute of Oceanography
+Matlab code (see Dewey (2023) for an updated version). The second was in
+spreadsheets and other documents provided by Jay Barthelotte and Matthew
+Lawson of the Bedford Institute of Oceanography
 ([BIO](https://www.bio.gc.ca/index-en.php)). And the third was in
 spreadsheets and other documents provided by Danielle Dempsey and Nicole
 Torrie of the Centre for Marine Research ([CMAR](https://cmar.ca)).
@@ -76,11 +82,6 @@ respectively, in `mooringElements`.
 Conversations with Clark Richards and Chantelle Layton (both of
 [BIO](https://www.bio.gc.ca/index-en.php)) were helpful in identifying
 data sources and in clarifying the nature of mooring systems.
-
-And, at the heart of the matter, it must be said that the present
-package is little more than an echo of foundational work by Moller
-(1976), James M. Hamilton, Fowler, and Belliveau (1997), J. M. Hamilton
-(1989), and Dewey (1999).
 
 # References
 
