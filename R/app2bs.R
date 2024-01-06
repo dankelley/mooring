@@ -92,9 +92,9 @@ app2bs <- function(debug = FALSE) {
                         choices = c(
                             "Constant",
                             "Linear",
-                            "exp(z/30)",
-                            "exp(z/100)",
-                            "exp(z/300)"
+                            "exp(-depth/30)",
+                            "exp(-depth/100)",
+                            "exp(-depth/300)"
                         ),
                         selected = "Linear"
                     ),
@@ -185,8 +185,8 @@ app2bs <- function(debug = FALSE) {
                 shiny::updateSliderInput(session, inputId = "waterDepth", min = 2.0, max = 200.0, value = 150.0, step = 1.0)
                 shiny::updateSliderInput(session, inputId = "wireLength", min = 10.0, max = 180.0, value = 130.0, step = 1.0)
                 shiny::updateSliderInput(session, inputId = "instrumentDepth", min = 10.0, max = 160.0, value = 75.0, step = 1.0)
-                shiny::updateSliderInput(session, inputId = "u", min = 0.0, max = 1.0, value = 0.5)
-                shiny::updateSelectInput(session, inputId = "currentModel", selected = "Linear")
+                shiny::updateSliderInput(session, inputId = "u", min = 0.0, max = 1.0, value = 0.25)
+                shiny::updateSelectInput(session, inputId = "currentModel", selected = "exp(-depth/30)")
                 wire <- "1/4in wire/jack"
                 shiny::updateSelectInput(session,
                     inputId = "wireType",
@@ -247,6 +247,7 @@ app2bs <- function(debug = FALSE) {
             wireBelow <- input$waterDepth - input$instrumentDepth
             instrumentType <- gsub("[ ]+\\[.*kg\\]$", "", input$instrumentType)
             wireAbove <- input$wireLength - wireBelow
+            #message("input$wireLength=",input$wireLength,", wireBelow=", wireBelow,", wireAbove=",wireAbove)
             floatType <- gsub("[ ]+\\[.*kg\\]$", "", input$floatType)
             u <- input$u
             msg <- "<pre>library(mooring)<br>"
@@ -257,26 +258,27 @@ app2bs <- function(debug = FALSE) {
             msg <- paste0(msg, sprintf("    wire(model = \"%s\", length = %g),<br>", wireType, wireAbove))
             msg <- paste0(msg, sprintf("    float(model = \"%s\"),<br>", floatType))
             msg <- paste0(msg, sprintf("    waterDepth = %g<br>", input$waterDepth))
+            #msg <- paste0(msg, sprintf("# wireAbove=%f wireBelow=%f<br>\n", wireAbove, wireBelow))
             msg <- paste0(msg, ")<br>")
-            msg <- paste0(msg, "md <- segmentize(m, by = 1)<br>")
+            msg <- paste0(msg, "ms <- segmentize(m, by = ", max(1, round(input$waterDepth / 100)), ")<br>")
             msg <- paste0(
                 msg,
-                "mdk <- knockdown(md, u = ",
+                "msk <- knockdown(ms, u = ",
                 switch(input$currentModel,
                     "Constant" = sprintf("%g", input$u),
                     "Linear" = sprintf("function(depth) %g * (1 - depth / %g)", input$u, input$waterDepth),
-                    "exp(z/30)" = sprintf("function(depth) %g * exp(-depth / 30)", input$u),
-                    "exp(z/100)" = sprintf("function(depth) %g * exp(-depth / 100)", input$u),
-                    "exp(z/300)" = sprintf("function(depth) %g * exp(-depth / 300)", input$u)
+                    "exp(-depth/30)" = sprintf("function(depth) %g * exp(-depth / 30)", input$u),
+                    "exp(-depth/100)" = sprintf("function(depth) %g * exp(-depth / 100)", input$u),
+                    "exp(-depth/300)" = sprintf("function(depth) %g * exp(-depth / 300)", input$u)
                 ),
                 ")<br>"
             )
             msg <- paste0(msg, "# Demonstrate all 4 plot types (unlike the app)<br>")
             msg <- paste0(msg, "par(mfrow = c(2, 2))<br>")
-            msg <- paste0(msg, "draw(mdk, which = \"tension\", fancy = TRUE, showDepths = FALSE)<br>")
-            msg <- paste0(msg, "draw(mdk, which = \"shape\", fancy = TRUE)<br>")
-            msg <- paste0(msg, "draw(mdk, which = \"knockdown\", fancy = TRUE)<br>")
-            msg <- paste0(msg, "draw(mdk, which = \"velocity\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "draw(msk, which = \"tension\", fancy = TRUE, showDepths = FALSE)<br>")
+            msg <- paste0(msg, "draw(msk, which = \"shape\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "draw(msk, which = \"knockdown\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "draw(msk, which = \"velocity\", fancy = TRUE)<br>")
             msg <- paste0(msg, "</pre>")
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
@@ -390,16 +392,16 @@ app2bs <- function(debug = FALSE) {
                         waterDepth = waterDepth
                     )
                     # message(str(m))
-                    md <- segmentize(m, 1)
+                    ms <- segmentize(m, max(1, round(input$waterDepth / 100)))
                     u <- switch(input$currentModel,
                         "Constant" = input$u,
                         "Linear" = function(depth) input$u * (1 - depth / waterDepth),
-                        "exp(z/30)" = function(depth) input$u * exp(-depth / 30),
-                        "exp(z/100)" = function(depth) input$u * exp(-depth / 100),
-                        "exp(z/300)" = function(depth) input$u * exp(-depth / 300)
+                        "exp(-depth/30)" = function(depth) input$u * exp(-depth / 30),
+                        "exp(-depth/100)" = function(depth) input$u * exp(-depth / 100),
+                        "exp(-depth/300)" = function(depth) input$u * exp(-depth / 300)
                     )
-                    mdk <- knockdown(md, u, convergenceCriterion = 1e-3, debug = debug)
-                    attr <- attributes(mdk)
+                    msk <- knockdown(ms, u, debug = debug)
+                    attr <- attributes(msk)
                     mar <- c(0.5, 2.5, 3.75, 0.5)
                     mgp <- c(1.5, 0.5, 0)
                     cex <- 1.2
@@ -417,31 +419,25 @@ app2bs <- function(debug = FALSE) {
                     titleShown <- FALSE
                     for (choice in input$plotChoices) {
                         if (is.null(ylim)) {
-                            draw(mdk,
+                            draw(msk,
                                 which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE,
                                 xaxs = "r", yaxs = "r"
                             )
                             ylim <- par("usr")[3:4]
-                            message(
-                                "choice=\"", choice, "\": set ylim=",
-                                paste(round(ylim, 2), collapse = " ")
-                            )
                         } else {
-                            draw(mdk,
+                            draw(msk,
                                 which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE,
                                 ylim = ylim, xaxs = "r", yaxs = "r"
                                 # ylim = ylim, yaxs = "r"
-                            )
-                            message(
-                                "choice=\"", choice, "\": using existing ylim=",
-                                paste(round(ylim, 2), collapse = " ")
                             )
                         }
                         if (!titleShown) {
                             mtext(
                                 sprintf(
-                                    "Depth converged to %.03fm in %s",
-                                    attr$iterationChange, pluralize("iteration", n = attr$iterationCount)
+                                    "Converged to %.03fm and %.02fdeg in %s",
+                                    attr$RMSChangeDepth,
+                                    attr$RMSChangeAngle,
+                                    pluralize("iteration", n = attr$iteration)
                                 ),
                                 cex = par("cex"),
                                 col = 2,

@@ -126,10 +126,10 @@ app1 <- function() {
                     wireModel, wireLength, floatModel, waterDepth
                 )
             )
-            msg <- paste0(msg, "md <- segmentize(m, by=1)<br>")
+            msg <- paste0(msg, "ms <- segmentize(m, by=1)<br>")
             msg <- paste0(
                 msg,
-                "mdk <- knockdown(md, u=",
+                "msk <- knockdown(ms, u=",
                 switch(input$currentModel,
                     "Constant" = sprintf("%g", input$u),
                     "Linear" = sprintf("function(depth) %g*(1-depth/%g)", input$u, input$waterDepth),
@@ -140,8 +140,8 @@ app1 <- function() {
                 ")<br>"
             )
             msg <- paste0(msg, "par(mfrow=c(1, 2))<br>")
-            msg <- paste0(msg, "draw(mdk, which=\"tension\", fancy=TRUE, showDepths=FALSE)<br>")
-            msg <- paste0(msg, "draw(mdk, which=\"shape\", fancy=TRUE)<br>")
+            msg <- paste0(msg, "draw(msk, which=\"tension\", fancy=TRUE, showDepths=FALSE)<br>")
+            msg <- paste0(msg, "draw(msk, which=\"shape\", fancy=TRUE)<br>")
             msg <- paste0(msg, "</pre>")
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
@@ -186,7 +186,7 @@ app1 <- function() {
                     #> message("  wireModel=", wireModel)
                     #> message("  floatModel=", floatModel)
                     m <- mooring(anchor(), wire(model = wireModel, length = wireLength), float(model = floatModel), waterDepth = waterDepth)
-                    md <- segmentize(m, 1)
+                    ms <- segmentize(m, 1)
                     u <- switch(input$currentModel,
                         "Constant" = input$u,
                         "Linear" = function(depth) input$u * (1 - depth / waterDepth),
@@ -194,10 +194,10 @@ app1 <- function() {
                         "exp(z/100)" = function(depth) input$u * exp(-depth / 100),
                         "exp(z/300)" = function(depth) input$u * exp(-depth / 300)
                     )
-                    mdk <- knockdown(md, u)
+                    msk <- knockdown(ms, u)
                     par(mfrow = c(1, 2))
-                    draw(mdk, which = "tension", fancy = TRUE, showDepths = FALSE)
-                    draw(mdk, fancy = TRUE)
+                    draw(msk, which = "tension", fancy = TRUE, showDepths = FALSE)
+                    draw(msk, fancy = TRUE)
                 }
             },
             pointsize = 12

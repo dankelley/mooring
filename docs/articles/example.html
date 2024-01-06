@@ -96,7 +96,7 @@
       <h1 data-toc-skip>A Practical Example</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2024-01-05</h4>
+            <h4 data-toc-skip class="date">2024-01-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/example.Rmd" class="external-link"><code>vignettes/example.Rmd</code></a></small>
       <div class="hidden name"><code>example.Rmd</code></div>
@@ -183,7 +183,7 @@ Notice to Mariners document.</p>
 <span>    <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="st">"new glass streamlined float c2"</span><span class="op">)</span>,</span>
 <span>    waterDepth <span class="op">=</span> <span class="fl">1400</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">ms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="knockdown-simulation">Knockdown Simulation<a class="anchor" aria-label="anchor" href="#knockdown-simulation"></a>
@@ -193,11 +193,10 @@ velocity structure. Note the setting of <code>xlim</code> to provide
 space for the labels.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="fl">0.3</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span> <span class="op">/</span> <span class="fl">1400</span><span class="op">)</span></span>
-<span><span class="co">#???depth &lt;- seq(tail(depth(m), 1), 0, length.out = 100)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html" class="external-link">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u <span class="op">=</span> <span class="va">u</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"knockdown"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4.0</span><span class="op">)</span>, showDetails <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">mdk</span>, <span class="st">"velocity"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">msk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">ms</span>, u <span class="op">=</span> <span class="va">u</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, <span class="st">"knockdown"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4.0</span><span class="op">)</span>, showDetails <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, <span class="st">"velocity"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="example_files/figure-html/unnamed-chunk-3-1.png" alt="**Figure 2. Simulation of knockdown with a depth-decaying current.**" width="100%"><p class="caption">
 <strong>Figure 2. Simulation of knockdown with a depth-decaying
@@ -212,11 +211,11 @@ current.</strong>
 velocity by running simulations with a range of velocities. Noting that
 the top of the mooring, from the surface to 200m, is knocked over much
 more than the rest, let’s focus on the depth of the second microcat from
-the top, i.e. the one below the ADCP. Typing <code>md</code> in a
+the top, i.e. the one below the ADCP. Typing <code>ms</code> in a
 console gives an overview, from which one may find the ADCP element
 using</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">md</span><span class="op">@</span><span class="va">elements</span>, \<span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="va">e</span><span class="op">@</span><span class="va">model</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">ms</span><span class="op">@</span><span class="va">elements</span>, \<span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="va">e</span><span class="op">@</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="va">iADCP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"ADCP"</span>, <span class="va">names</span><span class="op">)</span></span>
 <span><span class="va">iADCP</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 23</span></span></code></pre>
@@ -231,13 +230,13 @@ velocity at the depth of the ADCP.</p>
 <span><span class="va">U</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">N</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">u</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="va">u0</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span> <span class="op">/</span> <span class="fl">1400</span><span class="op">)</span></span>
-<span>    <span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, <span class="va">u</span><span class="op">)</span></span>
+<span>    <span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">ms</span>, <span class="va">u</span><span class="op">)</span></span>
 <span>    <span class="va">U</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">u</span><span class="op">(</span><span class="op">-</span><span class="va">k</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span><span class="op">)</span></span>
-<span>    <span class="va">dz</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">k</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span> <span class="op">-</span> <span class="va">md</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span></span>
+<span>    <span class="va">dz</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">k</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span> <span class="op">-</span> <span class="va">ms</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">U</span>, <span class="va">dz</span>, lwd <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Velocity [m/s]"</span>, ylab <span class="op">=</span> <span class="st">"Knockdown [m]"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/grid.html" class="external-link">grid</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Knockdown for ADCP nominally at %.0f m depth"</span>, <span class="op">-</span><span class="va">md</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Knockdown for ADCP nominally at %.0f m depth"</span>, <span class="op">-</span><span class="va">ms</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="example_files/figure-html/unnamed-chunk-5-1.png" alt="**Figure 3. Speed-knockdown summary diagram**" width="100%"><p class="caption">
 <strong>Figure 3. Speed-knockdown summary diagram</strong>
@@ -256,9 +255,9 @@ velocity at the depth of the ADCP.</p>
 <p>or, in an interactive session, with</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span></span></code></pre></div>
-<p>Note that the results for <code>md</code> will be similar, except
+<p>Note that the results for <code>ms</code> will be similar, except
 there will be many more elements (for the segmented chain and wire
-components). If <code>mdk</code> is examined in this way, the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> values will be different.</p>
+components). If <code>msk</code> is examined in this way, the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> values will be different.</p>
 </div>
 <div class="section level3">
 <h3 id="components">Components<a class="anchor" aria-label="anchor" href="#components"></a>
@@ -280,7 +279,7 @@ components). If <code>mdk</code> is examined in this way, the <span class="math 
 <span><span class="co">##  @ z0          : num -63.6</span></span>
 <span><span class="co">##  @ phi         : num 0</span></span>
 <span><span class="co">##  @ tau         : num 45.4</span></span>
-<span><span class="co">##  @ group       : int(0)</span></span></code></pre>
+<span><span class="co">##  @ group       : num 0</span></span></code></pre>
 <p>and, as shown previously, finer-grained access is achieved as,
 e.g.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -318,7 +317,7 @@ with</p>
 <span>        area <span class="op">=</span> <span class="va">w0</span><span class="op">@</span><span class="va">area</span>, CD <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">w0</span><span class="op">@</span><span class="va">CD</span>, length <span class="op">=</span> <span class="va">length</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>and then create <code>m</code>, <code>md</code> and <code>mdk</code>
+<p>and then create <code>m</code>, <code>ms</code> and <code>msk</code>
 as before. The results are as follows. Note that an axis change is
 required to capture the approximately-doubled knockdown. This
 illustrates the importance of getting drag coefficient right, a matter

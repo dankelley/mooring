@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Object-orientation Scheme</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2024-01-05</h4>
+            <h4 data-toc-skip class="date">2024-01-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/object_orientation.Rmd" class="external-link"><code>vignettes/object_orientation.Rmd</code></a></small>
       <div class="hidden name"><code>object_orientation.Rmd</code></div>
@@ -105,32 +105,83 @@
 
     
     
-<p>The S3 scheme is used for objects created by functions in the
-<code>mooring</code> package. There are two types of functions, and two
-classes of return value.</p>
-<p>The overall functions, <code><a href="../reference/mooring.html">mooring()</a></code>,
-<code><a href="../reference/segmentize.html">segmentize()</a></code> and <code><a href="../reference/knockdown.html">knockdown()</a></code> all produce
-return lists that have class <code>"mooring"</code>. The elements of
-those lists are produced with what are called “elementary” functions,
-which include <code><a href="../reference/anchor.html">anchor()</a></code>, <code><a href="../reference/wire.html">wire()</a></code>,
-<code><a href="../reference/float.html">float()</a></code>, etc., all of which return objects with main class
-<code>"mooringElement"</code> and sub-class patterned on the function
-name.</p>
-<p>The return values from the elementary functions vary with type, and
-allowances for these different aspects are made in
-<code><a href="../reference/knockdown.html">knockdown()</a></code> and the functions it accesses, such as
-<code><a href="../reference/area.html">area()</a></code>, etc.</p>
-<p>For example,</p>
+<p>The <a href="https://cran.r-project.org/web/packages/S7/index.html" class="external-link">S7</a>
+scheme is used for objects created by functions in the
+<code>mooring</code> package.</p>
+<p>The functions <code><a href="../reference/mooring.html">mooring()</a></code>, <code><a href="../reference/segmentize.html">segmentize()</a></code> and
+<code><a href="../reference/knockdown.html">knockdown()</a></code> all deal with moorings, and they return an
+object that is named so that other functions will know how to deal with
+the information. Moorings consist of what are called “elements” in the
+package, and these are created with a suite of specialized functions. In
+common work, the main element-creating functions are
+<code><a href="../reference/anchor.html">anchor()</a></code> for creating anchors, <code><a href="../reference/wire.html">wire()</a></code> for
+creating wires, <code><a href="../reference/instrument.html">instrument()</a></code> for creating instruments, and
+<code><a href="../reference/float.html">float()</a></code> for creating floats. Consult the “see also” section
+of the documentation for any of these functions, to discover other
+element-creating functions.</p>
+<p>Some examples may clarify. First, we create an anchor element, and
+find its contents.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required package: S7</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fl">75</span><span class="op">)</span>, <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span>, waterDepth <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
-<p>produces a <code>mooring</code> object with 3 elements, one that
-holds information on the anchor, a second that holds information on the
-wire, and a third that holds information on the float.</p>
-<p>The contents are revealed with</p>
+<code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>To see it’s contents, simply type its name in an interactive
+console:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a</span></span></code></pre></div>
+<pre><code><span><span class="co">## &lt;mooring::anchorS7&gt;</span></span>
+<span><span class="co">##  @ model       : chr "1 Railway Wheel"</span></span>
+<span><span class="co">##  @ buoyancy    : num -350</span></span>
+<span><span class="co">##  @ height      : num 0.15</span></span>
+<span><span class="co">##  @ area        : num 0</span></span>
+<span><span class="co">##  @ CD          : num 1.3</span></span>
+<span><span class="co">##  @ source      : chr "Dewey"</span></span>
+<span><span class="co">##  @ originalName: chr "1 Railway Wheel"</span></span>
+<span><span class="co">##  @ x           : num 0</span></span>
+<span><span class="co">##  @ x0          : num 0</span></span>
+<span><span class="co">##  @ z           : num 0</span></span>
+<span><span class="co">##  @ z0          : num 0</span></span>
+<span><span class="co">##  @ phi         : num 0</span></span>
+<span><span class="co">##  @ tau         : num 0</span></span>
+<span><span class="co">##  @ group       : num 0</span></span></code></pre>
+<p>The individual components can be accessed with the <code>@</code>
+syntax used by <a href="https://cran.r-project.org/web/packages/S7/index.html" class="external-link">S7</a>. For
+example, the buoyancy (the negative of the ‘weight’ in water, expressed
+in kg) as</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a</span><span class="op">@</span><span class="va">buoyancy</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] -350</span></span></code></pre>
+<p>You may also alter the components easily; e.g. the following reduces
+the height of this anchor to zero.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a</span><span class="op">@</span><span class="va">height</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">a</span></span></code></pre></div>
+<pre><code><span><span class="co">## &lt;mooring::anchorS7&gt;</span></span>
+<span><span class="co">##  @ model       : chr "1 Railway Wheel"</span></span>
+<span><span class="co">##  @ buoyancy    : num -350</span></span>
+<span><span class="co">##  @ height      : num 0</span></span>
+<span><span class="co">##  @ area        : num 0</span></span>
+<span><span class="co">##  @ CD          : num 1.3</span></span>
+<span><span class="co">##  @ source      : chr "Dewey"</span></span>
+<span><span class="co">##  @ originalName: chr "1 Railway Wheel"</span></span>
+<span><span class="co">##  @ x           : num 0</span></span>
+<span><span class="co">##  @ x0          : num 0</span></span>
+<span><span class="co">##  @ z           : num 0</span></span>
+<span><span class="co">##  @ z0          : num 0</span></span>
+<span><span class="co">##  @ phi         : num 0</span></span>
+<span><span class="co">##  @ tau         : num 0</span></span>
+<span><span class="co">##  @ group       : num 0</span></span></code></pre>
+<p>Using e.g. <code>anchor("?")</code> gives a list of built-in anchor
+types, and it is not uncommon to construct mooring elements by staring
+with a known element and changing some quantities.</p>
+<p>Turning to moorings, a 4-element case will suffice for
+illustration.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="../reference/anchor.html">anchor</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/wire.html">wire</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fl">75</span><span class="op">)</span>, <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span>, waterDepth <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+<p>As the reader has no doubt guessed, the way to find the contents is
+to name the object.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;mooring::mooringS7&gt;</span></span>
 <span><span class="co">##  @ elements  :List of 3</span></span>
@@ -148,7 +199,7 @@ wire, and a third that holds information on the float.</p>
 <span><span class="co">##  ..  ..@ z0          : num -23.8</span></span>
 <span><span class="co">##  ..  ..@ phi         : num 0</span></span>
 <span><span class="co">##  ..  ..@ tau         : num 320</span></span>
-<span><span class="co">##  ..  ..@ group       : int(0) </span></span>
+<span><span class="co">##  ..  ..@ group       : num 0</span></span>
 <span><span class="co">##  .. $ : &lt;mooring::wireS7&gt;</span></span>
 <span><span class="co">##  ..  ..@ model       : chr "1/4in wire/jack"</span></span>
 <span><span class="co">##  ..  ..@ buoyancy    : num -9.75</span></span>
@@ -163,7 +214,7 @@ wire, and a third that holds information on the float.</p>
 <span><span class="co">##  ..  ..@ z0          : num -24.8</span></span>
 <span><span class="co">##  ..  ..@ phi         : num 0</span></span>
 <span><span class="co">##  ..  ..@ tau         : num 310</span></span>
-<span><span class="co">##  ..  ..@ group       : int(0) </span></span>
+<span><span class="co">##  ..  ..@ group       : num 0</span></span>
 <span><span class="co">##  .. $ : &lt;mooring::anchorS7&gt;</span></span>
 <span><span class="co">##  ..  ..@ model       : chr "1 Railway Wheel"</span></span>
 <span><span class="co">##  ..  ..@ buoyancy    : num -350</span></span>
@@ -178,12 +229,11 @@ wire, and a third that holds information on the float.</p>
 <span><span class="co">##  ..  ..@ z0          : num -99.8</span></span>
 <span><span class="co">##  ..  ..@ phi         : num 0</span></span>
 <span><span class="co">##  ..  ..@ tau         : num 310</span></span>
-<span><span class="co">##  ..  ..@ group       : int(0) </span></span>
+<span><span class="co">##  ..  ..@ group       : num 0</span></span>
 <span><span class="co">##  @ waterDepth: num 100</span></span>
 <span><span class="co">##  @ u         : num 0</span></span></code></pre>
-<p>The contents of the uppermost object (i.e. the float) are revealed
-with</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>The way to get the top element is e.g.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;mooring::floatS7&gt;</span></span>
 <span><span class="co">##  @ model       : chr "Kiel SFS40in"</span></span>
@@ -199,7 +249,7 @@ with</p>
 <span><span class="co">##  @ z0          : num -23.8</span></span>
 <span><span class="co">##  @ phi         : num 0</span></span>
 <span><span class="co">##  @ tau         : num 320</span></span>
-<span><span class="co">##  @ group       : int(0)</span></span></code></pre>
+<span><span class="co">##  @ group       : num 0</span></span></code></pre>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

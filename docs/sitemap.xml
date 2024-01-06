@@ -37,10 +37,16 @@
     <loc>/reference/CD.html</loc>
   </url>
   <url>
+    <loc>/reference/RMS.html</loc>
+  </url>
+  <url>
     <loc>/reference/anchor.html</loc>
   </url>
   <url>
     <loc>/reference/anchorWeight.html</loc>
+  </url>
+  <url>
+    <loc>/reference/angle.html</loc>
   </url>
   <url>
     <loc>/reference/app1.html</loc>
@@ -71,9 +77,6 @@
   </url>
   <url>
     <loc>/reference/depth.html</loc>
-  </url>
-  <url>
-    <loc>/reference/discretise.html</loc>
   </url>
   <url>
     <loc>/reference/drag.html</loc>

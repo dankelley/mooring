@@ -24,6 +24,7 @@
 #'
 #' @author Dan Kelley
 segmentize <- function(m, by = 1, debug = 0) {
+    byOrig <- by
     mooringDebug(debug, "segmentize() {\n")
     if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
@@ -34,17 +35,19 @@ segmentize <- function(m, by = 1, debug = 0) {
     elementsNew <- list() # copy elements into this, then make mooring from it
     group <- 1L
     for (element in m@elements) {
-        mooringDebug(debug, "  handling item of class c(\"", paste(class(element), collapse = "\", \""), "\")\n", sep = "")
+        by <- byOrig
         if (is.wire(element) || is.chain(element)) {
+            mooringDebug(debug, "  handling \"", gsub(".*:(.*)S7", "\\1", class(element)[1]), "\"\n", sep = "")
             height <- element@height
             n <- as.integer(1 + floor(height / by))
-            # message(    "INITIAL: height=", height, ", by=", by, ", n=", n)
+            mooringDebug(debug, "    initially, height=", height, ", by=", by, ", n=", n, "\n", sep="")
             # Ensure at least 20 chunks
             if (n < 20L) {
                 n <- 20L
                 by <- height / n
                 # message("  LATER:", height, ", by=", by, ", n=", n)
             }
+            mooringDebug(debug, "    later, height=", height, ", by=", by, ", n=", n, "\n", sep="")
             portion <- element
             portion@height <- height / n
             portion@area <- portion@area / n

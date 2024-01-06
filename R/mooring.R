@@ -18,9 +18,9 @@
 #<OLD> #' par(mfrow = c(1, 3))
 #<OLD> #' plot(m)
 #<OLD> #' # Must segmentize the wire portion to resolve the shape.
-#<OLD> #' md <- segmentize(m)
-#<OLD> #' mdk <- knockdown(md, u = 0.5)
-#<OLD> #' plot(mdk)
+#<OLD> #' ms <- segmentize(m)
+#<OLD> #' msk <- knockdown(ms, u = 0.5)
+#<OLD> #' plot(msk)
 #<OLD> #'
 #<OLD> #' @docType package
 #<OLD> #'

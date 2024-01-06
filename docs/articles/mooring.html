@@ -96,7 +96,7 @@
       <h1 data-toc-skip>The mooring package</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2024-01-05</h4>
+            <h4 data-toc-skip class="date">2024-01-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring.Rmd" class="external-link"><code>vignettes/mooring.Rmd</code></a></small>
       <div class="hidden name"><code>mooring.Rmd</code></div>
@@ -208,10 +208,10 @@ that <code><a href="../reference/knockdown.html">knockdown()</a></code> can comp
 is done with the <code><a href="../reference/segmentize.html">segmentize()</a></code> function. The following shows
 how to do this with the mooring just created.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="co"># breaks wire portions into approx. 1-m segments</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="co"># breaks wire portions into approx. 1-m segments</span></span></code></pre></div>
 <p>and the knocked-down mooring is found with e.g.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, u <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">msk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">ms</span>, u <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>for a 1 m/s current.</p>
 <p>The functions <code><a href="../reference/x.html">x()</a></code> and <code><a href="../reference/z.html">z()</a></code> find the <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span> locations of mooring elements. Note
 that <span class="math inline">\(z=0\)</span> at the surface and
@@ -220,7 +220,7 @@ below the surface.</p>
 <p>For example, the shape of the knocked-over mooring from the previous
 code block could be plotted with</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/x.html">x</a></span><span class="op">(</span><span class="va">mdk</span><span class="op">)</span>, <span class="fu"><a href="../reference/z.html">z</a></span><span class="op">(</span><span class="va">mdk</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/x.html">x</a></span><span class="op">(</span><span class="va">msk</span><span class="op">)</span>, <span class="fu"><a href="../reference/z.html">z</a></span><span class="op">(</span><span class="va">msk</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="mooring_files/figure-html/unnamed-chunk-5-1.png" alt="**Mooring shape (not to scale).**" width="700.0000032"><p class="caption">
 <strong>Mooring shape (not to scale).</strong>
@@ -228,7 +228,7 @@ code block could be plotted with</p>
 </div>
 <p>Similarly, the tension between elements is found with
 <code><a href="../reference/tension.html">tension()</a></code>, and the angle that elements make to the vertical
-is found with <code>angle()</code>.</p>
+is found with <code><a href="../reference/angle.html">angle()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="plotting">Plotting<a class="anchor" aria-label="anchor" href="#plotting"></a>
@@ -238,8 +238,8 @@ is found with <code>angle()</code>.</p>
 and shape.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">mdk</span>, which <span class="op">=</span> <span class="st">"shape"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">mdk</span>, which <span class="op">=</span> <span class="st">"tension"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"shape"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"tension"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="mooring_files/figure-html/unnamed-chunk-6-1.png" alt="**Mooring shape and tension profiles created with draw(). The red dashed line on the right-hand panel represents the anchor weight.**" width="700.0000032"><p class="caption">
 <strong>Mooring shape and tension profiles created with draw(). The red
@@ -255,8 +255,8 @@ above.</p>
 <p>A fancier version is obtained with</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">mdk</span>, which <span class="op">=</span> <span class="st">"shape"</span>, fancy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">mdk</span>, which <span class="op">=</span> <span class="st">"tension"</span>, fancy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"shape"</span>, fancy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"tension"</span>, fancy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="mooring_files/figure-html/unnamed-chunk-7-1.png" alt="**Mooring shape and tension, with water coloured blue and bottom coloured brown.**" width="700.0000032"><p class="caption">
 <strong>Mooring shape and tension, with water coloured blue and bottom
@@ -342,13 +342,13 @@ in a given type is to create a sample object and study it, e.g. with</p>
 <span><span class="co">##  @ CD          : num 0.65</span></span>
 <span><span class="co">##  @ source      : chr "Dewey"</span></span>
 <span><span class="co">##  @ originalName: chr "Kiel SFS40in"</span></span>
-<span><span class="co">##  @ x           : int(0) </span></span>
-<span><span class="co">##  @ x0          : int(0) </span></span>
-<span><span class="co">##  @ z           : int(0) </span></span>
-<span><span class="co">##  @ z0          : int(0) </span></span>
-<span><span class="co">##  @ phi         : int(0) </span></span>
-<span><span class="co">##  @ tau         : int(0) </span></span>
-<span><span class="co">##  @ group       : int(0)</span></span></code></pre>
+<span><span class="co">##  @ x           : num 0</span></span>
+<span><span class="co">##  @ x0          : num 0</span></span>
+<span><span class="co">##  @ z           : num 0</span></span>
+<span><span class="co">##  @ z0          : num 0</span></span>
+<span><span class="co">##  @ phi         : num 0</span></span>
+<span><span class="co">##  @ tau         : num 0</span></span>
+<span><span class="co">##  @ group       : num 0</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="mooring-design">Mooring Design<a class="anchor" aria-label="anchor" href="#mooring-design"></a>
@@ -369,10 +369,10 @@ Similar graphs could be done with different float and wire types.</p>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mooring.html">mooring</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">w</span>, <span class="va">f</span>, waterDepth <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">us</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.0</span>, length.out <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
+<span><span class="va">ms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
 <span><span class="va">depths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">us</span>, \<span class="op">(</span><span class="va">u</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">mdk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">md</span>, <span class="va">u</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">mdk</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>    <span class="va">msk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">ms</span>, <span class="va">u</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">msk</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.7</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">us</span>, <span class="va">depths</span>,</span>
@@ -380,7 +380,7 @@ Similar graphs could be done with different float and wire types.</p>
 <span>    xlab <span class="op">=</span> <span class="st">"Horiz. velo. [m/s]"</span>, ylab <span class="op">=</span> <span class="st">"Float depth [m]"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/grid.html" class="external-link">grid</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">1.1</span> <span class="op">*</span> <span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">1.1</span> <span class="op">*</span> <span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">ms</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="mooring_files/figure-html/unnamed-chunk-13-1.png" alt="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**" width="700.0000032"><p class="caption">
 <strong>Dependence of knockdown on current. Solid: depth of top mooring

@@ -1,5 +1,8 @@
 # mooring 0.1.6
 
+* Change `app2bs()` to increase processing speed, mainly by using coarser
+  segments.
+* Change `knockdown()` convergence criterion to focus on angles.
 * Rename `discretise()` as `segmentize()`. (See
   https://github.com/dankelley/mooring/issues/61.)
 
