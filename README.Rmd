@@ -70,10 +70,10 @@ library(mooring)
 # anchor with 100m of wire cable.
 m <- mooring(anchor(), wire(length = 100), float("16in Viny"), waterDepth = 120)
 # Segmentize wire portion (to 1m spacing).
-md <- segmentize(m)
+ms <- segmentize(m)
 # Apply a 1 m/s current.
-mdk <- knockdown(md, u = 0.5)
-draw(mdk, fancy = TRUE)
+msk <- knockdown(ms, u = 0.5)
+draw(msk, fancy = TRUE)
 ```
 
 # Acknowledgements 

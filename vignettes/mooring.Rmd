@@ -78,11 +78,11 @@ But, before applying `knockdown()`, it is important to first subdivide any
 shape more precisely.  This is done with the `segmentize()` function.  The
 following shows how to do this with the mooring just created.
 ```{r}
-md <- segmentize(m) # breaks wire portions into approx. 1-m segments
+ms <- segmentize(m) # breaks wire portions into approx. 1-m segments
 ```
 and the knocked-down mooring is found with e.g.
 ```{r}
-mdk <- knockdown(md, u = 1)
+msk <- knockdown(ms, u = 1)
 ```
 for a 1 m/s current.
 
@@ -93,7 +93,7 @@ elements.  Note that $z=0$ at the surface and negative in the water column; use
 For example, the shape of the knocked-over mooring from the previous code
 block could be plotted with
 ```{r, fig.cap="**Mooring shape (not to scale).**", fig.align="center"}
-plot(x(mdk), z(mdk), type = "l")
+plot(x(msk), z(msk), type = "l")
 ```
 
 Similarly, the tension between elements is found with `tension()`, and the angle that elements make to the vertical is found with `angle()`.
@@ -104,8 +104,8 @@ The plot shown above is quite primitive, so the package offers a `draw()`
 function.  For example, this gives a view of tension and shape.
 ```{r, fig.cap="**Mooring shape and tension profiles created with draw(). The red dashed line on the right-hand panel represents the anchor weight.**", fig.align="center"}
 par(mfrow = c(1, 2))
-draw(mdk, which = "shape")
-draw(mdk, which = "tension")
+draw(msk, which = "shape")
+draw(msk, which = "tension")
 ```
 
 In both instances, the gray line is the shape that would occur with no current.
@@ -116,8 +116,8 @@ the $z$ shown above.
 A fancier version is obtained with
 ```{r, fig.cap="**Mooring shape and tension, with water coloured blue and bottom coloured brown.**", fig.align="center"}
 par(mfrow = c(1, 2))
-draw(mdk, which = "shape", fancy = TRUE)
-draw(mdk, which = "tension", fancy = TRUE)
+draw(msk, which = "shape", fancy = TRUE)
+draw(msk, which = "tension", fancy = TRUE)
 ```
 
 # Interactive Apps
@@ -201,10 +201,10 @@ w <- wire(length = 90)
 f <- float()
 m <- mooring(a, w, f, waterDepth = 100)
 us <- seq(0, 1.0, length.out = 10)
-md <- segmentize(m)
+ms <- segmentize(m)
 depths <- sapply(us, \(u) {
-    mdk <- knockdown(md, u)
-    depth(mdk)[1]
+    msk <- knockdown(ms, u)
+    depth(msk)[1]
 })
 par(mar = c(3, 3, 1, 1), mgp = c(2, 0.7, 0))
 plot(us, depths,
@@ -212,7 +212,7 @@ plot(us, depths,
     xlab = "Horiz. velo. [m/s]", ylab = "Float depth [m]"
 )
 grid()
-abline(h = 1.1 * depth(md)[1], lty = 2)
+abline(h = 1.1 * depth(ms)[1], lty = 2)
 ```
 
 This analysis suggests that a $0.3$m/s current could yield a 10 percent

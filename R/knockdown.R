@@ -1,15 +1,5 @@
 # vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
-# internal functions {
-RMS <- function(x) sqrt(mean(x^2))
-pluralize <- function(singular = "item", plural = NULL, n = 0L) {
-    if (is.null(plural)) {
-        plural <- paste0(singular, "s")
-    }
-    if (n == 1) paste(n, singular) else paste(n, plural)
-}
-# } internal functions
-
 
 #' Compute mooring knockdown by a horizontal current
 #'
@@ -27,17 +17,15 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #'
 #' @template uTemplate
 #'
-#' @param niteration integer value setting maximum number of
-#' iterations that will be taken in order to achieve convergence (see
-#' also `convergenceCriterion`).
-#'
-#' @param convergenceCriterion numeric value giving a convergence
-#' criterion to stop iterating the solution.  If the RMS difference in
-#' z values between iterations falls below the product of
-#' `convergenceCriterion` and the water depth, then the iteration loop
-#' is stopped early. Otherwise, once `niteration` iterations are
-#' permitted, a warning is issued.  (Setting `debug` to a positive
-#' value will cause information about each iteration to be printd.)
+#' @param convergence,maxiteration criteria for stopping the iteration process.
+#' If the root-mean-squared difference in element angles
+#' drops below this `convergence` degrees, then convergence is declared and the iterative
+#' solution process stops. If not, then the iteration stops after `maxiteration`
+#' passes (and a warning is issued).  In any case, the actual number of
+#' iterations is stored in an attribute named `iterations`, the RMS
+#' angle difference (in degrees) is stored as `RMSAngleChange`,
+#' and the RMA difference in element depth (in m) is stored
+#' `RMSDepthChange`.
 #'
 #' @template debugTemplate
 #'
@@ -50,27 +38,25 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' stores the value supplied to `knockdown()`, and `waterDepth` stores
 #' the water depth that was supplied to the [anchor()] call.  An
 #' overview of the iterative solution is provided in the
-#' `iterationCount` and `iterationChange` attributes, which store the
-#' number of iterations used in the computation, and the RMS change in
-#' `z` over the final iteration.
+#' attributes (see `convergence`).
 #'
 #' @examples
 #' # Illustrate importance of drag on the wire.
 #' library(mooring)
 #' m <- mooring(anchor(), wire(length = 80), float("16in Viny"), waterDepth = 100)
-#' md <- segmentize(m)
+#' ms <- segmentize(m)
 #'
 #' # Example 1: no current
-#' draw(md)
+#' draw(ms)
 #'
 #' # Example 2: uniform 1 m/s (approx. 2 knot) current
 #' par(mfrow = c(1, 2))
-#' k1 <- knockdown(md, u = 1)
+#' k1 <- knockdown(ms, u = 1)
 #' draw(k1, which = "velocity")
 #' draw(k1)
 #'
 #' # Example 3: 1 m/s current at surface, decaying exponentially below
-#' k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
+#' k2 <- knockdown(ms, u = function(depth) 1.0 * exp(-depth / 30))
 #' par(mfrow = c(1, 2))
 #' draw(k2)
 #' draw(k2, which = "velocity")
@@ -78,7 +64,7 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' # Example 4: as Example 3, but show knockdown and tension
 #' # The red dashed line in the tension plot indicates the
 #' # anchor weight.
-#' k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
+#' k2 <- knockdown(ms, u = function(depth) 1.0 * exp(-depth / 30))
 #' par(mfrow = c(1, 2))
 #' draw(k2, which = "knockdown")
 #' draw(k2, which = "tension")
@@ -87,7 +73,7 @@ pluralize <- function(singular = "item", plural = NULL, n = 0L) {
 #' @importFrom utils tail
 #' @export
 #' @author Dan Kelley
-knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1/500, debug = 0L) {
+knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L) {
     debug <- max(0L, as.integer(debug))
     # check for well-formed parameters
     if (!is.mooring(m)) {
@@ -108,19 +94,19 @@ knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1/500, d
     # start actual calculation, which relies on buoyancy B and drag, D.
     waterDepth <- m@waterDepth
     tau <- vector("numeric", n)
-    phi <- vector("numeric", n)
+    phi <- rep(0.0, length.out = n)
     zold <- z(m)
-    iterationChange <- NA
-    for (iteration in seq_len(niteration)) {
+    angleold <- angle(m)
+    RMSChangeAngle <- NA # in degrees, even though phi is in radians
+    RMSChangeDepth <- NA
+    for (iteration in seq_len(maxiteration)) {
+        mooringDebug(debug, "Iteration ", iteration, " (of possibly ", maxiteration, ")\n", sep="")
         iterationCount <- iteration
         B <- 9.81 * buoyancy(m) # note conversion from kg to N
         D <- drag(m, u)
         # Next two are Equation 5 in the Mooring Model vignette.
         tau[1] <- sqrt(D[1]^2 + B[1]^2)
         phi[1] <- atan2(D[1], B[1])
-        if (debug) {
-            cat("tau[1]=", tau[1], ", phi[1]=", phi[1], "\n")
-        }
         # Next block, run only if more than 2 elements, computes rest of tau and phi
         # values, using Equation 8 in the Mooring Model vignette.
         # For tension at bookmark B1c, see bookmarks B1a and B1b.
@@ -135,12 +121,18 @@ knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1/500, d
         phi[n] <- phi[n - 1L]
         # Clip the angle (do not allow it to run "inside" the sediment)
         phi <- ifelse(phi > pi / 2, pi / 2, phi)
+        zm <- z(m)
+        if (debug) {
+            cat("Initially, first/last few data are as follows\n")
+            look <- c(1, 2, n - 1, n)
+            print(data.frame(angle = 180 / pi * phi, z = zm)[look, ],
+                digits = 4
+            )
+        }
         # Compute position from bottom up, starting at x=0 and z=-waterDepth
-        # FIXME: save tension in object
         m@elements[[n]]@phi <- phi[n - 1] # does this matter? Is it ever used?
         m@elements[[n]]@x <- 0
         m@elements[[n]]@z <- -waterDepth + m@elements[[n]]@height
-        mooringDebug(debug, "Before knockdown, m[[1]]@z=", m@elements[[1]]@z, ", m[[", n, "]]@z=", m[[n]]@z, "\n", sep = "")
         m@elements[[n]]@tau <- tau[n]
         for (i in seq(n - 1L, 1L, -1L)) {
             m@elements[[i]]@phi <- phi[i]
@@ -148,36 +140,41 @@ knockdown <- function(m, u = 1, niteration = 30, convergenceCriterion = 1/500, d
             m@elements[[i]]@x <- m@elements[[i + 1]]@x + m@elements[[i]]@height * sin(m@elements[[i]]@phi)
             m@elements[[i]]@z <- m@elements[[i + 1]]@z + m@elements[[i]]@height * cos(m@elements[[i]]@phi)
         }
-        if (debug) {
-            cat("iteration", iteration, " had first few data as follows\n")
-            print(head(data.frame(D = D, PHI = phi, tau = tau, x = x(m), z = z(m)), 4), digits = 4)
-        }
-        mooringDebug(
-            debug,
-            sprintf("After knockdown, m@elements[[1]]@z=%.5g m, and m@elements[[%d]]@z=%.5g\n",
-                m@elements[[1]]@z, n, m@elements[[n]]@z)
-        )
         ztop <- m@elements[[1]]@z
         if (ztop > 0) {
             warning(sprintf("mooring line too long for depth (top element %.2f m in air); expect odd results", ztop))
         }
+        zm <- z(m)
+        anglem <- angle(m)
+        RMSChangeDepth <- RMS(zm - zold)
+        RMSChangeAngle <- 180 / pi * RMS(anglem - angleold)
         if (debug) {
-            cat(sprintf("RMS z change: %.4gm\n", RMS(z(m) - zold)))
+            cat("After calculation, first/last few data are as follows\n")
+            look <- c(1, 2, n - 1, n)
+            print(data.frame(angle = 180 / pi * phi, z = zm)[look, ],
+                digits = 4
+            )
         }
-        iterationChange <- RMS(z(m) - zold)
-        if (iterationChange < convergenceCriterion * waterDepth) {
+        if (debug) {
+            cat(sprintf("RMS angle change: %.4g deg\n", 180 / pi * RMSChangeAngle))
+            cat(sprintf("RMS depth change: %.4g m\n", RMSChangeDepth))
+        }
+        if (RMSChangeAngle < pi / 180 * convergence) {
             break
         }
-        zold <- z(m)
+        zold <- zm
+        angleold <- anglem
+        mooringDebug(debug, "\n")
     }
-    if (iterationChange >= convergenceCriterion * waterDepth) {
+    if (RMSChangeAngle >= pi / 180 * convergence) {
         warning(sprintf(
-            "convergence not achieved in %s (RMS z difference was %.4gm, so exceeding convergenceCriterion*waterDepth value of %.4gm)\n",
-            pluralize("iteration", n = niteration), iterationChange, convergenceCriterion * waterDepth
+            "convergence not achieved in %s; RMS angle change %.4g deg, RMS depth change %.4g m\n",
+            pluralize("iteration", n = maxiteration), 180 / pi * RMSChangeAngle, RMSChangeDepth
         ))
     }
     m@u <- u
-    attr(m, "iterationCount") <- iterationCount
-    attr(m, "iterationChange") <- iterationChange
+    attr(m, "iteration") <- iterationCount
+    attr(m, "RMSChangeAngle") <- 180 / pi * RMSChangeAngle
+    attr(m, "RMSChangeDepth") <- RMSChangeDepth
     m
 } # knockdown()

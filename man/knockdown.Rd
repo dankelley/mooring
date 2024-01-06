@@ -4,7 +4,7 @@
 \alias{knockdown}
 \title{Compute mooring knockdown by a horizontal current}
 \usage{
-knockdown(m, u = 1, niteration = 30, convergenceCriterion = 1/500, debug = 0L)
+knockdown(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L)
 }
 \arguments{
 \item{m}{an object of the \code{"mooring"} class, usually created with
@@ -14,17 +14,15 @@ knockdown(m, u = 1, niteration = 30, convergenceCriterion = 1/500, debug = 0L)
 or a function that returns that velocity as a function of depth (m)
 below the ocean surface.}
 
-\item{niteration}{integer value setting maximum number of
-iterations that will be taken in order to achieve convergence (see
-also \code{convergenceCriterion}).}
-
-\item{convergenceCriterion}{numeric value giving a convergence
-criterion to stop iterating the solution.  If the RMS difference in
-z values between iterations falls below the product of
-\code{convergenceCriterion} and the water depth, then the iteration loop
-is stopped early. Otherwise, once \code{niteration} iterations are
-permitted, a warning is issued.  (Setting \code{debug} to a positive
-value will cause information about each iteration to be printd.)}
+\item{convergence, maxiteration}{criteria for stopping the iteration process.
+If the root-mean-squared difference in element angles
+drops below this \code{convergence} degrees, then convergence is declared and the iterative
+solution process stops. If not, then the iteration stops after \code{maxiteration}
+passes (and a warning is issued).  In any case, the actual number of
+iterations is stored in an attribute named \code{iterations}, the RMS
+angle difference (in degrees) is stored as \code{RMSAngleChange},
+and the RMA difference in element depth (in m) is stored
+\code{RMSDepthChange}.}
 
 \item{debug}{an integer value (or a numeric that can be converted to an
 integer) that controls debugging. If this is positive, then some debugging
@@ -40,9 +38,7 @@ object to describe the solution in more detail.  The \code{u} attribute
 stores the value supplied to \code{knockdown()}, and \code{waterDepth} stores
 the water depth that was supplied to the \code{\link[=anchor]{anchor()}} call.  An
 overview of the iterative solution is provided in the
-\code{iterationCount} and \code{iterationChange} attributes, which store the
-number of iterations used in the computation, and the RMS change in
-\code{z} over the final iteration.
+attributes (see \code{convergence}).
 }
 \description{
 The current may be a depth-independent or depth-dependent, as
@@ -58,19 +54,19 @@ Examples 2 and 3.
 # Illustrate importance of drag on the wire.
 library(mooring)
 m <- mooring(anchor(), wire(length = 80), float("16in Viny"), waterDepth = 100)
-md <- segmentize(m)
+ms <- segmentize(m)
 
 # Example 1: no current
-draw(md)
+draw(ms)
 
 # Example 2: uniform 1 m/s (approx. 2 knot) current
 par(mfrow = c(1, 2))
-k1 <- knockdown(md, u = 1)
+k1 <- knockdown(ms, u = 1)
 draw(k1, which = "velocity")
 draw(k1)
 
 # Example 3: 1 m/s current at surface, decaying exponentially below
-k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
+k2 <- knockdown(ms, u = function(depth) 1.0 * exp(-depth / 30))
 par(mfrow = c(1, 2))
 draw(k2)
 draw(k2, which = "velocity")
@@ -78,7 +74,7 @@ draw(k2, which = "velocity")
 # Example 4: as Example 3, but show knockdown and tension
 # The red dashed line in the tension plot indicates the
 # anchor weight.
-k2 <- knockdown(md, u = function(depth) 1.0 * exp(-depth / 30))
+k2 <- knockdown(ms, u = function(depth) 1.0 * exp(-depth / 30))
 par(mfrow = c(1, 2))
 draw(k2, which = "knockdown")
 draw(k2, which = "tension")

@@ -27,12 +27,12 @@ a <- anchor("fake", buoyancy=-1000, height=0, CD=1, depth=L)
 m <- mooring(a, w, f)
 
 n <- 500 # number of sub-segments to use
-md <- discretise(m, L/n)
-mdk <- knockdown(md, u=u)
+ms <- discretise(m, L/n)
+msk <- knockdown(ms, u=u)
 
 if (!interactive())
     png("force_diagram.png", width=5, height=3, unit="in", res=120, pointsize=10)
-plot(mdk, fancy=TRUE, showDepths=FALSE, showLabels=FALSE)
+plot(msk, fancy=TRUE, showDepths=FALSE, showLabels=FALSE)
 
 # Add component names to diagram
 scale <- 0.2
@@ -57,7 +57,7 @@ arrows(x, L-l, x+scale*Tx, L-l+scale*Tz, length=length, col=col, lwd=lwd)
 text(2*tweak+x+scale*Tx, tweak/3+L-l+scale*Tz, expression(T[i]), font=2, col=col, pos=1, cex=cex)
 
 # Angle
-text(2*tweak+tail(x(mdk), 1), -4*tweak+tail(depth(mdk),1), expression(phi[i]), col=col, font=2, cex=1.2*cex)
+text(2*tweak+tail(x(msk), 1), -4*tweak+tail(depth(msk),1), expression(phi[i]), col=col, font=2, cex=1.2*cex)
 
 if (!interactive())
     dev.off()

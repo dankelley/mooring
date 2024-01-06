@@ -17,41 +17,69 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The S3 scheme is used for objects created by functions in the
-`mooring` package. There are two types of functions, and two classes
-of return value.
+The [S7](https://cran.r-project.org/web/packages/S7/index.html) scheme
+is used for objects created by functions in the `mooring` package.
 
-The overall functions, `mooring()`, `segmentize()` and `knockdown()`
-all produce return lists that have class `"mooring"`. The elements of
-those lists are produced with what are called "elementary" functions,
-which include `anchor()`, `wire()`, `float()`, etc., all of which
-return objects with main class `"mooringElement"` and sub-class
-patterned on the function name.  
+The functions `mooring()`, `segmentize()` and `knockdown()` all deal
+with moorings, and they return an object that is named so that other
+functions will know how to deal with the information.  Moorings
+consist of what are called "elements" in the package, and these are
+created with a suite of specialized functions.  In common work, the
+main element-creating functions are `anchor()` for creating anchors,
+`wire()` for creating wires, `instrument()` for creating instruments,
+and `float()` for creating floats.  Consult the "see also" section of
+the documentation for any of these functions, to discover other
+element-creating functions.
 
-The return values from the elementary functions vary with type, and
-allowances for these different aspects are made in `knockdown()` and
-the functions it accesses, such as `area()`, etc.
-
-For example,
+Some examples may clarify.  First, we create an anchor element,
+and find its contents.
 
 ```{r}
 library(mooring)
+a <- anchor()
+```
+
+To see it's contents, simply type its name in an interactive console:
+```{r}
+a
+```
+
+The individual components can be accessed with the `@` syntax used by
+[S7](https://cran.r-project.org/web/packages/S7/index.html). For
+example, the buoyancy (the negative of the 'weight' in water, 
+expressed in kg) as
+
+```{r}
+a@buoyancy
+```
+
+You may also alter the components easily; e.g. the following
+reduces the height of this anchor to zero.
+
+```{r}
+a@height <- 0
+a
+```
+
+Using e.g. `anchor("?")` gives a list of built-in anchor types,
+and it is not uncommon to construct mooring elements by staring
+with a known element and changing some quantities.
+
+Turning to moorings, a 4-element case will suffice for
+illustration.
+
+```{r}
 m <- mooring(anchor(), wire(length = 75), float(), waterDepth = 100)
 ```
 
-produces a `mooring` object with 3 elements, one that holds
-information on the anchor, a second that holds information on the
-wire, and a third that holds information on the float.  
-
-The contents are revealed with
+As the reader has no doubt guessed, the way to find the contents is
+to name the object.
 
 ```{r}
 m
 ```
 
-The contents of the uppermost object (i.e. the float) are revealed with
-
+The way to get the top element is e.g.
 ```{r}
 m@elements[[1]]
 ```
-

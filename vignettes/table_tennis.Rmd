@@ -143,10 +143,9 @@ w <- wire("gossamer", length = L, buoyancyPerMeter = 0, areaPerMeter = 0, CD = 0
 a <- anchor("fake", buoyancy = -1000, height = 0, CD = 0)
 m <- mooring(a, w, f, waterDepth = L)
 
-n <- 10 # number of sub-segments to use (not much need for any)
-md <- segmentize(m, L / n)
-mdk <- knockdown(md, u = u)
-draw(mdk, fancy = TRUE)
+ms <- segmentize(m, L / 10)
+msk <- knockdown(ms, u = u)
+draw(msk, fancy = TRUE)
 # Check against theory
 points(x, L - l, col = 2, cex = 2)
 ```
@@ -154,8 +153,8 @@ points(x, L - l, col = 2, cex = 2)
 # Results
 
 ```{r,echo=FALSE}
-xcm <- 100 * head(x(mdk), 1)
-zcm <- -100 * head(z(mdk), 1)
+xcm <- 100 * head(x(msk), 1)
+zcm <- -100 * head(z(msk), 1)
 ```
 
 The theory and the calculations using `knockdown()` agree well.  There

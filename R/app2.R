@@ -234,10 +234,10 @@ app2 <- function(debug = FALSE) {
             msg <- paste0(msg, sprintf("    float(model = \"%s\"),<br>", floatModel))
             msg <- paste0(msg, sprintf("    waterDepth = \"%g\")<br>", input$waterDepth))
             msg <- paste0(msg, ")<br>")
-            msg <- paste0(msg, "md <- segmentize(m, by = 1)<br>")
+            msg <- paste0(msg, "ms <- segmentize(m, by = 1)<br>")
             msg <- paste0(
                 msg,
-                "mdk <- knockdown(md, u = ",
+                "msk <- knockdown(ms, u = ",
                 switch(input$currentModel,
                     "Constant" = sprintf("%g", input$u),
                     "Linear" = sprintf("function(depth) %g * (1 - depth / %g)", input$u, input$waterDepth),
@@ -249,10 +249,10 @@ app2 <- function(debug = FALSE) {
             )
             msg <- paste0(msg, "# Demonstrate all 4 plot types (unlike the app)<br>")
             msg <- paste0(msg, "par(mfrow = c(2, 2))<br>")
-            msg <- paste0(msg, "draw(mdk, which = \"tension\", fancy = TRUE, showDepths = FALSE)<br>")
-            msg <- paste0(msg, "draw(mdk, which = \"shape\", fancy = TRUE)<br>")
-            msg <- paste0(msg, "draw(mdk, which = \"knockdown\", fancy = TRUE)<br>")
-            msg <- paste0(msg, "draw(mdk, which = \"velocity\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "draw(msk, which = \"tension\", fancy = TRUE, showDepths = FALSE)<br>")
+            msg <- paste0(msg, "draw(msk, which = \"shape\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "draw(msk, which = \"knockdown\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "draw(msk, which = \"velocity\", fancy = TRUE)<br>")
             msg <- paste0(msg, "</pre>")
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
@@ -362,7 +362,7 @@ app2 <- function(debug = FALSE) {
                         waterDepth = waterDepth
                     )
                     #message(str(m))
-                    md <- segmentize(m, 1)
+                    ms <- segmentize(m, 1)
                     u <- switch(input$currentModel,
                         "Constant" = input$u,
                         "Linear" = function(depth) input$u * (1 - depth / waterDepth),
@@ -370,7 +370,7 @@ app2 <- function(debug = FALSE) {
                         "exp(z/100)" = function(depth) input$u * exp(-depth / 100),
                         "exp(z/300)" = function(depth) input$u * exp(-depth / 300)
                     )
-                    mdk <- knockdown(md, u)
+                    msk <- knockdown(ms, u)
                     mar <- c(2.5, 2.5, 0.5, 0.5)
                     mpg <- c(1.5, 0.5, 0)
                     cex <- 1.2
@@ -385,7 +385,7 @@ app2 <- function(debug = FALSE) {
                         par(mfrow = c(2, 2), mar = mar, mgp = mpg, cex = cex)
                     }
                     for (choice in input$plotChoices) {
-                        draw(mdk, which = choice, fancy = TRUE, showDepths = FALSE)
+                        draw(msk, which = choice, fancy = TRUE, showDepths = FALSE)
                     }
                 }
             },
