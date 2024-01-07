@@ -24,7 +24,7 @@ provides crude interactive tools for exploring simple moorings.
 
 Conventional R help is provided, in addition to several vignettes, and a
 [youtube
-playlist](https://youtube.com/playlist?list=PLgOXS4jiqJftEEw-jS_V4edXWpaojcw-J&si=xkM2cH3u_e1gdsWU).
+playlist](https://www.youtube.com/playlist?list=PLgOXS4jiqJftEEw-jS_V4edXWpaojcw-J&si=xkM2cH3u_e1gdsWU).
 
 At the moment, `mooring` only handles bottom-anchored moorings in which
 the top buoyancy element is below the sub-surface.
@@ -69,7 +69,7 @@ draw(msk, fancy = TRUE)
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-# Acknowledgements
+# Acknowledgments
 
 The mooring-element properties that are stored in the `mooringElements`
 database stem from three main sources. The first was Richard Dewey’s

@@ -24,7 +24,7 @@
 #' passes (and a warning is issued).  In any case, the actual number of
 #' iterations is stored in an attribute named `iterations`, the RMS
 #' angle difference (in degrees) is stored as `RMSAngleChange`,
-#' and the RMA difference in element depth (in m) is stored
+#' and the RMS difference in element depth (in m) is stored
 #' `RMSDepthChange`.
 #'
 #' @template debugTemplate
@@ -43,20 +43,20 @@
 #' @examples
 #' # Illustrate importance of drag on the wire.
 #' library(mooring)
-#' m <- mooring(anchor(), wire(length = 80), float("16in Viny"), waterDepth = 100)
+#' m <- mooring(anchor(), wire(length = 30), float("16in Viny"), waterDepth = 50)
 #' ms <- segmentize(m)
 #'
 #' # Example 1: no current
 #' draw(ms)
 #'
-#' # Example 2: uniform 1 m/s (approx. 2 knot) current
+#' # Example 2: uniform 0.5 m/s (approx. 1 knot) current
 #' par(mfrow = c(1, 2))
-#' k1 <- knockdown(ms, u = 1)
+#' k1 <- knockdown(ms, u = 0.5)
 #' draw(k1, which = "velocity")
 #' draw(k1)
 #'
-#' # Example 3: 1 m/s current at surface, decaying exponentially below
-#' k2 <- knockdown(ms, u = function(depth) 1.0 * exp(-depth / 30))
+#' # Example 3: 0.5 m/s surface current, exponential decay below
+#' k2 <- knockdown(ms, u = function(depth) 0.5 * exp(-depth / 30))
 #' par(mfrow = c(1, 2))
 #' draw(k2)
 #' draw(k2, which = "velocity")
@@ -64,7 +64,6 @@
 #' # Example 4: as Example 3, but show knockdown and tension
 #' # The red dashed line in the tension plot indicates the
 #' # anchor weight.
-#' k2 <- knockdown(ms, u = function(depth) 1.0 * exp(-depth / 30))
 #' par(mfrow = c(1, 2))
 #' draw(k2, which = "knockdown")
 #' draw(k2, which = "tension")

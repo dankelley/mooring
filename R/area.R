@@ -6,7 +6,7 @@
 #' This is computed using the `area` item stored within the element,
 #' adjusted for the angle, depending on the value of `phi`. Note that
 #' elements created by [float()] are assumed to be spherical, and so
-#' their orientiation is not taken into account.
+#' their orientation is not taken into account.
 #'
 #' When initially created, objects do not contain an angle value, but
 #' such values are inserted by [knockdown()]. Moorings that are

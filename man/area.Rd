@@ -24,7 +24,7 @@ Returns the area of the mooring element, projected onto a vertical plane.
 This is computed using the \code{area} item stored within the element,
 adjusted for the angle, depending on the value of \code{phi}. Note that
 elements created by \code{\link[=float]{float()}} are assumed to be spherical, and so
-their orientiation is not taken into account.
+their orientation is not taken into account.
 }
 \details{
 When initially created, objects do not contain an angle value, but
