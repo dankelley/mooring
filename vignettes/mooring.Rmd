@@ -190,8 +190,8 @@ task.
 
 As a simplified example, imagine that a mooring is to be placed in 100 m of
 water, with a 1/4-inch jacketed wire cable connecting a subsurface float to a
-bottom anchor. How will knockdown vary with current strenth?  To answer this,
-we might constract a graph as follows.  Similar graphs could be done with
+bottom anchor. How will knockdown vary with current strength?  To answer this,
+we might construct a graph as follows.  Similar graphs could be done with
 different float and wire types.
 
 ```{r fig.cap="**Dependence of knockdown on current. Solid: depth of top mooring element (a float). Dashed: 10% increase in that depth.**", fig.align="center"}

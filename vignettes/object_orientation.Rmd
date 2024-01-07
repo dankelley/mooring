@@ -17,8 +17,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The [S7](https://cran.r-project.org/web/packages/S7/index.html) scheme
-is used for objects created by functions in the `mooring` package.
+The [S7](https://CRAN.R-project.org/package=S7) scheme is used for
+objects created by functions in the `mooring` package.
 
 The functions `mooring()`, `segmentize()` and `knockdown()` all deal
 with moorings, and they return an object that is named so that other
@@ -45,9 +45,8 @@ a
 ```
 
 The individual components can be accessed with the `@` syntax used by
-[S7](https://cran.r-project.org/web/packages/S7/index.html). For
-example, the buoyancy (the negative of the 'weight' in water, 
-expressed in kg) as
+[S7](https://CRAN.R-project.org/package=S7). For example, the buoyancy
+(the negative of the 'weight' in water, expressed in kg) as
 
 ```{r}
 a@buoyancy
