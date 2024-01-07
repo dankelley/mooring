@@ -56,13 +56,16 @@ devtools::install_github("dankelley/mooring")
 ```
 ## Example
 
-The following shows how to assess the knockdown of a mooring consisting of a
-bottom anchor, 100 m of wire, and a 16-inch Viny float, in a region of
-water depth 120 m with a constant current of 0.5 m/s (roughly 1 knot).  To
-learn more, (a) alter the current and observe changes in the
-mooring shape, (b) set the `which` argument of `plot.mooring()`, to focus more
-directly on the knockdown, then (c) explore the effects of specifying
-depth-dependent currents in the `knockdown()` call.
+The following shows how to assess the knockdown of a mooring
+consisting of a bottom anchor, 100 m of wire, and a 16-inch Viny
+float, in a region of water depth 120 m with a constant current of 0.5
+m/s (roughly 1 knot).  To learn more, (a) alter the current and
+observe changes in the mooring shape, (b) set the `which` argument of
+`plot.mooring()` to focus more directly on the knockdown, and (c)
+explore the effects of specifying depth-dependent currents in the
+`knockdown()` call. After a few steps like this, you ought to examine
+the vignettes and the documentation of the package's functions, so you
+can tackle a practical case of your own.
 
 ```{r example}
 library(mooring)
@@ -71,7 +74,7 @@ library(mooring)
 m <- mooring(anchor(), wire(length = 100), float("16in Viny"), waterDepth = 120)
 # Segmentize wire portion (to 1m spacing).
 ms <- segmentize(m)
-# Apply a 1 m/s current.
+# Apply a depth-invariant 0.5 m/s current.
 msk <- knockdown(ms, u = 0.5)
 draw(msk, fancy = TRUE)
 ```
