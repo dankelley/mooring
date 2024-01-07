@@ -85,11 +85,14 @@ NULL
 #' `mooringElement` class.
 #'
 #' @examples
-#' # Example 1: most basic case: anchor, line, float.
+#' # Example 1: a simple mooring with a single instrument
 #' library(mooring)
-#' m <- mooring(anchor(), wire(length = 80), float(), waterDepth = 100)
-#' m # whole-mooring overview
-#' m@elements[[1]] # float details
+#' m <- mooring(anchor(),
+#'     wire(length = 70), instrument(), wire(length = 10),
+#'     float(), waterDepth = 100)
+#' ms <- segmentize(m)
+#' msk <- knockdown(ms, u = 1)
+#' draw(msk)
 #'
 ## # Example 2: compare a simple mooring (with inadequate
 ## # buoyancy) with a stiffer one that has extra buoyancy
