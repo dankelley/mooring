@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7</span>
       </span>
     </div>
 
@@ -73,6 +73,11 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.7" id="mooring-017">mooring 0.1.7<a class="anchor" aria-label="anchor" href="#mooring-017"></a></h2>
+<ul><li>Rename <code>draw()</code> to <code><a href="../reference/plot.html">plot()</a></code>, undoing the change made in the 0.1.5 version.</li>
+<li>Rename <code>printMooring()</code> to <code><a href="../reference/summary.html">summary()</a></code>. It really is a summary, not a printout, and we want users to know that they can examine the contents in the normal way, by naming the item.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.6" id="mooring-016">mooring 0.1.6<a class="anchor" aria-label="anchor" href="#mooring-016"></a></h2>
 <ul><li>Change <code><a href="../reference/app2bs.html">app2bs()</a></code> to increase processing speed, mainly by using coarser segments.</li>
 <li>Change <code><a href="../reference/knockdown.html">knockdown()</a></code> convergence criterion to focus on angles.</li>
@@ -83,7 +88,7 @@
 <ul><li>Switch to S7 object scheme.</li>
 <li>Change <code><a href="../reference/anchor.html">anchor()</a></code>, dropping the <code>depth</code> parameter.</li>
 <li>Change <code><a href="../reference/mooring.html">mooring()</a></code>, gaining the <code>waterDepth</code> parameter.</li>
-<li>Rename <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> as <code><a href="../reference/plot.mooringS7.html">draw()</a></code>, as a hopefully temporary measure until the proper way of documenting S7 generics becomes clearer. (See <a href="https://stat.ethz.ch/pipermail/r-package-devel/2024q1/010266.html" class="external-link uri">https://stat.ethz.ch/pipermail/r-package-devel/2024q1/010266.html</a>, but note that my comment on Jan 3 20:38:17 CET 2024 was incorrect: I realized later that I could build but then not document, or document but then not build. But I was just trying different syntax options willy-nilly, with no real understanding. I gave up and renamed the function, on the assumption that somebody will document how this is meant to be done, at some time in the near future.)</li>
+<li>Rename <code><a href="../reference/plot.html">plot()</a></code> as <code>draw()</code>, as a hopefully temporary measure until the proper way of documenting S7 generics becomes clearer. (See <a href="https://stat.ethz.ch/pipermail/r-package-devel/2024q1/010266.html" class="external-link uri">https://stat.ethz.ch/pipermail/r-package-devel/2024q1/010266.html</a>, but note that my comment on Jan 3 20:38:17 CET 2024 was incorrect: I realized later that I could build but then not document, or document but then not build. But I was just trying different syntax options willy-nilly, with no real understanding. I gave up and renamed the function, on the assumption that somebody will document how this is meant to be done, at some time in the near future.)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.4" id="mooring-014">mooring 0.1.4<a class="anchor" aria-label="anchor" href="#mooring-014"></a></h2>

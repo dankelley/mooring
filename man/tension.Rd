@@ -30,7 +30,7 @@ depth <- depth(msk)
 # The right-hand panel indicates the anchor limit in red.
 par(mfrow = c(1, 2))
 plot(tension(msk), depth, ylim = rev(range(depth)), type = "l")
-draw(msk, which = "tension")
+plot(msk, which = "tension")
 
 }
 \author{

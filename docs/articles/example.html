@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
       <h1 data-toc-skip>A Practical Example</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2024-01-07</h4>
+            <h4 data-toc-skip class="date">2024-01-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/example.Rmd" class="external-link"><code>vignettes/example.Rmd</code></a></small>
       <div class="hidden name"><code>example.Rmd</code></div>
@@ -195,8 +195,8 @@ space for the labels.</p>
 <code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="fl">0.3</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span> <span class="op">/</span> <span class="fl">1400</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html" class="external-link">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">msk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/knockdown.html">knockdown</a></span><span class="op">(</span><span class="va">ms</span>, u <span class="op">=</span> <span class="va">u</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, <span class="st">"knockdown"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4.0</span><span class="op">)</span>, showDetails <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, <span class="st">"velocity"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">msk</span>, <span class="st">"knockdown"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4.0</span><span class="op">)</span>, showDetails <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">msk</span>, <span class="st">"velocity"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="example_files/figure-html/unnamed-chunk-3-1.png" alt="**Figure 2. Simulation of knockdown with a depth-decaying current.**" width="100%"><p class="caption">
 <strong>Figure 2. Simulation of knockdown with a depth-decaying
@@ -234,7 +234,7 @@ velocity at the depth of the ADCP.</p>
 <span>    <span class="va">U</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">u</span><span class="op">(</span><span class="op">-</span><span class="va">k</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span><span class="op">)</span></span>
 <span>    <span class="va">dz</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">k</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span> <span class="op">-</span> <span class="va">ms</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">U</span>, <span class="va">dz</span>, lwd <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Velocity [m/s]"</span>, ylab <span class="op">=</span> <span class="st">"Knockdown [m]"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">U</span>, <span class="va">dz</span>, lwd <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Velocity [m/s]"</span>, ylab <span class="op">=</span> <span class="st">"Knockdown [m]"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/grid.html" class="external-link">grid</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Knockdown for ADCP nominally at %.0f m depth"</span>, <span class="op">-</span><span class="va">ms</span><span class="op">@</span><span class="va">elements</span><span class="op">[[</span><span class="va">iADCP</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">z</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
