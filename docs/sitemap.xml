@@ -145,6 +145,9 @@
     <loc>/reference/mooringElements.html</loc>
   </url>
   <url>
+    <loc>/reference/plot.html</loc>
+  </url>
+  <url>
     <loc>/reference/plot.mooringS7.html</loc>
   </url>
   <url>
@@ -155,6 +158,9 @@
   </url>
   <url>
     <loc>/reference/segmentize.html</loc>
+  </url>
+  <url>
+    <loc>/reference/summary.html</loc>
   </url>
   <url>
     <loc>/reference/summaryMooring.html</loc>

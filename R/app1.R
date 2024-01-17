@@ -140,8 +140,8 @@ app1 <- function() {
                 ")<br>"
             )
             msg <- paste0(msg, "par(mfrow=c(1, 2))<br>")
-            msg <- paste0(msg, "draw(msk, which=\"tension\", fancy=TRUE, showDepths=FALSE)<br>")
-            msg <- paste0(msg, "draw(msk, which=\"shape\", fancy=TRUE)<br>")
+            msg <- paste0(msg, "plot(msk, which=\"tension\", fancy=TRUE, showDepths=FALSE)<br>")
+            msg <- paste0(msg, "plot(msk, which=\"shape\", fancy=TRUE)<br>")
             msg <- paste0(msg, "</pre>")
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
@@ -196,8 +196,8 @@ app1 <- function() {
                     )
                     msk <- knockdown(ms, u)
                     par(mfrow = c(1, 2))
-                    draw(msk, which = "tension", fancy = TRUE, showDepths = FALSE)
-                    draw(msk, fancy = TRUE)
+                    plot(msk, which = "tension", fancy = TRUE, showDepths = FALSE)
+                    plot(msk, fancy = TRUE)
                 }
             },
             pointsize = 12

@@ -5,7 +5,7 @@ niteration times until the RMS deviation between computed z
 values falls below the product of convergenceCriterion and wire
 length. The returned result has an attribute named u that holds
 the value of that argument, and this is how a later call to
-draw() is able to display a velocity profile; see
+plot() is able to display a velocity profile; see
 Examples 2 and 3."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -24,7 +24,7 @@ Examples 2 and 3."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@ specified by the <code>u</code> argument.  The computation is iterated at most
 values falls below the product of <code>convergenceCriterion</code> and wire
 length. The returned result has an attribute named <code>u</code> that holds
 the value of that argument, and this is how a later call to
-<code><a href="plot.mooringS7.html">draw()</a></code> is able to display a velocity profile; see
+<code><a href="plot.html">plot()</a></code> is able to display a velocity profile; see
 Examples 2 and 3.</p>
     </div>
 
@@ -116,7 +116,7 @@ solution process stops. If not, then the iteration stops after <code>maxiteratio
 passes (and a warning is issued).  In any case, the actual number of
 iterations is stored in an attribute named <code>iterations</code>, the RMS
 angle difference (in degrees) is stored as <code>RMSAngleChange</code>,
-and the RMA difference in element depth (in m) is stored
+and the RMS difference in element depth (in m) is stored
 <code>RMSDepthChange</code>.</p></dd>
 
 
@@ -152,34 +152,33 @@ attributes (see <code>convergence</code>).</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Illustrate importance of drag on the wire.</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="anchor.html">anchor</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="wire.html">wire</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fl">80</span><span class="op">)</span>, <span class="fu"><a href="float.html">float</a></span><span class="op">(</span><span class="st">"16in Viny"</span><span class="op">)</span>, waterDepth <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="mooring.html">mooring</a></span><span class="op">(</span><span class="fu"><a href="anchor.html">anchor</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="wire.html">wire</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>, <span class="fu"><a href="float.html">float</a></span><span class="op">(</span><span class="st">"16in Viny"</span><span class="op">)</span>, waterDepth <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ms</span> <span class="op">&lt;-</span> <span class="fu"><a href="segmentize.html">segmentize</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 1: no current</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">ms</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">ms</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="knockdown-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Example 2: uniform 1 m/s (approx. 2 knot) current</span></span></span>
+<span class="r-in"><span><span class="co"># Example 2: uniform 0.5 m/s (approx. 1 knot) current</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fu">knockdown</span><span class="op">(</span><span class="va">ms</span>, u <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">k1</span>, which <span class="op">=</span> <span class="st">"velocity"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">k1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fu">knockdown</span><span class="op">(</span><span class="va">ms</span>, u <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">k1</span>, which <span class="op">=</span> <span class="st">"velocity"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">k1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="knockdown-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Example 3: 1 m/s current at surface, decaying exponentially below</span></span></span>
-<span class="r-in"><span><span class="va">k2</span> <span class="op">&lt;-</span> <span class="fu">knockdown</span><span class="op">(</span><span class="va">ms</span>, u <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="fl">1.0</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span> <span class="op">/</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Example 3: 0.5 m/s surface current, exponential decay below</span></span></span>
+<span class="r-in"><span><span class="va">k2</span> <span class="op">&lt;-</span> <span class="fu">knockdown</span><span class="op">(</span><span class="va">ms</span>, u <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span> <span class="op">/</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">k2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">k2</span>, which <span class="op">=</span> <span class="st">"velocity"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">k2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">k2</span>, which <span class="op">=</span> <span class="st">"velocity"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="knockdown-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 4: as Example 3, but show knockdown and tension</span></span></span>
 <span class="r-in"><span><span class="co"># The red dashed line in the tension plot indicates the</span></span></span>
 <span class="r-in"><span><span class="co"># anchor weight.</span></span></span>
-<span class="r-in"><span><span class="va">k2</span> <span class="op">&lt;-</span> <span class="fu">knockdown</span><span class="op">(</span><span class="va">ms</span>, u <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="fl">1.0</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">depth</span> <span class="op">/</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">k2</span>, which <span class="op">=</span> <span class="st">"knockdown"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">k2</span>, which <span class="op">=</span> <span class="st">"tension"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">k2</span>, which <span class="op">=</span> <span class="st">"knockdown"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">k2</span>, which <span class="op">=</span> <span class="st">"tension"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="knockdown-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Object-orientation Scheme</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2024-01-07</h4>
+            <h4 data-toc-skip class="date">2024-01-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/object_orientation.Rmd" class="external-link"><code>vignettes/object_orientation.Rmd</code></a></small>
       <div class="hidden name"><code>object_orientation.Rmd</code></div>
@@ -105,9 +105,9 @@
 
     
     
-<p>The <a href="https://cran.r-project.org/web/packages/S7/index.html" class="external-link">S7</a>
-scheme is used for objects created by functions in the
-<code>mooring</code> package.</p>
+<p>The <a href="https://CRAN.R-project.org/package=S7" class="external-link">S7</a> scheme is
+used for objects created by functions in the <code>mooring</code>
+package.</p>
 <p>The functions <code><a href="../reference/mooring.html">mooring()</a></code>, <code><a href="../reference/segmentize.html">segmentize()</a></code> and
 <code><a href="../reference/knockdown.html">knockdown()</a></code> all deal with moorings, and they return an
 object that is named so that other functions will know how to deal with
@@ -146,9 +146,9 @@ console:</p>
 <span><span class="co">##  @ tau         : num 0</span></span>
 <span><span class="co">##  @ group       : num 0</span></span></code></pre>
 <p>The individual components can be accessed with the <code>@</code>
-syntax used by <a href="https://cran.r-project.org/web/packages/S7/index.html" class="external-link">S7</a>. For
-example, the buoyancy (the negative of the ‘weight’ in water, expressed
-in kg) as</p>
+syntax used by <a href="https://CRAN.R-project.org/package=S7" class="external-link">S7</a>.
+For example, the buoyancy (the negative of the ‘weight’ in water,
+expressed in kg) as</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span><span class="op">@</span><span class="va">buoyancy</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] -350</span></span></code></pre>

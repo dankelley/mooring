@@ -92,7 +92,7 @@ NULL
 #'     float(), waterDepth = 100)
 #' ms <- segmentize(m)
 #' msk <- knockdown(ms, u = 1)
-#' draw(msk)
+#' plot(msk)
 #'
 ## # Example 2: compare a simple mooring (with inadequate
 ## # buoyancy) with a stiffer one that has extra buoyancy

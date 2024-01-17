@@ -249,10 +249,10 @@ app2 <- function(debug = FALSE) {
             )
             msg <- paste0(msg, "# Demonstrate all 4 plot types (unlike the app)<br>")
             msg <- paste0(msg, "par(mfrow = c(2, 2))<br>")
-            msg <- paste0(msg, "draw(msk, which = \"tension\", fancy = TRUE, showDepths = FALSE)<br>")
-            msg <- paste0(msg, "draw(msk, which = \"shape\", fancy = TRUE)<br>")
-            msg <- paste0(msg, "draw(msk, which = \"knockdown\", fancy = TRUE)<br>")
-            msg <- paste0(msg, "draw(msk, which = \"velocity\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "plot(msk, which = \"tension\", fancy = TRUE, showDepths = FALSE)<br>")
+            msg <- paste0(msg, "plot(msk, which = \"shape\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "plot(msk, which = \"knockdown\", fancy = TRUE)<br>")
+            msg <- paste0(msg, "plot(msk, which = \"velocity\", fancy = TRUE)<br>")
             msg <- paste0(msg, "</pre>")
             shiny::showModal(shiny::modalDialog(shiny::HTML(msg), title = "R code", size = "l"))
         })
@@ -385,7 +385,7 @@ app2 <- function(debug = FALSE) {
                         par(mfrow = c(2, 2), mar = mar, mgp = mpg, cex = cex)
                     }
                     for (choice in input$plotChoices) {
-                        draw(msk, which = choice, fancy = TRUE, showDepths = FALSE)
+                        plot(msk, which = choice, fancy = TRUE, showDepths = FALSE)
                     }
                 }
             },

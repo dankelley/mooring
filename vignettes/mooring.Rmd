@@ -100,12 +100,12 @@ Similarly, the tension between elements is found with `tension()`, and the angle
 
 # Plotting
 
-The plot shown above is quite primitive, so the package offers a `draw()`
+The plot shown above is quite primitive, so the package offers a `plot()`
 function.  For example, this gives a view of tension and shape.
-```{r, fig.cap="**Mooring shape and tension profiles created with draw(). The red dashed line on the right-hand panel represents the anchor weight.**", fig.align="center"}
+```{r, fig.cap="**Mooring shape and tension profiles created with plot(). The red dashed line on the right-hand panel represents the anchor weight.**", fig.align="center"}
 par(mfrow = c(1, 2))
-draw(msk, which = "shape")
-draw(msk, which = "tension")
+plot(msk, which = "shape")
+plot(msk, which = "tension")
 ```
 
 In both instances, the gray line is the shape that would occur with no current.
@@ -116,8 +116,8 @@ the $z$ shown above.
 A fancier version is obtained with
 ```{r, fig.cap="**Mooring shape and tension, with water coloured blue and bottom coloured brown.**", fig.align="center"}
 par(mfrow = c(1, 2))
-draw(msk, which = "shape", fancy = TRUE)
-draw(msk, which = "tension", fancy = TRUE)
+plot(msk, which = "shape", fancy = TRUE)
+plot(msk, which = "tension", fancy = TRUE)
 ```
 
 # Interactive Apps
@@ -175,10 +175,10 @@ c(drag(w, 1), drag(w2, 1))
 ```
 
 All object types store a value for `CD`, but the other entries depend on the
-type. The simplest way to find out what is store in a given type is to create
+type. The simplest way to find out what is stored in a given type is to create
 a sample object and study it, e.g. with
 ```{r}
-str(float())
+float()
 ```
 
 ## Mooring Design

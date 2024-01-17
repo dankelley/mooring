@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
       <h1 data-toc-skip>The mooring package</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2024-01-07</h4>
+            <h4 data-toc-skip class="date">2024-01-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring.Rmd" class="external-link"><code>vignettes/mooring.Rmd</code></a></small>
       <div class="hidden name"><code>mooring.Rmd</code></div>
@@ -220,7 +220,7 @@ below the surface.</p>
 <p>For example, the shape of the knocked-over mooring from the previous
 code block could be plotted with</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/x.html">x</a></span><span class="op">(</span><span class="va">msk</span><span class="op">)</span>, <span class="fu"><a href="../reference/z.html">z</a></span><span class="op">(</span><span class="va">msk</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/x.html">x</a></span><span class="op">(</span><span class="va">msk</span><span class="op">)</span>, <span class="fu"><a href="../reference/z.html">z</a></span><span class="op">(</span><span class="va">msk</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="mooring_files/figure-html/unnamed-chunk-5-1.png" alt="**Mooring shape (not to scale).**" width="700.0000032"><p class="caption">
 <strong>Mooring shape (not to scale).</strong>
@@ -234,15 +234,15 @@ is found with <code><a href="../reference/angle.html">angle()</a></code>.</p>
 <h2 id="plotting">Plotting<a class="anchor" aria-label="anchor" href="#plotting"></a>
 </h2>
 <p>The plot shown above is quite primitive, so the package offers a
-<code><a href="../reference/plot.mooringS7.html">draw()</a></code> function. For example, this gives a view of tension
+<code><a href="../reference/plot.html">plot()</a></code> function. For example, this gives a view of tension
 and shape.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"shape"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"tension"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"shape"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"tension"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="mooring_files/figure-html/unnamed-chunk-6-1.png" alt="**Mooring shape and tension profiles created with draw(). The red dashed line on the right-hand panel represents the anchor weight.**" width="700.0000032"><p class="caption">
-<strong>Mooring shape and tension profiles created with draw(). The red
+<img src="mooring_files/figure-html/unnamed-chunk-6-1.png" alt="**Mooring shape and tension profiles created with plot(). The red dashed line on the right-hand panel represents the anchor weight.**" width="700.0000032"><p class="caption">
+<strong>Mooring shape and tension profiles created with plot(). The red
 dashed line on the right-hand panel represents the anchor
 weight.</strong>
 </p>
@@ -255,8 +255,8 @@ above.</p>
 <p>A fancier version is obtained with</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"shape"</span>, fancy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plot.mooringS7.html">draw</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"tension"</span>, fancy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"shape"</span>, fancy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">msk</span>, which <span class="op">=</span> <span class="st">"tension"</span>, fancy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="mooring_files/figure-html/unnamed-chunk-7-1.png" alt="**Mooring shape and tension, with water coloured blue and bottom coloured brown.**" width="700.0000032"><p class="caption">
 <strong>Mooring shape and tension, with water coloured blue and bottom
@@ -330,10 +330,10 @@ use</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">w</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="../reference/drag.html">drag</a></span><span class="op">(</span><span class="va">w2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1]  534.04 1068.08</span></span></code></pre>
 <p>All object types store a value for <code>CD</code>, but the other
-entries depend on the type. The simplest way to find out what is store
+entries depend on the type. The simplest way to find out what is stored
 in a given type is to create a sample object and study it, e.g. with</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/float.html">float</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;mooring::floatS7&gt;</span></span>
 <span><span class="co">##  @ model       : chr "Kiel SFS40in"</span></span>
 <span><span class="co">##  @ buoyancy    : num 320</span></span>
@@ -360,7 +360,7 @@ despite the tendency of currents to knock it over. The
 <p>As a simplified example, imagine that a mooring is to be placed in
 100 m of water, with a 1/4-inch jacketed wire cable connecting a
 subsurface float to a bottom anchor. How will knockdown vary with
-current strenth? To answer this, we might constract a graph as follows.
+current strength? To answer this, we might construct a graph as follows.
 Similar graphs could be done with different float and wire types.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dankelley.github.io/mooring/" class="external-link">mooring</a></span><span class="op">)</span></span>
@@ -375,7 +375,7 @@ Similar graphs could be done with different float and wire types.</p>
 <span>    <span class="fu"><a href="../reference/depth.html">depth</a></span><span class="op">(</span><span class="va">msk</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.7</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">us</span>, <span class="va">depths</span>,</span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">us</span>, <span class="va">depths</span>,</span>
 <span>    xaxs <span class="op">=</span> <span class="st">"i"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">depths</span><span class="op">)</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span>, lwd <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    xlab <span class="op">=</span> <span class="st">"Horiz. velo. [m/s]"</span>, ylab <span class="op">=</span> <span class="st">"Float depth [m]"</span></span>
 <span><span class="op">)</span></span>
@@ -441,7 +441,7 @@ a line of slope 2/3.</li>
 <span><span class="va">ok</span> <span class="op">&lt;-</span> <span class="va">b</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">d</span> <span class="op">&gt;</span> <span class="fl">0</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>float <span class="op">=</span> <span class="va">f</span><span class="op">[</span><span class="va">ok</span><span class="op">]</span>, drag <span class="op">=</span> <span class="va">d</span><span class="op">[</span><span class="va">ok</span><span class="op">]</span>, buoyancy <span class="op">=</span> <span class="va">b</span><span class="op">[</span><span class="va">ok</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co"># 2</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">drag</span>, <span class="va">df</span><span class="op">$</span><span class="va">buoyancy</span>, xlab <span class="op">=</span> <span class="st">"Drag Force [N]"</span>, ylab <span class="op">=</span> <span class="st">"Buoyancy Force [N]"</span>, log <span class="op">=</span> <span class="st">"xy"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">drag</span>, <span class="va">df</span><span class="op">$</span><span class="va">buoyancy</span>, xlab <span class="op">=</span> <span class="st">"Drag Force [N]"</span>, ylab <span class="op">=</span> <span class="st">"Buoyancy Force [N]"</span>, log <span class="op">=</span> <span class="st">"xy"</span><span class="op">)</span></span>
 <span><span class="co"># 3</span></span>
 <span><span class="va">drag</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">drag</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">drag</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">buoyancy</span> <span class="op">&lt;-</span> <span class="va">drag</span><span class="op">^</span><span class="op">(</span><span class="fl">3</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># the factor is just for illustration</span></span>

@@ -1,6 +1,6 @@
 Package: mooring
 Title: Design and Model Oceanographic Moorings
-Version: 0.1.6
+Version: 0.1.7
 Authors@R:
     person(given = "Dan",
            family = "Kelley",
