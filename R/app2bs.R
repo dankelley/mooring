@@ -427,8 +427,8 @@ app2bs <- function(debug = FALSE) {
                         } else {
                             plot(msk,
                                 which = choice, mar = mar, mgp = mgp, fancy = TRUE, showDepths = FALSE,
-                                ylim = ylim, xaxs = "r", yaxs = "r"
-                                # ylim = ylim, yaxs = "r"
+                                #<<>>ylim = ylim,
+                                xaxs = "r", yaxs = "r"
                             )
                         }
                         if (!titleShown) {

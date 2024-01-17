@@ -175,10 +175,10 @@ c(drag(w, 1), drag(w2, 1))
 ```
 
 All object types store a value for `CD`, but the other entries depend on the
-type. The simplest way to find out what is store in a given type is to create
+type. The simplest way to find out what is stored in a given type is to create
 a sample object and study it, e.g. with
 ```{r}
-str(float())
+float()
 ```
 
 ## Mooring Design

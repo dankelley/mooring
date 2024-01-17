@@ -4,22 +4,27 @@
 \alias{summary}
 \title{Summarize a mooring or a mooringElement}
 \arguments{
-\item{x}{a \code{mooring} object, created with \code{\link[=mooring]{mooring()}},
-or a \code{moringElement} object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=wire]{wire()}},
-or any of the other functions that create mooring elements.}
+\item{x}{either a \code{mooring} object, created with \code{\link[=mooring]{mooring()}},
+or a \code{mooringElement} object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=wire]{wire()}},
+or any of the related functions that create mooring elements.}
 }
 \description{
 Summarize a mooring or a mooringElement
+
+Summarize a mooring element
 }
 \examples{
 library(mooring)
 a <- anchor()
-a
+summary(a)
+
 m <- mooring(anchor(), wire(length = 80), float("HMB 20"), waterDepth = 100)
-m
+summary(m)
 
 }
 \author{
 Dan Kelley
 part of the item.
+
+Dan Kelley
 }
