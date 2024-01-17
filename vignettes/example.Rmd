@@ -100,8 +100,8 @@ structure. Note the setting of `xlim` to provide space for the labels.
 u <- function(depth) 0.3 * exp(-depth / 1400)
 layout(matrix(1:2, nrow = 1), widths = c(0.75, 0.25))
 msk <- knockdown(ms, u = u)
-draw(msk, "knockdown", xlim = c(0, 4.0), showDetails = TRUE)
-draw(msk, "velocity")
+plot(msk, "knockdown", xlim = c(0, 4.0), showDetails = TRUE)
+plot(msk, "velocity")
 ```
 
 # Knockdown-Speed Diagram
@@ -251,8 +251,8 @@ mDraggy <- mooring(
 msDraggy <- segmentize(mDraggy, by = 5)
 layout(matrix(1:2, nrow = 1), widths = c(0.75, 0.25))
 mskDraggy <- knockdown(msDraggy, u = u)
-draw(mskDraggy, "knockdown", xlim = c(0, 8.0), showDetails = TRUE)
-draw(mskDraggy, "velocity")
+plot(mskDraggy, "knockdown", xlim = c(0, 8.0), showDetails = TRUE)
+plot(mskDraggy, "velocity")
 ```
 
 # References

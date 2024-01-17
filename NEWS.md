@@ -1,3 +1,11 @@
+# mooring 0.1.7
+
+* Rename `draw()` to `plot()`, undoing the change made in the 0.1.5
+  version.
+* Rename `printMooring()` to `summary()`.  It really is a summary, not
+  a printout, and we want users to know that they can examine the
+  contents in the normal way, by naming the item.
+
 # mooring 0.1.6
 
 * Change `app2bs()` to increase processing speed, mainly by using coarser

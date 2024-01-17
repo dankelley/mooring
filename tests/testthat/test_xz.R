@@ -14,7 +14,7 @@ test_that("plot with x-y superimposed", {
     m <- mooring(anchor(), wire(length=100), float("HMB 20"), waterDepth = 120)
     expect_silent(ms <- segmentize(m))
     expect_silent(msk <- knockdown(ms, u=1))
-    expect_silent(draw(msk))
+    expect_silent(plot(msk))
     X <- sapply(msk@elements, \(e) e@x)
     Z <- sapply(msk@elements, \(e) e@z)
     lines(X, -Z, col=2, type="o", pch=20, cex=0.5)

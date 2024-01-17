@@ -35,7 +35,7 @@ m <- mooring(anchor(),
     float(), waterDepth = 100)
 ms <- segmentize(m)
 msk <- knockdown(ms, u = 1)
-draw(msk)
+plot(msk)
 
 
 }

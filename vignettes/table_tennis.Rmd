@@ -145,7 +145,7 @@ m <- mooring(a, w, f, waterDepth = L)
 
 ms <- segmentize(m, L / 10)
 msk <- knockdown(ms, u = u)
-draw(msk, fancy = TRUE)
+plot(msk, fancy = TRUE)
 # Check against theory
 points(x, L - l, col = 2, cex = 2)
 ```

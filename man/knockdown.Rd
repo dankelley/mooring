@@ -47,7 +47,7 @@ specified by the \code{u} argument.  The computation is iterated at most
 values falls below the product of \code{convergenceCriterion} and wire
 length. The returned result has an attribute named \code{u} that holds
 the value of that argument, and this is how a later call to
-\code{\link[=draw]{draw()}} is able to display a velocity profile; see
+\code{\link[=plot]{plot()}} is able to display a velocity profile; see
 Examples 2 and 3.
 }
 \examples{
@@ -57,26 +57,26 @@ m <- mooring(anchor(), wire(length = 30), float("16in Viny"), waterDepth = 50)
 ms <- segmentize(m)
 
 # Example 1: no current
-draw(ms)
+plot(ms)
 
 # Example 2: uniform 0.5 m/s (approx. 1 knot) current
 par(mfrow = c(1, 2))
 k1 <- knockdown(ms, u = 0.5)
-draw(k1, which = "velocity")
-draw(k1)
+plot(k1, which = "velocity")
+plot(k1)
 
 # Example 3: 0.5 m/s surface current, exponential decay below
 k2 <- knockdown(ms, u = function(depth) 0.5 * exp(-depth / 30))
 par(mfrow = c(1, 2))
-draw(k2)
-draw(k2, which = "velocity")
+plot(k2)
+plot(k2, which = "velocity")
 
 # Example 4: as Example 3, but show knockdown and tension
 # The red dashed line in the tension plot indicates the
 # anchor weight.
 par(mfrow = c(1, 2))
-draw(k2, which = "knockdown")
-draw(k2, which = "tension")
+plot(k2, which = "knockdown")
+plot(k2, which = "tension")
 
 }
 \author{
