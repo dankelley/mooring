@@ -71,6 +71,9 @@ segmentize <- function(m, by = 1, debug = 0) {
     for (i in rev(seq_along(rval@elements))) {
         zz <- zz + rval@elements[[i]]@height
         rval@elements[[i]]@z <- zz # z is defined at TOP of item
+        rval@elements[[i]]@z0 <- zz # z is defined at TOP of item
+        rval@elements[[i]]@x <- 0
+        rval@elements[[i]]@x0 <- 0
         rval@elements[[i]]@tau <- tau[i]
     }
     mooringDebug(debug, "} # segmentize()\n")

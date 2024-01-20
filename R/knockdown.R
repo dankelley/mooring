@@ -85,104 +85,120 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
     if (!is.anchor(m@elements[[n]])) {
         stop("the bottom element of a mooring must be created with anchor()")
     }
-    # rename x,z into x0,z0 for the stagnant (u=0) case
-    for (i in seq_len(n)) {
-        m@elements[[i]]@x0 <- m@elements[[i]]@x
-        m@elements[[i]]@z0 <- m@elements[[i]]@z
-    }
+    #<done in segmentize> rename x,z into x0,z0 for the stagnant (u=0) case
+    #<done in segmentize>for (i in seq_len(n)) {
+    #<done in segmentize>    m@elements[[i]]@x0 <- m@elements[[i]]@x
+    #<done in segmentize>    m@elements[[i]]@z0 <- m@elements[[i]]@z
+    #<done in segmentize>}
     # start actual calculation, which relies on buoyancy B and drag, D.
     waterDepth <- m@waterDepth
-    tau <- vector("numeric", n)
-    phi <- rep(0.0, length.out = n)
-    zold <- z(m)
+    Tau <- vector("numeric", n)
+    H <- sapply(1:n, \(i) m@elements[[i]]@height)
+    Phi <- rep(0.0, length.out = n)
+    X <- x(m)
+    Z <- z(m)
+    zold <- Z
     angleold <- angle(m)
-    RMSChangeAngle <- NA # in degrees, even though phi is in radians
-    RMSChangeDepth <- NA
+    RMSAngleChange <- NA # radians, converted to degrees for convergence test and reporting
+    RMSDepthChange <- NA
     for (iteration in seq_len(maxiteration)) {
         mooringDebug(debug, "Iteration ", iteration, " (of possibly ", maxiteration, ")\n", sep="")
         iterationCount <- iteration
         B <- 9.81 * buoyancy(m) # note conversion from kg to N
         D <- drag(m, u)
         # Next two are Equation 5 in the Mooring Model vignette.
-        tau[1] <- sqrt(D[1]^2 + B[1]^2)
-        phi[1] <- atan2(D[1], B[1])
+        Tau[1] <- sqrt(D[1]^2 + B[1]^2)
+        Phi[1] <- atan2(D[1], B[1])
         # Next block, run only if more than 2 elements, computes rest of tau and phi
         # values, using Equation 8 in the Mooring Model vignette.
         # For tension at bookmark B1c, see bookmarks B1a and B1b.
         if (n > 2L) {
             for (i in seq(2L, n - 1L)) {
-                Cprev <- cos(phi[i - 1L])
-                Sprev <- sin(phi[i - 1L])
-                tauprev <- tau[i - 1L]
+                Cprev <- cos(Phi[i - 1L])
+                Sprev <- sin(Phi[i - 1L])
+                Tauprev <- Tau[i - 1L]
                 #tau[i] <- sqrt((D[i] + tau[i - 1] * sin(phi[i - 1]))^2 + (B[i] + tau[i - 1] * cos(phi[i - 1]))^2) # bookmark B1c
                 #phi[i] <- atan2(D[i] + tau[i - 1] * sin(phi[i - 1]), B[i] + tau[i - 1] * cos(phi[i - 1]))
-                tau[i] <- sqrt((D[i] + tauprev * Sprev)^2 + (B[i] + tauprev * Cprev)^2)
-                phi[i] <- atan2(D[i] + tauprev * Sprev, B[i] + tauprev * Cprev)
+                Tau[i] <- sqrt((D[i] + Tauprev * Sprev)^2 + (B[i] + Tauprev * Cprev)^2)
+                Phi[i] <- atan2(D[i] + Tauprev * Sprev, B[i] + Tauprev * Cprev)
             }
         }
         # carry tension and angle through mooring (just for plotting; not used in calculations)
-        tau[n] <- tau[n - 1L]
-        phi[n] <- phi[n - 1L]
-        C <- cos(phi)
-        S <- sin(phi)
+        Tau[n] <- Tau[n - 1L]
+        Phi[n] <- Phi[n - 1L]
+        C <- cos(Phi)
+        S <- sin(Phi)
         # Clip the angle (do not allow it to run "inside" the sediment)
-        phi <- ifelse(phi > pi / 2, pi / 2, phi)
+        Phi <- ifelse(Phi > pi / 2, pi / 2, Phi)
         zm <- z(m)
         if (debug) {
             cat("Initially, first/last few data are as follows\n")
             look <- c(1, 2, n - 1, n)
-            print(data.frame(angle = 180 / pi * phi, z = zm)[look, ],
-                digits = 4
-            )
+            print(data.frame(angle = 180 / pi * Phi, z = zm)[look, ], digits = 4)
         }
         # Compute position from bottom up, starting at x=0 and z=-waterDepth
-        m@elements[[n]]@phi <- phi[n - 1] # does this matter? Is it ever used?
-        m@elements[[n]]@x <- 0
-        m@elements[[n]]@z <- -waterDepth + m@elements[[n]]@height
-        m@elements[[n]]@tau <- tau[n]
+        #(put after iteration loop) m@elements[[n]]@phi <- Phi[n - 1] # does this matter? Is it ever used?
+        #(put after iteration loop) m@elements[[n]]@x <- 0
+        #(put after iteration loop) m@elements[[n]]@z <- -waterDepth + m@elements[[n]]@height
+        #(put after iteration loop) m@elements[[n]]@tau <- Tau[n]
+        X[n] <- 0
+        Z[n] <- -waterDepth + H[n]
         # FIXME: do not use OO here; transfer stuff only when iterations are finished
         for (i in seq(n - 1L, 1L, -1L)) {
-            m@elements[[i]]@phi <- phi[i]
-            m@elements[[i]]@tau <- tau[i]
-            H <- m@elements[[i]]@height
-            m@elements[[i]]@x <- m@elements[[i + 1]]@x + H * S[i]
-            m@elements[[i]]@z <- m@elements[[i + 1]]@z + H * C[i]
+            #<> m@elements[[i]]@phi <- Phi[i]
+            #<> m@elements[[i]]@tau <- Tau[i]
+            #<> H <- m@elements[[i]]@height
+            #<> m@elements[[i]]@x <- m@elements[[i + 1]]@x + H * S[i]
+            #<> m@elements[[i]]@z <- m@elements[[i + 1]]@z + H * C[i]
+            X[i] <- X[i + 1] + H[i] * S[i]
+            Z[i] <- Z[i + 1] + H[i] * C[i]
         }
-        ztop <- m@elements[[1]]@z
+        ztop <- Z[[1]] # m@elements[[1]]@z
         if (ztop > 0) {
             warning(sprintf("mooring line too long for depth (top element %.2f m in air); expect odd results", ztop))
         }
-        zm <- z(m)
-        anglem <- angle(m)
-        RMSChangeDepth <- RMS(zm - zold)
-        RMSChangeAngle <- 180 / pi * RMS(anglem - angleold)
+        zm <- Z # z(m)
+        anglem <- Phi # angle(m)
+        RMSDepthChange <- RMS(zm - zold)
+        RMSAngleChange <- RMS(anglem - angleold)
         if (debug) {
             cat("After calculation, first/last few data are as follows\n")
             look <- c(1, 2, n - 1, n)
-            print(data.frame(angle = 180 / pi * phi, z = zm)[look, ],
+            print(data.frame(angle = 180 / pi * Phi, z = zm)[look, ],
                 digits = 4
             )
         }
         if (debug) {
-            cat(sprintf("RMS angle change: %.4g deg\n", 180 / pi * RMSChangeAngle))
-            cat(sprintf("RMS depth change: %.4g m\n", RMSChangeDepth))
+            cat(sprintf("RMS angle change: %.8g deg\n", 180 / pi * RMSAngleChange))
+            cat(sprintf("RMS depth change: %.8g m\n", RMSDepthChange))
         }
-        if (RMSChangeAngle < pi / 180 * convergence) {
+        if ((RMSAngleChange * 180 / pi) < convergence) {
             break
         }
         zold <- zm
         angleold <- anglem
         mooringDebug(debug, "\n")
+    } # iteration loop
+    # Copy results into the object (note extraction, to avoid validating on every [[<- operation)
+    e <- m@elements
+    for (i in seq_len(n)) {
+        O <- e[[i]]
+        O@phi <- Phi[i]
+        O@x <- X[i]
+        O@z <- Z[i]
+        O@tau <- Tau[i]
+        e[[i]] <- O
     }
-    if (RMSChangeAngle >= pi / 180 * convergence) {
+    m@elements <- e
+    if ((RMSAngleChange * 180 / pi) >= convergence) {
         warning(sprintf(
             "convergence not achieved in %s; RMS angle change %.4g deg, RMS depth change %.4g m\n",
-            pluralize("iteration", n = maxiteration), 180 / pi * RMSChangeAngle, RMSChangeDepth
+            pluralize("iteration", n = maxiteration), 180 / pi * RMSAngleChange, RMSDepthChange
         ))
     }
     m@u <- u
     attr(m, "iteration") <- iterationCount
-    attr(m, "RMSChangeAngle") <- 180 / pi * RMSChangeAngle
-    attr(m, "RMSChangeDepth") <- RMSChangeDepth
+    attr(m, "RMSAngleChange") <- 180 / pi * RMSAngleChange
+    attr(m, "RMSDepthChange") <- RMSDepthChange
     m
 } # knockdown()
