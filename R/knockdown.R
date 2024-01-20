@@ -111,13 +111,20 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
         # For tension at bookmark B1c, see bookmarks B1a and B1b.
         if (n > 2L) {
             for (i in seq(2L, n - 1L)) {
-                tau[i] <- sqrt((D[i] + tau[i - 1] * sin(phi[i - 1]))^2 + (B[i] + tau[i - 1] * cos(phi[i - 1]))^2) # bookmark B1c
-                phi[i] <- atan2(D[i] + tau[i - 1] * sin(phi[i - 1]), B[i] + tau[i - 1] * cos(phi[i - 1]))
+                Cprev <- cos(phi[i - 1L])
+                Sprev <- sin(phi[i - 1L])
+                tauprev <- tau[i - 1L]
+                #tau[i] <- sqrt((D[i] + tau[i - 1] * sin(phi[i - 1]))^2 + (B[i] + tau[i - 1] * cos(phi[i - 1]))^2) # bookmark B1c
+                #phi[i] <- atan2(D[i] + tau[i - 1] * sin(phi[i - 1]), B[i] + tau[i - 1] * cos(phi[i - 1]))
+                tau[i] <- sqrt((D[i] + tauprev * Sprev)^2 + (B[i] + tauprev * Cprev)^2)
+                phi[i] <- atan2(D[i] + tauprev * Sprev, B[i] + tauprev * Cprev)
             }
         }
         # carry tension and angle through mooring (just for plotting; not used in calculations)
         tau[n] <- tau[n - 1L]
         phi[n] <- phi[n - 1L]
+        C <- cos(phi)
+        S <- sin(phi)
         # Clip the angle (do not allow it to run "inside" the sediment)
         phi <- ifelse(phi > pi / 2, pi / 2, phi)
         zm <- z(m)
@@ -133,11 +140,12 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
         m@elements[[n]]@x <- 0
         m@elements[[n]]@z <- -waterDepth + m@elements[[n]]@height
         m@elements[[n]]@tau <- tau[n]
+        # FIXME: do not use OO here; transfer stuff only when iterations are finished
         for (i in seq(n - 1L, 1L, -1L)) {
             m@elements[[i]]@phi <- phi[i]
             m@elements[[i]]@tau <- tau[i]
-            m@elements[[i]]@x <- m@elements[[i + 1]]@x + m@elements[[i]]@height * sin(m@elements[[i]]@phi)
-            m@elements[[i]]@z <- m@elements[[i + 1]]@z + m@elements[[i]]@height * cos(m@elements[[i]]@phi)
+            m@elements[[i]]@x <- m@elements[[i + 1]]@x + m@elements[[i]]@height * S[i]
+            m@elements[[i]]@z <- m@elements[[i + 1]]@z + m@elements[[i]]@height * C[i]
         }
         ztop <- m@elements[[1]]@z
         if (ztop > 0) {
