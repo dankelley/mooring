@@ -144,8 +144,9 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
         for (i in seq(n - 1L, 1L, -1L)) {
             m@elements[[i]]@phi <- phi[i]
             m@elements[[i]]@tau <- tau[i]
-            m@elements[[i]]@x <- m@elements[[i + 1]]@x + m@elements[[i]]@height * S[i]
-            m@elements[[i]]@z <- m@elements[[i + 1]]@z + m@elements[[i]]@height * C[i]
+            H <- m@elements[[i]]@height
+            m@elements[[i]]@x <- m@elements[[i + 1]]@x + H * S[i]
+            m@elements[[i]]@z <- m@elements[[i + 1]]@z + H * C[i]
         }
         ztop <- m@elements[[1]]@z
         if (ztop > 0) {
