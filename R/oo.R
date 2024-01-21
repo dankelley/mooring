@@ -6,6 +6,9 @@ mooringS7 <- S7::new_class("mooringS7",
         waterDepth = class_numeric,
         u = class_any
     ),
+    validator = function(self) {
+        NULL
+    },
     constructor = function(..., waterDepth = NA_real_) {
         # cat("in mooring constructor\n")
         elements <- unlist(list(...)[[1]]) # FIXME: why is this so complicated?
@@ -33,21 +36,12 @@ mooringElementS7 <- S7::new_class("mooringElementS7",
         phi = new_property(class_numeric, default = 0.0),
         tau = new_property(class_numeric, default = 0.0),
         group = new_property(class_numeric, default = 0)
-    ) # ,
-    # constructor = function(...) {
-    #    # cat("in mooringElement constructor\n")
-    #    elements <- list(...)
-    #    print(names(elements))
-    #    imodel <- grep("^mod", names(elements))
-    #    ioriginalName <- grep("^orig", names(elements))
-    #    if (!length(ioriginalName) && length(imodel) > 0L) {
-    #        cat("BEFORE:\n");print(elements)
-    #        elements <- c(elements, originalName = elements[[imodel[1]]])
-    #        cat("AFTER:\n");print(elements)
-    #    }
-    #    new_object(S7_object(), elements = elements)
-    # }
+    ),
+    validator = function(self) {
+        NULL
+    }
 )
+
 # properties = list(waterDepth = class_numeric)
 anchorS7 <- S7::new_class("anchorS7", parent = mooringElementS7, package = "mooring")
 chainS7 <- S7::new_class("chainS7", parent = mooringElementS7, package = "mooring")
