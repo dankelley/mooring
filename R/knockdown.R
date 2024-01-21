@@ -134,7 +134,7 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
         if (debug) {
             cat("Initially, first/last few data are as follows\n")
             look <- c(1, 2, n - 1, n)
-            print(data.frame(angle = 180 / pi * Phi, z = zm)[look, ], digits = 4)
+            print(data.frame(angle = 180 / pi * Phi, z = zm, x = X)[look, ], digits = 4)
         }
         # Compute position from bottom up, starting at x=0 and z=-waterDepth
         #(put after iteration loop) m@elements[[n]]@phi <- Phi[n - 1] # does this matter? Is it ever used?
@@ -164,9 +164,7 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
         if (debug) {
             cat("After calculation, first/last few data are as follows\n")
             look <- c(1, 2, n - 1, n)
-            print(data.frame(angle = 180 / pi * Phi, z = zm)[look, ],
-                digits = 4
-            )
+            print(data.frame(angle = 180 / pi * Phi, z = zm, x = X)[look, ], digits = 4)
         }
         if (debug) {
             cat(sprintf("RMS angle change: %.8g deg\n", 180 / pi * RMSAngleChange))
