@@ -123,8 +123,9 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
         zm <- z(m)
         if (debug) {
             cat("Initially, first/last few data are as follows\n")
+            xm <- x(m)
             look <- c(1, 2, n - 1, n)
-            print(data.frame(angle = 180 / pi * phi, z = zm)[look, ],
+            print(data.frame(angle = 180 / pi * phi, z = zm, x = xm)[look, ],
                 digits = 4
             )
         }
@@ -150,7 +151,8 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
         if (debug) {
             cat("After calculation, first/last few data are as follows\n")
             look <- c(1, 2, n - 1, n)
-            print(data.frame(angle = 180 / pi * phi, z = zm)[look, ],
+            xm <- x(m)
+            print(data.frame(angle = 180 / pi * phi, z = zm, x = xm)[look, ],
                 digits = 4
             )
         }
