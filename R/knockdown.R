@@ -176,18 +176,18 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
         zold <- zm
         angleold <- anglem
         mooringDebug(debug, "\n")
+        # Copy results into the object (note extraction, to avoid validating on every [[<- operation)
+        e <- m@elements
+        for (i in seq_len(n)) {
+            O <- e[[i]]
+            O@phi <- Phi[i]
+            O@x <- X[i]
+            O@z <- Z[i]
+            O@tau <- Tau[i]
+            e[[i]] <- O
+        }
+        m@elements <- e
     } # iteration loop
-    # Copy results into the object (note extraction, to avoid validating on every [[<- operation)
-    e <- m@elements
-    for (i in seq_len(n)) {
-        O <- e[[i]]
-        O@phi <- Phi[i]
-        O@x <- X[i]
-        O@z <- Z[i]
-        O@tau <- Tau[i]
-        e[[i]] <- O
-    }
-    m@elements <- e
     if ((RMSAngleChange * 180 / pi) >= convergence) {
         warning(sprintf(
             "convergence not achieved in %s; RMS angle change %.4g deg, RMS depth change %.4g m\n",
