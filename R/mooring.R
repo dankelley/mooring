@@ -124,10 +124,10 @@ mooring <- function(..., waterDepth = NA) {
     dots <- list(...)
     n <- length(dots)
     if (n < 3L) {
-        stop("need 3 or more arguments")
+        stop("need 3 or more mooring elements, but only got ", n)
     }
     if (!is.anchor(dots[[1]])) {
-        stop("first argument must be created with anchor()")
+        stop("first mooring element must be created with anchor()")
     }
     w <- which(sapply(dots, \(x) !is.mooringElement(x)))
     if (length(w)) {
