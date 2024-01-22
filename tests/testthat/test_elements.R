@@ -2,8 +2,8 @@ library(mooring)
 
 test_that("mooring construction", {
     e <- 1
-    expect_error(mooring(e), "need 3 or more arguments")
-    expect_error(expect_warning(mooring(e, e, e), "This is not an S7 object"), "first argument must")
+    expect_error(mooring(e), "need 3 or more mooring elements")
+    expect_error(expect_warning(mooring(e, e, e), "This is not an S7 object"), "first mooring element must")
     a <- anchor()
     expect_error(mooring(a, e, e), "parameters at the following indices are not")
     expect_error(mooring(anchor(), wire(length = 1), float()), "must specify waterDepth")

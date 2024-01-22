@@ -41,8 +41,6 @@ mooringElementS7 <- S7::new_class("mooringElementS7",
         NULL
     }
 )
-
-# properties = list(waterDepth = class_numeric)
 anchorS7 <- S7::new_class("anchorS7", parent = mooringElementS7, package = "mooring")
 chainS7 <- S7::new_class("chainS7", parent = mooringElementS7, package = "mooring")
 connectorS7 <- S7::new_class("connectorS7", parent = mooringElementS7, package = "mooring")
