@@ -434,9 +434,13 @@ app2bs <- function(debug = FALSE) {
                         if (!titleShown) {
                             mtext(
                                 sprintf(
-                                    "Converged to %.03fm and %.02fdeg in %s",
-                                    attr$RMSChangeDepth,
-                                    attr$RMSChangeAngle,
+                                    if (attr$converged) {
+                                        "Converged to %.03fm and %.02fdeg in %s"
+                                    } else {
+                                        "Not yet converged (%.03fm and %.02fdeg in %s)"
+                                    },
+                                    attr$RMSDepthChange,
+                                    attr$RMSAngleChange,
                                     pluralize("iteration", n = attr$iteration)
                                 ),
                                 cex = par("cex"),
