@@ -1,3 +1,7 @@
+# mooring 0.1.8
+
+* Change `knockdown()` to increase speed by 10X.
+
 # mooring 0.1.7
 
 * Rename `draw()` to `plot()`, undoing the change made in the 0.1.5
