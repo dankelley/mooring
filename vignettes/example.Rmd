@@ -123,7 +123,7 @@ mooring knockdown, as follows. Note that the $x$ axis of the resultant plot is
 showing velocity at the depth of the ADCP.
 ```{r fig.cap="**Figure 3. Speed-knockdown summary diagram**", out.width="100%", fig.align="center", dev.args=list(pointsize=9)}
 par(mar = c(3, 3, 1, 1), mgp = c(2, 0.7, 0), mfrow = c(1, 1))
-N <- 10
+N <- 20
 u0 <- seq(0, 0.3, length.out = N)
 dz <- rep(NA, N)
 U <- rep(NA, N)
