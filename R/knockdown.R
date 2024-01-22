@@ -72,7 +72,7 @@
 #' @importFrom utils tail
 #' @export
 #' @author Dan Kelley
-knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L) {
+knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0L) {
     debug <- max(0L, as.integer(debug))
     # check for well-formed parameters
     if (!is.mooring(m)) {
@@ -198,5 +198,6 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 30, debug = 0L
     attr(m, "iteration") <- iterationCount
     attr(m, "RMSAngleChange") <- 180 / pi * RMSAngleChange
     attr(m, "RMSDepthChange") <- RMSDepthChange
+    attr(m, "converged") <- iterationCount < maxiteration
     m
 } # knockdown()
