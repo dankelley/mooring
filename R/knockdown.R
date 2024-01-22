@@ -70,6 +70,7 @@
 #'
 #' @importFrom graphics grid
 #' @importFrom utils tail
+#' @importFrom S7 prop
 #' @export
 #' @author Dan Kelley
 knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0L) {
@@ -180,10 +181,14 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0
         e <- m@elements
         for (i in seq_len(n)) {
             O <- e[[i]]
-            O@phi <- Phi[i]
-            O@x <- X[i]
-            O@z <- Z[i]
-            O@tau <- Tau[i]
+            #O@phi <- Phi[i]
+            #O@x <- X[i]
+            #O@z <- Z[i]
+            #O@tau <- Tau[i]
+            S7::prop(O, "phi", check = FALSE) <- Phi[i]
+            S7::prop(O, "x", check = FALSE) <- X[i]
+            S7::prop(O, "z", check = FALSE) <- Z[i]
+            S7::prop(O, "tau", check = FALSE) <- Tau[i]
             e[[i]] <- O
         }
         m@elements <- e

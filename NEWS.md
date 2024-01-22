@@ -1,6 +1,6 @@
 # mooring 0.1.8
 
-* Change `knockdown()` to increase speed by 10X.
+* Change `knockdown()` to increase speed by approximately 40X.
 
 # mooring 0.1.7
 
