@@ -4,7 +4,7 @@
 \alias{drag}
 \title{Drag on mooring elements}
 \usage{
-drag(m, u, rho = 1027, phi = 0)
+drag(m, u, phi = TRUE, rho = 1027)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
@@ -14,6 +14,9 @@ mooring-element object, created with}
 or a function that returns that velocity as a function of depth (m)
 below the ocean surface.}
 
+\item{phi}{passed to \code{\link[=area]{area()}}, so see that function's documentation
+for the somewhat subtle details.}
+
 \item{rho}{a numeric value giving
 water density in kg/m^3. The default value of 1027 is
 likely to be sufficient for most calculations, given that
@@ -22,9 +25,6 @@ percent, although it might make sense to use a smaller value
 in lake applications.  Note that the overall force balance
 is more sensitive to other things, as discussed in the \dQuote{Details}
 section of the documentation for \code{\link[=buoyancy]{buoyancy()}}.}
-
-\item{phi}{angle (in degrees) of element compared with a vertical line. This
-is passed to \code{\link[=area]{area()}}.}
 }
 \value{
 \code{drag} returns a numeric vector of horizontal drag force in

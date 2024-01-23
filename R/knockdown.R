@@ -103,10 +103,10 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0
     RMSAngleChange <- NA # radians, converted to degrees for convergence test and reporting
     RMSDepthChange <- NA
     for (iteration in seq_len(maxiteration)) {
-        mooringDebug(debug, "Iteration ", iteration, " (of possibly ", maxiteration, ")\n", sep="")
+        mooringDebug(debug, "Iteration ", iteration, " (of possibly ", maxiteration, ")\n", sep = "")
         iterationCount <- iteration
         B <- 9.81 * buoyancy(m) # note conversion from kg to N
-        D <- drag(m, u)
+        D <- drag(m, u = u)
         # Next two are Equation 5 in the Mooring Model vignette.
         Tau[1] <- sqrt(D[1]^2 + B[1]^2)
         Phi[1] <- atan2(D[1], B[1])
@@ -118,8 +118,8 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0
                 Cprev <- cos(Phi[i - 1L])
                 Sprev <- sin(Phi[i - 1L])
                 Tauprev <- Tau[i - 1L]
-                #tau[i] <- sqrt((D[i] + tau[i - 1] * sin(phi[i - 1]))^2 + (B[i] + tau[i - 1] * cos(phi[i - 1]))^2) # bookmark B1c
-                #phi[i] <- atan2(D[i] + tau[i - 1] * sin(phi[i - 1]), B[i] + tau[i - 1] * cos(phi[i - 1]))
+                # tau[i] <- sqrt((D[i] + tau[i - 1] * sin(phi[i - 1]))^2 + (B[i] + tau[i - 1] * cos(phi[i - 1]))^2) # bookmark B1c
+                # phi[i] <- atan2(D[i] + tau[i - 1] * sin(phi[i - 1]), B[i] + tau[i - 1] * cos(phi[i - 1]))
                 Tau[i] <- sqrt((D[i] + Tauprev * Sprev)^2 + (B[i] + Tauprev * Cprev)^2)
                 Phi[i] <- atan2(D[i] + Tauprev * Sprev, B[i] + Tauprev * Cprev)
             }
@@ -138,10 +138,10 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0
             print(data.frame(angle = 180 / pi * Phi, z = zm, x = X)[look, ], digits = 4)
         }
         # Compute position from bottom up, starting at x=0 and z=-waterDepth
-        #(put after iteration loop) m@elements[[n]]@phi <- Phi[n - 1] # does this matter? Is it ever used?
-        #(put after iteration loop) m@elements[[n]]@x <- 0
-        #(put after iteration loop) m@elements[[n]]@z <- -waterDepth + m@elements[[n]]@height
-        #(put after iteration loop) m@elements[[n]]@tau <- Tau[n]
+        # (put after iteration loop) m@elements[[n]]@phi <- Phi[n - 1] # does this matter? Is it ever used?
+        # (put after iteration loop) m@elements[[n]]@x <- 0
+        # (put after iteration loop) m@elements[[n]]@z <- -waterDepth + m@elements[[n]]@height
+        # (put after iteration loop) m@elements[[n]]@tau <- Tau[n]
         X[n] <- 0
         Z[n] <- -waterDepth + H[n]
         # FIXME: do not use OO here; transfer stuff only when iterations are finished
@@ -181,10 +181,10 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0
         e <- m@elements
         for (i in seq_len(n)) {
             O <- e[[i]]
-            #O@phi <- Phi[i]
-            #O@x <- X[i]
-            #O@z <- Z[i]
-            #O@tau <- Tau[i]
+            # O@phi <- Phi[i]
+            # O@x <- X[i]
+            # O@z <- Z[i]
+            # O@tau <- Tau[i]
             S7::prop(O, "phi", check = FALSE) <- Phi[i]
             S7::prop(O, "x", check = FALSE) <- X[i]
             S7::prop(O, "z", check = FALSE) <- Z[i]
