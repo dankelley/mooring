@@ -17,9 +17,10 @@
 #'
 #' @param phi a numeric or logical value that controls how the angle
 #' is computed.  If this is FALSE, no angle is used.  If it is TRUE,
-#' then a value of `phi` is sought within `me`, and that is used,
-#' or else 0 is used. Finally, if `phi` is numeric, then it is taken
-#' to be the angle the element makes to the vertical, in radians.
+#' which is the default, then the value of `phi` within the mooring
+#' element is used (or 0 is used, if there is no value).  Finally, if
+#' `phi` is a single numerical value, then that is taken as the angle
+#' to the vertical, in radians.
 #'
 #' @return `area` returns a numeric value of the side-view area, in m^2.
 #'
