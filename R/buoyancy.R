@@ -31,19 +31,14 @@
 #'
 #' @export
 #'
-## @references
-## Hamilton, J. M. "The Validation and Practical Applications of a Sub-Surface
-## Mooring Model." Canadian Technical Report of Hydrography and Ocean
-## Sciences. Bedford Institute of Oceanography, 1989.
-#'
 #' @author Dan Kelley
 buoyancy <- function(m, debug = 0L) {
-    if (is.mooring(m)) {
-        mooringDebug(debug, "computing buoyancy for ", length(m@elements), "-element mooring\n", sep = "")
-        rval <- sapply(m@elements, \(mi) buoyancy(mi, debug = debug))
-    } else if (is.mooringElement(m)) {
+    if (is.mooringElement(m)) {
         mooringDebug(debug, "computing buoyancy for a ", class(m)[1], " element\n", sep = "")
         rval <- m@buoyancy # FIXME: what about chopped-up wire/chain?
+    } else if (is.mooring(m)) {
+        mooringDebug(debug, "computing buoyancy for ", length(m@elements), "-element mooring\n", sep = "")
+        rval <- sapply(m@elements, \(mi) buoyancy(mi, debug = debug))
     } else {
         warning("object is neither a mooring nor a mooringElement")
         rval <- NA

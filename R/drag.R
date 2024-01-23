@@ -17,10 +17,10 @@
 #'
 #' @template uTemplate
 #'
-#' @template rhoTemplate
+#' @param phi passed to [area()], so see that function's documentation
+#' for the somewhat subtle details.
 #'
-#' @param phi angle (in degrees) of element compared with a vertical line. This
-#' is passed to [area()].
+#' @template rhoTemplate
 #'
 #' @return `drag` returns a numeric vector of horizontal drag force in
 #' Newtons.
@@ -28,7 +28,7 @@
 #' @export
 #'
 #' @author Dan Kelley
-drag <- function(m, u, rho = 1027, phi = 0.0) {
+drag <- function(m, u, phi = TRUE, rho = 1027) {
     if (length(rho) > 1L && length(rho) != length(m)) {
         stop("length of rho, ", length(rho), " must match length of m, ", length(m))
     }

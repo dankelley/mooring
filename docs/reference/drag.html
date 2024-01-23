@@ -84,7 +84,7 @@ force (in Newtons) with
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">drag</span><span class="op">(</span><span class="va">m</span>, <span class="va">u</span>, rho <span class="op">=</span> <span class="fl">1027</span>, phi <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">drag</span><span class="op">(</span><span class="va">m</span>, <span class="va">u</span>, phi <span class="op">=</span> <span class="cn">TRUE</span>, rho <span class="op">=</span> <span class="fl">1027</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -100,6 +100,11 @@ or a function that returns that velocity as a function of depth (m)
 below the ocean surface.</p></dd>
 
 
+<dt>phi</dt>
+<dd><p>passed to <code><a href="area.html">area()</a></code>, so see that function's documentation
+for the somewhat subtle details.</p></dd>
+
+
 <dt>rho</dt>
 <dd><p>a numeric value giving
 water density in kg/m^3. The default value of 1027 is
@@ -109,11 +114,6 @@ percent, although it might make sense to use a smaller value
 in lake applications.  Note that the overall force balance
 is more sensitive to other things, as discussed in the “Details”
 section of the documentation for <code><a href="buoyancy.html">buoyancy()</a></code>.</p></dd>
-
-
-<dt>phi</dt>
-<dd><p>angle (in degrees) of element compared with a vertical line. This
-is passed to <code><a href="area.html">area()</a></code>.</p></dd>
 
 </dl></div>
     <div id="value">
