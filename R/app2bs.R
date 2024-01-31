@@ -21,6 +21,9 @@ app2bs <- function(debug = FALSE) {
     dmsg <- function(...) {
         if (debugMode) message(...)
     }
+    if (!requireNamespace("bslib")) {
+        stop("must install.packages(\"bslib\") for app2bs() to work")
+    }
     if (!requireNamespace("shiny")) {
         stop("must install.packages(\"shiny\") for app2bs() to work")
     }

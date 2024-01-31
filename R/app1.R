@@ -3,8 +3,8 @@
 #' Run a GUI app for interactive simulations
 #'
 #' This makes a simple mooring with an anchor, a line, and a float, in
-#' a variety of current profiles. It differs from [app2()] in having
-#' an instrument as well as a float.
+#' a variety of current profiles. It differs from [app2()] and [app2bs()]
+#' in having an instrument as well as a float.
 #'
 #' @export
 #'

@@ -14,6 +14,8 @@ output.}
 This makes a simple mooring with an anchor, an instrument, and
 a float, in a variety of current profiles. It differs from \code{\link[=app1]{app1()}}
 in having the instrument, and in having some interface changes.
+It differs from \code{\link[=app2bs]{app2bs()}} in being shiny-based, as opposed to
+bslib-based.
 }
 \seealso{
 Other interactive apps: 
