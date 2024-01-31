@@ -22,7 +22,7 @@ app2bs <- function(debug = FALSE) {
         if (debugMode) message(...)
     }
     if (!requireNamespace("shiny")) {
-        stop("must install.packages(\"shiny\") for app2() to work")
+        stop("must install.packages(\"shiny\") for app2bs() to work")
     }
     debugMode <- debug
     anchorChoices <- anchor("?")
