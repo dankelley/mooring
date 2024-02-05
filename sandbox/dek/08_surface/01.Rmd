@@ -1,0 +1,44 @@
+---
+title: ice-tethered device
+author: Dan Kelley
+---
+
+$$
+\phi = \tan^{-1}\frac{D}{-B}
+$$
+
+```{r}
+library(mooring)
+# Construct 1/2-inch stainless steel ball.
+# https://en.wikipedia.org/wiki/Stainless_steel
+R <- (0.5 / 2) * 0.0254
+rho <- mean(c(7500, 8000))
+rhoWater <- 2025
+g <- 9.8
+buoyancy <- 4 / 3 * pi * R^3 * (rhoWater - rho)
+buoyancyKg <- buoyancy / g
+ball <- instrument("ball",
+    buoyancy = buoyancyKg,
+    height = 2 * R, area = pi * R^3, CD = 1.3
+)
+u <- 1
+phi <- atan2(drag(ball, u = u), -buoyancy(ball))
+L <- 0.5
+dx <- L * sin(phi)
+dz <- L - L * cos(phi)
+```
+
+Area: $D=`r round(ball@area, 9)`$
+
+Buoyancy: $D=`r round(ball@buoyancy, 4)`$N
+
+Drag: $D=`r round(ball@area, 9)`$
+
+Angle: $\phi=`r round(phi *180/pi, 2)`^\circ$
+
+$L=`r round(L, 3)`$m
+
+$\Delta x=`r round(dx, 3)`$m
+
+$\Delta z=`r round(dz, 3)`$m
+
