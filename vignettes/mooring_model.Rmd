@@ -34,6 +34,7 @@ An approach to analysing realistic oceanographic moorings is to use lumped-mass
 theory, in which elements such as floats and instrument packages are
 parameterized by their buoyancy and drag characteristics, and in which cables
 envisioned as connected line elements.  This approach was taken by
+@moller_computer_1976 in a Fortran program, and more recently by
 @dewey_mooring_1999 in a GUI-based Matlab system.  The present treatment is of
 similar foundation, although with some added simplifications (such as
 unidirectional current) that are relevant to the basic problem of computing
@@ -128,7 +129,7 @@ consideration of its force balance yields
 \tag{4}
 D_1 = \tau_1 \sin\phi_1
 \end{equation}
-and
+along with
 \begin{equation}
 \tag{5}
 B_1 = \tau_1 \cos\phi_1
@@ -137,8 +138,8 @@ where $\tau_1$ is the tension between this element and the one below it, and
 $\phi_1$ is the angle that this tension force makes to the vertical.
 
 Consider first the case of a depth-independent current, so that the drag $D_i$
-on the $i$-th element my be computed without consideration for the position of
-the element in the water column. In such a case,  both $D_1$ and $B_1$ are
+on the $i$-th element may be computed without consideration for the position of
+the element in the water column. In such a case, both $D_1$ and $B_1$ are
 known, these two equations may be solved for $\tau_1$ and $\phi_1$, yielding
 \begin{equation}
 \tag{6}
@@ -150,9 +151,19 @@ and
 \phi_1 = \tan^{-1}\frac{D_1}{B_1}
 \end{equation}
 
-If there are more than 2 elements in the mooring, this same reasoning may be
-extended to the next element, although now there is a tension force pulling
-upward. This situation is described by
+In the case of a single anchor, a short wire, and a single float, equations 6
+and 7 will yield a solution for the angle of the wire, which in turn yields a
+value for the depth of that float.  Now, we may relax the assumption of
+depth-independent current, by a simple scheme: solve the equations again with
+the updated float depth, in which case the drag will be altered from the value
+initially inferred.  This process can then be repeated, yielding a more
+accurate estimate of the float depth and thus of the drag.  Iterating this
+process can thus yield a practical estimate of the configuration of this
+simple mooring.
+
+If there are more than 2 elements in the mooring, a similar line of reasoning
+may be extended to the next element, although now there is a tension force
+pulling upward. This situation is described by
 \begin{equation}
 \tag{8}
 D_2 + \tau_1 \sin\phi_1 = \tau_2 \sin\phi_2
@@ -197,24 +208,15 @@ $n$:
    tension below the top ($i=1)$ element.
 2. Use Equations 12 and 13 to compute $\tau_i$ and $\phi_i$ for $i=2$.
 3. Continue as in step 2, until reaching the bottom ($i=n-1$) element.
-
-If the current varies with depth, then the drag of a given element will depend
-on depth of the element, which in turn depends on the shape of the mooring.
-This may be handled by an iterative scheme.  In the first iteration, the
-vertical positions of mooring elements are inferred by summing their heights,
-and the above procedure is used to infer $\phi_i$. Then, these angles are used
-to calculate a second estimate of element locations, and the procedure is
-repeated using drags appropriate to those locations.  This may be repeated
-until the solution converges to within a stated criterion.  In practice, for
-professional moorings that are sufficiently taut to meet scientific objectives,
-the changes in element depths are likely to be only a few percent of water
-depth, and so the need for iteration is arguable, given that uncertainties
-about velocity variations on such scales.
+4. Update the depth location of all elements and repeat the computation
+   of steps 1 to 3.  Repeat this procedure until some convergence
+   criterion is reached; @moller_computer_1976 suggested basing this
+   criterion on the changes in $\phi$ from one iteration to the next.
 
 # Example
 
 ```{r echo=FALSE}
-library(mooring)
+suppressPackageStartupMessages(library(mooring))
 f <- float("HMB 20")
 w <- wire(length = 100)
 ```
