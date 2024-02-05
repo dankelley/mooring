@@ -5,6 +5,8 @@
 #' This makes a simple mooring with an anchor, an instrument, and
 #' a float, in a variety of current profiles. It differs from [app1()]
 #' in having the instrument, and in having some interface changes.
+#' It differs from [app2bs()] in being shiny-based, as opposed to
+#' bslib-based.
 #'
 #' @param debug logical value indicating whether to print debugging
 #' output.

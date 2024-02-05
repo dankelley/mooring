@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Mooring Model</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2024-01-23</h4>
+            <h4 data-toc-skip class="date">2024-02-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring_model.Rmd" class="external-link"><code>vignettes/mooring_model.Rmd</code></a></small>
       <div class="hidden name"><code>mooring_model.Rmd</code></div>
@@ -122,12 +122,13 @@ buoyancy and drag.</p>
 lumped-mass theory, in which elements such as floats and instrument
 packages are parameterized by their buoyancy and drag characteristics,
 and in which cables envisioned as connected line elements. This approach
-was taken by <span class="citation">Dewey (1999)</span> in a GUI-based
-Matlab system. The present treatment is of similar foundation, although
-with some added simplifications (such as unidirectional current) that
-are relevant to the basic problem of computing “knock-down”, i.e. the
-vertical displacement of instruments that is caused by slanting of the
-mooring line.</p>
+was taken by <span class="citation">Moller (1976)</span> in a Fortran
+program, and more recently by <span class="citation">Dewey (1999)</span>
+in a GUI-based Matlab system. The present treatment is of similar
+foundation, although with some added simplifications (such as
+unidirectional current) that are relevant to the basic problem of
+computing “knock-down”, i.e. the vertical displacement of instruments
+that is caused by slanting of the mooring line.</p>
 </div>
 <div class="section level2">
 <h2 id="model">Model<a class="anchor" aria-label="anchor" href="#model"></a>
@@ -216,14 +217,14 @@ a current.</p>
 consideration of its force balance yields <span class="math display">\[\begin{equation}
 \tag{4}
 D_1 = \tau_1 \sin\phi_1
-\end{equation}\]</span> and <span class="math display">\[\begin{equation}
+\end{equation}\]</span> along with <span class="math display">\[\begin{equation}
 \tag{5}
 B_1 = \tau_1 \cos\phi_1
 \end{equation}\]</span> where <span class="math inline">\(\tau_1\)</span> is the tension between this
 element and the one below it, and <span class="math inline">\(\phi_1\)</span> is the angle that this tension
 force makes to the vertical.</p>
 <p>Consider first the case of a depth-independent current, so that the
-drag <span class="math inline">\(D_i\)</span> on the <span class="math inline">\(i\)</span>-th element my be computed without
+drag <span class="math inline">\(D_i\)</span> on the <span class="math inline">\(i\)</span>-th element may be computed without
 consideration for the position of the element in the water column. In
 such a case, both <span class="math inline">\(D_1\)</span> and <span class="math inline">\(B_1\)</span> are known, these two equations may be
 solved for <span class="math inline">\(\tau_1\)</span> and <span class="math inline">\(\phi_1\)</span>, yielding <span class="math display">\[\begin{equation}
@@ -234,9 +235,18 @@ and
 \tag{7}
 \phi_1 = \tan^{-1}\frac{D_1}{B_1}
 \end{equation}\]</span></p>
-<p>If there are more than 2 elements in the mooring, this same reasoning
-may be extended to the next element, although now there is a tension
-force pulling upward. This situation is described by <span class="math display">\[\begin{equation}
+<p>In the case of a single anchor, a short wire, and a single float,
+equations 6 and 7 will yield a solution for the angle of the wire, which
+in turn yields a value for the depth of that float. Now, we may relax
+the assumption of depth-independent current, by a simple scheme: solve
+the equations again with the updated float depth, in which case the drag
+will be altered from the value initially inferred. This process can then
+be repeated, yielding a more accurate estimate of the float depth and
+thus of the drag. Iterating this process can thus yield a practical
+estimate of the configuration of this simple mooring.</p>
+<p>If there are more than 2 elements in the mooring, a similar line of
+reasoning may be extended to the next element, although now there is a
+tension force pulling upward. This situation is described by <span class="math display">\[\begin{equation}
 \tag{8}
 D_2 + \tau_1 \sin\phi_1 = \tau_2 \sin\phi_2
 \end{equation}\]</span> and <span class="math display">\[\begin{equation}
@@ -270,25 +280,15 @@ depth-independent current, in which <span class="math inline">\(D_i\)</span> and
 top (<span class="math inline">\(i=1)\)</span> element.</li>
 <li>Use Equations 12 and 13 to compute <span class="math inline">\(\tau_i\)</span> and <span class="math inline">\(\phi_i\)</span> for <span class="math inline">\(i=2\)</span>.</li>
 <li>Continue as in step 2, until reaching the bottom (<span class="math inline">\(i=n-1\)</span>) element.</li>
+<li>Update the depth location of all elements and repeat the computation
+of steps 1 to 3. Repeat this procedure until some convergence criterion
+is reached; <span class="citation">Moller (1976)</span> suggested basing
+this criterion on the changes in <span class="math inline">\(\phi\)</span> from one iteration to the next.</li>
 </ol>
-<p>If the current varies with depth, then the drag of a given element
-will depend on depth of the element, which in turn depends on the shape
-of the mooring. This may be handled by an iterative scheme. In the first
-iteration, the vertical positions of mooring elements are inferred by
-summing their heights, and the above procedure is used to infer <span class="math inline">\(\phi_i\)</span>. Then, these angles are used to
-calculate a second estimate of element locations, and the procedure is
-repeated using drags appropriate to those locations. This may be
-repeated until the solution converges to within a stated criterion. In
-practice, for professional moorings that are sufficiently taut to meet
-scientific objectives, the changes in element depths are likely to be
-only a few percent of water depth, and so the need for iteration is
-arguable, given that uncertainties about velocity variations on such
-scales.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<pre><code><span><span class="co">## Loading required package: S7</span></span></code></pre>
 <p>Figure 2 shows the result of simulating a 20-inch Hydro Float Mooring
 Buoy (with <span class="math inline">\(34.5\)</span>kg buoyancy)
 connected to a bottom anchor with 100 m of quarter-inch jacketed wire
@@ -335,6 +335,14 @@ Dewey, Richard K. 1999. <span>“Mooring <span>Design</span> &amp;
 <span>Dynamics</span>—a <span>Matlab</span>® Package for Designing and
 Analyzing Oceanographic Moorings.”</span> <em>Marine Models</em> 1 (1):
 103–57. <a href="https://doi.org/10.1016/S1369-9350(00)00002-X" class="external-link">https://doi.org/10.1016/S1369-9350(00)00002-X</a>.
+</div>
+<div id="ref-moller_computer_1976" class="csl-entry">
+Moller, Donald A. 1976. <span>“A <span>Computer</span>
+<span>Program</span> for the <span>Design</span> and <span>Static</span>
+<span>Analysis</span> of <span>Single</span>-<span>Point</span>
+<span>Subsurface</span> <span>Mooring</span> <span>Systems</span>:
+<span>NOYFB</span>.”</span> WHOI-76-59. Woods Hole, MA: Woods Hole
+Oceanographic Institution. <a href="https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content" class="external-link">https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content</a>.
 </div>
 </div>
 </div>
