@@ -427,7 +427,7 @@ S7::method(`plot`, mooring:::mooringS7) <- function(
 S7::method(`summary`, mooring:::mooringS7) <- function(
     x) {
     debug <- 0
-    #message("SUMMARY of whole mooring")
+    # message("SUMMARY of whole mooring")
     mooringDebug(debug, "summary.mooring() {\n", sep = "")
     elementary <- is.mooringElement(x)
     if (elementary) {
@@ -580,7 +580,7 @@ S7::method(`summary`, mooring:::mooringS7) <- function(
 S7::method(`summary`, mooring:::mooringElementS7) <- function(
     x) {
     debug <- 0
-    #message("SUMMARY of element")
+    # message("SUMMARY of element")
     mooringDebug(debug, "summary(mooringElement) {\n", sep = "")
     elementary <- is.mooringElement(x)
     if (!elementary) {
