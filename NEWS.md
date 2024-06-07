@@ -1,3 +1,7 @@
+# mooring 0.1.9
+
+* Improve `clamped()` example.
+
 # mooring 0.1.8
 
 * Change `knockdown()` to increase speed by approximately 40X.
