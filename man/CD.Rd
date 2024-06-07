@@ -8,7 +8,8 @@ CD(m)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
-mooring-element object, created with}
+mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}},
+\code{\link[=connector]{connector()}}, \code{\link[=instrument]{instrument()}}, \code{\link[=misc]{misc()}}, \code{\link[=release]{release()}}, or \code{\link[=wire]{wire()}}.}
 }
 \value{
 \code{CD} returns a numeric vector of drag coefficient(s).

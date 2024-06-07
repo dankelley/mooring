@@ -2,13 +2,14 @@
 % Please edit documentation in R/area.R
 \name{area}
 \alias{area}
-\title{Side-view Area of Mooring Element}
+\title{Get Mooring/Element side-view Area}
 \usage{
 area(m, phi = TRUE)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
-mooring-element object, created with}
+mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}},
+\code{\link[=connector]{connector()}}, \code{\link[=instrument]{instrument()}}, \code{\link[=misc]{misc()}}, \code{\link[=release]{release()}}, or \code{\link[=wire]{wire()}}.}
 
 \item{phi}{a numeric or logical value that controls how the angle
 is computed.  If this is FALSE, no angle is used.  If it is TRUE,
@@ -21,11 +22,15 @@ to the vertical, in radians.}
 \code{area} returns a numeric value of the side-view area, in m^2.
 }
 \description{
-Returns the area of the mooring element, projected onto a vertical plane.
-This is computed using the \code{area} item stored within the element,
-adjusted for the angle, depending on the value of \code{phi}. Note that
-elements created by \code{\link[=float]{float()}} are assumed to be spherical, and so
-their orientation is not taken into account.
+\code{area} returns a numeric vector of mooring element side-view
+area(s), in square metres, taking into account the orientation of
+the element with respect to the vertical. (Floats are assumed to be
+spherical, so the orientation is irrelevant. This is not the case
+for wires and instruments.) The return value will be a single
+number if \code{m} is a single element but in a typical mooring it will
+have multiple values. The areas are listed with the top element
+first, i.e. in the reverse order to that used in constructing the
+mooring with \code{\link[=mooring]{mooring()}}.
 }
 \details{
 When initially created, objects do not contain an angle value, but

@@ -36,9 +36,11 @@
 #' # Notice that M is 40m long (the sum of the wire lengths)
 #' # but that m is longer, because the instrument height is
 #' # included.
-#' sum(sapply(m@elements, \(e) e@height)) # unclamped instrument
-#' sum(sapply(M@elements, \(e) e@height)) # clamped instrument
-#' i@height # instrument height
+## sum(sapply(m@elements, \(e) e@height)) # unclamped instrument
+#' sum(height(m))
+## sum(sapply(M@elements, \(e) e@height)) # clamped instrument
+#' sum(height(M))
+#' height(i)
 #'
 #' @export
 #'

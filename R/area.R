@@ -1,12 +1,16 @@
 # vim:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
 
-#' Side-view Area of Mooring Element
+#' Get Mooring/Element side-view Area
 #'
-#' Returns the area of the mooring element, projected onto a vertical plane.
-#' This is computed using the `area` item stored within the element,
-#' adjusted for the angle, depending on the value of `phi`. Note that
-#' elements created by [float()] are assumed to be spherical, and so
-#' their orientation is not taken into account.
+#' `area` returns a numeric vector of mooring element side-view
+#' area(s), in square metres, taking into account the orientation of
+#' the element with respect to the vertical. (Floats are assumed to be
+#' spherical, so the orientation is irrelevant. This is not the case
+#' for wires and instruments.) The return value will be a single
+#' number if `m` is a single element but in a typical mooring it will
+#' have multiple values. The areas are listed with the top element
+#' first, i.e. in the reverse order to that used in constructing the
+#' mooring with [mooring()].
 #'
 #' When initially created, objects do not contain an angle value, but
 #' such values are inserted by [knockdown()]. Moorings that are
@@ -52,33 +56,21 @@
 #' @author Dan Kelley
 area <- function(m, phi = TRUE) {
     if (is.mooring(m)) {
-        # message("area case 1")
-        # print(areaFactor)
-        # print(sapply(m, \(mi) mi@area))
         sapply(m@elements, \(e) area(e, phi))
     } else if (is.mooringElement(m)) {
-        #message("DAN 1")
         if (is.float(m)) {
-            # message("DAN 2a")
-            #message("Dan 1")
             areaFactor <- 1.0
         } else {
-            # message("DAN 2b")
             if (is.logical(phi)) {
-                #message("DAN 3a")
                 if (phi) {
-                    #message("DAN 3a1")
                     areaFactor <- if (length(m@phi)) cos(m@phi) else 1 # FIXME: is this a good assumption?
                 } else {
-                    # message("DAN 3a2")
                     areaFactor <- 1.0
                 }
             } else {
-                # message("DAN 4")
                 areaFactor <- cos(phi)
             }
         }
-        # message("areaFactor=", areaFactor)
         areaFactor * m@area
     } else {
         stop("area can only be computed for a mooring or an individual element")

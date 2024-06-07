@@ -32,16 +32,18 @@ a <- anchor("my anchor", buoyancy = -50, height = 0, CD = 0)
 w <- function(length) wire(length = length)
 i <- instrument("SBE37 microcat clamp-on style")
 f <- float("my float", buoyancy = 20, height = 0, area = 0.2^2, CD = 1.3)
+
 # Construct unclamped mooring (m) and clamped mooring (M).
 m <- mooring(a, w(20), i, w(20), f, waterDepth = 50)
 M <- mooring(a, w(20), clamped(i), w(20), f, waterDepth = 50)
+
 # Compute the mooring lengths by summing the element heights.
 # Notice that M is 40m long (the sum of the wire lengths)
 # but that m is longer, because the instrument height is
 # included.
-sum(sapply(m@elements, \(e) e@height)) # unclamped instrument
-sum(sapply(M@elements, \(e) e@height)) # clamped instrument
-i@height # instrument height
+sum(height(m))
+sum(height(M))
+height(i)
 
 }
 \author{

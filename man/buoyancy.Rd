@@ -8,7 +8,8 @@ buoyancy(m, debug = 0L)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
-mooring-element object, created with}
+mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}},
+\code{\link[=connector]{connector()}}, \code{\link[=instrument]{instrument()}}, \code{\link[=misc]{misc()}}, \code{\link[=release]{release()}}, or \code{\link[=wire]{wire()}}.}
 
 \item{debug}{an integer value (or a numeric that can be converted to an
 integer) that controls debugging. If this is positive, then some debugging

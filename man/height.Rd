@@ -2,25 +2,34 @@
 % Please edit documentation in R/height.R
 \name{height}
 \alias{height}
-\title{Get mooring/element height}
+\title{Get Mooring/Element Height}
 \usage{
 height(m)
 }
 \arguments{
 \item{m}{either a mooring object, created by \code{\link[=mooring]{mooring()}}, or a
-mooring-element object, created with}
+mooring-element object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=chain]{chain()}},
+\code{\link[=connector]{connector()}}, \code{\link[=instrument]{instrument()}}, \code{\link[=misc]{misc()}}, \code{\link[=release]{release()}}, or \code{\link[=wire]{wire()}}.}
 }
 \value{
-\code{height} returns a numeric vector of element(s) height, in m.  This will be
-a single value if the first element is a single element, or a longer vector if it
-is a mooring.
+\code{height} returns a numeric vector of mooring element height(s), in
+metres.  This will be a single value if \code{m} is a single element (as in
+the first Example) or a vector, for a typical mooring, which has
+multiple elements (as in the second Example). Note that, in the
+latter case, the heights are listed with the top element first,
+i.e. in the reverse order to that used in constructing the mooring
+with \code{\link[=mooring]{mooring()}}.
 }
 \description{
-Get mooring/element height
+Get Mooring/Element Height
 }
 \examples{
 library(mooring)
-height(float())
+# Example 1. height of an individual element
+height(float("HMB 20"))
+
+# Example 2. height of individual mooring elements, starting
+# with the float.
 m <- mooring(anchor(), wire(length = 100), float("HMB 20"), waterDepth = 120)
 height(m)
 
