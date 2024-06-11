@@ -1,3 +1,7 @@
+# mooring 0.1.10
+
+* Improve anchor drawing (issue #66).
+
 # mooring 0.1.9
 
 * Improve `clamped()` example.

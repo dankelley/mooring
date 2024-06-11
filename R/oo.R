@@ -274,7 +274,8 @@ S7::method(`plot`, mooring:::mooringS7) <- function(
     # draw anchor (only makes sense for shape diagrams)
     if (which == "shape") {
         waterDepth <- attr(m, "waterDepth")
-        A <- waterDepth - max(depth(m))
+        n <- length(m@elements)
+        A <- m@elements[[n]]@height
         anchorSymbol <- list(x = sqrt(3.0 / 4.0) * c(-A, 0, A), y = waterDepth - c(0, A, 0))
         polygon(anchorSymbol, col = colStagnant)
     }

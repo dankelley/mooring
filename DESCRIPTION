@@ -1,6 +1,6 @@
 Package: mooring
 Title: Design and Model Oceanographic Moorings
-Version: 0.1.9
+Version: 0.1.10
 Authors@R:
     person(given = "Dan",
            family = "Kelley",
@@ -12,7 +12,7 @@ Description: Calculates the response of oceanographic moorings to horizontal cur
 Depends:
     R (>= 4.3.0), S7
 Imports:
-    bslib, 
+    bslib,
     shiny
 Suggests:
     knitr,
