@@ -13,7 +13,7 @@
 #' Examples 2 and 3.
 #'
 #' @param m an object of the `"mooring"` class, usually created with
-#' [segmentize()].
+#' [mooring()], followed by a call to [segmentize()].
 #'
 #' @template uTemplate
 #'
@@ -200,9 +200,19 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0
         ))
     }
     m@u <- u
-    attr(m, "iteration") <- iterationCount
-    attr(m, "RMSAngleChange") <- 180 / pi * RMSAngleChange
-    attr(m, "RMSDepthChange") <- RMSDepthChange
-    attr(m, "converged") <- iterationCount < maxiteration
+    insufficientBuoyancy <- max(depth(m)) > waterDepth
+    #attr(m, "iteration") <- iterationCount
+    #attr(m, "RMSAngleChange") <- 180 / pi * RMSAngleChange
+    #attr(m, "RMSDepthChange") <- RMSDepthChange
+    #attr(m, "converged") <- iterationCount < maxiteration
+    #attr(m, "insufficientBuoyancy") <- insufficientBuoyancy
+    m@attributes$iteration <- iterationCount
+    m@attributes$RMSAngleChange <- 180 / pi * RMSAngleChange
+    m@attributes$RMSDepthChange <- RMSDepthChange
+    m@attributes$converged <- iterationCount < maxiteration
+    m@attributes$insufficientBuoyancy <- insufficientBuoyancy
+    if (insufficientBuoyancy) {
+        warning("More buoyancy is needed to lift all mooring elements off the bottom")
+    }
     m
 } # knockdown()

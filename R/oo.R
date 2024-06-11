@@ -4,7 +4,8 @@ mooringS7 <- S7::new_class("mooringS7",
     properties = list(
         elements = class_list, # holds mooringElement items
         waterDepth = class_numeric,
-        u = class_any
+        u = class_any,
+        attributes = class_list
     ),
     validator = function(self) {
         NULL
@@ -15,7 +16,10 @@ mooringS7 <- S7::new_class("mooringS7",
         # cat("elements[[1]] follows\n");print(elements[[1]])
         if (!is.anchor(elements[[1]])) stop("element 1 is not an anchor")
         if (is.na(waterDepth)) stop("must specify waterDepth")
-        new_object(S7_object(), elements = elements, waterDepth = waterDepth, u = 0.0)
+        new_object(S7_object(),
+            elements = elements, waterDepth = waterDepth, u = 0.0,
+            attributes = list()
+        )
     }
 )
 
@@ -273,7 +277,7 @@ S7::method(`plot`, mooring:::mooringS7) <- function(
     # message("plot 15")
     # draw anchor (only makes sense for shape diagrams)
     if (which == "shape") {
-        waterDepth <- attr(m, "waterDepth")
+        waterDepth <- m@waterDepth
         n <- length(m@elements)
         A <- m@elements[[n]]@height
         anchorSymbol <- list(x = sqrt(3.0 / 4.0) * c(-A, 0, A), y = waterDepth - c(0, A, 0))
@@ -403,6 +407,11 @@ S7::method(`plot`, mooring:::mooringS7) <- function(
         }
     }
     mtext(title, side = 1, cex = par("cex"))
+    if (isTRUE(m@attributes$insufficientBuoyancy)) {
+        mtext("mooring needs more buoyancy",
+            side = 3, line = -1, cex = 1.1 * par("cex"), col = 2
+        )
+    }
     mooringDebug(debug, "} # plot()\n", sep = "")
 }
 
@@ -435,16 +444,16 @@ S7::method(`summary`, mooring:::mooringS7) <- function(
         stop("internal programming error: how did an element call this?")
     }
     n <- length(x@elements)
-    if (is.null(attr(x, "segmentized"))) {
+    if (!isTRUE(x@attributes$segmentized)) {
         cat(sprintf(
             "Mooring in %gm of water that has %d elements, listed from the top down:\n",
             x@waterDepth, n
         ))
     } else {
-        if (is.null(attr(x, "u"))) {
+        if (is.null(x@u)) {
             cat("Segmentized mooring with", n, "elements, listed from the top down:\n")
         } else {
-            cat("Segmentized a knocked-over mooring with", n, "elements, listed from the top down:\n")
+            cat("Segmentized knocked-over mooring with", n, "elements, listed from the top down:\n")
         }
     }
     prefix <- "  "

@@ -31,9 +31,9 @@
 #'
 #' @author Dan Kelley
 anchor <- function(model = "1 Railway Wheel", buoyancy = NULL, height = NULL, CD = NULL) {
-    #message("about to try anchorS7...")
-    #print(anchorS7())
-    #message("... did it work?")
+    # message("about to try anchorS7...")
+    # print(anchorS7())
+    # message("... did it work?")
     data("mooringElements", package = "mooring", envir = environment())
     mooringElements <- get("mooringElements")
     if (model == "?") {
@@ -67,16 +67,15 @@ anchor <- function(model = "1 Railway Wheel", buoyancy = NULL, height = NULL, CD
 
 #' Find Anchor Weight of a Mooring
 #'
-#' @param m an object of class `"mooring"`, created with [mooring()].
+#' @template mTemplate
 #'
-#' @return `anchorWeight` returns the weight (i.e. the negative of the
-#' buoyancy) of the anchor in the mooring.
+#' @return `anchorWeight` returns the weight of the mooring anchor,
+#' in kg.
 #'
 #' @export
 #'
 #' @author Dan Kelley
-anchorWeight <- function(m)
-{
+anchorWeight <- function(m) {
     if (!is.mooring(m)) {
         stop("m must be a mooring object, created with mooring()")
     }

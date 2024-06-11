@@ -7,11 +7,11 @@
 anchorWeight(m)
 }
 \arguments{
-\item{m}{an object of class \code{"mooring"}, created with \code{\link[=mooring]{mooring()}}.}
+\item{m}{a mooring object, created by \code{\link[=mooring]{mooring()}}.}
 }
 \value{
-\code{anchorWeight} returns the weight (i.e. the negative of the
-buoyancy) of the anchor in the mooring.
+\code{anchorWeight} returns the weight of the mooring anchor,
+in kg.
 }
 \description{
 Find Anchor Weight of a Mooring

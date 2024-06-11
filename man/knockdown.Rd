@@ -8,7 +8,7 @@ knockdown(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0L)
 }
 \arguments{
 \item{m}{an object of the \code{"mooring"} class, usually created with
-\code{\link[=segmentize]{segmentize()}}.}
+\code{\link[=mooring]{mooring()}}, followed by a call to \code{\link[=segmentize]{segmentize()}}.}
 
 \item{u}{either a non-negative number indicating depth-independent velocity,
 or a function that returns that velocity as a function of depth (m)

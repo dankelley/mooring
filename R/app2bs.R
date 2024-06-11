@@ -404,7 +404,7 @@ app2bs <- function(debug = FALSE) {
                         "exp(-depth/300)" = function(depth) input$u * exp(-depth / 300)
                     )
                     msk <- knockdown(ms, u, debug = debug)
-                    attr <- attributes(msk)
+                    diagnostics <- msk@diagnostics
                     mar <- c(0.5, 2.5, 3.75, 0.5)
                     mgp <- c(1.5, 0.5, 0)
                     cex <- 1.2
@@ -437,14 +437,14 @@ app2bs <- function(debug = FALSE) {
                         if (!titleShown) {
                             mtext(
                                 sprintf(
-                                    if (attr$converged) {
+                                    if (diagnostics$converged) {
                                         "Converged to %.03fm and %.02fdeg in %s"
                                     } else {
                                         "Not yet converged (%.03fm and %.02fdeg in %s)"
                                     },
-                                    attr$RMSDepthChange,
-                                    attr$RMSAngleChange,
-                                    pluralize("iteration", n = attr$iteration)
+                                    diagnostics$RMSDepthChange,
+                                    diagnostics$RMSAngleChange,
+                                    pluralize("iteration", n = diagnostics$iteration)
                                 ),
                                 cex = par("cex"),
                                 col = 2,
