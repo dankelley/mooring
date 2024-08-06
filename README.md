@@ -12,11 +12,11 @@
 The goal of the `mooring` package is to facilitate computations in the R
 language of the deformation of oceanographic moorings by ocean currents.
 It builds on Fortran code discussed by Moller (1976), which evolved into
-a new form as discussed by James M. Hamilton, Fowler, and Belliveau
-(1997) and J. M. Hamilton (1989), and then a Matlab form discussed by
-Dewey (1999). It is more limited than these earlier works, e.g. in
-considering only unidirectional currents, in ignoring the stretching of
-mooring components, and in ignoring the stresses involved during mooring
+a new form as discussed by Hamilton, Fowler, and Belliveau (1997) and
+Hamilton (1989), and then a Matlab form discussed by Dewey (1999). It is
+more limited than these earlier works, e.g. in considering only
+unidirectional currents, in ignoring the stretching of mooring
+components, and in ignoring the stresses involved during mooring
 descent.
 
 In addition to a fairly broad suite of functions, the package also
@@ -64,7 +64,7 @@ m <- mooring(anchor(), wire(length = 100), float("16in Viny"), waterDepth = 120)
 ms <- segmentize(m)
 # Apply a depth-invariant 0.5 m/s current.
 msk <- knockdown(ms, u = 0.5)
-draw(msk, fancy = TRUE)
+plot(msk, fancy = TRUE)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
@@ -107,7 +107,7 @@ Designing and Analyzing Oceanographic Moorings.” *Marine Models* 1 (1):
 
 <div id="ref-hamilton_validation_1989" class="csl-entry">
 
-Hamilton, J. M. 1989. “The Validation and Practical Applications of a
+Hamilton, James M. 1989. “The Validation and Practical Applications of a
 Sub-Surface Mooring Model.” 119. Bedford Institute of Oceanography.
 <https://waves-vagues.dfo-mpo.gc.ca/Library/112322.pdf>.
 
@@ -127,8 +127,11 @@ Correction.” *Journal of Atmospheric and Oceanic Technology* 14 (3):
 
 Moller, Donald A. 1976. “A Computer Program for the Design and Static
 Analysis of Single-Point Subsurface Mooring Systems: NOYFB.” WHOI-76-59.
-Woods Hole, MA: Woods Hole Oceanographic Institution.
-<https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content>.
+Woods Hole, MA: Woods Hole Oceanographic Institution.[
+https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content
+](
+           https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content
+           ).
 
 </div>
 

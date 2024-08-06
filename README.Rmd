@@ -75,10 +75,10 @@ m <- mooring(anchor(), wire(length = 100), float("16in Viny"), waterDepth = 120)
 ms <- segmentize(m)
 # Apply a depth-invariant 0.5 m/s current.
 msk <- knockdown(ms, u = 0.5)
-draw(msk, fancy = TRUE)
+plot(msk, fancy = TRUE)
 ```
 
-# Acknowledgments 
+# Acknowledgments
 
 The mooring-element properties that are stored in the
 `mooringElements` database stem from three main sources. The first was
