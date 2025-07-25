@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mooring</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.11</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
       <h1 data-toc-skip>Mooring Model</h1>
                         <h4 data-toc-skip class="author">Dan Kelley (<a href="https://orcid.org/0000-0001-7808-5911" class="external-link uri">https://orcid.org/0000-0001-7808-5911</a>)</h4>
             
-            <h4 data-toc-skip class="date">2024-08-06</h4>
+            <h4 data-toc-skip class="date">2025-07-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dankelley/mooring/blob/HEAD/vignettes/mooring_model.Rmd" class="external-link"><code>vignettes/mooring_model.Rmd</code></a></small>
       <div class="hidden name"><code>mooring_model.Rmd</code></div>
@@ -189,7 +189,7 @@ freshwater and seawater is seldom made clear.</li>
 defined as the ratio of drag force,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mi>i</mi></msub><annotation encoding="application/x-tex">D_i</annotation></semantics></math>,
 to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>A</mi><mi>i</mi></msub><msub><mi>ρ</mi><mi>i</mi></msub><msub><mi>u</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>u</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">|</mo></mrow></mrow><annotation encoding="application/x-tex">\frac{1}{2}A_i\rho_i u_i|u_i|</annotation></semantics></math>.</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>A</mi><mi>i</mi></msub><msub><mi>ρ</mi><mi>i</mi></msub><msub><mi>u</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>u</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">\frac{1}{2}A_i\rho_i u_i|u_i|</annotation></semantics></math>.</li>
 </ul>
 <div class="float">
 <img src="../reference/figures/force_diagram.png" alt="Figure 1. Force diagram, showing an idealization of a table-tennis ball at the end of a very thin 0.5m fishing line in a 1 m/s current flowing in a river that is 0.5m deep. Arrows show forces in the i-th element (with i=1 in this case), and the corresponding angle is indicated alongside the gray line that represents the stagnant case. The brown region is the sediment below the river, and the dot is an anchor (element i=2, for which there is no force calculation since it assumed to be immobile)."><div class="figcaption"><em>Figure 1. Force diagram, showing an
@@ -240,19 +240,19 @@ or
 is positive.</p>
 <p>The buoyancy force for a solid object such as an anchor or a float is
 found with
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>=</mo><mo>−</mo><mi>g</mi><msub><mi>m</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>=</mo><mi>−</mi><mi>g</mi><msub><mi>m</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{1}
 B_i = -g m_i
 \end{equation}</annotation></semantics></math> while it is represented
 with
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>=</mo><mo>−</mo><mi>g</mi><msub><mi>μ</mi><mi>i</mi></msub><mi>Δ</mi><msub><mi>l</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>=</mo><mi>−</mi><mi>g</mi><msub><mi>μ</mi><mi>i</mi></msub><mi mathvariant="normal">Δ</mi><msub><mi>l</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{2}
 B_i = -g \mu_i \Delta l_i
 \end{equation}</annotation></semantics></math> for a portion of a cable
 of length
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msub><mi>l</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\Delta l_i</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msub><mi>l</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\Delta l_i</annotation></semantics></math>.</p>
 <p>The drag force is expressed with
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mi>i</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>A</mi><mi>i</mi></msub><msub><mi>C</mi><mi>i</mi></msub><msub><mi>ρ</mi><mi>i</mi></msub><msub><mi>u</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>u</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">|</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mi>i</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>A</mi><mi>i</mi></msub><msub><mi>C</mi><mi>i</mi></msub><msub><mi>ρ</mi><mi>i</mi></msub><msub><mi>u</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>u</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{3}
 D_i = \frac{1}{2} A_i C_i \rho_i u_i |u_i|
 \end{equation}</annotation></semantics></math> where
@@ -283,11 +283,11 @@ vertical component for an upright mooring, but horizontal components
 occur for a mooring that is tilted by a current.</p>
 <p>By definition, the top element has no tension from above, and so a
 consideration of its force balance yields
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mn>1</mn></msub><mo>=</mo><msub><mi>τ</mi><mn>1</mn></msub><mo>sin</mo><msub><mi>ϕ</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mn>1</mn></msub><mo>=</mo><msub><mi>τ</mi><mn>1</mn></msub><mi>sin</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{4}
 D_1 = \tau_1 \sin\phi_1
 \end{equation}</annotation></semantics></math> along with
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>1</mn></msub><mo>=</mo><msub><mi>τ</mi><mn>1</mn></msub><mo>cos</mo><msub><mi>ϕ</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>1</mn></msub><mo>=</mo><msub><mi>τ</mi><mn>1</mn></msub><mi>cos</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{5}
 B_1 = \tau_1 \cos\phi_1
 \end{equation}</annotation></semantics></math> where
@@ -314,7 +314,7 @@ yielding
 \tag{6}
 \tau_1 = \sqrt{D_1^2 + B_1^2}
 \end{equation}</annotation></semantics></math> and
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϕ</mi><mn>1</mn></msub><mo>=</mo><msup><mo>tan</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mfrac><msub><mi>D</mi><mn>1</mn></msub><msub><mi>B</mi><mn>1</mn></msub></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϕ</mi><mn>1</mn></msub><mo>=</mo><msup><mi>tan</mi><mo>⁡</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><mfrac><msub><mi>D</mi><mn>1</mn></msub><msub><mi>B</mi><mn>1</mn></msub></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{7}
 \phi_1 = \tan^{-1}\frac{D_1}{B_1}
 \end{equation}</annotation></semantics></math></p>
@@ -330,11 +330,11 @@ estimate of the configuration of this simple mooring.</p>
 <p>If there are more than 2 elements in the mooring, a similar line of
 reasoning may be extended to the next element, although now there is a
 tension force pulling upward. This situation is described by
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mo>sin</mo><msub><mi>ϕ</mi><mn>1</mn></msub><mo>=</mo><msub><mi>τ</mi><mn>2</mn></msub><mo>sin</mo><msub><mi>ϕ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mi>sin</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>1</mn></msub><mo>=</mo><msub><mi>τ</mi><mn>2</mn></msub><mi>sin</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{8}
 D_2 + \tau_1 \sin\phi_1 = \tau_2 \sin\phi_2
 \end{equation}</annotation></semantics></math> and
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mo>cos</mo><msub><mi>ϕ</mi><mn>1</mn></msub><mo>=</mo><msub><mi>τ</mi><mn>2</mn></msub><mo>cos</mo><msub><mi>ϕ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mi>cos</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>1</mn></msub><mo>=</mo><msub><mi>τ</mi><mn>2</mn></msub><mi>cos</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{9}
 B_2 + \tau_1 \cos\phi_1 = \tau_2 \cos\phi_2
 \end{equation}</annotation></semantics></math></p>
@@ -347,20 +347,20 @@ are known from Equation 5, Equation 6 may be solved for
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ϕ</mi><mn>2</mn></msub><annotation encoding="application/x-tex">\phi_2</annotation></semantics></math>,
 using
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mn>2</mn></msub><mo>=</mo><msqrt><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>D</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mo>sin</mo><msub><mi>ϕ</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>B</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mo>cos</mo><msub><mi>ϕ</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mn>2</mn></msub><mo>=</mo><msqrt><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mi>sin</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>1</mn></msub><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>B</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mi>cos</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>1</mn></msub><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{10}
 \tau_2 = \sqrt{(D_2+\tau_1\sin\phi_1)^2 + (B_2+\tau_1\cos\phi_1)^2}
 \end{equation}</annotation></semantics></math> and
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϕ</mi><mn>2</mn></msub><mo>=</mo><msup><mo>tan</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mfrac><mrow><msub><mi>D</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mo>sin</mo><msub><mi>ϕ</mi><mn>1</mn></msub></mrow><mrow><msub><mi>B</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mo>cos</mo><msub><mi>ϕ</mi><mn>1</mn></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϕ</mi><mn>2</mn></msub><mo>=</mo><msup><mi>tan</mi><mo>⁡</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><mfrac><mrow><msub><mi>D</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mi>sin</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>1</mn></msub></mrow><mrow><msub><mi>B</mi><mn>2</mn></msub><mo>+</mo><msub><mi>τ</mi><mn>1</mn></msub><mi>cos</mi><mo>⁡</mo><msub><mi>ϕ</mi><mn>1</mn></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{11}
 \phi_2 = \tan^{-1}\frac{D_2+\tau_1\sin\phi_1}{B_2+\tau_1\cos\phi_1}
 \end{equation}</annotation></semantics></math></p>
 <p>This may be generalized to larger moorings, with
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mi>i</mi></msub><mo>=</mo><msqrt><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>D</mi><mi>i</mi></msub><mo>+</mo><msub><mi>τ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>sin</mo><msub><mi>ϕ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>B</mi><mi>i</mi></msub><mo>+</mo><msub><mi>τ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>cos</mo><msub><mi>ϕ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mi>i</mi></msub><mo>=</mo><msqrt><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mi>i</mi></msub><mo>+</mo><msub><mi>τ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mi>sin</mi><mo>⁡</mo><msub><mi>ϕ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>B</mi><mi>i</mi></msub><mo>+</mo><msub><mi>τ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mi>cos</mi><mo>⁡</mo><msub><mi>ϕ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{12}
 \tau_i = \sqrt{(D_i+\tau_{i-1}\sin\phi_{i-1})^2+(B_i+\tau_{i-1}\cos\phi_{i-1})^2}
 \end{equation}</annotation></semantics></math> and
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϕ</mi><mi>i</mi></msub><mo>=</mo><msup><mo>tan</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mfrac><mrow><msub><mi>D</mi><mi>i</mi></msub><mo>+</mo><msub><mi>τ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>sin</mo><msub><mi>ϕ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>+</mo><msub><mi>τ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>cos</mo><msub><mi>ϕ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ϕ</mi><mi>i</mi></msub><mo>=</mo><msup><mi>tan</mi><mo>⁡</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><mfrac><mrow><msub><mi>D</mi><mi>i</mi></msub><mo>+</mo><msub><mi>τ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mi>sin</mi><mo>⁡</mo><msub><mi>ϕ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>+</mo><msub><mi>τ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mi>cos</mi><mo>⁡</mo><msub><mi>ϕ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{13}
 \phi_i = \tan^{-1}\frac{D_i+\tau_{i-1}\sin\phi_{i-1}}{B_i+\tau_{i-1}\cos\phi_{i-1}}
 \end{equation}</annotation></semantics></math> applying for elements
@@ -414,7 +414,7 @@ Buoy (with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>34.5</mn><annotation encoding="application/x-tex">34.5</annotation></semantics></math>kg
 buoyancy) connected to a bottom anchor with 100 m of quarter-inch
 jacketed wire (with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>13</mn></mrow><annotation encoding="application/x-tex">-13</annotation></semantics></math>kg/m
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>13</mn></mrow><annotation encoding="application/x-tex">-13</annotation></semantics></math>kg/m
 of buoyancy), in a depth-independent 0.5 m/s (roughly 1 knot) current.
 Note that the float is predicted to sink
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7.7</mn><annotation encoding="application/x-tex">7.7</annotation></semantics></math>m
@@ -469,7 +469,7 @@ situations.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-dewey_mooring_1999" class="csl-entry">
 Dewey, Richard K. 1999. <span>“Mooring <span>Design</span> &amp;
 <span>Dynamics</span>—a <span>Matlab</span>® Package for Designing and
@@ -482,8 +482,7 @@ Moller, Donald A. 1976. <span>“A <span>Computer</span>
 <span>Analysis</span> of <span>Single</span>-<span>Point</span>
 <span>Subsurface</span> <span>Mooring</span> <span>Systems</span>:
 <span>NOYFB</span>.”</span> WHOI-76-59. Woods Hole, MA: Woods Hole
-Oceanographic Institution.<a href="https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content%0A%20%20%20%20%20%20%20%20%20%20%20" class="external-link">
-https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content
+Oceanographic Institution.<a href="%0A%20%20%20%20%20%20%20%20%20%20%20https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content%0A%20%20%20%20%20%20%20%20%20%20%20" class="external-link">https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content
 </a>.
 </div>
 </div>
@@ -505,7 +504,7 @@ https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-564
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer>

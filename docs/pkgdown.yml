@@ -1,5 +1,5 @@
-pandoc: 3.1.1
-pkgdown: 2.1.0
+pandoc: 3.6.4
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   example: example.html
@@ -8,4 +8,4 @@ articles:
   mooring: mooring.html
   object_orientation: object_orientation.html
   table_tennis: table_tennis.html
-last_built: 2024-08-06T14:32Z
+last_built: 2025-07-25T10:03Z
