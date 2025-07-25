@@ -24,11 +24,11 @@ below, are based on the following sources.  Each entry has a column named
 the package, and another column named `OriginalName` that indicates the name
 used in the original source.
 
-1. A Matlab file named `mdcodes.mat`, contained within Dewey's [Matlab-based
-   mooring package](http://web.uvic.ca/~rdewey/mooring/moordyn.php) (which was
-   the inspiration for the present package). These entries have "Dewey" in the
-   source column in the tables. The details of data provenance were not
-   pursued, in creating the present R package.
+1. A Matlab file named `mdcodes.mat`, contained within Dewey's Matlab-based
+   mooring package. These entries have "Dewey" in the source column in the
+   tables. The details of data provenance were not pursued, in creating the
+   present R package.
+
 2. Information obtained from [Bedford Institute of
    Oceanography](https://www.bio.gc.ca/index-en.php) ("BIO" in the source
    column), based in Dartmouth, Nova Scotia, Canada.

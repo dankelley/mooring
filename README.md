@@ -88,7 +88,8 @@ data sources and in clarifying the nature of mooring systems.
 
 # References
 
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 
 <div id="ref-dewey_mooring_1999" class="csl-entry">
 
@@ -101,7 +102,6 @@ Designing and Analyzing Oceanographic Moorings.” *Marine Models* 1 (1):
 <div id="ref-dewey_mooring_2023" class="csl-entry">
 
 ———. 2023. “Mooring Design and Dynamics: Users Guide.”
-<http://web.uvic.ca/~rdewey/mooring/mdd/mdd.php>.
 
 </div>
 
@@ -127,11 +127,7 @@ Correction.” *Journal of Atmospheric and Oceanic Technology* 14 (3):
 
 Moller, Donald A. 1976. “A Computer Program for the Design and Static
 Analysis of Single-Point Subsurface Mooring Systems: NOYFB.” WHOI-76-59.
-Woods Hole, MA: Woods Hole Oceanographic Institution.[
-https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content
-](
-           https://darchive.mblwhoilibrary.org/server/api/core/bitstreams/0f41541c-7db6-5641-8412-02f68276b439/content
-           ).
+Woods Hole, MA: Woods Hole Oceanographic Institution.
 
 </div>
 
