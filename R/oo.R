@@ -102,6 +102,8 @@ wireS7 <- S7::new_class("wireS7", parent = mooringElementS7, package = "mooring"
 #'
 #' @template debugTemplate
 #'
+#' @param ... ignored
+#'
 #' @examples
 #' # Create, summarize, and plot a simple mooring comprising
 #' # a bottom anchor, a 100-metre wire, and a float, in
@@ -135,7 +137,8 @@ S7::method(`plot`, mooring:::mooringS7) <- function(
     xlim = NULL,
     xaxs = "r", yaxs = "r",
     type = "l",
-    debug = 0) {
+    debug = 0,
+    ...) {
     m <- x # we only use x above to obey the R rules on generics.
     if (!is.mooring(m)) {
         stop("only works for objects created by mooring()")
@@ -417,9 +420,11 @@ S7::method(`plot`, mooring:::mooringS7) <- function(
 
 #' Summarize a mooring or a mooringElement
 #'
-#' @param x either a `mooring` object, created with [mooring()],
+#' @param object either a `mooring` object, created with [mooring()],
 #' or a `mooringElement` object, created with [anchor()], [wire()],
 #' or any of the related functions that create mooring elements.
+#'
+#' @param ... ignored
 #'
 #' @examples
 #' library(mooring)
@@ -435,7 +440,7 @@ S7::method(`plot`, mooring:::mooringS7) <- function(
 #'
 #' @author Dan Kelley
 S7::method(`summary`, mooring:::mooringS7) <- function(
-    x) {
+    object, ...) {
     debug <- 0
     # message("SUMMARY of whole mooring")
     mooringDebug(debug, "summary.mooring() {\n", sep = "")
@@ -443,14 +448,14 @@ S7::method(`summary`, mooring:::mooringS7) <- function(
     if (elementary) {
         stop("internal programming error: how did an element call this?")
     }
-    n <- length(x@elements)
-    if (!isTRUE(x@attributes$segmentized)) {
+    n <- length(object@elements)
+    if (!isTRUE(object@attributes$segmentized)) {
         cat(sprintf(
             "Mooring in %gm of water that has %d elements, listed from the top down:\n",
-            x@waterDepth, n
+            object@waterDepth, n
         ))
     } else {
-        if (is.null(x@u)) {
+        if (is.null(object@u)) {
             cat("Segmentized mooring with", n, "elements, listed from the top down:\n")
         } else {
             cat("Segmentized knocked-over mooring with", n, "elements, listed from the top down:\n")
@@ -466,7 +471,7 @@ S7::method(`summary`, mooring:::mooringS7) <- function(
     # lastWasWire <- FALSE
     i <- 1L
     while (i <= n) {
-        xi <- x@elements[[i]]
+        xi <- object@elements[[i]]
         mooringDebug(debug, "i=", i, " class=", paste(class(xi), collapse = ","), "\n", sep = "")
         if (is.anchor(xi)) {
             cat(sprintf(
@@ -544,7 +549,7 @@ S7::method(`summary`, mooring:::mooringS7) <- function(
             mooringDebug(debug, "a wire; n=", n, ", n-i=", n - i, "\n")
             count <- 1L
             while (count <= (n - i)) {
-                if (!is.wire(x@elements[[i + count]])) {
+                if (!is.wire(object@elements[[i + count]])) {
                     break
                 }
                 count <- count + 1L
@@ -573,7 +578,7 @@ S7::method(`summary`, mooring:::mooringS7) <- function(
         }
     }
     mooringDebug(debug, "} # summary.mooring()\n", sep = "")
-    invisible(x)
+    invisible(object)
 }
 
 #' Summarize a mooring element
@@ -588,57 +593,57 @@ S7::method(`summary`, mooring:::mooringS7) <- function(
 #'
 #' @author Dan Kelley
 S7::method(`summary`, mooring:::mooringElementS7) <- function(
-    x) {
+    object, ...) {
     debug <- 0
     # message("SUMMARY of element")
     mooringDebug(debug, "summary(mooringElement) {\n", sep = "")
-    elementary <- is.mooringElement(x)
+    elementary <- is.mooringElement(object)
     if (!elementary) {
         stop("internal programming error: how did a mooring call this?")
     }
-    if (is.anchor(x)) {
+    if (is.anchor(object)) {
         cat(sprintf(
             "\"%s\" anchor, buoyancy %gkg, height %gm\n",
-            x@model, x@buoyancy, x@height
+            object@model, object@buoyancy, object@height
         ), sep = "")
-    } else if (is.chain(x)) {
+    } else if (is.chain(object)) {
         cat(sprintf(
             "\"%s\" chain, buoyancy %gkg, length %gm, area %gm^2\n",
-            x@model, x@buoyancy, x@height, x@area
+            object@model, object@buoyancy, object@height, object@area
         ), sep = "")
-    } else if (is.connector(x)) {
+    } else if (is.connector(object)) {
         cat(sprintf(
             "\"%s\" connector, buoyancy %gkg, height %gm, area %gm^2\n",
-            x@model, x@buoyancy, x@height, x@area
+            object@model, object@buoyancy, object@height, object@area
         ), sep = "")
-    } else if (is.float(x)) {
+    } else if (is.float(object)) {
         cat(sprintf(
             "\"%s\" float, buoyancy %gkg, height %gm, area %gm^2\n",
-            x@model, x@buoyancy, x@height, x@area
+            object@model, object@buoyancy, object@height, object@area
         ), sep = "")
-    } else if (is.instrument(x)) {
+    } else if (is.instrument(object)) {
         cat(sprintf(
             "\"%s\" instrument, buoyancy %gkg, height %gm, area %gm^2\n",
-            x@model, x@buoyancy, x@height, x@area
+            object@model, object@buoyancy, object@height, object@area
         ), sep = "")
-    } else if (is.misc(x)) {
+    } else if (is.misc(object)) {
         cat(sprintf(
             "\"%s\" misc, buoyancy %gkg, height %gm, area %gm^2\n",
-            x@model, x@buoyancy, x@height, x@area
+            object@model, object@buoyancy, object@height, object@area
         ), sep = "")
-    } else if (is.release(x)) {
+    } else if (is.release(object)) {
         cat(sprintf(
             "\"%s\" release, buoyancy %gkg, height %gm, area %gm^2\n",
-            x@model, x@buoyancy, x@height, x@area
+            object@model, object@buoyancy, object@height, object@area
         ), sep = "")
-    } else if (is.wire(x)) {
+    } else if (is.wire(object)) {
         cat(sprintf(
             "\"%s\" wire, buoyancy %gkg, length %gm, area %gm^2\n",
-            x@model, x@buoyancy, x@height, x@area
+            object@model, object@buoyancy, object@height, object@area
         ), sep = "")
     } else {
         stop("unknown element")
     }
     mooringDebug(debug, "} # summary(mooringElement)\n", sep = "")
-    invisible(x)
+    invisible(object)
 }

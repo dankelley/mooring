@@ -4,6 +4,12 @@
 \alias{summary}
 \title{Summarize a mooring or a mooringElement}
 \arguments{
+\item{object}{either a \code{mooring} object, created with \code{\link[=mooring]{mooring()}},
+or a \code{mooringElement} object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=wire]{wire()}},
+or any of the related functions that create mooring elements.}
+
+\item{...}{ignored}
+
 \item{x}{either a \code{mooring} object, created with \code{\link[=mooring]{mooring()}},
 or a \code{mooringElement} object, created with \code{\link[=anchor]{anchor()}}, \code{\link[=wire]{wire()}},
 or any of the related functions that create mooring elements.}

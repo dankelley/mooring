@@ -1,3 +1,8 @@
+# mooring 0.1.11
+
+* Rewrite `plot` and `summary` functions to silence a warning about a mismatch
+  with the base-R versions (issue #67)
+
 # mooring 0.1.10
 
 * Improve anchor drawing (issue #66).
@@ -12,11 +17,10 @@
 
 # mooring 0.1.7
 
-* Rename `draw()` to `plot()`, undoing the change made in the 0.1.5
-  version.
-* Rename `printMooring()` to `summary()`.  It really is a summary, not
-  a printout, and we want users to know that they can examine the
-  contents in the normal way, by naming the item.
+* Rename `draw()` to `plot()`, undoing the change made in the 0.1.5 version.
+* Rename `printMooring()` to `summary()`.  It really is a summary, not a
+  printout, and we want users to know that they can examine the contents in the
+  normal way, by naming the item.
 
 # mooring 0.1.6
 

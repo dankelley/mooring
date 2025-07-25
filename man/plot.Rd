@@ -48,6 +48,8 @@ means to draw lines, while e.g. \code{"p"} means to draw points.}
 \item{debug}{an integer value (or a numeric that can be converted to an
 integer) that controls debugging. If this is positive, then some debugging
 information may be printed by the function.}
+
+\item{...}{ignored}
 }
 \description{
 Plot a side-view diagram that indicates mooring geometry.
