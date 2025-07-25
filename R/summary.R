@@ -16,7 +16,7 @@
 ## @aliases summary.mooring
 #'
 #' @author Dan Kelley
-#`summary.mooring::mooring` <- function(object, ...) {
+# `summary.mooring::mooring` <- function(object, ...) {
 summaryMooring <- function(object, ...) {
     if (!is.mooring(object)) {
         stop("only works for objects created by mooring()")

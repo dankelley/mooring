@@ -20,7 +20,8 @@ Determine which Mooring Elements are Instruments
 library(mooring)
 m <- mooring(
     anchor(), wire(length = 100), instrument("RD ADCP"),
-    wire(length = 100), float("HMB 20"), waterDepth = 120
+    wire(length = 100), float("HMB 20"),
+    waterDepth = 120
 )
 is.instrument(m)
 

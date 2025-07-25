@@ -8,16 +8,16 @@ is.mooringInternal <- function(object, class) {
         # message("Case 0: a mooring::mooring")
         return(sapply(object@elements, \(o) is.mooringInternal(o, class)))
     }
-    #message("not a mooring::mooring")
+    # message("not a mooring::mooring")
     if (!inherits(object, "S7_object")) {
         warning("This is not an S7 object. Please do not use this function in your code.")
         rval <- FALSE
     } else {
         # mooring element
-        #message("Case 2: check if a ", class, " object")
+        # message("Case 2: check if a ", class, " object")
         rval <- inherits(object, paste0("mooring::", class, "S7"))
     }
-    #message("   returning: ", paste(rval, collapse = " "))
+    # message("   returning: ", paste(rval, collapse = " "))
     rval
 }
 
@@ -104,7 +104,8 @@ is.float <- function(m) {
 #' library(mooring)
 #' m <- mooring(
 #'     anchor(), wire(length = 100), instrument("RD ADCP"),
-#'     wire(length = 100), float("HMB 20"), waterDepth = 120
+#'     wire(length = 100), float("HMB 20"),
+#'     waterDepth = 120
 #' )
 #' is.instrument(m)
 #'

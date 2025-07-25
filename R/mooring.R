@@ -89,7 +89,9 @@ NULL
 #' library(mooring)
 #' m <- mooring(anchor(),
 #'     wire(length = 70), instrument(), wire(length = 10),
-#'     float(), waterDepth = 100)
+#'     float(),
+#'     waterDepth = 100
+#' )
 #' ms <- segmentize(m)
 #' msk <- knockdown(ms, u = 1)
 #' plot(msk)
@@ -143,7 +145,7 @@ mooring <- function(..., waterDepth = NA) {
     # store with top at first, because knockdown() works in that order
     rval@elements <- rev(rval@elements)
     # message("DAN 2 mooring.R L142")
-    #class(rval) <- "mooring"
+    # class(rval) <- "mooring"
     depth <- waterDepth # rval[[n]]@depth # NOTE: only anchor() objects have this, but we know we have one
     # message("AA 1")
     height <- rev(cumsum(sapply(rev(rval@elements), \(x) x@height)))

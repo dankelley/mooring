@@ -201,11 +201,11 @@ knockdown <- function(m, u = 1, convergence = 0.1, maxiteration = 100, debug = 0
     }
     m@u <- u
     insufficientBuoyancy <- max(depth(m)) > waterDepth
-    #attr(m, "iteration") <- iterationCount
-    #attr(m, "RMSAngleChange") <- 180 / pi * RMSAngleChange
-    #attr(m, "RMSDepthChange") <- RMSDepthChange
-    #attr(m, "converged") <- iterationCount < maxiteration
-    #attr(m, "insufficientBuoyancy") <- insufficientBuoyancy
+    # attr(m, "iteration") <- iterationCount
+    # attr(m, "RMSAngleChange") <- 180 / pi * RMSAngleChange
+    # attr(m, "RMSDepthChange") <- RMSDepthChange
+    # attr(m, "converged") <- iterationCount < maxiteration
+    # attr(m, "insufficientBuoyancy") <- insufficientBuoyancy
     m@attributes$iteration <- iterationCount
     m@attributes$RMSAngleChange <- 180 / pi * RMSAngleChange
     m@attributes$RMSDepthChange <- RMSDepthChange

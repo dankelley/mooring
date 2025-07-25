@@ -40,14 +40,14 @@ segmentize <- function(m, by = 1, debug = 0) {
             mooringDebug(debug, "  handling \"", gsub(".*:(.*)S7", "\\1", class(element)[1]), "\"\n", sep = "")
             height <- element@height
             n <- as.integer(1 + floor(height / by))
-            mooringDebug(debug, "    initially, height=", height, ", by=", by, ", n=", n, "\n", sep="")
+            mooringDebug(debug, "    initially, height=", height, ", by=", by, ", n=", n, "\n", sep = "")
             # Ensure at least 20 chunks
             if (n < 20L) {
                 n <- 20L
                 by <- height / n
                 # message("  LATER:", height, ", by=", by, ", n=", n)
             }
-            mooringDebug(debug, "    later, height=", height, ", by=", by, ", n=", n, "\n", sep="")
+            mooringDebug(debug, "    later, height=", height, ", by=", by, ", n=", n, "\n", sep = "")
             portion <- element
             portion@height <- height / n
             portion@area <- portion@area / n

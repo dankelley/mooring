@@ -32,7 +32,9 @@ in the return value (see Example 1).
 library(mooring)
 m <- mooring(anchor(),
     wire(length = 70), instrument(), wire(length = 10),
-    float(), waterDepth = 100)
+    float(),
+    waterDepth = 100
+)
 ms <- segmentize(m)
 msk <- knockdown(ms, u = 1)
 plot(msk)

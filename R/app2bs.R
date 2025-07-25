@@ -250,7 +250,7 @@ app2bs <- function(debug = FALSE) {
             wireBelow <- input$waterDepth - input$instrumentDepth
             instrumentType <- gsub("[ ]+\\[.*kg\\]$", "", input$instrumentType)
             wireAbove <- input$wireLength - wireBelow
-            #message("input$wireLength=",input$wireLength,", wireBelow=", wireBelow,", wireAbove=",wireAbove)
+            # message("input$wireLength=",input$wireLength,", wireBelow=", wireBelow,", wireAbove=",wireAbove)
             floatType <- gsub("[ ]+\\[.*kg\\]$", "", input$floatType)
             u <- input$u
             msg <- "<pre>library(mooring)<br>"
@@ -261,7 +261,7 @@ app2bs <- function(debug = FALSE) {
             msg <- paste0(msg, sprintf("    wire(model = \"%s\", length = %g),<br>", wireType, wireAbove))
             msg <- paste0(msg, sprintf("    float(model = \"%s\"),<br>", floatType))
             msg <- paste0(msg, sprintf("    waterDepth = %g<br>", input$waterDepth))
-            #msg <- paste0(msg, sprintf("# wireAbove=%f wireBelow=%f<br>\n", wireAbove, wireBelow))
+            # msg <- paste0(msg, sprintf("# wireAbove=%f wireBelow=%f<br>\n", wireAbove, wireBelow))
             msg <- paste0(msg, ")<br>")
             msg <- paste0(msg, "ms <- segmentize(m, by = ", max(1, round(input$waterDepth / 100)), ")<br>")
             msg <- paste0(

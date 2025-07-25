@@ -1,5 +1,5 @@
 #<old feature, no longer needed> # vim:spell:textwidth=128:expandtab:shiftwidth=4:softtabstop=4
-#<old feature, no longer needed> 
+#<old feature, no longer needed>
 #<old feature, no longer needed> #' Access something in a mooring
 #<old feature, no longer needed> #'
 #<old feature, no longer needed> #' Retrieves values from (a) a mooring element, as created with
